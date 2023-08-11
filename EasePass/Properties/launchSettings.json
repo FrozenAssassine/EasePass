@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "EasePass (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "EasePass (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
