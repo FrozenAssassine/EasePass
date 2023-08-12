@@ -1,3 +1,4 @@
+using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
@@ -36,6 +37,7 @@ namespace EasePass.Views
         {
             this.InitializeComponent();
 
+            PasswordItemsManager.passwordItemFlyout = passwordItemFlyout;
             PasswordItemsManager.PopulateNaivgationView(mainNavigationView, Items);
         }
         private void ShowPasswordItem(PasswordManagerItem item)
@@ -76,6 +78,35 @@ namespace EasePass.Views
         private void passwordSearchBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             
+        }
+
+        private void PasswordItem_Delete_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            if (PasswordItemsManager.rightClickedItem == null)
+                return;
+
+            PasswordItemsManager.DeleteItem(mainNavigationView, Items, PasswordItemsManager.rightClickedItem.Tag as PasswordManagerItem);
+        }
+
+        private async void PasswordItem_Edit_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            if (PasswordItemsManager.rightClickedItem == null)
+                return;
+            
+            var editItem = await new EditItemDialog().ShowAsync(Items, PasswordItemsManager.rightClickedItem.Tag as PasswordManagerItem);
+            if (editItem.pwItem == null)
+                return;
+
+            PasswordItemsManager.UpdateItem(mainNavigationView, Items, editItem.pwItem, editItem.category);
+        }
+
+        private async void AddPasswordItem_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            var newItem = await new AddItemDialog().ShowAsync(Items);
+            if (newItem.pwItem == null)
+                return;
+
+            PasswordItemsManager.AddItem(mainNavigationView, Items, newItem.pwItem, newItem.category);
         }
     }
 }

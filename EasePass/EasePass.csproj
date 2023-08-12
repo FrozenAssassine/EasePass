@@ -12,6 +12,13 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Core\**" />
+    <EmbeddedResource Remove="Core\**" />
+    <None Remove="Core\**" />
+    <Page Remove="Core\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\AddItemPage.xaml" />
     <None Remove="Views\LoginPage.xaml" />
     <None Remove="Views\PasswordsPage.xaml" />
   </ItemGroup>
@@ -51,9 +58,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\" />
-  </ItemGroup>
 
   <!-- 
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution 
@@ -63,4 +67,12 @@
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
+  <ItemGroup>
+    <PRIResource Remove="Core\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\AddItemPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
 </Project>

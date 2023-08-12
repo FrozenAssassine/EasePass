@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EasePass.Models
 {
-    internal class PasswordManagerCategory
+    public class PasswordManagerCategory
     {
         public string CategoryName { get; set; }
         public string IconId { get; set; }

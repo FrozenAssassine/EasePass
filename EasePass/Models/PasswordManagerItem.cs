@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace EasePass.Models
 {
-    internal class PasswordManagerItem
+    public class PasswordManagerItem
     {
+        public PasswordManagerItem() { }
         public PasswordManagerItem(string displayname, string password, string username, string email, string notes)
         {
             DisplayName = displayname;
