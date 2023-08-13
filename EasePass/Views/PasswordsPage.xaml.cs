@@ -1,45 +1,60 @@
 using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Security;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.System;
 
 namespace EasePass.Views
 {
     public sealed partial class PasswordsPage : Page
     {
-        private List<PasswordManagerCategory> Items = new List<PasswordManagerCategory>
-        {
-            new PasswordManagerCategory{
-                CategoryName = "Wichtig", IconId = "\xE734",
-                Items = new List<PasswordManagerItem>
-                {
-                    new PasswordManagerItem("github", "\xE731", "1231241234", "MyUserName", "MyEmail@Emai.de", "This are notes\nMore notes"),
-                    new PasswordManagerItem("otherhub", "1231241234", "MyUserName2", "MyEmail@Email2.de", "This are notes\nMore notes\and More"),
-                    new PasswordManagerItem("thinkhub", "1231241234", "MyUserName5", "MyEmail@Email5.de", "This are notes\nMore notes"),
-                }
-            },
-            new PasswordManagerCategory{
-                CategoryName = "Unwichtig", IconId = "\xE7B3",
-                Items = new List<PasswordManagerItem>
-                {
-                    new PasswordManagerItem("Amazon", "\xE7BA", "asldkasldök1", "MyUserNam8e", "MyEmail@Emai12.de", "This are notes\nMore notes"),
-                    new PasswordManagerItem("Paypal", "asldkasldök5", "MyUserName9", "MyEmail@Emai5.de", "This are notes\nMore notes\and More"),
-                    new PasswordManagerItem("Baguette Bank", "asldkasldök100", "MyUserName6", "MyEmail@Email5.de", "This are notes\nMore notes"),
-                }
-            }
-        };
+        private ObservableCollection<PasswordManagerItem> PasswordItems = new ObservableCollection<PasswordManagerItem>();
+
         private PasswordManagerItem SelectedItem = null;
+        private SecureString masterPassword = null;
 
         public PasswordsPage()
         {
             this.InitializeComponent();
-
-            PasswordItemsManager.passwordItemFlyout = passwordItemFlyout;
-            PasswordItemsManager.PopulateNaivgationView(mainNavigationView, Items);
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if(e.Parameter == null)
+            {
+                return;
+            }
+
+            if(e.Parameter is SecureString pw)
+            {
+                masterPassword = pw;
+                LoadData(masterPassword);
+            }
+
+            base.OnNavigatedTo(e);
+        }
+
+        private void LoadData(SecureString pw)
+        {
+            var data = DatabaseHelper.LoadDatabase(pw);
+            if (data == null)
+                return;
+
+            PasswordItems = data;
+        }
+        private void SaveData()
+        {
+            DatabaseHelper.SaveDatabase(PasswordItems, masterPassword);
+        }
+
         private void ShowPasswordItem(PasswordManagerItem item)
         {
             notesTB.Text = item.Notes;
@@ -48,65 +63,88 @@ namespace EasePass.Views
             usernameTB.Text = item.Username;
             itemnameTB.Text = item.DisplayName;
             iconFI.Glyph = item.IconId;
+
+            passwordShowArea.Visibility = Visibility.Visible;
         }
 
 
-        private void mainNavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private void passwordItemListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (args.SelectedItem == null)
+            if (passwordItemListView.SelectedItem == null)
                 return;
 
-            if(args.SelectedItem is NavigationViewItem navItem && navItem.Tag is PasswordManagerItem pwItem)
+            if (passwordItemListView.SelectedItem is PasswordManagerItem pwItem)
             {
                 SelectedItem = pwItem;
                 ShowPasswordItem(pwItem);
             }
         }
-        private void passwordSearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-        {
-            // Since selecting an item will also change the text,
-            // only listen to changes caused by user entering text.
-            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
-            {
-                var suitableItems = PasswordItemsManager.FindItemsByName(Items, sender.Text.ToLower());
-                if (suitableItems.Count == 0)
-                    return; //TODO Message nothing found:
-
-                sender.ItemsSource = suitableItems;
-            }
-        }
-        private void passwordSearchBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-            
-        }
-
-        private void PasswordItem_Delete_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-        {
-            if (PasswordItemsManager.rightClickedItem == null)
-                return;
-
-            PasswordItemsManager.DeleteItem(mainNavigationView, Items, PasswordItemsManager.rightClickedItem.Tag as PasswordManagerItem);
-        }
-
-        private async void PasswordItem_Edit_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-        {
-            if (PasswordItemsManager.rightClickedItem == null)
-                return;
-            
-            var editItem = await new EditItemDialog().ShowAsync(Items, PasswordItemsManager.rightClickedItem.Tag as PasswordManagerItem);
-            if (editItem.pwItem == null)
-                return;
-
-            PasswordItemsManager.UpdateItem(mainNavigationView, Items, editItem.pwItem, editItem.category);
-        }
-
         private async void AddPasswordItem_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            var newItem = await new AddItemDialog().ShowAsync(Items);
-            if (newItem.pwItem == null)
+            var newItem = await new AddItemDialog().ShowAsync(PasswordItems);
+            if (newItem == null)
                 return;
 
-            PasswordItemsManager.AddItem(mainNavigationView, Items, newItem.pwItem, newItem.category);
+            PasswordItemsManager.AddItem(PasswordItems, newItem);
+            SaveData();
+        }
+        private async void EditPasswordItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedItem == null)
+                return;
+
+            var editItem = await new EditItemDialog().ShowAsync(PasswordItems, SelectedItem);
+            if (editItem == null)
+                return;
+
+            SaveData();
+        }
+        private void searchbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(searchbox.Text == "")
+            {
+                passwordItemListView.ItemsSource = PasswordItems;
+                return;
+            }
+            passwordItemListView.ItemsSource = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
+        }
+        private void ShowPassword_Changed(object sender, RoutedEventArgs e)
+        {
+            if(sender is CheckBox cb)
+                pwTB.PasswordRevealMode = cb.IsChecked ?? false ? PasswordRevealMode.Visible : PasswordRevealMode.Hidden;
+        }
+        private void pwTB_PreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            e.Handled = true;
+            if (e.Key == VirtualKey.A && KeyHelper.IsKeyPressed(VirtualKey.Control))
+                pwTB.SelectAll();
+            else if(e.Key == VirtualKey.C && KeyHelper.IsKeyPressed(VirtualKey.Control))
+                ClipboardHelper.Copy(pwTB.Password);
+        }
+        private void TB_SelectAl_Click(object sender, RoutedEventArgs e)
+        {
+            if(sender is TextBox tb)
+                tb.SelectAll();
+            else if(sender is PasswordBox pb) 
+                pb.SelectAll();
+        }
+        private void TB_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox tb)
+                ClipboardHelper.Copy(tb.Text);
+            else if (sender is PasswordBox pb)
+                ClipboardHelper.Copy(pb.Password);
+        }
+
+        private async void DeletePasswordItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedItem == null)
+                return;
+
+            if(await new DeleteConfirmationDialog().ShowAsync(SelectedItem))
+            {
+                PasswordItemsManager.DeleteItem(PasswordItems, SelectedItem);
+            }
         }
     }
 }

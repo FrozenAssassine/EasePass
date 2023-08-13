@@ -2,6 +2,7 @@ using EasePass.Models;
 using Microsoft.UI;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace EasePass.Views
 {
@@ -9,14 +10,9 @@ namespace EasePass.Views
     {
         PasswordManagerItem input = null;
 
-        public AddItemPage(List<PasswordManagerCategory> categories, PasswordManagerItem input = null)
+        public AddItemPage(ObservableCollection<PasswordManagerItem> pwItems, PasswordManagerItem input = null)
         {
             this.InitializeComponent();
-
-            foreach (var category in categories)
-            {
-                categoryCB.Items.Add(new ComboBoxItem { Content = category.CategoryName, Tag = category });
-            }
 
             if (input == null)
                 return;
@@ -30,11 +26,10 @@ namespace EasePass.Views
             //iconFI.Glyph = input.IconId;
         }
 
-        public (PasswordManagerItem, PasswordManagerCategory)GetValue()
+        public PasswordManagerItem GetValue()
         {
             if (input == null)
                 input = new PasswordManagerItem();
-
 
             input.Notes = notesTB.Text;
             input.Password = pwTB.Password;
@@ -42,7 +37,7 @@ namespace EasePass.Views
             input.Username = usernameTB.Text;
             input.DisplayName = nameTB.Text;
             
-            return (input, (categoryCB.SelectedItem as ComboBoxItem).Tag as PasswordManagerCategory);
+            return input;
         }
     }
 }

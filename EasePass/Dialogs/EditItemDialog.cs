@@ -3,6 +3,7 @@ using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +12,9 @@ namespace EasePass.Dialogs
 {
     internal class EditItemDialog
     {
-        public async Task<(PasswordManagerItem pwItem, PasswordManagerCategory category)> ShowAsync(List<PasswordManagerCategory> categories, PasswordManagerItem item)
+        public async Task<PasswordManagerItem> ShowAsync(ObservableCollection<PasswordManagerItem> pwItems, PasswordManagerItem item)
         {
-            var page = new AddItemPage(categories, item);
+            var page = new AddItemPage(pwItems, item);
             var dialog = new ContentDialog
             {
                 Title = "Edit item",
@@ -25,7 +26,7 @@ namespace EasePass.Dialogs
 
             if (await dialog.ShowAsync() == ContentDialogResult.Primary)
                 return page.GetValue();
-            return (null, null);
+            return null;
         }
     }
 }

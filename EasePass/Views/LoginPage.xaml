@@ -8,10 +8,17 @@
     xmlns:local="using:EasePass.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button Click="WindowsHello_Click">Login using Windows Hello</Button>
+        <StackPanel Background="{ThemeResource CardBackgroundFillColorDefault}" CornerRadius="10" Padding="30" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Margin="10,0,0,0" Text="Enter your Password"/>
+            <PasswordBox Margin="10" x:Name="passwordBox" MinWidth="150">
+                <PasswordBox.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="Enter" Invoked="Enter_Invoked"/>
+                </PasswordBox.KeyboardAccelerators>
+            </PasswordBox>
+            <Button Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Center" Padding="20,5" Margin="10" Click="PWLogin_Click" Content="Login"/>
+        </StackPanel>
     </Grid>
 </Page>

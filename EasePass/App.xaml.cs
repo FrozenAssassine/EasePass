@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation and Contributors.
 // Licensed under the MIT License.
 
+using EasePass.Settings;
 using EasePass.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -12,6 +13,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -47,21 +49,20 @@ namespace EasePass
         {
             m_window = new MainWindow();
 
-            // Create a Frame to act as the navigation context and navigate to the first page
-            m_frame = new Frame();
+            m_frame = m_window.MainFrame;
             m_frame.NavigationFailed += OnNavigationFailed;
 
-            m_frame.Navigate(typeof(LoginPage), args.Arguments);
-            m_frame.Navigate(typeof(PasswordsPage), args.Arguments);
+            var pwHash = AppSettings.GetSettings(AppSettingsValues.pHash, "");
+            if (pwHash.Length <= 0)
+                m_frame.Navigate(typeof(RegisterPage));
+            else
+                m_frame.Navigate(typeof(LoginPage));
 
-            // Place the frame in the current Window
-            m_window.Content = m_frame;
-            // Ensure the MainWindow is active
             m_window.Activate();
         }
 
         public static Frame m_frame;
-        public static Window m_window;
+        public static MainWindow m_window;
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {

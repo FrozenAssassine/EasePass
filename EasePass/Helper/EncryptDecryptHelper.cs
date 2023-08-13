@@ -1,0 +1,94 @@
+﻿using System.Linq;
+using System.Text;
+using System.Security.Cryptography;
+using System.IO;
+using System.Security;
+using System.Runtime.InteropServices;
+using EasePass.Settings;
+
+namespace EasePass.Helper
+{
+    internal class EncryptDecryptHelper
+    {
+        public static byte[] EncryptStringAES(string plainText, SecureString password)
+        {
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.Key = GetCryptionKey(password);
+                aesAlg.GenerateIV();
+
+                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+
+                using (var msEncrypt = new MemoryStream())
+                {
+                    msEncrypt.Write(aesAlg.IV, 0, aesAlg.IV.Length);
+
+                    using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    using (var swEncrypt = new StreamWriter(csEncrypt, Encoding.UTF8))
+                    {
+                        swEncrypt.Write(plainText);
+                    }
+
+                    return msEncrypt.ToArray();
+                }
+            }
+        }
+
+        public static string DecryptStringAES(byte[] cipherText, SecureString password)
+        {
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.Key = GetCryptionKey(password);
+                aesAlg.IV = cipherText.Take(16).ToArray();
+
+                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+
+                using (var msDecrypt = new MemoryStream(cipherText.Skip(16).ToArray()))
+                using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                using (var srDecrypt = new StreamReader(csDecrypt, Encoding.UTF8))
+                {
+                    return srDecrypt.ReadToEnd();
+                }
+            }
+        }
+
+        private static byte[] ToBytes(SecureString secureString)
+        {
+            var pUnicodeBytes = Marshal.SecureStringToGlobalAllocUnicode(secureString);
+            try
+            {
+                byte[] unicodeBytes = new byte[secureString.Length * 2];
+                byte[] bytes = new byte[unicodeBytes.Length];
+
+                for (var idx = 0; idx < unicodeBytes.Length; ++idx)
+                {
+                    bytes[idx] = Marshal.ReadByte(pUnicodeBytes, idx);
+                }
+
+                return bytes;
+            }
+            finally
+            {
+                Marshal.ZeroFreeGlobalAllocUnicode(pUnicodeBytes);
+            }
+        }
+
+        public static byte[] DeriveEncryptionKey(SecureString password, byte[] salt, int keySizeInBytes, int iterations)
+        {
+            using (Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(ToBytes(password), salt, iterations))
+            {
+                return pbkdf2.GetBytes(keySizeInBytes);
+            }
+        }
+
+        private static byte[] GetCryptionKey(SecureString pw)
+        {
+            byte[] saltFromDatabase = Encoding.UTF8.GetBytes(AppSettings.GetSettings(AppSettingsValues.pSalt));
+            int keySizeInBytes = 32;
+            int iterations = 10000;
+
+            return DeriveEncryptionKey(pw, saltFromDatabase, keySizeInBytes, iterations);
+        }
+
+    }
+}

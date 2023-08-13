@@ -12,5 +12,8 @@
     <Window.SystemBackdrop>
         <MicaBackdrop/>
     </Window.SystemBackdrop>
-
+    <Grid>
+        <Frame x:Name="naivgationFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <StackPanel Margin="20" MinWidth="300" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" x:Name="infoMessagesPanel"/>
+    </Grid>
 </Window>
