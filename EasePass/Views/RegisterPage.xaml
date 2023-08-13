@@ -8,11 +8,12 @@
     xmlns:local="using:EasePass.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <PasswordBox  MinWidth="150" x:Name="passwordBox"/>
-        <Button Content="Register" Margin="0, 50,0,0" Click="Register_Click"/>
-    </Grid>
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock FontSize="24" TextAlignment="Center" TextWrapping="Wrap" Width="400">Welcome to Ease Pass - Your open source password manager</TextBlock>
+        <TextBlock Margin="0,50,0,0" FontSize="14">Please choose a password to start using the password manager.</TextBlock>
+        <PasswordBox Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBox"/>
+        <Button Margin="0,20,0,0" HorizontalAlignment="Center" Style="{ThemeResource AccentButtonStyle}" Padding="20,5,20,5" Content="Register" Click="Register_Click"/>
+    </StackPanel>
 </Page>

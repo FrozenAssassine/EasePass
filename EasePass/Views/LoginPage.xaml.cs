@@ -12,6 +12,8 @@ namespace EasePass.Views
         public LoginPage()
         {
             this.InitializeComponent();
+
+            passwordBox.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
         }
 
         private void PWLogin_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)

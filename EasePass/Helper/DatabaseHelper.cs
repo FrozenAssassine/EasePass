@@ -12,23 +12,22 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace EasePass.Helper
 {
     internal class DatabaseHelper
     {
-        private static string DatabaseFilePath = @"C:\Users\Juliu\Desktop\PW.json";
+        private static string DatabaseFilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "easepass.db");
 
-        private static string CreateJsonstring(ObservableCollection<PasswordManagerItem> pwItems)
+        public static string CreateJsonstring(ObservableCollection<PasswordManagerItem> pwItems)
         {
             return JsonConvert.SerializeObject(pwItems, Formatting.Indented);
         }
-        private static ObservableCollection<PasswordManagerItem> LoadItems(string json)
+        public static ObservableCollection<PasswordManagerItem> LoadItems(string json)
         {
-            File.WriteAllText(@"C:\Users\juliu\Desktop\test.json", json);
             return ((JArray)JsonConvert.DeserializeObject(json)).ToObject<ObservableCollection<PasswordManagerItem>>();
         }
-
 
         private static string ReadFile(SecureString pw)
         {
@@ -37,7 +36,7 @@ namespace EasePass.Helper
                 var bytes = File.ReadAllBytes(DatabaseFilePath);
                 return EncryptDecryptHelper.DecryptStringAES(bytes, pw);
             }
-            catch(FileNotFoundException ex)
+            catch(FileNotFoundException)
             {
                 return "";
             }

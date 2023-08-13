@@ -1,6 +1,7 @@
 using EasePass.Helper;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System.Security;
 
 namespace EasePass.Views
 {
@@ -14,7 +15,13 @@ namespace EasePass.Views
         private void Register_Click(object sender, RoutedEventArgs e)
         {
             AuthenticationHelper.StorePassword(passwordBox.Password);
-            App.m_frame.Navigate(typeof(PasswordsPage));
+
+            SecureString pw = new SecureString();
+            foreach (var character in passwordBox.Password)
+            {
+                pw.AppendChar(character);
+            }
+            App.m_frame.Navigate(typeof(PasswordsPage), pw);
         }
     }
 }

@@ -17,9 +17,18 @@ namespace EasePass.Views
     public sealed partial class PasswordsPage : Page
     {
         private ObservableCollection<PasswordManagerItem> PasswordItems = new ObservableCollection<PasswordManagerItem>();
+        //{
+        //    new PasswordManagerItem("github", "\xE731", "1231241234", "MyUserName", "MyEmail@Emai.de", "This are notes\nMore notes"),
+        //    new PasswordManagerItem("otherhub", "1231241234", "MyUserName2", "MyEmail@Email2.de", "This are notes\nMore notes\and More"),
+        //    new PasswordManagerItem("thinkhub", "1231241234", "MyUserName5", "MyEmail@Email5.de", "This are notes\nMore notes"),
+        //    new PasswordManagerItem("Amazon", "\xE7BA", "asldkasldök1", "MyUserNam8e", "MyEmail@Emai12.de", "This are notes\nMore notes"),
+        //    new PasswordManagerItem("Paypal", "asldkasldök5", "MyUserName9", "MyEmail@Emai5.de", "This are notes\nMore notes\and More"),
+        //    new PasswordManagerItem("Baguette Bank", "asldkasldök100", "MyUserName6", "MyEmail@Email5.de", "This are notes\nMore notes"),
+        //};
 
         private PasswordManagerItem SelectedItem = null;
         private SecureString masterPassword = null;
+        private FrameworkElement rightClickedItem = null;
 
         public PasswordsPage()
         {
@@ -28,8 +37,11 @@ namespace EasePass.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if(e.Parameter == null)
+            App.m_window.ShowBackArrow = false;
+            //when navigating from settings:
+            if (e.Parameter == null)
             {
+                SaveData();
                 return;
             }
 
@@ -62,7 +74,6 @@ namespace EasePass.Views
             emailTB.Text = item.Email;
             usernameTB.Text = item.Username;
             itemnameTB.Text = item.DisplayName;
-            iconFI.Glyph = item.IconId;
 
             passwordShowArea.Visibility = Visibility.Visible;
         }
@@ -97,6 +108,7 @@ namespace EasePass.Views
             if (editItem == null)
                 return;
 
+            ShowPasswordItem(SelectedItem);
             SaveData();
         }
         private void searchbox_TextChanged(object sender, TextChangedEventArgs e)
@@ -123,16 +135,16 @@ namespace EasePass.Views
         }
         private void TB_SelectAl_Click(object sender, RoutedEventArgs e)
         {
-            if(sender is TextBox tb)
+            if(rightClickedItem is TextBox tb)
                 tb.SelectAll();
-            else if(sender is PasswordBox pb) 
+            else if(rightClickedItem is PasswordBox pb) 
                 pb.SelectAll();
         }
         private void TB_Copy_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is TextBox tb)
+            if (rightClickedItem is TextBox tb)
                 ClipboardHelper.Copy(tb.Text);
-            else if (sender is PasswordBox pb)
+            else if (rightClickedItem is PasswordBox pb)
                 ClipboardHelper.Copy(pb.Password);
         }
 
@@ -145,6 +157,20 @@ namespace EasePass.Views
             {
                 PasswordItemsManager.DeleteItem(PasswordItems, SelectedItem);
             }
+        }
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            App.m_frame.Navigate(typeof(SettingsPage), PasswordItems);
+        }
+        private void AboutPage_Click(object sender, RoutedEventArgs e)
+        {
+            App.m_frame.Navigate(typeof(AboutPage));
+        }
+
+        private void pwTB_RightTapped(object sender, Microsoft.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        {
+            rightClickedItem = sender as FrameworkElement;
+            textboxFlyout.ShowAt(rightClickedItem);
         }
     }
 }

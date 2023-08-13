@@ -10,11 +10,34 @@ namespace EasePass.Helper
 {
     internal class EncryptDecryptHelper
     {
-        public static byte[] EncryptStringAES(string plainText, SecureString password)
+        public static byte[] EncryptStringAES(string plainText, string password, string salt)
+        {
+            SecureString pw = new SecureString();
+            for(var i = 0; i< password.Length; i++)
+            {
+                pw.AppendChar(password[i]);
+            }
+
+            return EncryptStringAES(plainText, pw, salt);
+        }
+
+        public static string DecryptStringAES(byte[] cipherText, string password, string salt)
+        {
+            SecureString pw = new SecureString();
+            for (var i = 0; i < password.Length; i++)
+            {
+                pw.AppendChar(password[i]);
+            }
+
+            return DecryptStringAES(cipherText, pw, salt);
+        }
+
+
+        public static byte[] EncryptStringAES(string plainText, SecureString password, string salt = "")
         {
             using (Aes aesAlg = Aes.Create())
             {
-                aesAlg.Key = GetCryptionKey(password);
+                aesAlg.Key = GetCryptionKey(password, salt);
                 aesAlg.GenerateIV();
 
                 ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
@@ -34,11 +57,11 @@ namespace EasePass.Helper
             }
         }
 
-        public static string DecryptStringAES(byte[] cipherText, SecureString password)
+        public static string DecryptStringAES(byte[] cipherText, SecureString password, string salt = "")
         {
             using (Aes aesAlg = Aes.Create())
             {
-                aesAlg.Key = GetCryptionKey(password);
+                aesAlg.Key = GetCryptionKey(password, salt);
                 aesAlg.IV = cipherText.Take(16).ToArray();
 
                 ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
@@ -81,14 +104,13 @@ namespace EasePass.Helper
             }
         }
 
-        private static byte[] GetCryptionKey(SecureString pw)
+        private static byte[] GetCryptionKey(SecureString pw, string salt = "")
         {
-            byte[] saltFromDatabase = Encoding.UTF8.GetBytes(AppSettings.GetSettings(AppSettingsValues.pSalt));
+            byte[] saltFromDatabase = Encoding.UTF8.GetBytes(salt == "" ? AppSettings.GetSettings(AppSettingsValues.pSalt) : "");
             int keySizeInBytes = 32;
             int iterations = 10000;
 
             return DeriveEncryptionKey(pw, saltFromDatabase, keySizeInBytes, iterations);
         }
-
     }
 }

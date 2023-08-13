@@ -1,19 +1,35 @@
-<!-- Copyright (c) Microsoft Corporation and Contributors. -->
-<!-- Licensed under the MIT License. -->
-
 <Window
     x:Class="EasePass.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:EasePass"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:converter="using:EasePass.Converter"
     mc:Ignorable="d">
     <Window.SystemBackdrop>
         <MicaBackdrop/>
     </Window.SystemBackdrop>
     <Grid>
-        <Frame x:Name="naivgationFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        <StackPanel Margin="20" MinWidth="300" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" x:Name="infoMessagesPanel"/>
+        <Button x:Name="navigateBackButton" Grid.Column="0" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Click="NavigateBack_Click">
+            <SymbolIcon Symbol="Back"/>
+        </Button>
+        <Grid Margin="50,0,0,0" VerticalAlignment="Top" Height="30" x:Name="titleBar">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="1" Source="ms-appx:///Assets/AppIcon/Icon.png"
+                   HorizontalAlignment="Left" 
+                   Width="16" Height="16" 
+                   Margin="8,0"/>
+            <TextBlock Grid.Column="2" x:Name="appTitle" Text="Ease Pass"
+                       TextWrapping="NoWrap"
+                       Style="{StaticResource CaptionTextBlockStyle}" 
+                       VerticalAlignment="Center"
+                       Margin="8,0,0,0"/>
+        </Grid>
+        
+        <Frame Margin="0,30,0,0" x:Name="naivgationFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <StackPanel Margin="20,40,20,20" MinWidth="300" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" x:Name="infoMessagesPanel"/>
     </Grid>
 </Window>

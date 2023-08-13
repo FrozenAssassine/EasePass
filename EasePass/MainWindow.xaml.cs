@@ -10,10 +10,17 @@ namespace EasePass
             this.InitializeComponent();
 
             InfoMessagesPanel = infoMessagesPanel;
+            ExtendsContentIntoTitleBar = true;
+            SetTitleBar(titleBar);
         }
 
         public static StackPanel InfoMessagesPanel;
         public Frame MainFrame => naivgationFrame;
 
+        public bool ShowBackArrow { get => navigateBackButton.Visibility == Visibility.Visible; set => navigateBackButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
+        private void NavigateBack_Click(object sender, RoutedEventArgs e)
+        {
+            naivgationFrame.GoBack();
+        }
     }
 }
