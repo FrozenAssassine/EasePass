@@ -14,14 +14,14 @@
         <StackPanel Margin="20">
             <controls:SetingsItemSeparator Header="Database"/>
 
-            <controls:SettingsControl Header="Export database without encryption">
+            <controls:SettingsControl Header="Export database">
                 <StackPanel Orientation="Horizontal">
                     <PasswordBox Margin="5" x:Name="encryptDBPassword" PlaceholderText="Password"/>
                     <Button Margin="5" Content="Export" Click="ExportEncryptedDatabase_Click"/>
                 </StackPanel>
             </controls:SettingsControl>
 
-            <controls:SettingsControl Header="Import database without encryption">
+            <controls:SettingsControl Header="Import database">
                 <StackPanel Orientation="Horizontal">
                     <PasswordBox Margin="5" x:Name="decryptDBPassword" PlaceholderText="Password"/>
                     <Button Margin="5" Content="Import" Click="ImportEncryptedDatabase_Click"/>
