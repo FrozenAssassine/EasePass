@@ -105,7 +105,7 @@ namespace EasePass.Views
                 SaveData();
             }
         }
-        private async void AddPasswordItem_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private async void AddPasswordItem_Click(object sender, RoutedEventArgs e)
         {
             var newItem = await new AddItemDialog().ShowAsync();
             if (newItem == null)

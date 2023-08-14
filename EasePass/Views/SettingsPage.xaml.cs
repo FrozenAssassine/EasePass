@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 
 namespace EasePass.Views
@@ -37,6 +38,12 @@ namespace EasePass.Views
 
         private async void ExportEncryptedDatabase_Click(object sender, RoutedEventArgs e)
         {
+            if (encryptDBPassword.Password.Length < 4)
+            {
+                InfoMessages.PasswordTooShort();
+                return;
+            }
+
             var (hash, salt) = AuthenticationHelper.HashPassword(encryptDBPassword.Password);
 
             var encodedDB = EncryptDecryptHelper.EncryptStringAES(DatabaseHelper.CreateJsonstring(passwordItems), encryptDBPassword.Password, salt);
@@ -53,6 +60,12 @@ namespace EasePass.Views
         }
         private async void ImportEncryptedDatabase_Click(object sender, RoutedEventArgs e)
         {
+            if(decryptDBPassword.Password.Length < 4)
+            {
+                InfoMessages.PasswordTooShort();
+                return;
+            }
+
             var pickerResult = await FilePickerHelper.PickOpenFile(new string[] {".eped" });
             if (pickerResult.success)
             {
