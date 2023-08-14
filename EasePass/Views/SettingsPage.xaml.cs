@@ -7,9 +7,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
-using System.Text;
 
 namespace EasePass.Views
 {
@@ -70,16 +68,13 @@ namespace EasePass.Views
 
                     if (dialogResult == InsertOrOverwriteDatabaseDialog.Result.Overwrite)
                     {
-                        Debug.WriteLine("---CLEAR---");
                         passwordItems.Clear();
                     }
 
                     foreach (var item in importedItems)
                     {
                         passwordItems.Add(item);
-                        Debug.WriteLine("Add: " + item.DisplayName);
                     }
-                    Debug.WriteLine("ITEMS: " + passwordItems.Count);
                     InfoMessages.ImportDBSuccess();
                     return;
                 }

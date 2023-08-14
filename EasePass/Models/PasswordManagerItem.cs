@@ -27,8 +27,6 @@ namespace EasePass.Models
                 NotifyPropertyChanged("DisplayName");
             }
         }
-        public string IconId { get; set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

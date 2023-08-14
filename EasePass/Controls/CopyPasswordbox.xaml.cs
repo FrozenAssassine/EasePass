@@ -1,7 +1,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using EasePass.Helper;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace EasePass.Controls
 {

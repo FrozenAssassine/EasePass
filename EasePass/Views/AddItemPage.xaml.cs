@@ -1,8 +1,5 @@
 using EasePass.Models;
-using Microsoft.UI;
 using Microsoft.UI.Xaml.Controls;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace EasePass.Views
 {
@@ -10,7 +7,7 @@ namespace EasePass.Views
     {
         PasswordManagerItem input = null;
 
-        public AddItemPage(ObservableCollection<PasswordManagerItem> pwItems, PasswordManagerItem input = null)
+        public AddItemPage(PasswordManagerItem input = null)
         {
             this.InitializeComponent();
 
@@ -23,7 +20,6 @@ namespace EasePass.Views
             emailTB.Text = input.Email;
             usernameTB.Text = input.Username;
             nameTB.Text = input.DisplayName;
-            //iconFI.Glyph = input.IconId;
         }
 
         public PasswordManagerItem GetValue()

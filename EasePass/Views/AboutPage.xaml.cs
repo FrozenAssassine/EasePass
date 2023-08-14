@@ -1,9 +1,6 @@
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using Windows.ApplicationModel;
 
 namespace EasePass.Views

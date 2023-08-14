@@ -11,6 +11,5 @@ namespace EasePass.Dialogs
         public static void ExportDBWrongPassword() => new InfoBar().Show("Wrong password", $"Could not import database, because you've entered the wrong password.", InfoBarSeverity.Error);
         public static void ImportDBSuccess() => new InfoBar().Show("Imported successfully", $"Imported data successfully", InfoBarSeverity.Success);
         public static void ExportDBSuccess() => new InfoBar().Show("Export successfully", $"Exported data successfully", InfoBarSeverity.Success);
-
     }
 }

@@ -1,6 +1,3 @@
-<!-- Copyright (c) Microsoft Corporation and Contributors. -->
-<!-- Licensed under the MIT License. -->
-
 <Page
     x:Class="EasePass.Views.AboutPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -130,7 +127,7 @@
                 <RichTextBlock FontSize="18" IsTextSelectionEnabled="False">
                     <Paragraph Margin="0,30,0,0">
                         <Run>
-                            We are doing our best to prepare the content of this app. However, Ease Pass cannot warranty the expressions and suggestions of the contents, as well as its accuracy. In addition, to the extent permitted by the law, Ease Pass shall not be responsible for any losses and/or damages due to the usage of the information on our app. Our Disclaimer was generated with the help of the App Disclaimer Generator from App-Privacy-Policy.com
+                            We are doing our best to prepare the content of this app. However, Ease Pass cannot warranty the expressions and suggestions of the contents, as well as its accuracy. In addition, to the extent permitted by the law, Ease Pass shall not be responsible for any losses and/or damages due to the usage of the information on our app.
                         </Run>
                     </Paragraph>
                     <Paragraph Margin="0,30,0,0">

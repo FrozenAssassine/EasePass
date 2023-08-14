@@ -2,19 +2,16 @@
 using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs
 {
     internal class EditItemDialog
     {
-        public async Task<PasswordManagerItem> ShowAsync(ObservableCollection<PasswordManagerItem> pwItems, PasswordManagerItem item)
+        public async Task<PasswordManagerItem> ShowAsync(PasswordManagerItem item)
         {
-            var page = new AddItemPage(pwItems, item);
+            var page = new AddItemPage(item);
             var dialog = new ContentDialog
             {
                 Title = "Edit item",

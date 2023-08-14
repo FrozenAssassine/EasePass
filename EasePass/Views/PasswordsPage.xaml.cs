@@ -14,7 +14,6 @@ namespace EasePass.Views
         private ObservableCollection<PasswordManagerItem> PasswordItems = new ObservableCollection<PasswordManagerItem>();
         private PasswordManagerItem SelectedItem = null;
         private SecureString masterPassword = null;
-        private FrameworkElement rightClickedItem = null;
 
         public PasswordsPage()
         {
@@ -99,7 +98,7 @@ namespace EasePass.Views
         }
         private async void AddPasswordItem_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            var newItem = await new AddItemDialog().ShowAsync(PasswordItems);
+            var newItem = await new AddItemDialog().ShowAsync();
             if (newItem == null)
                 return;
 
@@ -111,7 +110,7 @@ namespace EasePass.Views
             if (SelectedItem == null)
                 return;
 
-            var editItem = await new EditItemDialog().ShowAsync(PasswordItems, SelectedItem);
+            var editItem = await new EditItemDialog().ShowAsync(SelectedItem);
             if (editItem == null)
                 return;
 
