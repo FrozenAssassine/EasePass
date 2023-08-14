@@ -65,6 +65,11 @@ namespace EasePass.Views
 
         private void passwordItemListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if(passwordItemListView.Items.Count == 0)
+            {
+                passwordShowArea.Visibility = Visibility.Collapsed;
+            }
+
             if (passwordItemListView.SelectedItem == null)
             {
                 SelectedItem = null;
@@ -87,12 +92,16 @@ namespace EasePass.Views
                 int index = passwordItemListView.SelectedIndex;
                 PasswordItemsManager.DeleteItem(PasswordItems, SelectedItem);
 
-                if (PasswordItems.Count >= 1)
+                if (passwordItemListView.Items.Count >= 1)
                     passwordItemListView.SelectedIndex = index - 1 > 0 ? index - 1 :
-                        index + 1 < PasswordItems.Count ? index + 1 : 0;
+                        index + 1 < passwordItemListView.Items.Count ? index + 1 : 0;
                 else
                     passwordShowArea.Visibility = Visibility.Collapsed;
 
+                //update searchbox:
+                if(searchbox.Text.Length > 0)
+                    passwordItemListView.ItemsSource = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
+                
                 SaveData();
             }
         }
