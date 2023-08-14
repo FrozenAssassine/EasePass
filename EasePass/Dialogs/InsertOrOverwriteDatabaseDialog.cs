@@ -12,11 +12,11 @@ namespace EasePass.Dialogs
 {
     internal class InsertOrOverwriteDatabaseDialog
     {
-        public enum InsertOverwriteDialogResult
+        public enum Result
         {
             Insert, Overwrite, Cancel
         }
-        public async Task<InsertOverwriteDialogResult> ShowAsync()
+        public async Task<Result> ShowAsync()
         {
             var dialog = new ContentDialog
             {
@@ -30,10 +30,10 @@ namespace EasePass.Dialogs
 
             var res = await dialog.ShowAsync();
             if (res == ContentDialogResult.Primary)
-                return InsertOverwriteDialogResult.Insert;
+                return Result.Insert;
             else if(res == ContentDialogResult.Secondary)
-                return InsertOverwriteDialogResult.Overwrite;
-            return InsertOverwriteDialogResult.Cancel;
+                return Result.Overwrite;
+            return Result.Cancel;
         }
     }
 }
