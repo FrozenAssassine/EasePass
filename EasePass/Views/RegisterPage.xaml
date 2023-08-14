@@ -9,7 +9,7 @@
     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Image Width="200" Height="200" Source="ms-appx:///Assets/AppIcon/Icon.png"/>
         <TextBlock Margin="0,50,0,0" FontSize="24" TextAlignment="Center" TextWrapping="Wrap" Width="400">Welcome to Ease Pass - Your open source password manager</TextBlock>
-        <TextBlock Margin="0,50,0,0" FontSize="14">Please choose a password to start using the password manager.</TextBlock>
+        <TextBlock TextWrapping="Wrap" Width="400" Margin="0,50,0,0" FontSize="14">Please choose a master password to begin using the password manager. Without this password, you will never be able to retrieve your saved passwords.</TextBlock>
         <PasswordBox Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBox">
             <PasswordBox.KeyboardAccelerators>
                 <KeyboardAccelerator Key="Enter" Invoked="Enter_Invoked"/>

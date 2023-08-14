@@ -1,3 +1,4 @@
+using EasePass.Dialogs;
 using EasePass.Helper;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -14,6 +15,12 @@ namespace EasePass.Views
 
         private void Register_Click(object sender, RoutedEventArgs e)
         {
+            if(passwordBox.Password.Length < 4)
+            {
+                InfoMessages.PasswordTooShort();
+                return;
+            }
+
             AuthenticationHelper.StorePassword(passwordBox.Password);
 
             SecureString pw = new SecureString();
