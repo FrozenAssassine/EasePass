@@ -37,7 +37,8 @@
     <None Remove="Assets\AppIcon\Generated\Square44x44Logo.targetsize-48_altform-lightunplated.png" />
     <None Remove="Assets\AppIcon\Generated\Square44x44Logo.targetsize-48_altform-unplated.png" />
     <None Remove="Assets\AppIcon\Generated\Wide310x150Logo.scale-400.png" />
-    <None Remove="Controls\RenamableListViewItem.xaml" />
+    <None Remove="Controls\CopyPasswordbox.xaml" />
+    <None Remove="Controls\CopyTextbox.xaml" />
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\AddItemPage.xaml" />
     <None Remove="Views\LoginPage.xaml" />
@@ -124,6 +125,16 @@
     <Content Remove="Assets\AppIcon\Generated\Wide310x150Logo.scale-125.png" />
     <Content Remove="Assets\AppIcon\Generated\Wide310x150Logo.scale-150.png" />
     <Content Remove="Assets\AppIcon\Generated\Wide310x150Logo.scale-200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\CopyPasswordbox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\CopyTextbox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\AboutPage.xaml">
