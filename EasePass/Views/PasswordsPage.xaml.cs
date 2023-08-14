@@ -24,20 +24,18 @@ namespace EasePass.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             App.m_window.ShowBackArrow = false;
-            //when navigating from settings:
-            if (e.Parameter == null)
+    
+            if(e.NavigationMode == NavigationMode.Back)
             {
                 passwordItemListView.ItemsSource = PasswordItems;
                 SaveData();
-                return;
             }
-
-            if(e.Parameter is SecureString pw)
+            else if(e.NavigationMode == NavigationMode.New && e.Parameter is SecureString pw)
             {
                 masterPassword = pw;
                 LoadData(masterPassword);
             }
-
+   
             base.OnNavigatedTo(e);
         }
 
@@ -137,6 +135,36 @@ namespace EasePass.Views
         private void AboutPage_Click(object sender, RoutedEventArgs e)
         {
             App.m_frame.Navigate(typeof(AboutPage));
+        }
+
+        private void Page_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (KeyHelper.IsKeyPressed(Windows.System.VirtualKey.Control))
+            {
+                switch (e.Key)
+                {
+                    case Windows.System.VirtualKey.F:
+                        searchbox.Focus(FocusState.Programmatic);
+                        break;
+                    case Windows.System.VirtualKey.N:
+                        AddPasswordItem_Click(null, null);
+                        break;
+                    case Windows.System.VirtualKey.E:
+                        EditPasswordItem_Click(null, null);
+                        break;
+                    default: return;
+                }
+            }
+
+            switch (e.Key)
+            {
+                case Windows.System.VirtualKey.F1:
+                    Settings_Click(null, null);
+                    break;
+                case Windows.System.VirtualKey.F2:
+                    EditPasswordItem_Click(null, null);
+                    break;
+            }
         }
     }
 }
