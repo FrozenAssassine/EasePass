@@ -90,6 +90,25 @@ namespace EasePass.Views
                 ShowPasswordItem(pwItem);
             }
         }
+        private async void DeletePasswordItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedItem == null)
+                return;
+
+            if (await new DeleteConfirmationDialog().ShowAsync(SelectedItem))
+            {
+                int index = passwordItemListView.SelectedIndex;
+                PasswordItemsManager.DeleteItem(PasswordItems, SelectedItem);
+
+                if (PasswordItems.Count >= 1)
+                    passwordItemListView.SelectedIndex = index - 1 > 0 ? index - 1 :
+                        index + 1 < PasswordItems.Count ? index + 1 : 0;
+                else
+                    passwordShowArea.Visibility = Visibility.Collapsed;
+
+                SaveData();
+            }
+        }
         private async void AddPasswordItem_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             var newItem = await new AddItemDialog().ShowAsync(PasswordItems);
@@ -148,16 +167,6 @@ namespace EasePass.Views
                 ClipboardHelper.Copy(pb.Password);
         }
 
-        private async void DeletePasswordItem_Click(object sender, RoutedEventArgs e)
-        {
-            if (SelectedItem == null)
-                return;
-
-            if(await new DeleteConfirmationDialog().ShowAsync(SelectedItem))
-            {
-                PasswordItemsManager.DeleteItem(PasswordItems, SelectedItem);
-            }
-        }
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
             App.m_frame.Navigate(typeof(SettingsPage), PasswordItems);
@@ -167,7 +176,7 @@ namespace EasePass.Views
             App.m_frame.Navigate(typeof(AboutPage));
         }
 
-        private void pwTB_RightTapped(object sender, Microsoft.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        private void tb_RightTapped(object sender, Microsoft.UI.Xaml.Input.RightTappedRoutedEventArgs e)
         {
             rightClickedItem = sender as FrameworkElement;
             textboxFlyout.ShowAt(rightClickedItem);
