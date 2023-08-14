@@ -12,6 +12,7 @@ namespace EasePass
             InfoMessagesPanel = infoMessagesPanel;
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(titleBar);
+            ShowBackArrow = false;
         }
 
         public static StackPanel InfoMessagesPanel;

@@ -17,15 +17,6 @@ namespace EasePass.Views
     public sealed partial class PasswordsPage : Page
     {
         private ObservableCollection<PasswordManagerItem> PasswordItems = new ObservableCollection<PasswordManagerItem>();
-        //{
-        //    new PasswordManagerItem("github", "\xE731", "1231241234", "MyUserName", "MyEmail@Emai.de", "This are notes\nMore notes"),
-        //    new PasswordManagerItem("otherhub", "1231241234", "MyUserName2", "MyEmail@Email2.de", "This are notes\nMore notes\and More"),
-        //    new PasswordManagerItem("thinkhub", "1231241234", "MyUserName5", "MyEmail@Email5.de", "This are notes\nMore notes"),
-        //    new PasswordManagerItem("Amazon", "\xE7BA", "asldkasldök1", "MyUserNam8e", "MyEmail@Emai12.de", "This are notes\nMore notes"),
-        //    new PasswordManagerItem("Paypal", "asldkasldök5", "MyUserName9", "MyEmail@Emai5.de", "This are notes\nMore notes\and More"),
-        //    new PasswordManagerItem("Baguette Bank", "asldkasldök100", "MyUserName6", "MyEmail@Email5.de", "This are notes\nMore notes"),
-        //};
-
         private PasswordManagerItem SelectedItem = null;
         private SecureString masterPassword = null;
         private FrameworkElement rightClickedItem = null;
@@ -41,6 +32,7 @@ namespace EasePass.Views
             //when navigating from settings:
             if (e.Parameter == null)
             {
+                passwordItemListView.ItemsSource = PasswordItems;
                 SaveData();
                 return;
             }
@@ -151,13 +143,6 @@ namespace EasePass.Views
                 pwTB.SelectAll();
             else if(e.Key == VirtualKey.C && KeyHelper.IsKeyPressed(VirtualKey.Control))
                 ClipboardHelper.Copy(pwTB.Password);
-        }
-        private void TB_SelectAl_Click(object sender, RoutedEventArgs e)
-        {
-            if(rightClickedItem is TextBox tb)
-                tb.SelectAll();
-            else if(rightClickedItem is PasswordBox pb) 
-                pb.SelectAll();
         }
         private void TB_Copy_Click(object sender, RoutedEventArgs e)
         {

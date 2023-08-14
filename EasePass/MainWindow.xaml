@@ -10,25 +10,30 @@
         <MicaBackdrop/>
     </Window.SystemBackdrop>
     <Grid>
-        <Button x:Name="navigateBackButton" Grid.Column="0" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Click="NavigateBack_Click">
-            <SymbolIcon Symbol="Back"/>
-        </Button>
-        <Grid Margin="50,0,0,0" VerticalAlignment="Top" Height="30" x:Name="titleBar">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="1" Source="ms-appx:///Assets/AppIcon/Icon.png"
+            <Button Grid.Row="0" Grid.Column="0" x:Name="navigateBackButton" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top" Click="NavigateBack_Click">
+                <SymbolIcon Symbol="Back"/>
+            </Button>
+            <Grid Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Column="1" Height="30" x:Name="titleBar">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Source="ms-appx:///Assets/AppIcon/Icon.png"
                    HorizontalAlignment="Left" 
                    Width="16" Height="16" 
                    Margin="8,0"/>
-            <TextBlock Grid.Column="2" x:Name="appTitle" Text="Ease Pass"
+                <TextBlock Grid.Column="1" x:Name="appTitle" Text="Ease Pass"
                        TextWrapping="NoWrap"
                        Style="{StaticResource CaptionTextBlockStyle}" 
                        VerticalAlignment="Center"
                        Margin="8,0,0,0"/>
+            </Grid>
         </Grid>
-        
         <Frame Margin="0,30,0,0" x:Name="naivgationFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         <StackPanel Margin="20,40,20,20" MinWidth="300" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" x:Name="infoMessagesPanel"/>
     </Grid>

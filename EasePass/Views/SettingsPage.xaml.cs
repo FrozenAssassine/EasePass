@@ -63,30 +63,28 @@ namespace EasePass.Views
                 {
                     var str = EncryptDecryptHelper.DecryptStringAES(decryptedJson.Data, decryptDBPassword.Password, decryptedJson.Salt);
                     var importedItems = DatabaseHelper.LoadItems(str);
-                    
+
                     var dialogResult = await new InsertOrOverwriteDatabaseDialog().ShowAsync();
-                    if(dialogResult == InsertOrOverwriteDatabaseDialog.InsertOverwriteDialogResult.Insert)
+                    if (dialogResult == InsertOrOverwriteDatabaseDialog.Result.Cancel)
+                        return;
+
+                    if (dialogResult == InsertOrOverwriteDatabaseDialog.Result.Overwrite)
                     {
-                        foreach(var item in importedItems)
-                        {
-                            passwordItems.Add(item);
-                        }
-                        InfoMessages.ImportDBSuccess();
+                        Debug.WriteLine("---CLEAR---");
+                        passwordItems.Clear();
                     }
-                    else if (dialogResult == InsertOrOverwriteDatabaseDialog.InsertOverwriteDialogResult.Overwrite)
+
+                    foreach (var item in importedItems)
                     {
-                        passwordItems = importedItems;
-                        InfoMessages.ImportDBSuccess();
+                        passwordItems.Add(item);
+                        Debug.WriteLine("Add: " + item.DisplayName);
                     }
+                    Debug.WriteLine("ITEMS: " + passwordItems.Count);
+                    InfoMessages.ImportDBSuccess();
                     return;
                 }
                 InfoMessages.ExportDBWrongPassword();
             }
-        }
-
-        private void NavigateBack_Click(object sender, RoutedEventArgs e)
-        {
-            App.m_frame.GoBack();
         }
     }
 }
