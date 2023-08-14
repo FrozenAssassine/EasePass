@@ -1,38 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EasePass.Models
 {
-    public class PasswordManagerItem
+    public class PasswordManagerItem : INotifyPropertyChanged
     {
-        public PasswordManagerItem() { }
-        public PasswordManagerItem(string displayname, string password, string username, string email, string notes)
+        private void NotifyPropertyChanged(string propertyName)
         {
-            DisplayName = displayname;
-            Password = password;
-            Username = username;
-            Email = email;
-            Notes = notes;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        public PasswordManagerItem(string displayname, string iconid, string password, string username, string email, string notes)
-        {
-            IconId = iconid;
-            DisplayName = displayname;
-            Password = password;
-            Username = username;
-            Email = email;
-            Notes = notes;
-        }
-
         public string Password { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
         public string Notes { get; set; }
-        public string DisplayName { get; set; }
+        private string _DisplayName;
+        public string DisplayName
+        {
+            get => _DisplayName;
+            set
+            {
+                _DisplayName = value;
+                NotifyPropertyChanged("DisplayName");
+            }
+        }
         public string IconId { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
