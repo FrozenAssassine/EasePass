@@ -4,13 +4,8 @@ using EasePass.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Security;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.System;
 
 namespace EasePass.Views
 {
@@ -62,7 +57,7 @@ namespace EasePass.Views
         private void ShowPasswordItem(PasswordManagerItem item)
         {
             notesTB.Text = item.Notes;
-            pwTB.Password = item.Password;
+            pwTB.Text = item.Password;
             emailTB.Text = item.Email;
             usernameTB.Text = item.Username;
             itemnameTB.Text = item.DisplayName;
@@ -74,7 +69,10 @@ namespace EasePass.Views
         private void passwordItemListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (passwordItemListView.SelectedItem == null)
+            {
+                SelectedItem = null;
                 return;
+            }
 
             if (passwordItemListView.SelectedItem is PasswordManagerItem pwItem)
             {
@@ -131,26 +129,6 @@ namespace EasePass.Views
             }
             passwordItemListView.ItemsSource = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
         }
-        private void ShowPassword_Changed(object sender, RoutedEventArgs e)
-        {
-            if(sender is CheckBox cb)
-                pwTB.PasswordRevealMode = cb.IsChecked ?? false ? PasswordRevealMode.Visible : PasswordRevealMode.Hidden;
-        }
-        private void pwTB_PreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
-        {
-            e.Handled = true;
-            if (e.Key == VirtualKey.A && KeyHelper.IsKeyPressed(VirtualKey.Control))
-                pwTB.SelectAll();
-            else if(e.Key == VirtualKey.C && KeyHelper.IsKeyPressed(VirtualKey.Control))
-                ClipboardHelper.Copy(pwTB.Password);
-        }
-        private void TB_Copy_Click(object sender, RoutedEventArgs e)
-        {
-            if (rightClickedItem is TextBox tb)
-                ClipboardHelper.Copy(tb.Text);
-            else if (rightClickedItem is PasswordBox pb)
-                ClipboardHelper.Copy(pb.Password);
-        }
 
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
@@ -159,12 +137,6 @@ namespace EasePass.Views
         private void AboutPage_Click(object sender, RoutedEventArgs e)
         {
             App.m_frame.Navigate(typeof(AboutPage));
-        }
-
-        private void tb_RightTapped(object sender, Microsoft.UI.Xaml.Input.RightTappedRoutedEventArgs e)
-        {
-            rightClickedItem = sender as FrameworkElement;
-            textboxFlyout.ShowAt(rightClickedItem);
         }
     }
 }
