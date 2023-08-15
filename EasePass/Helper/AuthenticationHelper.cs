@@ -29,7 +29,7 @@ namespace EasePass.Helper
 
         public static void StorePassword(string password)
         {
-            var (hash, salt)= HashPassword(password);
+            var (hash, salt) = HashPassword(password);
             AppSettings.SaveSettings(AppSettingsValues.pHash, hash);
             AppSettings.SaveSettings(AppSettingsValues.pSalt, salt);
         }

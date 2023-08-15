@@ -13,7 +13,7 @@ namespace EasePass.Views
     {
         private ObservableCollection<PasswordManagerItem> PasswordItems = new ObservableCollection<PasswordManagerItem>();
         private PasswordManagerItem SelectedItem = null;
-        private SecureString masterPassword = null;
+        public SecureString masterPassword = null;
 
         public PasswordsPage()
         {
@@ -46,7 +46,7 @@ namespace EasePass.Views
 
             PasswordItems = data;
         }
-        private void SaveData()
+        public void SaveData()
         {
             DatabaseHelper.SaveDatabase(PasswordItems, masterPassword);
         }
@@ -138,7 +138,11 @@ namespace EasePass.Views
 
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            App.m_frame.Navigate(typeof(SettingsPage), PasswordItems);
+            App.m_frame.Navigate(typeof(SettingsPage), new SettingsNavigationParameters
+            {
+                PasswordPage = this,
+                PwItems = PasswordItems
+            });
         }
         private void AboutPage_Click(object sender, RoutedEventArgs e)
         {
