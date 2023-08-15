@@ -4,10 +4,11 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="uap rescap">
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  IgnorableNamespaces="uap rescap mp">
 
   <Identity
-    Name="3605521d-bbcf-4eab-a157-97cbe63d4e06"
+    Name="52804JuliusKirsch.EasePass"
     Publisher="CN=131520D9-7303-41D1-808C-53CCB4ADFB34"
     Version="1.0.0.0" />
 
@@ -39,6 +40,11 @@
         <uap:DefaultTile Wide310x150Logo="Assets\AppIcon\Generated\Wide310x150Logo.png"  Square71x71Logo="Assets\AppIcon\Generated\SmallTile.png" Square310x310Logo="Assets\AppIcon\Generated\LargeTile.png">
         </uap:DefaultTile >
         <!--<uap:SplashScreen a:Optional="true" xmlns:a="http://schemas.microsoft.com/appx/manifest/uap/windows10/5" Image="Assets\AppIcon\Generated\SplashScreen.scale-400.png" />-->
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape"/>
+          <uap:Rotation Preference="portrait"/>
+          <uap:Rotation Preference="landscapeFlipped"/>
+          <uap:Rotation Preference="portraitFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>
@@ -46,4 +52,5 @@
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
   </Capabilities>
+  <mp:PhoneIdentity PhoneProductId="3b0b91ff-dc83-4170-87f9-d51da36d8a48" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 </Package>
