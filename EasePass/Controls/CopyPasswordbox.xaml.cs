@@ -45,5 +45,19 @@ namespace EasePass.Controls
                 ToggleShowPassword(cb.IsChecked ?? false);
             }
         }
+
+        private void TextBox_PreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (KeyHelper.IsKeyPressed(Windows.System.VirtualKey.Control))
+            {
+                if (e.Key == Windows.System.VirtualKey.A)
+                    this.SelectAll();
+                else if (e.Key == Windows.System.VirtualKey.C)
+                    CopyText_Click(null, null);
+                
+                e.Handled = true;
+                return;
+            }
+        }
     }
 }
