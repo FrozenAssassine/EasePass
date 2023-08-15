@@ -21,6 +21,12 @@ namespace EasePass.Views
                 return;
             }
 
+            if (!passwordBox.Password.Equals(passwordBoxRepeat.Password))
+            {
+                InfoMessages.PasswordsDoNotMatch();
+                return;
+            }
+
             AuthenticationHelper.StorePassword(passwordBox.Password);
 
             SecureString pw = new SecureString();
