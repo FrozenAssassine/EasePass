@@ -19,3 +19,8 @@ Ease Pass is a simple password manager designed to streamline password managemen
 
 ### Time spent on this project:
 <img src="https://wakatime.com/badge/user/1ce7d4e7-d3a9-45a5-bea0-e04995db707c/project/9a91fa1f-b0d3-4b51-a674-486788829096.svg"/>
+
+## Images
+
+<img src="Images/img1.png"/>
+<img src="Images/img4.png"/>
