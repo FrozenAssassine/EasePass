@@ -21,7 +21,7 @@
     <AppxBundle>Always</AppxBundle>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
-    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <AppxBundlePlatforms>arm64</AppxBundlePlatforms>
     <AppxPackageDir>F:\C#\EasePass\EasePass\bin\publish</AppxPackageDir>
   </PropertyGroup>
   <ItemGroup>
@@ -55,8 +55,10 @@
     <None Remove="Assets\AppIcon\Generated\Square44x44Logo.targetsize-16_altform-lightunplated.png" />
     <None Remove="Assets\AppIcon\Generated\Square44x44Logo.targetsize-16_altform-unplated.png" />
     <None Remove="Assets\AppIcon\Generated\Square44x44Logo.targetsize-24.png" />
+    <None Remove="Assets\AppIcon\Generated\Square44x44Logo.targetsize-24_altform-lightunplated.png" />
     <None Remove="Assets\AppIcon\Generated\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <None Remove="Assets\AppIcon\Generated\Square44x44Logo.targetsize-256.png" />
+    <None Remove="Assets\AppIcon\Generated\Square44x44Logo.targetsize-256_altform-lightunplated.png" />
     <None Remove="Assets\AppIcon\Generated\Square44x44Logo.targetsize-32.png" />
     <None Remove="Assets\AppIcon\Generated\Square44x44Logo.targetsize-32_altform-lightunplated.png" />
     <None Remove="Assets\AppIcon\Generated\Square44x44Logo.targetsize-32_altform-unplated.png" />
