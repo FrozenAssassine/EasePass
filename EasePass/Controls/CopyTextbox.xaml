@@ -267,16 +267,16 @@
                                 Foreground="{ThemeResource SystemControlDescriptionTextForegroundBrush}"
                                 AutomationProperties.AccessibilityView="Raw"
                                 x:Load="False"/>
-                            <Button 
+                            <Button
                                 Grid.Column="1"
                                 Click="CopyText_Click"
                                 Grid.Row="1"
                                 VerticalAlignment="Top" 
                                 BorderThickness="0"
+                                Margin="0,1,0,1"
                                 CornerRadius="{TemplateBinding CornerRadius}"
                                 IsTabStop="False"
                                 FontSize="{TemplateBinding FontSize}"
-                                Background="{ThemeResource ButtonBackgroundThemeBrush}"
                                 >
                                 <FontIcon Glyph="&#xE8C8;" />
                             </Button>
