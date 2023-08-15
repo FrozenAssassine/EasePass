@@ -9,21 +9,52 @@
 
     <ScrollViewer Margin="0,50,0,0" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">
         <StackPanel Margin="20">
+            <TextBlock TextAlignment="Center" FontSize="36" Text="Settings"/>
             <controls:SetingsItemSeparator Header="Database"/>
-
-            <controls:SettingsControl Header="Export database">
+            <controls:SettingsControl Header="Export Database">
                 <StackPanel Orientation="Horizontal">
-                    <PasswordBox Margin="5" x:Name="encryptDBPassword" PlaceholderText="Password"/>
+                    <PasswordBox MinWidth="150" Margin="5" x:Name="encryptDBPassword" PlaceholderText="Password"/>
                     <Button Margin="5" Content="Export" Click="ExportEncryptedDatabase_Click"/>
                 </StackPanel>
             </controls:SettingsControl>
 
-            <controls:SettingsControl Header="Import database">
+            <controls:SettingsControl Header="Import Database">
                 <StackPanel Orientation="Horizontal">
-                    <PasswordBox Margin="5" x:Name="decryptDBPassword" PlaceholderText="Password"/>
+                    <PasswordBox MinWidth="150" Margin="5" x:Name="decryptDBPassword" PlaceholderText="Password"/>
                     <Button Margin="5" Content="Import" Click="ImportEncryptedDatabase_Click"/>
                 </StackPanel>
             </controls:SettingsControl>
+
+            <controls:SetingsItemSeparator Header="Security"/>
+            <Expander HorizontalAlignment="Stretch">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Height="70">
+                        <TextBlock Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xE785;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Change Password"/>
+                    </StackPanel>
+                </Expander.Header>
+                <Expander.Content>
+                    <StackPanel MaxWidth="600">
+                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="Be sure to select a password that you'll always remember. If the password is lost, so are all your stored credentials, with no means of recovery. Additionally, ensure you back up your passwords either to an external offline drive or the cloud."/>
+                        <Grid Margin="0,20,0,0" Grid.Column="1" Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <PasswordBox Margin="5" Grid.Row="0" Grid.Column="0" Header="Current Password" x:Name="changePW_currentPw" PlaceholderText="Current Password"/>
+                            <PasswordBox Margin="5" Grid.Row="0" Grid.Column="2" Header="New Password" x:Name="changePW_newPw" PlaceholderText="New Password"/>
+                            <PasswordBox Margin="5" Grid.Row="1" Grid.Column="2" Header="Repeat Password" x:Name="changePW_repeatPw" PlaceholderText="Repeat new Password"/>
+                        </Grid>
+                        <Button Grid.Row="2" Margin="0,20,0,0" Style="{ThemeResource AccentButtonStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Content="Change Password" Click="ChangePassword_Click"/>
+                    </StackPanel>
+                </Expander.Content>
+            </Expander>
 
         </StackPanel>
     </ScrollViewer>

@@ -9,12 +9,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Security;
 
 namespace EasePass.Views
 {
     public sealed partial class SettingsPage : Page
     {
         ObservableCollection<PasswordManagerItem> passwordItems = null;
+        PasswordsPage passwordsPage = null;
 
         public SettingsPage()
         {
@@ -32,7 +34,9 @@ namespace EasePass.Views
             base.OnNavigatedTo(e);
 
             App.m_window.ShowBackArrow = true;
-            passwordItems = e.Parameter as ObservableCollection<PasswordManagerItem>;
+            var navParam = e.Parameter as SettingsNavigationParameters;
+            passwordItems = navParam.PwItems;
+            passwordsPage = navParam.PasswordPage;
         }
 
 
@@ -88,11 +92,43 @@ namespace EasePass.Views
                     {
                         passwordItems.Add(item);
                     }
+                    passwordsPage.SaveData();
                     InfoMessages.ImportDBSuccess();
                     return;
                 }
                 InfoMessages.ExportDBWrongPassword();
             }
+        }
+
+        private void ChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            if (changePW_newPw.Password.Length < 4)
+            {
+                InfoMessages.PasswordTooShort();
+                return;
+            }
+
+            if (AuthenticationHelper.VerifyPassword(changePW_currentPw.Password))
+            {
+                if (changePW_newPw.Password.Equals(changePW_repeatPw.Password))
+                {
+                    SecureString newMasterPw = new SecureString();
+                    foreach(var character in changePW_newPw.Password)
+                    {
+                        newMasterPw.AppendChar(character);
+                    }
+
+                    passwordsPage.masterPassword = newMasterPw;
+                    AuthenticationHelper.StorePassword(changePW_newPw.Password);
+                    passwordsPage.SaveData();
+
+                    InfoMessages.SuccessfullyChangedPassword();
+                    return;
+                }
+                InfoMessages.PasswordsDoNotMatch();
+                return;
+            }
+            InfoMessages.ChangePasswordWrong();
         }
     }
 }
