@@ -1,7 +1,7 @@
  <p align="center">
     <img src="EasePass/Assets/AppIcon/Icon.png" height="150px" width="auto" alt="alternate text">
  </p>
- <h1  align="center">EasePass</h1>
+ <h1  align="center">Ease Pass</h1>
 <div align="center">
      <!--<a href="https://www.microsoft.com/en-us/p/fastedit/9ntq53w18dpw?activetab=pivot:overviewtab">
          <img src="https://img.shields.io/badge/Download-Microsoft%20Store-brightgreen?style=flat">
