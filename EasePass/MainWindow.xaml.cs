@@ -15,7 +15,16 @@ namespace EasePass
             SetTitleBar(titleBar);
             ShowBackArrow = false;
 
-            var windowSize = new Windows.Graphics.SizeInt32(AppSettings.GetSettingsAsInt(AppSettingsValues.windowWidth, 1100), AppSettings.GetSettingsAsInt(AppSettingsValues.windowHeight, 700));
+            var width = AppSettings.GetSettingsAsInt(AppSettingsValues.windowWidth, 1100);
+            var height = AppSettings.GetSettingsAsInt(AppSettingsValues.windowHeight, 700);
+
+            //when closing the window from a minimized state the size will be wrong:
+            if (width < 200)
+                width = 1100;
+            if (height < 100)
+                height = 700;
+
+            var windowSize = new Windows.Graphics.SizeInt32(width, height);
             this.AppWindow.Resize(windowSize);
 
             this.AppWindow.Closing += AppWindow_Closing;
