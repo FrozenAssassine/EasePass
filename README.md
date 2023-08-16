@@ -3,15 +3,15 @@
  </p>
  <h1  align="center">Ease Pass</h1>
 <div align="center">
-     <!--<a href="https://www.microsoft.com/en-us/p/fastedit/9ntq53w18dpw?activetab=pivot:overviewtab">
-         <img src="https://img.shields.io/badge/Download-Microsoft%20Store-brightgreen?style=flat">
-    </a>-->
-      <a href="http://easepass.frozenassassine.de/">
-         <img src="https://img.shields.io/badge/Ease Pass-Website-blue">
+    <a href="https://apps.microsoft.com/store/detail/ease-pass/9NQPF80923F5?hl=en-us&gl=us&ocid=pdpshare">
+        <img src="https://img.shields.io/badge/Download-Microsoft%20Store-brightgreen?style=flat"/>
     </a>
-    <img src="https://img.shields.io/github/stars/FrozenAssassine/EasePass?style=flat">
-    <img src="https://img.shields.io/github/issues-pr/FrozenAssassine/EasePass?style=flat">
-    <img src="https://img.shields.io/github/repo-size/FrozenAssassine/EasePass?style=flat">
+    <a href="http://easepass.frozenassassine.de/">
+        <img src="https://img.shields.io/badge/Ease Pass-Website-blue"/>
+    </a>
+    <img src="https://img.shields.io/github/stars/FrozenAssassine/EasePass?style=flat"/>
+    <img src="https://img.shields.io/github/issues-pr/FrozenAssassine/EasePass?style=flat"/>
+    <img src="https://img.shields.io/github/repo-size/FrozenAssassine/EasePass?style=flat"/>
 </div>
 
 ### What is Ease Pass?
