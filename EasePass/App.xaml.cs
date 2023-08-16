@@ -1,6 +1,7 @@
 ﻿using EasePass.Helper;
 using EasePass.Settings;
 using EasePass.Views;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -19,16 +20,15 @@ namespace EasePass
             this.InitializeComponent();
 
             _singleInstanceApp = new SingleInstanceDesktopApp("easepass.juliuskirsch");
-            _singleInstanceApp.Launched += _singleInstanceApp_Launched; ;
+            _singleInstanceApp.Launched += _singleInstanceApp_Launched;
         }
 
         private void _singleInstanceApp_Launched(object sender, SingleInstanceLaunchEventArgs e)
         {
             m_window = new MainWindow();
-
             m_frame = m_window.MainFrame;
             m_frame.NavigationFailed += OnNavigationFailed;
-
+            
             var pwHash = AppSettings.GetSettings(AppSettingsValues.pHash, "");
             if (pwHash.Length <= 0)
                 m_frame.Navigate(typeof(RegisterPage));

@@ -26,6 +26,9 @@
             </controls:SettingsControl>
 
             <controls:SetingsItemSeparator Header="Security"/>
+            <controls:SettingsControl Header="Inactivity Logout">
+                <NumberBox SpinButtonPlacementMode="Inline" ValueChanged="InactivityLogoutTime_ValueChanged" Maximum="1000" Minimum="1" MinWidth="150" Margin="5" x:Name="inactivityLogoutTime" PlaceholderText="Logout time" Header="Minutes"/>
+            </controls:SettingsControl>
             <Expander HorizontalAlignment="Stretch">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">

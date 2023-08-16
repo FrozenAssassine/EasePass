@@ -12,5 +12,6 @@ namespace EasePass.Settings
         public const string pSalt = "pSalt";
         public const string windowWidth = "windowWidth";
         public const string windowHeight = "windowHeight";
+        public const string inactivityLogoutTime = "inactivityLogoutTime";
     }
 }

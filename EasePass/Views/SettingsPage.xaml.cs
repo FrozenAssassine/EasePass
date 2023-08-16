@@ -1,6 +1,7 @@
 using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
+using EasePass.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -23,22 +24,27 @@ namespace EasePass.Views
             this.InitializeComponent();
         }
 
+        private void LoadSettings()
+        {
+            inactivityLogoutTime.Value = AppSettings.GetSettingsAsInt(AppSettingsValues.inactivityLogoutTime, DefaultSettingsValues.InactivityLogoutTime);
+        }
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
             App.m_window.ShowBackArrow = false;
         }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            LoadSettings();
 
             App.m_window.ShowBackArrow = true;
             var navParam = e.Parameter as SettingsNavigationParameters;
             passwordItems = navParam.PwItems;
             passwordsPage = navParam.PasswordPage;
         }
-
 
         private async void ExportEncryptedDatabase_Click(object sender, RoutedEventArgs e)
         {
@@ -99,7 +105,6 @@ namespace EasePass.Views
                 InfoMessages.ExportDBWrongPassword();
             }
         }
-
         private void ChangePassword_Click(object sender, RoutedEventArgs e)
         {
             if (changePW_newPw.Password.Length < 4)
@@ -129,6 +134,10 @@ namespace EasePass.Views
                 return;
             }
             InfoMessages.ChangePasswordWrong();
+        }
+        private void InactivityLogoutTime_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        {
+            AppSettings.SaveSettings(AppSettingsValues.inactivityLogoutTime, inactivityLogoutTime.Value);
         }
     }
 }
