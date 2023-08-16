@@ -37,9 +37,14 @@ namespace EasePass.Views
             App.m_frame.Navigate(typeof(PasswordsPage), pw);
         }
 
-        private void Enter_Invoked(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        private void passwordBoxRepeat_EnterInvoked(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
             Register_Click(null, null);
+        }
+
+        private void passwordBox_EnterInvoked(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            passwordBoxRepeat.Focus(FocusState.Programmatic);
         }
     }
 }

@@ -10,10 +10,14 @@
         <Image Width="200" Height="200" Source="ms-appx:///Assets/AppIcon/Icon.png"/>
         <TextBlock Margin="0,50,0,0" FontSize="24" TextAlignment="Center" TextWrapping="Wrap" Width="400">Welcome to Ease Pass - Your open source password manager</TextBlock>
         <TextBlock TextWrapping="Wrap" Width="400" Margin="0,50,0,0" FontSize="14">Please choose a master password to begin using the password manager. Without this password, you will never be able to retrieve your saved passwords.</TextBlock>
-        <PasswordBox PlaceholderText="Enter Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBox"/>
+        <PasswordBox PlaceholderText="Enter Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBox">
+            <PasswordBox.KeyboardAccelerators>
+                <KeyboardAccelerator Key="Enter" Invoked="passwordBox_EnterInvoked"/>
+            </PasswordBox.KeyboardAccelerators>
+        </PasswordBox>
         <PasswordBox PlaceholderText="Repeat Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBoxRepeat">
             <PasswordBox.KeyboardAccelerators>
-                <KeyboardAccelerator Key="Enter" Invoked="Enter_Invoked"/>
+                <KeyboardAccelerator Key="Enter" Invoked="passwordBoxRepeat_EnterInvoked"/>
             </PasswordBox.KeyboardAccelerators>
         </PasswordBox>
         <Button Margin="0,20,0,0" HorizontalAlignment="Center" Style="{ThemeResource AccentButtonStyle}" Padding="20,5,20,5" Content="Register" Click="Register_Click"/>
