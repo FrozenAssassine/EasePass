@@ -22,7 +22,6 @@ namespace EasePass.Views
         {
             this.InitializeComponent();
 
-            totpTokenUpdater = new TOTPTokenUpdater(SelectedItem, totpTB);
             autoBackupHelper.Start(this, PasswordItems);
         }
 
@@ -66,12 +65,14 @@ namespace EasePass.Views
             emailTB.Text = item.Email;
             usernameTB.Text = item.Username;
             itemnameTB.Text = item.DisplayName;
+            websiteTB.Text = item.Website;
 
             passwordShowArea.Visibility = Visibility.Visible;
 
             if (!string.IsNullOrEmpty(item.Secret))
             {
                 totpTB.Visibility = totpLB.Visibility = Visibility.Visible;
+                totpTokenUpdater = new TOTPTokenUpdater(item, totpTB);
                 totpTokenUpdater.StartTimer();
                 totpTokenUpdater.SimulateTickEvent();
                 return;

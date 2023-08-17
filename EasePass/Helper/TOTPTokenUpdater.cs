@@ -27,7 +27,7 @@ namespace EasePass.Helper
             if (selectedItem == null)
                 return;
 
-            if (!string.IsNullOrEmpty(selectedItem.Secret))
+            if (string.IsNullOrEmpty(selectedItem.Secret))
                 return;
 
             string token = TOTP.GenerateTOTPToken(
