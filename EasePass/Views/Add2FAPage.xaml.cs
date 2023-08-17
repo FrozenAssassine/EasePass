@@ -1,7 +1,8 @@
+using EasePass.Helper;
 using EasePass.Models;
-using EasyCodeClass;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Text;
 
 namespace EasePass.Views
 {
@@ -36,38 +37,40 @@ namespace EasePass.Views
             return input;
         }
 
-        private void digitsTB_TextChanged(object sender, TextBoxTextChangingEventArgs e)
+        private void DigitsTB_TextChanged(object sender, TextBoxTextChangingEventArgs e)
         {
             string digits = digitsTB.Text;
-            string newDigits = "";
+            StringBuilder newDigits = new StringBuilder();
             for(int i = 0; i < digits.Length; i++)
             {
-                if (char.IsDigit(digits[i])) newDigits += digits[i];
+                if (char.IsDigit(digits[i])) 
+                    newDigits.Append(digits[i]);
             }
-            digitsTB.Text = newDigits;
+            digitsTB.Text = newDigits.ToString();
             digitsTB.SelectionStart = digitsTB.Text.Length;
         }
 
-        private void intervalTB_TextChanged(object sender, TextBoxTextChangingEventArgs e)
+        private void IntervalTB_TextChanged(object sender, TextBoxTextChangingEventArgs e)
         {
             string interval = intervalTB.Text;
-            string newInterval = "";
+            StringBuilder newInterval = new StringBuilder();
             for (int i = 0; i < interval.Length; i++)
             {
-                if (char.IsDigit(interval[i])) newInterval += interval[i];
+                if (char.IsDigit(interval[i])) 
+                    newInterval.Append(interval[i]);
             }
-            intervalTB.Text = newInterval;
+            intervalTB.Text = newInterval.ToString();
             intervalTB.SelectionStart = intervalTB.Text.Length;
         }
 
-        private void screen_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private void Screen_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             // TODO: Scan qr-code from somewhere on the screen.
             //       The result is an url.
             //       Call the function LoadFromUrl(string url)
         }
 
-        private void webcam_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private void Webcam_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             // TODO: Scan qr-code using webcam.
             //       The result is an url.

@@ -1,11 +1,9 @@
 using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
-using EasyCodeClass;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using System;
 using System.Collections.ObjectModel;
 using System.Security;
 
@@ -16,47 +14,16 @@ namespace EasePass.Views
         private ObservableCollection<PasswordManagerItem> PasswordItems = new ObservableCollection<PasswordManagerItem>();
         private PasswordManagerItem SelectedItem = null;
         public SecureString masterPassword = null;
-        AutoBackupHelper autoBackupHelper = new AutoBackupHelper();
-
-        private DispatcherTimer timer = new DispatcherTimer();
-
+        private AutoBackupHelper autoBackupHelper = new AutoBackupHelper();
         public const int TOTP_SPACING = 3;
+        private TOTPTokenUpdater totpTokenUpdater;
 
         public PasswordsPage()
         {
             this.InitializeComponent();
 
-            totpTB.RemoveWhitespaceOnCopy = true;
-            timer.Stop();
-            timer.Interval = TimeSpan.FromSeconds(3);
-            timer.Tick += Timer_Tick;
-            
+            totpTokenUpdater = new TOTPTokenUpdater(SelectedItem, totpTB);
             autoBackupHelper.Start(this, PasswordItems);
-        }
-
-        private void Timer_Tick(object sender, object e)
-        {
-            if (SelectedItem != null)
-            {
-                if (!string.IsNullOrEmpty(SelectedItem.Secret))
-                {
-                    DateTime time = DateTime.Now;
-                    try
-                    {
-                        time = NTPClient.GetTime();
-                    }
-                    catch { }
-                    string token = TOTP.GenerateTOTPToken(DateTime.Now, SelectedItem.Secret, Convert.ToInt32(SelectedItem.Digits), Convert.ToInt32(SelectedItem.Interval), TOTP.StringToHashMode(SelectedItem.Algorithm));
-                    string final = "";
-                    for (int i = 0; i < token.Length; i++)
-                    {
-                        final += token[i];
-                        if ((i + 1) % TOTP_SPACING == 0) final += ' ';
-                    }
-                    final = final.Trim(' ');
-                    totpTB.Text = final;
-                }
-            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -99,22 +66,19 @@ namespace EasePass.Views
             emailTB.Text = item.Email;
             usernameTB.Text = item.Username;
             itemnameTB.Text = item.DisplayName;
-            
-            if (!string.IsNullOrEmpty(item.Secret))
-            {
-                totpLB.Visibility = Visibility.Visible;
-                totpTB.Visibility = Visibility.Visible;
-                timer.Start();
-                Timer_Tick(this, null);
-            }
-            else
-            {
-                totpLB.Visibility = Visibility.Collapsed;
-                totpTB.Visibility = Visibility.Collapsed;
-                timer.Stop();
-            }
 
             passwordShowArea.Visibility = Visibility.Visible;
+
+            if (!string.IsNullOrEmpty(item.Secret))
+            {
+                totpTB.Visibility = totpLB.Visibility = Visibility.Visible;
+                totpTokenUpdater.StartTimer();
+                totpTokenUpdater.SimulateTickEvent();
+                return;
+            }
+
+            totpTB.Visibility = totpLB.Visibility = Visibility.Collapsed;
+            totpTokenUpdater.StopTimer();
         }
 
         private void passwordItemListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -186,7 +150,7 @@ namespace EasePass.Views
 
         private void searchbox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(searchbox.Text == "")
+            if(searchbox.Text.Length == 0)
             {
                 passwordItemListView.ItemsSource = PasswordItems;
                 return;
@@ -266,6 +230,7 @@ namespace EasePass.Views
                 return;
 
             GenPassword_Click(this, null);
+        }
         private void searchbox_PreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Down)
