@@ -36,12 +36,11 @@ namespace EasePass.Views
                 intervalTB.Text = input.Interval;
                 algorithmTB.SelectedItem = input.Algorithm;
             }
-            else Hide2FA();
+            else
+                Hide2FA();
 
             if(scroll.VerticalScrollBarVisibility == ScrollBarVisibility.Visible)
-            {
                 scroll.Padding = new Microsoft.UI.Xaml.Thickness(0, 0, 13, 0);
-            }
         }
 
         public PasswordManagerItem GetValue()
@@ -64,25 +63,27 @@ namespace EasePass.Views
             return input;
         }
 
-        private void digitsTB_TextChanged(object sender, TextBoxTextChangingEventArgs e)
+        private void DigitsTB_TextChanged(object sender, TextBoxTextChangingEventArgs e)
         {
             string digits = digitsTB.Text;
             string newDigits = "";
             for (int i = 0; i < digits.Length; i++)
             {
-                if (char.IsDigit(digits[i])) newDigits += digits[i];
+                if (char.IsDigit(digits[i])) 
+                    newDigits += digits[i];
             }
             digitsTB.Text = newDigits;
             digitsTB.SelectionStart = digitsTB.Text.Length;
         }
 
-        private void intervalTB_TextChanged(object sender, TextBoxTextChangingEventArgs e)
+        private void IntervalTB_TextChanged(object sender, TextBoxTextChangingEventArgs e)
         {
             string interval = intervalTB.Text;
             string newInterval = "";
             for (int i = 0; i < interval.Length; i++)
             {
-                if (char.IsDigit(interval[i])) newInterval += interval[i];
+                if (char.IsDigit(interval[i])) 
+                    newInterval += interval[i];
             }
             intervalTB.Text = newInterval;
             intervalTB.SelectionStart = intervalTB.Text.Length;
@@ -90,14 +91,10 @@ namespace EasePass.Views
 
         private void Hide2FA()
         {
-            secretLB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-            secretTB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-            digitsLB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-            digitsTB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-            intervalLB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-            intervalTB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-            algorithmLB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-            algorithmTB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+            secretLB.Visibility = secretTB.Visibility =
+            digitsLB.Visibility = digitsTB.Visibility =
+            intervalLB.Visibility = intervalTB.Visibility =
+            algorithmLB.Visibility = algorithmTB.Visibility =  Microsoft.UI.Xaml.Visibility.Collapsed;
         }
     }
 }

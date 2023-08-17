@@ -27,10 +27,10 @@
             <PasswordBox x:Name="secretTB" Password=""/>
 
             <TextBlock Margin="0,10,0,0" x:Name="digitsLB" Text="Digits"/>
-            <TextBox x:Name="digitsTB" Text="6" TextChanging="digitsTB_TextChanged"/>
+            <TextBox x:Name="digitsTB" Text="6" TextChanging="DigitsTB_TextChanged"/>
 
             <TextBlock Margin="0,10,0,0" x:Name="intervalLB" Text="Interval (sec)"/>
-            <TextBox x:Name="intervalTB" Text="30" TextChanging="intervalTB_TextChanged"/>
+            <TextBox x:Name="intervalTB" Text="30" TextChanging="IntervalTB_TextChanged"/>
 
             <TextBlock Margin="0,10,0,0" x:Name="algorithmLB" Text="Algorithm"/>
             <ComboBox x:Name="algorithmTB" HorizontalAlignment="Stretch" SelectedItem="SHA1">

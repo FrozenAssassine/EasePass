@@ -1,4 +1,5 @@
 using EasePass.Helper;
+using EasePass.Settings;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Diagnostics;
@@ -7,8 +8,7 @@ namespace EasePass.Controls
 {
     public sealed partial class CopyTextbox : TextBox
     {
-        public bool RemoveWhitespaceOnCopy = false;
-        public bool IsUrlAction = false;
+        public bool RemoveWhitespaceOnCopy { get; set; } = false;
 
         public CopyTextbox()
         {
@@ -27,7 +27,6 @@ namespace EasePass.Controls
             else
             {
                 ClipboardHelper.Copy(this.Text);
-            }
         }
     }
 }

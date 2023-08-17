@@ -1,8 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 
@@ -36,13 +33,27 @@ namespace EasePass.Helper
             var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(App.m_window);
             WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hWnd);
 
-            savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
             savePicker.FileTypeChoices.Add(extensions.val, extensions.ext);
             
             var file = await savePicker.PickSaveFileAsync();
             if (file == null)
                 return (null, false);
             return (file.Path, true);
+        }
+
+        public static async Task<(string path, bool success)> PickFolder()
+        {
+            FolderPicker openPicker = new FolderPicker();
+
+            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(App.m_window);
+            WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
+
+            openPicker.SuggestedStartLocation = PickerLocationId.Desktop;
+            openPicker.FileTypeFilter.Add("*");
+            var folder = await openPicker.PickSingleFolderAsync();
+            if(folder == null)
+                return (null, false);
+            return (folder.Path, true);
         }
     }
 }

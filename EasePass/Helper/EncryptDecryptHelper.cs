@@ -106,7 +106,7 @@ namespace EasePass.Helper
 
         private static byte[] GetCryptionKey(SecureString pw, string salt = "")
         {
-            byte[] saltFromDatabase = Encoding.UTF8.GetBytes(salt == "" ? AppSettings.GetSettings(AppSettingsValues.pSalt) : "");
+            byte[] saltFromDatabase = Encoding.UTF8.GetBytes(salt.Length == 0 ? AppSettings.GetSettings(AppSettingsValues.pSalt) : "");
             int keySizeInBytes = 32;
             int iterations = 10000;
 

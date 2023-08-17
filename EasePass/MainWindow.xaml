@@ -12,11 +12,8 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Grid.Column="0" x:Name="navigateBackButton" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top" Click="NavigateBack_Click">
-                <SymbolIcon Symbol="Back"/>
-            </Button>
             <Grid Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Column="1" Height="30" x:Name="titleBar">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
@@ -32,6 +29,9 @@
                        VerticalAlignment="Center"
                        Margin="8,0,0,0"/>
             </Grid>
+            <Button Grid.Row="0" Grid.Column="0" x:Name="navigateBackButton" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top" Click="NavigateBack_Click">
+                <SymbolIcon Symbol="Back"/>
+            </Button>
         </Grid>
         <Frame Margin="0,30,0,0" x:Name="naivgationFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         <StackPanel Margin="20,40,20,20" MinWidth="300" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" x:Name="infoMessagesPanel"/>

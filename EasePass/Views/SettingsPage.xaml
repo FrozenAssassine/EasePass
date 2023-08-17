@@ -25,11 +25,39 @@
                 </StackPanel>
             </controls:SettingsControl>
 
+            <Expander Margin="0,5,0,5" HorizontalAlignment="Stretch">
+                <Expander.Header>
+                    <Grid VerticalAlignment="Center" Height="70">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xE96A;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="20" Text="Automatic Backups"/>
+                        <ToggleSwitch IsEnabled="True" Grid.Column="3" x:Name="autoBackupDB" Toggled="AutoBackupDB_Toggled"/>
+                    </Grid>
+                </Expander.Header>
+                <Expander.Content>
+                    <ContentControl IsEnabled="{x:Bind autoBackupDB.IsOn,Mode=TwoWay}">
+                        <StackPanel MaxWidth="600">
+                            <TextBlock Margin="10" Grid.Column="1" TextWrapping="Wrap" Text="Enable automatic backups to backup your database automatically to a given destination. You can also use network shares as the path."/>
+                            <StackPanel Margin="10" Orientation="Horizontal">
+                                <TextBox TextChanged="AutoBackupDBPathTB_TextChanged" x:Name="autoBackupDBPath" MinWidth="400" />
+                                <Button Margin="10,0,0,0" Content="Choose Path" Click="PickAutoBackupDBPath_Click"/>
+                            </StackPanel>
+                            <NumberBox Margin="10" Minimum="1" Maximum="100" Header="Minutes" ValueChanged="AutoBackupDBTime_ValueChanged" x:Name="autoBackupDBTime" SpinButtonPlacementMode="Inline" Width="150"/>
+                        </StackPanel>
+                    </ContentControl>
+                </Expander.Content>
+            </Expander>
+            
             <controls:SetingsItemSeparator Header="Security"/>
             <controls:SettingsControl Header="Inactivity Logout">
                 <NumberBox SpinButtonPlacementMode="Inline" ValueChanged="InactivityLogoutTime_ValueChanged" Maximum="1000" Minimum="1" MinWidth="150" Margin="5" x:Name="inactivityLogoutTime" PlaceholderText="Logout time" Header="Minutes"/>
             </controls:SettingsControl>
-            <Expander HorizontalAlignment="Stretch">
+            <Expander Margin="0,5,0,5" HorizontalAlignment="Stretch">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">
                         <TextBlock Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xE785;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
@@ -58,6 +86,11 @@
                     </StackPanel>
                 </Expander.Content>
             </Expander>
+
+            <controls:SetingsItemSeparator Header="Miscellaneous"/>
+            <controls:SettingsControl Header="Quick Copy on Double Click">
+                <ToggleSwitch x:Name="doubleTapToCopySW" Toggled="DoubleTapToCopySW_Toggled"/>
+            </controls:SettingsControl>
 
         </StackPanel>
     </ScrollViewer>
