@@ -245,5 +245,14 @@ namespace EasePass.Views
             ShowPasswordItem(SelectedItem);
             SaveData();
         }
+
+        private async void GenPassword_Click(object sender, RoutedEventArgs e)
+        {
+            var res = await new GenPasswordDialog().ShowAsync();
+            if (res == null)
+                return;
+
+            GenPassword_Click(this, null);
+        }
     }
 }

@@ -82,6 +82,7 @@
     <None Remove="Controls\CopyTextbox.xaml" />
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\AddItemPage.xaml" />
+    <None Remove="Views\GenPasswordPage.xaml" />
     <None Remove="Views\LoginPage.xaml" />
     <None Remove="Views\PasswordsPage.xaml" />
     <None Remove="Views\RegisterPage.xaml" />
@@ -142,6 +143,11 @@
     <Content Remove="Assets\AppIcon\Generated\Square44x44Logo.altform-unplated_targetsize-256.png" />
     <Content Remove="Assets\AppIcon\Generated\Square44x44Logo.altform-unplated_targetsize-32.png" />
     <Content Remove="Assets\AppIcon\Generated\Square44x44Logo.altform-unplated_targetsize-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\GenPasswordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\CopyPasswordbox.xaml">
