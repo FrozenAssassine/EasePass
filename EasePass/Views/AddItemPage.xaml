@@ -20,6 +20,9 @@
             <TextBlock Margin="0,10,0,0" Text="Password"/>
             <PasswordBox x:Name="pwTB"/>
 
+            <TextBlock Margin="0,10,0,0" Text="Website"/>
+            <TextBox x:Name="websiteTB" />
+
             <TextBlock Margin="0,10,0,0" x:Name="secretLB" Text="Secret"/>
             <PasswordBox x:Name="secretTB" Password=""/>
 

@@ -25,6 +25,7 @@ namespace EasePass.Views
         {
             this.InitializeComponent();
             totpTB.RemoveWhitespaceOnCopy = true;
+            websiteTB.IsUrlAction = true;
             timer.Stop();
             timer.Interval = TimeSpan.FromSeconds(3);
             timer.Tick += Timer_Tick;
@@ -94,6 +95,7 @@ namespace EasePass.Views
             emailTB.Text = item.Email;
             usernameTB.Text = item.Username;
             itemnameTB.Text = item.DisplayName;
+            websiteTB.Text = item.Website;
             
             if (!string.IsNullOrEmpty(item.Secret))
             {
