@@ -7,6 +7,13 @@ namespace EasePass.Views
     {
         PasswordManagerItem input = null;
 
+        public AddItemPage()
+        {
+            this.InitializeComponent();
+
+            Hide2FA();
+        }
+
         public AddItemPage(PasswordManagerItem input = null)
         {
             this.InitializeComponent();
@@ -28,16 +35,11 @@ namespace EasePass.Views
                 intervalTB.Text = input.Interval;
                 algorithmTB.SelectedItem = input.Algorithm;
             }
-            else
+            else Hide2FA();
+
+            if(scroll.VerticalScrollBarVisibility == ScrollBarVisibility.Visible)
             {
-                secretLB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-                secretTB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-                digitsLB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-                digitsTB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-                intervalLB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-                intervalTB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-                algorithmLB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-                algorithmTB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+                scroll.Padding = new Microsoft.UI.Xaml.Thickness(0, 0, 13, 0);
             }
         }
 
@@ -82,6 +84,18 @@ namespace EasePass.Views
             }
             intervalTB.Text = newInterval;
             intervalTB.SelectionStart = intervalTB.Text.Length;
+        }
+
+        private void Hide2FA()
+        {
+            secretLB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+            secretTB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+            digitsLB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+            digitsTB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+            intervalLB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+            intervalTB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+            algorithmLB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+            algorithmTB.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
         }
     }
 }

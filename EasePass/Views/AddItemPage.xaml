@@ -6,36 +6,38 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel>
-        <TextBlock Margin="0,10,0,0" Text="Display Name"/>
-        <TextBox x:Name="nameTB"/>
+    <ScrollViewer x:Name="scroll">
+        <StackPanel>
+            <TextBlock Margin="0,10,0,0" Text="Display Name"/>
+            <TextBox x:Name="nameTB"/>
 
-        <TextBlock Margin="0,10,0,0" Text="Username"/>
-        <TextBox x:Name="usernameTB"/>
+            <TextBlock Margin="0,10,0,0" Text="Username"/>
+            <TextBox x:Name="usernameTB"/>
 
-        <TextBlock Margin="0,10,0,0" Text="Email"/>
-        <TextBox x:Name="emailTB" />
+            <TextBlock Margin="0,10,0,0" Text="Email"/>
+            <TextBox x:Name="emailTB" />
 
-        <TextBlock Margin="0,10,0,0" Text="Password"/>
-        <PasswordBox x:Name="pwTB"/>
+            <TextBlock Margin="0,10,0,0" Text="Password"/>
+            <PasswordBox x:Name="pwTB"/>
 
-        <TextBlock Margin="0,10,0,0" x:Name="secretLB" Text="Secret"/>
-        <PasswordBox x:Name="secretTB" Password=""/>
+            <TextBlock Margin="0,10,0,0" x:Name="secretLB" Text="Secret"/>
+            <PasswordBox x:Name="secretTB" Password=""/>
 
-        <TextBlock Margin="0,10,0,0" x:Name="digitsLB" Text="Digits"/>
-        <TextBox x:Name="digitsTB" Text="6" TextChanging="digitsTB_TextChanged"/>
+            <TextBlock Margin="0,10,0,0" x:Name="digitsLB" Text="Digits"/>
+            <TextBox x:Name="digitsTB" Text="6" TextChanging="digitsTB_TextChanged"/>
 
-        <TextBlock Margin="0,10,0,0" x:Name="intervalLB" Text="Interval (sec)"/>
-        <TextBox x:Name="intervalTB" Text="30" TextChanging="intervalTB_TextChanged"/>
+            <TextBlock Margin="0,10,0,0" x:Name="intervalLB" Text="Interval (sec)"/>
+            <TextBox x:Name="intervalTB" Text="30" TextChanging="intervalTB_TextChanged"/>
 
-        <TextBlock Margin="0,10,0,0" x:Name="algorithmLB" Text="Algorithm"/>
-        <ComboBox x:Name="algorithmTB" HorizontalAlignment="Stretch" SelectedItem="SHA1">
-            <x:String>SHA1</x:String>
-            <x:String>SHA256</x:String>
-            <x:String>SHA512</x:String>
-        </ComboBox>
+            <TextBlock Margin="0,10,0,0" x:Name="algorithmLB" Text="Algorithm"/>
+            <ComboBox x:Name="algorithmTB" HorizontalAlignment="Stretch" SelectedItem="SHA1">
+                <x:String>SHA1</x:String>
+                <x:String>SHA256</x:String>
+                <x:String>SHA512</x:String>
+            </ComboBox>
 
-        <TextBlock Margin="0,10,0,0" Text="Notes"/>
-        <TextBox AcceptsReturn="True" Height="150" x:Name="notesTB"/>
-    </StackPanel>
+            <TextBlock Margin="0,10,0,0" Text="Notes"/>
+            <TextBox AcceptsReturn="True" Height="150" x:Name="notesTB"/>
+        </StackPanel>
+    </ScrollViewer>
 </Page>
