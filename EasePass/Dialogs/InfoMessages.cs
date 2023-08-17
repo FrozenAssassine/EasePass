@@ -16,5 +16,10 @@ namespace EasePass.Dialogs
         public static void PasswordsDoNotMatch() => new InfoBar().Show("Passwords do not match", "", InfoBarSeverity.Error);
         public static void SuccessfullyChangedPassword() => new InfoBar().Show("Password successfully changed", "Your password was successfully changed", InfoBarSeverity.Success);
         public static void AutomaticallyLoggedOut() => new InfoBar().ShowWithoutTimer("We automatically logged you out due to inactivity", "", InfoBarSeverity.Informational);
+        public static void NoAccessToPathDatabaseNotSaved(string path) => new InfoBar().Show("Database could not be saved", $"Database could not be saved. No access to the path {path}", InfoBarSeverity.Error, 15);
+        public static void NoAccessToPathDatabaseNotLoaded(string path) => new InfoBar().Show("Database could not be loaded", $"Database could not be loaded. No access to the path {path}", InfoBarSeverity.Error, 15);
+        public static void DatabaseSaveToFileError(string path) => new InfoBar().Show("Error while saving database", $"Data save error at {path}. Verify connection or device storage, then retry.", InfoBarSeverity.Error, 15);
+        public static void DatabaseFileNotFoundAt(string path) => new InfoBar().Show("Database not found", $"Your database with the stored passwords could not be found at path {path}", InfoBarSeverity.Error, 15);
+        public static void DatabaseInvalidData() => new InfoBar().Show("Invalid Database", $"Database could not be loaded. It may be corrupted or invalid.", InfoBarSeverity.Error, 15);
     }
 }

@@ -16,6 +16,7 @@ namespace EasePass.Views
         private ObservableCollection<PasswordManagerItem> PasswordItems = new ObservableCollection<PasswordManagerItem>();
         private PasswordManagerItem SelectedItem = null;
         public SecureString masterPassword = null;
+        AutoBackupHelper autoBackupHelper = new AutoBackupHelper();
 
         private DispatcherTimer timer = new DispatcherTimer();
 
@@ -24,10 +25,13 @@ namespace EasePass.Views
         public PasswordsPage()
         {
             this.InitializeComponent();
+
             totpTB.RemoveWhitespaceOnCopy = true;
             timer.Stop();
             timer.Interval = TimeSpan.FromSeconds(3);
             timer.Tick += Timer_Tick;
+            
+            autoBackupHelper.Start(this, PasswordItems);
         }
 
         private void Timer_Tick(object sender, object e)
@@ -58,11 +62,12 @@ namespace EasePass.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             App.m_window.ShowBackArrow = false;
-    
-            if(e.NavigationMode == NavigationMode.Back)
+
+            if (e.NavigationMode == NavigationMode.Back)
             {
                 passwordItemListView.ItemsSource = PasswordItems;
                 SaveData();
+                autoBackupHelper.UpdateSettings();
             }
             else if(e.NavigationMode == NavigationMode.New && e.Parameter is SecureString pw)
             {
@@ -218,6 +223,14 @@ namespace EasePass.Views
                     case Windows.System.VirtualKey.E:
                         EditPasswordItem_Click(null, null);
                         break;
+                    case Windows.System.VirtualKey.Down:
+                        if (passwordItemListView.SelectedIndex >= 0 && passwordItemListView.SelectedIndex < passwordItemListView.Items.Count - 1)
+                            passwordItemListView.SelectedIndex++;
+                        break;
+                    case Windows.System.VirtualKey.Up:
+                        if(passwordItemListView.SelectedIndex > 0 && passwordItemListView.SelectedIndex < passwordItemListView.Items.Count)
+                            passwordItemListView.SelectedIndex--;
+                        break;
                     default: return;
                 }
             }
@@ -253,6 +266,13 @@ namespace EasePass.Views
                 return;
 
             GenPassword_Click(this, null);
+        private void searchbox_PreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Down)
+            {
+                passwordItemListView.Focus(FocusState.Programmatic);
+                passwordItemListView.SelectedIndex = -1;
+            }
         }
     }
 }

@@ -233,7 +233,9 @@
                                 Foreground="{TemplateBinding Foreground}"
                                 IsTabStop="False"
                                 AutomationProperties.AccessibilityView="Raw"
-                                ZoomMode="Disabled" />
+                                ZoomMode="Disabled" 
+                                DoubleTapped="TextBox_DoubleTapped"
+                                IsDoubleTapEnabled="True"/>
 
                             <TextBlock x:Name="PlaceholderTextContentPresenter"
                                 Grid.Row="1"
