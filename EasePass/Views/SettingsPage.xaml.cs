@@ -25,8 +25,11 @@ namespace EasePass.Views
 
         private void LoadSettings()
         {
-            inactivityLogoutTime.Value = AppSettings.GetSettingsAsInt(AppSettingsValues.inactivityLogoutTime, DefaultSettingsValues.InactivityLogoutTime);
+            inactivityLogoutTime.Value = AppSettings.GetSettingsAsInt(AppSettingsValues.inactivityLogoutTime, DefaultSettingsValues.inactivityLogoutTime);
             doubleTapToCopySW.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.doubleTapToCopy, DefaultSettingsValues.doubleTapToCopy);
+            autoBackupDB.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.autoBackupDB, DefaultSettingsValues.autoBackupDatabase);
+            autoBackupDBPath.Text = AppSettings.GetSettings(AppSettingsValues.autoBackupDBPath, "");
+            autoBackupDBTime.Value = AppSettings.GetSettingsAsInt(AppSettingsValues.autoBackupDBTime, DefaultSettingsValues.autoBackupDBTime);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -61,8 +64,8 @@ namespace EasePass.Views
             var encryptedItem = new EncryptedDatabaseItem(hash, salt, encodedDB);
             string fileData = JsonConvert.SerializeObject(encryptedItem, Formatting.Indented);
 
-            var pickerResult = await FilePickerHelper.PickSaveFile(("Ease Pass Encrypted Database", new List<string> { ".eped" }));
-            if(pickerResult.success)
+            var pickerResult = await FilePickerHelper.PickSaveFile(("Ease Pass Exported Database", new List<string> { ".eped" }));
+            if (pickerResult.success)
             {
                 File.WriteAllText(pickerResult.path, fileData);
                 InfoMessages.ExportDBSuccess();
@@ -70,13 +73,13 @@ namespace EasePass.Views
         }
         private async void ImportEncryptedDatabase_Click(object sender, RoutedEventArgs e)
         {
-            if(decryptDBPassword.Password.Length < 4)
+            if (decryptDBPassword.Password.Length < 4)
             {
                 InfoMessages.PasswordTooShort();
                 return;
             }
 
-            var pickerResult = await FilePickerHelper.PickOpenFile(new string[] {".eped" });
+            var pickerResult = await FilePickerHelper.PickOpenFile(new string[] { ".eped" });
             if (pickerResult.success)
             {
                 EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(pickerResult.path));
@@ -118,7 +121,7 @@ namespace EasePass.Views
                 if (changePW_newPw.Password.Equals(changePW_repeatPw.Password))
                 {
                     SecureString newMasterPw = new SecureString();
-                    foreach(var character in changePW_newPw.Password)
+                    foreach (var character in changePW_newPw.Password)
                     {
                         newMasterPw.AppendChar(character);
                     }
@@ -140,9 +143,32 @@ namespace EasePass.Views
             AppSettings.SaveSettings(AppSettingsValues.inactivityLogoutTime, inactivityLogoutTime.Value);
         }
 
-        private void doubleTapToCopySW_Toggled(object sender, RoutedEventArgs e)
+        private void DoubleTapToCopySW_Toggled(object sender, RoutedEventArgs e)
         {
             AppSettings.SaveSettings(AppSettingsValues.doubleTapToCopy, doubleTapToCopySW.IsOn);
+        }
+
+        private async void PickAutoBackupDBPath_Click(object sender, RoutedEventArgs e)
+        {
+            var res = await FilePickerHelper.PickSaveFile(("Ease Pass Database", new List<string> { ".epdb" }));
+            if (!res.success)
+                return;
+
+            autoBackupDBPath.Text = res.path;
+        }
+
+        private void AutoBackupDB_Toggled(object sender, RoutedEventArgs e)
+        {
+            AppSettings.SaveSettings(AppSettingsValues.autoBackupDB, autoBackupDB.IsOn);
+        }
+        private void AutoBackupDBTime_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        {
+            AppSettings.SaveSettings(AppSettingsValues.autoBackupDBTime, autoBackupDBTime.Value);
+        }
+        private void AutoBackupDBPathTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            AppSettings.SaveSettings(AppSettingsValues.autoBackupDBPath, autoBackupDBPath.Text);
+
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using EasePass.Models;
+﻿using EasePass.Dialogs;
+using EasePass.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Security;
@@ -10,44 +12,84 @@ namespace EasePass.Helper
 {
     internal class DatabaseHelper
     {
-        private static string DatabaseFilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "easepass.db");
+        private static string DatabaseFilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "easepass.epdb");
 
         public static string CreateJsonstring(ObservableCollection<PasswordManagerItem> pwItems)
         {
+            if (pwItems == null)
+            {
+                return "";
+            }
             return JsonConvert.SerializeObject(pwItems, Formatting.Indented);
         }
         public static ObservableCollection<PasswordManagerItem> LoadItems(string json)
         {
-            return ((JArray)JsonConvert.DeserializeObject(json)).ToObject<ObservableCollection<PasswordManagerItem>>();
+            try
+            {
+                return ((JArray)JsonConvert.DeserializeObject(json)).ToObject<ObservableCollection<PasswordManagerItem>>();
+            }
+            catch
+            {
+                InfoMessages.DatabaseInvalidData();
+                return null;
+            }
         }
 
-        private static string ReadFile(SecureString pw)
+        private static string ReadFile(string path, SecureString pw, bool checkOldFileExt)
         {
             try
             {
-                var bytes = File.ReadAllBytes(DatabaseFilePath);
-                return EncryptDecryptHelper.DecryptStringAES(bytes, pw);
+                byte[] fileData;
+
+                //Alternative open old .db file:
+                var oldPath = Path.ChangeExtension(path, ".db");
+                if (checkOldFileExt && File.Exists(oldPath) && !File.Exists(path)) 
+                {
+                    fileData = File.ReadAllBytes(oldPath);
+                    File.Delete(oldPath);
+                    File.WriteAllBytes(path, fileData);
+                }
+                else
+                    fileData = File.ReadAllBytes(path);
+
+                return EncryptDecryptHelper.DecryptStringAES(fileData, pw);
             }
             catch(FileNotFoundException)
             {
-                return "";
+                InfoMessages.DatabaseFileNotFoundAt(path);
             }
+            catch (UnauthorizedAccessException)
+            {
+                InfoMessages.NoAccessToPathDatabaseNotLoaded(path);
+            }
+            return "";
         }
-        private static void WriteFile(string jsonString, SecureString pw)
+        private static void WriteFile(string path, string jsonString, SecureString pw)
         {
             var bytes = EncryptDecryptHelper.EncryptStringAES(jsonString, pw);
-            File.WriteAllBytes(DatabaseFilePath, bytes);
+            try
+            {
+                File.WriteAllBytes(path, bytes);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                InfoMessages.NoAccessToPathDatabaseNotSaved(path);
+            }
+            catch (IOException)
+            {
+                InfoMessages.DatabaseSaveToFileError(path);
+            }
         }
 
-        public static void SaveDatabase(ObservableCollection<PasswordManagerItem> pwItems, SecureString pw)
+        public static void SaveDatabase(ObservableCollection<PasswordManagerItem> pwItems, SecureString pw, string path = "")
         {
             var data = CreateJsonstring(pwItems);
-            WriteFile(data, pw);
+            WriteFile(path: path.Length == 0 ? DatabaseFilePath : path, jsonString: data, pw);
         }
-        public static ObservableCollection<PasswordManagerItem> LoadDatabase(SecureString pw)
+        public static ObservableCollection<PasswordManagerItem> LoadDatabase(SecureString pw, string path = "")
         {
-            string data = ReadFile(pw);
-            if (data == "")
+            string data = ReadFile(path.Length == 0 ? DatabaseFilePath : path , pw, path.Length == 0);
+            if (data.Length == 0)
                 return null;
 
             return LoadItems(data);
