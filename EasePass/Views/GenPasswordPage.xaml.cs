@@ -38,10 +38,10 @@ namespace EasePass.Views
 
             info.Text =
                 "Contains:" + Environment.NewLine +
-                "- digits" + Environment.NewLine +
-                "- lowercase characters" + Environment.NewLine +
-                "- uppercase characters" + Environment.NewLine +
-                "- punctuation" + Environment.NewLine + Environment.NewLine +
+                (chars.Any(char.IsDigit) ? "- digits" + Environment.NewLine : "") +
+                (chars.Any(char.IsLower) ? "- lowercase characters" + Environment.NewLine : "") +
+                (chars.Any(char.IsUpper) ? "- uppercase characters" + Environment.NewLine : "") +
+                (chars.Any(char.IsPunctuation) ? "- punctuation" + Environment.NewLine : "") + Environment.NewLine +
                 "Length: " + password.Length;
         }
 
