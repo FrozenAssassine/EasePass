@@ -1,5 +1,7 @@
 using EasePass.Models;
+using EasyCodeClass;
 using Microsoft.UI.Xaml.Controls;
+using System;
 
 namespace EasePass.Views
 {
@@ -56,6 +58,29 @@ namespace EasePass.Views
             }
             intervalTB.Text = newInterval;
             intervalTB.SelectionStart = intervalTB.Text.Length;
+        }
+
+        private void screen_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            // TODO: Scan qr-code from somewhere on the screen.
+            //       The result is an url.
+            //       Call the function LoadFromUrl(string url)
+        }
+
+        private void webcam_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            // TODO: Scan qr-code using webcam.
+            //       The result is an url.
+            //       Call the function LoadFromUrl(string url)
+        }
+
+        private void LoadFromUrl(string url)
+        {
+            var res = TOTP.DecodeUrl(url);
+            secretTB.Password = res.Secret;
+            digitsTB.Text = Convert.ToString(res.Digits);
+            intervalTB.Text = Convert.ToString(res.Period);
+            algorithmTB.SelectedItem = TOTP.HashModeToString(res.Algorithm);
         }
     }
 }
