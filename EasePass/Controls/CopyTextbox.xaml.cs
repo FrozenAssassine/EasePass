@@ -1,4 +1,5 @@
 using EasePass.Helper;
+using EasePass.Settings;
 using Microsoft.UI.Xaml.Controls;
 
 namespace EasePass.Controls
@@ -10,9 +11,17 @@ namespace EasePass.Controls
             this.InitializeComponent();
         }
 
+        private void CopyText() => ClipboardHelper.Copy(this.Text);
+
         private void CopyText_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            ClipboardHelper.Copy(this.Text);
+            CopyText();
+        }
+
+        private void TextBox_DoubleTapped(object sender, Microsoft.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
+        {
+            if (AppSettings.GetSettingsAsBool(AppSettingsValues.doubleTapToCopy, DefaultSettingsValues.doubleTapToCopy))
+                CopyText();
         }
     }
 }

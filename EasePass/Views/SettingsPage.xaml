@@ -29,7 +29,7 @@
             <controls:SettingsControl Header="Inactivity Logout">
                 <NumberBox SpinButtonPlacementMode="Inline" ValueChanged="InactivityLogoutTime_ValueChanged" Maximum="1000" Minimum="1" MinWidth="150" Margin="5" x:Name="inactivityLogoutTime" PlaceholderText="Logout time" Header="Minutes"/>
             </controls:SettingsControl>
-            <Expander HorizontalAlignment="Stretch">
+            <Expander Margin="0,5,0,5" HorizontalAlignment="Stretch">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">
                         <TextBlock Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xE785;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
@@ -58,6 +58,11 @@
                     </StackPanel>
                 </Expander.Content>
             </Expander>
+
+            <controls:SetingsItemSeparator Header="Miscellaneous"/>
+            <controls:SettingsControl Header="Quick Copy on Double Click">
+                <ToggleSwitch x:Name="doubleTapToCopySW" Toggled="doubleTapToCopySW_Toggled"/>
+            </controls:SettingsControl>
 
         </StackPanel>
     </ScrollViewer>

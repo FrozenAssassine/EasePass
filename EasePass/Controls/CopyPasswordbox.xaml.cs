@@ -1,6 +1,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using EasePass.Helper;
+using EasePass.Settings;
 
 namespace EasePass.Controls
 {
@@ -33,9 +34,16 @@ namespace EasePass.Controls
         private bool _ShowPassword = false;
         public bool ShowPassword { get => _ShowPassword; set { _ShowPassword = value; ToggleShowPassword(value); } }
 
+        private void CopyText() => ClipboardHelper.Copy(this.Text);
+
+        private void TextBox_DoubleTapped(object sender, Microsoft.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
+        {
+            if (AppSettings.GetSettingsAsBool(AppSettingsValues.doubleTapToCopy, DefaultSettingsValues.doubleTapToCopy))
+                CopyText();
+        }
         private void CopyText_Click(object sender, RoutedEventArgs e)
         {
-            ClipboardHelper.Copy(this._Password);
+            CopyText();
         }
 
         private void showPW_Toggled(object sender, RoutedEventArgs e)
@@ -53,7 +61,7 @@ namespace EasePass.Controls
                 if (e.Key == Windows.System.VirtualKey.A)
                     this.SelectAll();
                 else if (e.Key == Windows.System.VirtualKey.C)
-                    CopyText_Click(null, null);
+                    CopyText();
                 
                 e.Handled = true;
                 return;

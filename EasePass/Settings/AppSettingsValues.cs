@@ -13,5 +13,6 @@ namespace EasePass.Settings
         public const string windowWidth = "windowWidth";
         public const string windowHeight = "windowHeight";
         public const string inactivityLogoutTime = "inactivityLogoutTime";
+        public const string doubleTapToCopy = "doubleTapToCopy";
     }
 }

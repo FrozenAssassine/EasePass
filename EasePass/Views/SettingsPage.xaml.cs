@@ -8,7 +8,6 @@ using Microsoft.UI.Xaml.Navigation;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Security;
 
@@ -27,6 +26,7 @@ namespace EasePass.Views
         private void LoadSettings()
         {
             inactivityLogoutTime.Value = AppSettings.GetSettingsAsInt(AppSettingsValues.inactivityLogoutTime, DefaultSettingsValues.InactivityLogoutTime);
+            doubleTapToCopySW.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.doubleTapToCopy, DefaultSettingsValues.doubleTapToCopy);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -138,6 +138,11 @@ namespace EasePass.Views
         private void InactivityLogoutTime_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             AppSettings.SaveSettings(AppSettingsValues.inactivityLogoutTime, inactivityLogoutTime.Value);
+        }
+
+        private void doubleTapToCopySW_Toggled(object sender, RoutedEventArgs e)
+        {
+            AppSettings.SaveSettings(AppSettingsValues.doubleTapToCopy, doubleTapToCopySW.IsOn);
         }
     }
 }
