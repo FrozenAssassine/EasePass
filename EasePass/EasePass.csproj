@@ -9,7 +9,7 @@
     <PublishProfile>win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <Authors>Julius Kirsch</Authors>
+    <Authors>Julius Kirsch, Finn Freitag</Authors>
     <Copyright>Copyright © 2023 </Copyright>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
@@ -23,6 +23,9 @@
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <AppxBundlePlatforms>arm64</AppxBundlePlatforms>
     <AppxPackageDir>F:\C#\EasePass\EasePass\bin\publish</AppxPackageDir>
+    <RepositoryUrl>https://github.com/FrozenAssassine/EasePass.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>http://easepass.frozenassassine.de/</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Core\**" />

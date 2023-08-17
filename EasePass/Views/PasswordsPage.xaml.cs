@@ -1,9 +1,11 @@
 using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
+using EasyCodeClass;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System;
 using System.Collections.ObjectModel;
 using System.Security;
 
@@ -15,9 +17,42 @@ namespace EasePass.Views
         private PasswordManagerItem SelectedItem = null;
         public SecureString masterPassword = null;
 
+        private DispatcherTimer timer = new DispatcherTimer();
+
+        public const int TOTP_SPACING = 3;
+
         public PasswordsPage()
         {
             this.InitializeComponent();
+            totpTB.RemoveWhitespaceOnCopy = true;
+            timer.Stop();
+            timer.Interval = TimeSpan.FromSeconds(3);
+            timer.Tick += Timer_Tick;
+        }
+
+        private void Timer_Tick(object sender, object e)
+        {
+            if (SelectedItem != null)
+            {
+                if (!string.IsNullOrEmpty(SelectedItem.Secret))
+                {
+                    DateTime time = DateTime.Now;
+                    try
+                    {
+                        time = NTPClient.GetTime();
+                    }
+                    catch { }
+                    string token = TOTP.GenerateTOTPToken(DateTime.Now, SelectedItem.Secret, Convert.ToInt32(SelectedItem.Digits), Convert.ToInt32(SelectedItem.Interval), TOTP.StringToHashMode(SelectedItem.Algorithm));
+                    string final = "";
+                    for (int i = 0; i < token.Length; i++)
+                    {
+                        final += token[i];
+                        if ((i + 1) % TOTP_SPACING == 0) final += ' ';
+                    }
+                    final = final.Trim(' ');
+                    totpTB.Text = final;
+                }
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -46,6 +81,7 @@ namespace EasePass.Views
 
             PasswordItems = data;
         }
+
         public void SaveData()
         {
             DatabaseHelper.SaveDatabase(PasswordItems, masterPassword);
@@ -58,10 +94,23 @@ namespace EasePass.Views
             emailTB.Text = item.Email;
             usernameTB.Text = item.Username;
             itemnameTB.Text = item.DisplayName;
+            
+            if (!string.IsNullOrEmpty(item.Secret))
+            {
+                totpLB.Visibility = Visibility.Visible;
+                totpTB.Visibility = Visibility.Visible;
+                timer.Start();
+                Timer_Tick(this, null);
+            }
+            else
+            {
+                totpLB.Visibility = Visibility.Collapsed;
+                totpTB.Visibility = Visibility.Collapsed;
+                timer.Stop();
+            }
 
             passwordShowArea.Visibility = Visibility.Visible;
         }
-
 
         private void passwordItemListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -82,6 +131,7 @@ namespace EasePass.Views
                 ShowPasswordItem(pwItem);
             }
         }
+
         private async void DeletePasswordItem_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedItem == null)
@@ -105,6 +155,7 @@ namespace EasePass.Views
                 SaveData();
             }
         }
+
         private async void AddPasswordItem_Click(object sender, RoutedEventArgs e)
         {
             var newItem = await new AddItemDialog().ShowAsync();
@@ -114,6 +165,7 @@ namespace EasePass.Views
             PasswordItemsManager.AddItem(PasswordItems, newItem);
             SaveData();
         }
+
         private async void EditPasswordItem_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedItem == null)
@@ -126,6 +178,7 @@ namespace EasePass.Views
             ShowPasswordItem(SelectedItem);
             SaveData();
         }
+
         private void searchbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if(searchbox.Text == "")
@@ -144,6 +197,7 @@ namespace EasePass.Views
                 PwItems = PasswordItems
             });
         }
+
         private void AboutPage_Click(object sender, RoutedEventArgs e)
         {
             App.m_frame.Navigate(typeof(AboutPage));
@@ -177,6 +231,19 @@ namespace EasePass.Views
                     EditPasswordItem_Click(null, null);
                     break;
             }
+        }
+
+        private async void Add2FAPasswordItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedItem == null)
+                return;
+
+            var editItem = await new Add2FADialog().ShowAsync(SelectedItem);
+            if (editItem == null)
+                return;
+
+            ShowPasswordItem(SelectedItem);
+            SaveData();
         }
     }
 }

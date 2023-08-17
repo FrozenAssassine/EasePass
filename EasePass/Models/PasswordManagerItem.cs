@@ -17,6 +17,10 @@ namespace EasePass.Models
         public string Username { get; set; }
         public string Email { get; set; }
         public string Notes { get; set; }
+        public string Secret { get; set; }
+        public string Digits { get; set; } = "6";
+        public string Interval { get; set; } = "30";
+        public string Algorithm { get; set; } = "SHA1";
         private string _DisplayName;
         public string DisplayName
         {
