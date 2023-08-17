@@ -9,7 +9,7 @@
     <PublishProfile>win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <Authors>Julius Kirsch</Authors>
+    <Authors>Julius Kirsch, Finn Freitag</Authors>
     <Copyright>Copyright © 2023 </Copyright>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
@@ -23,6 +23,9 @@
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <AppxBundlePlatforms>arm64</AppxBundlePlatforms>
     <AppxPackageDir>F:\C#\EasePass\EasePass\bin\publish</AppxPackageDir>
+    <RepositoryUrl>https://github.com/FrozenAssassine/EasePass.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>http://easepass.frozenassassine.de/</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Core\**" />
@@ -79,6 +82,7 @@
     <None Remove="Controls\CopyTextbox.xaml" />
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\AddItemPage.xaml" />
+    <None Remove="Views\GenPasswordPage.xaml" />
     <None Remove="Views\LoginPage.xaml" />
     <None Remove="Views\PasswordsPage.xaml" />
     <None Remove="Views\RegisterPage.xaml" />
@@ -139,6 +143,11 @@
     <Content Remove="Assets\AppIcon\Generated\Square44x44Logo.altform-unplated_targetsize-256.png" />
     <Content Remove="Assets\AppIcon\Generated\Square44x44Logo.altform-unplated_targetsize-32.png" />
     <Content Remove="Assets\AppIcon\Generated\Square44x44Logo.altform-unplated_targetsize-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\GenPasswordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\CopyPasswordbox.xaml">
