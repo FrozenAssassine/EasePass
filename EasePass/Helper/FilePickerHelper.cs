@@ -36,7 +36,6 @@ namespace EasePass.Helper
             var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(App.m_window);
             WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hWnd);
 
-            savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
             savePicker.FileTypeChoices.Add(extensions.val, extensions.ext);
             
             var file = await savePicker.PickSaveFileAsync();
