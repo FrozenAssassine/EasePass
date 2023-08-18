@@ -79,7 +79,8 @@ namespace EasePass.Views
             }
 
             totpTB.Visibility = totpLB.Visibility = Visibility.Collapsed;
-            totpTokenUpdater.StopTimer();
+            if(TOTPTokenUpdater != null)
+                totpTokenUpdater.StopTimer();
         }
 
         private void passwordItemListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
