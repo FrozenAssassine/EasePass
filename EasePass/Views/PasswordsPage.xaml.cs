@@ -79,7 +79,7 @@ namespace EasePass.Views
             }
 
             totpTB.Visibility = totpLB.Visibility = Visibility.Collapsed;
-            if(TOTPTokenUpdater != null)
+            if(totpTokenUpdater != null)
                 totpTokenUpdater.StopTimer();
         }
 
