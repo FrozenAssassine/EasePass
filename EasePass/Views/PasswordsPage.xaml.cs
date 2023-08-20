@@ -226,11 +226,10 @@ namespace EasePass.Views
 
         private async void GenPassword_Click(object sender, RoutedEventArgs e)
         {
+            //retunrs true when the regenerate button was pressed
             var res = await new GenPasswordDialog().ShowAsync();
-            if (res == null)
-                return;
-
-            GenPassword_Click(this, null);
+            if (res)
+                GenPassword_Click(this, null);
         }
         private void searchbox_PreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
