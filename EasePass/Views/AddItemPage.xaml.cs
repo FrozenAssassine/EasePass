@@ -27,6 +27,7 @@ namespace EasePass.Views
             emailTB.Text = input.Email;
             usernameTB.Text = input.Username;
             nameTB.Text = input.DisplayName;
+            websiteTB.Text = input.Website;
 
             if (!string.IsNullOrEmpty(input.Secret))
             {
@@ -52,6 +53,7 @@ namespace EasePass.Views
             input.Email = emailTB.Text;
             input.Username = usernameTB.Text;
             input.DisplayName = nameTB.Text;
+            input.Website = websiteTB.Text;
 
             input.Secret = secretTB.Password;
             input.Digits = digitsTB.Text;
