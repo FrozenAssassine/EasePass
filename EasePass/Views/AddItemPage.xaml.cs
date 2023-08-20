@@ -91,10 +91,7 @@ namespace EasePass.Views
 
         private void Hide2FA()
         {
-            secretLB.Visibility = secretTB.Visibility =
-            digitsLB.Visibility = digitsTB.Visibility =
-            intervalLB.Visibility = intervalTB.Visibility =
-            algorithmLB.Visibility = algorithmTB.Visibility =  Microsoft.UI.Xaml.Visibility.Collapsed;
+            twoFactorAuthExpander.Visibility = twoFactorAuthTitle.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
         }
     }
 }
