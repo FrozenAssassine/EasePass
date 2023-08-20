@@ -24,7 +24,7 @@ namespace EasePass.Views
             algorithmTB.SelectedItem = input.Algorithm;
         }
 
-        public PasswordManagerItem GetValue()
+        public void UpdateValue()
         {
             if (input == null)
                 input = new PasswordManagerItem();
@@ -33,8 +33,6 @@ namespace EasePass.Views
             input.Digits = digitsTB.Text;
             input.Interval = intervalTB.Text;
             input.Algorithm = (string)algorithmTB.SelectedItem;
-            
-            return input;
         }
 
         private void DigitsTB_TextChanged(object sender, TextBoxTextChangingEventArgs e)

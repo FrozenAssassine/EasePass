@@ -8,7 +8,7 @@ namespace EasePass.Dialogs
 {
     internal class Add2FADialog
     {
-        public async Task<PasswordManagerItem> ShowAsync(PasswordManagerItem item)
+        public async Task<bool> ShowAsync(PasswordManagerItem item)
         {
             var page = new Add2FAPage(item);
             var dialog = new ContentDialog
@@ -20,9 +20,10 @@ namespace EasePass.Dialogs
                 Content = page
             };
 
-            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
-                return page.GetValue();
-            return null;
+            bool res = await dialog.ShowAsync() == ContentDialogResult.Primary;
+            if(res)
+                page.UpdateValue();
+            return res;
         }
     }
 }

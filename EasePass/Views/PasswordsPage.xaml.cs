@@ -215,8 +215,7 @@ namespace EasePass.Views
             if (SelectedItem == null)
                 return;
 
-            var editItem = await new Add2FADialog().ShowAsync(SelectedItem);
-            if (editItem == null)
+            if (!await new Add2FADialog().ShowAsync(SelectedItem))
                 return;
 
             ShowPasswordItem(SelectedItem);
