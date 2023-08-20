@@ -105,7 +105,7 @@ namespace EasePass.Views
                     InfoMessages.ImportDBSuccess();
                     return;
                 }
-                InfoMessages.ExportDBWrongPassword();
+                InfoMessages.ImportDBWrongPassword();
             }
         }
         private void ChangePassword_Click(object sender, RoutedEventArgs e)
