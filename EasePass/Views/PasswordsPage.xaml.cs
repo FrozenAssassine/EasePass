@@ -4,6 +4,7 @@ using EasePass.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System;
 using System.Collections.ObjectModel;
 using System.Security;
 
@@ -155,9 +156,12 @@ namespace EasePass.Views
             if(searchbox.Text.Length == 0)
             {
                 passwordItemListView.ItemsSource = PasswordItems;
+                searchbox.SetInfo(Convert.ToString(PasswordItems.Count));
                 return;
             }
-            passwordItemListView.ItemsSource = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
+            var search_res = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
+            passwordItemListView.ItemsSource = search_res;
+            searchbox.SetInfo(Convert.ToString(search_res.Count));
         }
 
         private void Settings_Click(object sender, RoutedEventArgs e)
@@ -238,6 +242,11 @@ namespace EasePass.Views
                 passwordItemListView.Focus(FocusState.Programmatic);
                 passwordItemListView.SelectedIndex = -1;
             }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            searchbox.SetInfo(Convert.ToString(PasswordItems.Count));
         }
     }
 }
