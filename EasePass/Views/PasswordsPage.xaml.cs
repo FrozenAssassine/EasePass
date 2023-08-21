@@ -45,6 +45,12 @@ namespace EasePass.Views
             base.OnNavigatedTo(e);
         }
 
+        public void Reload()
+        {
+            passwordItemListView.ItemsSource = null;
+            passwordItemListView.ItemsSource = PasswordItems;
+        }
+
         private void LoadData(SecureString pw)
         {
             var data = DatabaseHelper.LoadDatabase(pw);

@@ -91,6 +91,9 @@
             <controls:SettingsControl Header="Quick Copy on Double Click">
                 <ToggleSwitch x:Name="doubleTapToCopySW" Toggled="DoubleTapToCopySW_Toggled"/>
             </controls:SettingsControl>
+            <controls:SettingsControl Header="Show icons">
+                <ToggleSwitch x:Name="showIcons" Toggled="showIcons_Toggled"/>
+            </controls:SettingsControl>
 
         </StackPanel>
     </ScrollViewer>

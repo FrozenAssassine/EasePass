@@ -30,6 +30,7 @@ namespace EasePass.Views
             autoBackupDB.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.autoBackupDB, DefaultSettingsValues.autoBackupDatabase);
             autoBackupDBPath.Text = AppSettings.GetSettings(AppSettingsValues.autoBackupDBPath, "");
             autoBackupDBTime.Value = AppSettings.GetSettingsAsInt(AppSettingsValues.autoBackupDBTime, DefaultSettingsValues.autoBackupDBTime);
+            showIcons.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -37,6 +38,7 @@ namespace EasePass.Views
             base.OnNavigatedFrom(e);
             App.m_window.ShowBackArrow = false;
         }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -169,6 +171,12 @@ namespace EasePass.Views
         {
             AppSettings.SaveSettings(AppSettingsValues.autoBackupDBPath, autoBackupDBPath.Text);
 
+        }
+
+        private void showIcons_Toggled(object sender, RoutedEventArgs e)
+        {
+            AppSettings.SaveSettings(AppSettingsValues.showIcons, showIcons.IsOn);
+            if (passwordsPage != null) passwordsPage.Reload();
         }
     }
 }

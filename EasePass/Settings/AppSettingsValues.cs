@@ -13,5 +13,6 @@
         public const string autoBackupDBPath = "databaseBackupPath";
         public const string autoBackupDB = "autoBackupDB";
         public const string autoBackupDBTime = "autoBackupDBTime";
+        public const string showIcons = "showIcons";
     }
 }

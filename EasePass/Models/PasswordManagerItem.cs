@@ -1,4 +1,6 @@
-﻿using Microsoft.UI.Xaml.Media;
+﻿using EasePass.Settings;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Newtonsoft.Json;
 using System;
@@ -55,16 +57,26 @@ namespace EasePass.Models
         {
             get
             {
-                if (string.IsNullOrEmpty(WebsiteFix)) return null;
-                try
+                if (!string.IsNullOrEmpty(WebsiteFix) && Visibility == Visibility.Visible)
                 {
-                    return new BitmapImage(new Uri(WebsiteFix + "/favicon.ico"));
+                    try
+                    {
+                        return new BitmapImage(new Uri(WebsiteFix + "/favicon.ico"));
+                    }
+                    catch { }
                 }
-                catch
-                {
-                    return null;
-                }
+                return null;
             }
+        }
+
+        [JsonIgnore]
+        public Visibility Visibility
+        {
+            get
+            {
+                return AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons) ? Visibility.Visible : Visibility.Collapsed;
+            }
+            set { }
         }
     }
 }
