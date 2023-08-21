@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Security;
 using System.Threading.Tasks;
 
@@ -259,17 +260,50 @@ namespace EasePass.Views
             searchbox.SetInfo(Convert.ToString(PasswordItems.Count));
         }
 
-        private void sortAlphabetical_Click(object sender, RoutedEventArgs e)
-        {
-            PasswordItems.SortAlphabetic();
-            Reload();
-            SaveData();
-        }
-
-        private void PasswordItemListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
+        private void passwordItemListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
         {
             if(args.Items.Count > 0)
                 SaveData();
+        }
+
+        private void sortName_Click(object sender, RoutedEventArgs e)
+        {
+            PasswordItems.Sort(ObservableCollectionExtension.ByDisplayName);
+            Reload();
+            SaveData();
+            SetVis(sortname);
+        }
+
+        private void sortUsername_Click(object sender, RoutedEventArgs e)
+        {
+            PasswordItems.Sort(ObservableCollectionExtension.ByUsername);
+            Reload();
+            SaveData();
+            SetVis(sortusername);
+        }
+
+        private void sortNotes_Click(object sender, RoutedEventArgs e)
+        {
+            PasswordItems.Sort(ObservableCollectionExtension.ByNotes);
+            Reload();
+            SaveData();
+            SetVis(sortnotes);
+        }
+
+        private void sortWebsite_Click(object sender, RoutedEventArgs e)
+        {
+            PasswordItems.Sort(ObservableCollectionExtension.ByWebsite);
+            Reload();
+            SaveData();
+            SetVis(sortwebsite);
+        }
+
+        private void PasswordItemListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
+        private void switchOrder_Click(object sender, RoutedEventArgs e)
+        {
+            PasswordItems = PasswordItems.ReverseSelf();
+            Reload();
+            SaveData();
         }
 
 
@@ -278,5 +312,13 @@ namespace EasePass.Views
         private void RightclickedItem_CopyPassword_Click(object sender, RoutedEventArgs e) => ClipboardHelper.Copy(((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem)?.Password);
         private async void RightclickedItem_Delete_Click(object sender, RoutedEventArgs e) => await DeletePasswordItem((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem);
         private async void RightclickedItem_Edit_Click(object sender, RoutedEventArgs e) => await EditPasswordItem((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem);
+
+        private void SetVis(FontIcon icon)
+        {
+            sortname.Visibility = icon == sortname ? Visibility.Visible : Visibility.Collapsed;
+            sortusername.Visibility = icon == sortusername ? Visibility.Visible : Visibility.Collapsed;
+            sortnotes.Visibility = icon == sortnotes ? Visibility.Visible : Visibility.Collapsed;
+            sortwebsite.Visibility = icon == sortwebsite ? Visibility.Visible : Visibility.Collapsed;
+        }
     }
 }
