@@ -16,12 +16,12 @@ namespace EasePass.Helper
         private void InactivityTimer_Tick(object sender, object e)
         {
             inactivityTimer.Stop();
-            InactivityStarted.Invoke();
+            InactivityStarted?.Invoke();
         }
 
         public void WindowDeactivated()
         {
-            inactivityTimer.Interval += new TimeSpan(0, AppSettings.GetSettingsAsInt(AppSettingsValues.inactivityLogoutTime, DefaultSettingsValues.inactivityLogoutTime), 0);
+            inactivityTimer.Interval = new TimeSpan(0, AppSettings.GetSettingsAsInt(AppSettingsValues.inactivityLogoutTime, DefaultSettingsValues.inactivityLogoutTime), 0);
 
             inactivityTimer.Stop();
             inactivityTimer.Start();
