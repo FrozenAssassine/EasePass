@@ -164,10 +164,10 @@ namespace EasePass.Views
         }
         private void SetVis(FontIcon icon)
         {
-            sortname.Visibility = icon == sortname ? Visibility.Visible : Visibility.Collapsed;
-            sortusername.Visibility = icon == sortusername ? Visibility.Visible : Visibility.Collapsed;
-            sortnotes.Visibility = icon == sortnotes ? Visibility.Visible : Visibility.Collapsed;
-            sortwebsite.Visibility = icon == sortwebsite ? Visibility.Visible : Visibility.Collapsed;
+            sortname.Visibility = ConvertHelper.BoolToVisibility(icon == sortname);
+            sortusername.Visibility = ConvertHelper.BoolToVisibility(icon == sortusername);
+            sortnotes.Visibility = ConvertHelper.BoolToVisibility(icon == sortnotes);
+            sortwebsite.Visibility = ConvertHelper.BoolToVisibility(icon == sortwebsite);
         }
 
         private async void DeletePasswordItem_Click(object sender, RoutedEventArgs e) => await DeletePasswordItem(SelectedItem);
@@ -269,33 +269,16 @@ namespace EasePass.Views
             }
         }
 
-        private void SortName_Click(object sender, RoutedEventArgs e)
+        private void SortName_Click(object sender, RoutedEventArgs e) => SortClickAction(ObservableCollectionExtension.ByDisplayName, sortname);
+        private void SortUsername_Click(object sender, RoutedEventArgs e) => SortClickAction(ObservableCollectionExtension.ByUsername, sortusername);
+        private void SortNotes_Click(object sender, RoutedEventArgs e) => SortClickAction(ObservableCollectionExtension.ByNotes, sortnotes);
+        private void SortWebsite_Click(object sender, RoutedEventArgs e) => SortClickAction(ObservableCollectionExtension.ByWebsite, sortwebsite);
+        private void SortClickAction(Comparison<PasswordManagerItem> comparison, FontIcon icon)
         {
-            PasswordItems.Sort(ObservableCollectionExtension.ByDisplayName);
+            PasswordItems.Sort(comparison);
             Reload();
             SaveData();
-            SetVis(sortname);
-        }
-        private void SortUsername_Click(object sender, RoutedEventArgs e)
-        {
-            PasswordItems.Sort(ObservableCollectionExtension.ByUsername);
-            Reload();
-            SaveData();
-            SetVis(sortusername);
-        }
-        private void SortNotes_Click(object sender, RoutedEventArgs e)
-        {
-            PasswordItems.Sort(ObservableCollectionExtension.ByNotes);
-            Reload();
-            SaveData();
-            SetVis(sortnotes);
-        }
-        private void SortWebsite_Click(object sender, RoutedEventArgs e)
-        {
-            PasswordItems.Sort(ObservableCollectionExtension.ByWebsite);
-            Reload();
-            SaveData();
-            SetVis(sortwebsite);
+            SetVis(icon);
         }
         private void SwitchOrder_Click(object sender, RoutedEventArgs e)
         {
