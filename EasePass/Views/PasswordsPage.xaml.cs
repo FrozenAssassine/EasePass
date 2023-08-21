@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Security;
 
 namespace EasePass.Views
@@ -260,17 +261,57 @@ namespace EasePass.Views
             searchbox.SetInfo(Convert.ToString(PasswordItems.Count));
         }
 
-        private void sortAlphabetical_Click(object sender, RoutedEventArgs e)
-        {
-            PasswordItems.SortAlphabetic();
-            Reload();
-            SaveData();
-        }
-
         private void passwordItemListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
         {
             if(args.Items.Count > 0)
                 SaveData();
+        }
+
+        private void sortName_Click(object sender, RoutedEventArgs e)
+        {
+            PasswordItems.Sort(ObservableCollectionExtension.ByDisplayName);
+            Reload();
+            SaveData();
+            SetVis(sortname);
+        }
+
+        private void sortUsername_Click(object sender, RoutedEventArgs e)
+        {
+            PasswordItems.Sort(ObservableCollectionExtension.ByUsername);
+            Reload();
+            SaveData();
+            SetVis(sortusername);
+        }
+
+        private void sortNotes_Click(object sender, RoutedEventArgs e)
+        {
+            PasswordItems.Sort(ObservableCollectionExtension.ByNotes);
+            Reload();
+            SaveData();
+            SetVis(sortnotes);
+        }
+
+        private void sortWebsite_Click(object sender, RoutedEventArgs e)
+        {
+            PasswordItems.Sort(ObservableCollectionExtension.ByWebsite);
+            Reload();
+            SaveData();
+            SetVis(sortwebsite);
+        }
+
+        private void switchOrder_Click(object sender, RoutedEventArgs e)
+        {
+            PasswordItems = PasswordItems.ReverseSelf();
+            Reload();
+            SaveData();
+        }
+
+        private void SetVis(FontIcon icon)
+        {
+            sortname.Visibility = icon == sortname ? Visibility.Visible : Visibility.Collapsed;
+            sortusername.Visibility = icon == sortusername ? Visibility.Visible : Visibility.Collapsed;
+            sortnotes.Visibility = icon == sortnotes ? Visibility.Visible : Visibility.Collapsed;
+            sortwebsite.Visibility = icon == sortwebsite ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }
