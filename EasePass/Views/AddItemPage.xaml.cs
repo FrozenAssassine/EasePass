@@ -93,5 +93,11 @@ namespace EasePass.Views
         {
             twoFactorAuthExpander.Visibility = twoFactorAuthTitle.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
         }
+
+        private void rem2FA_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            secretTB.Password = "";
+            Hide2FA();
+        }
     }
 }

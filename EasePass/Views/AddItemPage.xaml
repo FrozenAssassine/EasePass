@@ -42,6 +42,8 @@
                             <x:String>SHA256</x:String>
                             <x:String>SHA512</x:String>
                         </ComboBox>
+
+                        <Button x:Name="rem2FA" Margin="0,10,0,0" Content="Remove 2FA" Click="rem2FA_Click" HorizontalAlignment="Stretch" />
                     </StackPanel>
                 </Expander.Content>
             </Expander>
