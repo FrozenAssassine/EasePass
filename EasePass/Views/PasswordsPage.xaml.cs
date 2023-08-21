@@ -150,7 +150,11 @@ namespace EasePass.Views
 
                 //update searchbox:
                 if(searchbox.Text.Length > 0)
-                    passwordItemListView.ItemsSource = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
+                {
+                    ObservableCollection<PasswordManagerItem> items = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
+                    passwordItemListView.ItemsSource = items;
+                    searchbox.SetInfo(Convert.ToString(items.Count));
+                }
                 
                 SaveData();
             }
