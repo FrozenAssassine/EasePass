@@ -1,4 +1,5 @@
-﻿using EasePass.Settings;
+﻿using EasePass.Helper;
+using EasePass.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
@@ -75,6 +76,16 @@ namespace EasePass.Models
             get
             {
                 return AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons) ? Visibility.Visible : Visibility.Collapsed;
+            }
+            set { }
+        }
+
+        [JsonIgnore]
+        public Visibility ContainsTOTP
+        {
+            get
+            {
+                return ConvertHelper.BoolToVisibility(!string.IsNullOrEmpty(Secret));
             }
             set { }
         }

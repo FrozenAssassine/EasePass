@@ -29,13 +29,18 @@ namespace EasePass.Helper
 
             if (string.IsNullOrEmpty(selectedItem.Secret))
                 return;
+            
+            totpTB.Text = generateCurrent(selectedItem);
+        }
 
+        public static string generateCurrent(PasswordManagerItem item)
+        {
             string token = TOTP.GenerateTOTPToken(
-                NTPClient.GetTime(), 
-                selectedItem.Secret, 
-                ConvertHelper.ToInt(selectedItem.Digits, 6), 
-                ConvertHelper.ToInt(selectedItem.Interval, 30), 
-                TOTP.StringToHashMode(selectedItem.Algorithm)
+                NTPClient.GetTime(),
+                item.Secret,
+                ConvertHelper.ToInt(item.Digits, 6),
+                ConvertHelper.ToInt(item.Interval, 30),
+                TOTP.StringToHashMode(item.Algorithm)
                 );
 
             string final = "";
@@ -46,7 +51,7 @@ namespace EasePass.Helper
                     final += ' ';
             }
             final = final.Trim(' ');
-            totpTB.Text = final;
+            return final;
         }
 
         public void StopTimer()
