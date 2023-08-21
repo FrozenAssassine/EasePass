@@ -162,6 +162,13 @@ namespace EasePass.Views
                 PwItems = PasswordItems
             });
         }
+        private void SetVis(FontIcon icon)
+        {
+            sortname.Visibility = icon == sortname ? Visibility.Visible : Visibility.Collapsed;
+            sortusername.Visibility = icon == sortusername ? Visibility.Visible : Visibility.Collapsed;
+            sortnotes.Visibility = icon == sortnotes ? Visibility.Visible : Visibility.Collapsed;
+            sortwebsite.Visibility = icon == sortwebsite ? Visibility.Visible : Visibility.Collapsed;
+        }
 
         private async void DeletePasswordItem_Click(object sender, RoutedEventArgs e) => await DeletePasswordItem(SelectedItem);
         private async void AddPasswordItem_Click(object sender, RoutedEventArgs e) => await AddPasswordItem();
@@ -169,6 +176,10 @@ namespace EasePass.Views
         private async void Add2FAPasswordItem_Click(object sender, RoutedEventArgs e) => await Add2FAPasswordItem(SelectedItem);
         private async void GenPassword_Click(object sender, RoutedEventArgs e) => await GeneratePassword();
         private void Settings_Click(object sender, RoutedEventArgs e) => ShowSettingsPage();
+        private void AboutPage_Click(object sender, RoutedEventArgs e)
+        {
+            App.m_frame.Navigate(typeof(AboutPage));
+        }
 
         private void PasswordItemListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -195,7 +206,6 @@ namespace EasePass.Views
                 SaveData();
         }
 
-
         private void Searchbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if(searchbox.Text.Length == 0)
@@ -208,12 +218,19 @@ namespace EasePass.Views
             passwordItemListView.ItemsSource = search_res;
             searchbox.SetInfo(Convert.ToString(search_res.Count));
         }
-
-        private void AboutPage_Click(object sender, RoutedEventArgs e)
+        private void Searchbox_PreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-            App.m_frame.Navigate(typeof(AboutPage));
+            if (e.Key == Windows.System.VirtualKey.Down)
+            {
+                passwordItemListView.Focus(FocusState.Programmatic);
+                passwordItemListView.SelectedIndex = -1;
+            }
         }
-
+      
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            searchbox.SetInfo(Convert.ToString(PasswordItems.Count));
+        }
         private void Page_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
             if (KeyHelper.IsKeyPressed(Windows.System.VirtualKey.Control))
@@ -234,7 +251,7 @@ namespace EasePass.Views
                             passwordItemListView.SelectedIndex++;
                         break;
                     case Windows.System.VirtualKey.Up:
-                        if(passwordItemListView.SelectedIndex > 0 && passwordItemListView.SelectedIndex < passwordItemListView.Items.Count)
+                        if (passwordItemListView.SelectedIndex > 0 && passwordItemListView.SelectedIndex < passwordItemListView.Items.Count)
                             passwordItemListView.SelectedIndex--;
                         break;
                     default: return;
@@ -251,21 +268,6 @@ namespace EasePass.Views
                     break;
             }
         }
-
-        private void Searchbox_PreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.Down)
-            {
-                passwordItemListView.Focus(FocusState.Programmatic);
-                passwordItemListView.SelectedIndex = -1;
-            }
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            searchbox.SetInfo(Convert.ToString(PasswordItems.Count));
-        }
-
 
         private void SortName_Click(object sender, RoutedEventArgs e)
         {
@@ -302,19 +304,10 @@ namespace EasePass.Views
             SaveData();
         }
 
-
         private void RightclickedItem_CopyUsername_Click(object sender, RoutedEventArgs e) => ClipboardHelper.Copy(((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem)?.Username);
         private void RightclickedItem_CopyEmail_Click(object sender, RoutedEventArgs e) => ClipboardHelper.Copy(((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem)?.Email);
         private void RightclickedItem_CopyPassword_Click(object sender, RoutedEventArgs e) => ClipboardHelper.Copy(((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem)?.Password);
         private async void RightclickedItem_Delete_Click(object sender, RoutedEventArgs e) => await DeletePasswordItem((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem);
         private async void RightclickedItem_Edit_Click(object sender, RoutedEventArgs e) => await EditPasswordItem((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem);
-
-        private void SetVis(FontIcon icon)
-        {
-            sortname.Visibility = icon == sortname ? Visibility.Visible : Visibility.Collapsed;
-            sortusername.Visibility = icon == sortusername ? Visibility.Visible : Visibility.Collapsed;
-            sortnotes.Visibility = icon == sortnotes ? Visibility.Visible : Visibility.Collapsed;
-            sortwebsite.Visibility = icon == sortwebsite ? Visibility.Visible : Visibility.Collapsed;
-        }
     }
 }
