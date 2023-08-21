@@ -6,10 +6,12 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Security;
+using System.Text;
 
 namespace EasePass.Views
 {
@@ -31,6 +33,8 @@ namespace EasePass.Views
             autoBackupDBPath.Text = AppSettings.GetSettings(AppSettingsValues.autoBackupDBPath, "");
             autoBackupDBTime.Value = AppSettings.GetSettingsAsInt(AppSettingsValues.autoBackupDBTime, DefaultSettingsValues.autoBackupDBTime);
             showIcons.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons);
+            pswd_chars.Text = AppSettings.GetSettings(AppSettingsValues.passwordChars, DefaultSettingsValues.PasswordChars);
+            pswd_length.Text = Convert.ToString(AppSettings.GetSettingsAsInt(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength));
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -177,6 +181,37 @@ namespace EasePass.Views
         {
             AppSettings.SaveSettings(AppSettingsValues.showIcons, showIcons.IsOn);
             if (passwordsPage != null) passwordsPage.Reload();
+        }
+
+        private void pswd_length_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
+        {
+            string length = pswd_length.Text;
+            StringBuilder newLength = new StringBuilder();
+            for (int i = 0; i < length.Length; i++)
+            {
+                if (char.IsDigit(length[i]))
+                    newLength.Append(length[i]);
+            }
+            pswd_length.Text = newLength.ToString();
+            pswd_length.SelectionStart = pswd_length.Text.Length;
+        }
+
+        private void pswd_length_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (pswd_length.Text.Length == 0 || pswd_length.Text == "0")
+            {
+                AppSettings.SaveSettings(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength);
+            }
+            else
+            {
+                AppSettings.SaveSettings(AppSettingsValues.passwordLength, Math.Max(ConvertHelper.ToInt(pswd_length.Text, DefaultSettingsValues.PasswordLength), 8));
+            }
+        }
+
+        private void pswd_chars_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (pswd_chars.Text.Length == 0) AppSettings.SaveSettings(AppSettingsValues.passwordChars, DefaultSettingsValues.PasswordChars);
+            else AppSettings.SaveSettings(AppSettingsValues.passwordChars, pswd_chars.Text);
         }
     }
 }

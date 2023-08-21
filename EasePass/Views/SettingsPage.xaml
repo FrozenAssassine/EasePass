@@ -86,6 +86,25 @@
                     </StackPanel>
                 </Expander.Content>
             </Expander>
+            <Expander Margin="0,5,0,5" HorizontalAlignment="Stretch">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Height="70">
+                        <TextBlock Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xE7B3;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Password Generator"/>
+                    </StackPanel>
+                </Expander.Header>
+                <Expander.Content>
+                    <Grid Margin="0,20,0,0" MaxWidth="600">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBox Margin="5" Grid.Row="0" Header="Possible characters in password" x:Name="pswd_chars" PlaceholderText="Some letters, digits and punctuation..." TextChanged="pswd_chars_TextChanged"/>
+                        <TextBox Margin="5" Grid.Row="1" Header="Password length (min: 8)" x:Name="pswd_length" PlaceholderText="Length of the password..." TextChanging="pswd_length_TextChanging" TextChanged="pswd_length_TextChanged"/>
+                    </Grid>
+                </Expander.Content>
+            </Expander>
 
             <controls:SetingsItemSeparator Header="Miscellaneous"/>
             <controls:SettingsControl Header="Quick Copy on Double Click">

@@ -1,7 +1,12 @@
 using EasePass.Settings;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace EasePass.Views
 {
@@ -16,7 +21,7 @@ namespace EasePass.Views
             length = AppSettings.GetSettingsAsInt(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength);
             string chars = AppSettings.GetSettings(AppSettingsValues.passwordChars, DefaultSettingsValues.PasswordChars);
             Random r = new Random();
-            while (!isSecure(password))
+            while (!isSecure(chars, length, password))
             {
                 if (password.Length > length) 
                     password = "";
@@ -30,7 +35,8 @@ namespace EasePass.Views
                 (chars.Any(char.IsLower) ? "- lowercase characters" + Environment.NewLine : "") +
                 (chars.Any(char.IsUpper) ? "- uppercase characters" + Environment.NewLine : "") +
                 (chars.Any(char.IsPunctuation) ? "- punctuation" + Environment.NewLine : "") + Environment.NewLine +
-                "Length: " + password.Length;
+                "Length: " + password.Length + Environment.NewLine + Environment.NewLine+
+                "This password is not known from leaks.";
         }
 
         public string GetPassword()
@@ -38,21 +44,24 @@ namespace EasePass.Views
             return passwordTB.Text;
         }
 
-        private bool isSecure(string password)
+        private bool isSecure(string chars, int length, string password)
         {
+            int maxpoints = 2; // 2 because of length and pwned passwords
+            if (chars.Any(char.IsDigit)) maxpoints++;
+            if (chars.Any(char.IsLower)) maxpoints++;
+            if (chars.Any(char.IsUpper)) maxpoints++;
+            if (chars.Any(char.IsPunctuation)) maxpoints++;
             int securepoints = 0;
             if (password.Any(char.IsDigit)) securepoints++;
             if (password.Any(char.IsLower)) securepoints++;
             if (password.Any(char.IsUpper)) securepoints++;
             if (password.Any(char.IsPunctuation) || password.Any(char.IsWhiteSpace)) securepoints++;
             if (password.Length >= length) securepoints++;
-            //if (!isPwned(password)) securepoints++;
-            return securepoints == 5; //6;
+            if (!isPwned(password)) securepoints++;
+            return securepoints == Math.Min(maxpoints, length);
         }
 
-        // Fix "GetSha1Hash" for checking password leaks online
-
-        /*private bool isPwned(string passwort)
+        private bool isPwned(string passwort)
         {
             try
             {
@@ -97,6 +106,19 @@ namespace EasePass.Views
         }
 
         private string GetSha1Hash(string input)
+        {
+            using (SHA1 sha1 = SHA1.Create())
+            {
+                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+                byte[] hashBytes = sha1.ComputeHash(inputBytes);
+
+                string hashHex = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+
+                return hashHex;
+            }
+        }
+
+        /*private string GetSha1Hash(string input)
         {
             using (var sha1 = new SHA1Managed())
             {
