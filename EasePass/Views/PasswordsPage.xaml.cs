@@ -163,9 +163,16 @@ namespace EasePass.Views
             });
         }
 
+        private async void DeletePasswordItem_Click(object sender, RoutedEventArgs e) => await DeletePasswordItem(SelectedItem);
+        private async void AddPasswordItem_Click(object sender, RoutedEventArgs e) => await AddPasswordItem();
+        private async void EditPasswordItem_Click(object sender, RoutedEventArgs e) => await EditPasswordItem(SelectedItem);
+        private async void Add2FAPasswordItem_Click(object sender, RoutedEventArgs e) => await Add2FAPasswordItem(SelectedItem);
+        private async void GenPassword_Click(object sender, RoutedEventArgs e) => await GeneratePassword();
+        private void Settings_Click(object sender, RoutedEventArgs e) => ShowSettingsPage();
+
         private void PasswordItemListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(passwordItemListView.Items.Count == 0)
+            if (passwordItemListView.Items.Count == 0)
             {
                 passwordShowArea.Visibility = Visibility.Collapsed;
             }
@@ -182,13 +189,12 @@ namespace EasePass.Views
                 ShowPasswordItem(pwItem);
             }
         }
+        private void PasswordItemListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
+        {
+            if (args.Items.Count > 0)
+                SaveData();
+        }
 
-        private async void DeletePasswordItem_Click(object sender, RoutedEventArgs e) => await DeletePasswordItem(SelectedItem);
-        private async void AddPasswordItem_Click(object sender, RoutedEventArgs e) => await AddPasswordItem();
-        private async void EditPasswordItem_Click(object sender, RoutedEventArgs e) => await EditPasswordItem(SelectedItem);
-        private async void Add2FAPasswordItem_Click(object sender, RoutedEventArgs e) => await Add2FAPasswordItem(SelectedItem);
-        private async void GenPassword_Click(object sender, RoutedEventArgs e) => await GeneratePassword();
-        private void Settings_Click(object sender, RoutedEventArgs e) => ShowSettingsPage();
 
         private void Searchbox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -260,46 +266,36 @@ namespace EasePass.Views
             searchbox.SetInfo(Convert.ToString(PasswordItems.Count));
         }
 
-        private void passwordItemListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
-        {
-            if(args.Items.Count > 0)
-                SaveData();
-        }
 
-        private void sortName_Click(object sender, RoutedEventArgs e)
+        private void SortName_Click(object sender, RoutedEventArgs e)
         {
             PasswordItems.Sort(ObservableCollectionExtension.ByDisplayName);
             Reload();
             SaveData();
             SetVis(sortname);
         }
-
-        private void sortUsername_Click(object sender, RoutedEventArgs e)
+        private void SortUsername_Click(object sender, RoutedEventArgs e)
         {
             PasswordItems.Sort(ObservableCollectionExtension.ByUsername);
             Reload();
             SaveData();
             SetVis(sortusername);
         }
-
-        private void sortNotes_Click(object sender, RoutedEventArgs e)
+        private void SortNotes_Click(object sender, RoutedEventArgs e)
         {
             PasswordItems.Sort(ObservableCollectionExtension.ByNotes);
             Reload();
             SaveData();
             SetVis(sortnotes);
         }
-
-        private void sortWebsite_Click(object sender, RoutedEventArgs e)
+        private void SortWebsite_Click(object sender, RoutedEventArgs e)
         {
             PasswordItems.Sort(ObservableCollectionExtension.ByWebsite);
             Reload();
             SaveData();
             SetVis(sortwebsite);
         }
-
-        private void PasswordItemListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
-        private void switchOrder_Click(object sender, RoutedEventArgs e)
+        private void SwitchOrder_Click(object sender, RoutedEventArgs e)
         {
             PasswordItems = PasswordItems.ReverseSelf();
             Reload();
