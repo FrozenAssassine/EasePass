@@ -4,6 +4,7 @@ using EasePass.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System;
 using System.Collections.ObjectModel;
 using System.Security;
 
@@ -79,7 +80,8 @@ namespace EasePass.Views
             }
 
             totpTB.Visibility = totpLB.Visibility = Visibility.Collapsed;
-            totpTokenUpdater.StopTimer();
+            if(totpTokenUpdater != null)
+                totpTokenUpdater.StopTimer();
         }
 
         private void passwordItemListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -154,9 +156,12 @@ namespace EasePass.Views
             if(searchbox.Text.Length == 0)
             {
                 passwordItemListView.ItemsSource = PasswordItems;
+                searchbox.SetInfo(Convert.ToString(PasswordItems.Count));
                 return;
             }
-            passwordItemListView.ItemsSource = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
+            var search_res = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
+            passwordItemListView.ItemsSource = search_res;
+            searchbox.SetInfo(Convert.ToString(search_res.Count));
         }
 
         private void Settings_Click(object sender, RoutedEventArgs e)
@@ -216,8 +221,7 @@ namespace EasePass.Views
             if (SelectedItem == null)
                 return;
 
-            var editItem = await new Add2FADialog().ShowAsync(SelectedItem);
-            if (editItem == null)
+            if (!await new Add2FADialog().ShowAsync(SelectedItem))
                 return;
 
             ShowPasswordItem(SelectedItem);
@@ -226,11 +230,10 @@ namespace EasePass.Views
 
         private async void GenPassword_Click(object sender, RoutedEventArgs e)
         {
+            //retunrs true when the regenerate button was pressed
             var res = await new GenPasswordDialog().ShowAsync();
-            if (res == null)
-                return;
-
-            GenPassword_Click(this, null);
+            if (res)
+                GenPassword_Click(this, null);
         }
         private void searchbox_PreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
@@ -239,6 +242,11 @@ namespace EasePass.Views
                 passwordItemListView.Focus(FocusState.Programmatic);
                 passwordItemListView.SelectedIndex = -1;
             }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            searchbox.SetInfo(Convert.ToString(PasswordItems.Count));
         }
     }
 }

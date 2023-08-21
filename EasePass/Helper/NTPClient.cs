@@ -40,7 +40,10 @@ namespace EasePass.Helper
             var milliseconds = (intPart * 1000) + ((fractPart * 1000) / 0x100000000L);
             var networkDateTime = (new DateTime(1900, 1, 1)).AddMilliseconds((long)milliseconds);
 
-            return networkDateTime.ToLocalTime();
+            DateTime onlineTime = networkDateTime.ToLocalTime();
+            TimeSpan ts = DateTime.Now - onlineTime;
+            if (ts.TotalSeconds < 5) return onlineTime;
+            return DateTime.Now;
         }
     }
 }

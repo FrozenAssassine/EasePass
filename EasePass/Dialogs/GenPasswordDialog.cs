@@ -7,21 +7,18 @@ namespace EasePass.Dialogs
 {
     internal class GenPasswordDialog
     {
-        public async Task<string> ShowAsync()
+        public async Task<bool> ShowAsync()
         {
-            var page = new GenPasswordPage();
             var dialog = new ContentDialog
             {
                 Title = "Password generator",
-                PrimaryButtonText = "Done",
-                CloseButtonText = "New",
+                PrimaryButtonText = "New",
+                CloseButtonText = "Done",
                 XamlRoot = App.m_window.Content.XamlRoot,
-                Content = page
+                Content = new GenPasswordPage()
             };
 
-            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
-                return null;
-            else return "x";
+            return await dialog.ShowAsync() == ContentDialogResult.Primary;
         }
     }
 }
