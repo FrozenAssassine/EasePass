@@ -287,5 +287,11 @@ namespace EasePass.Views
             Reload();
             SaveData();
         }
+
+        private void passwordItemListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
+        {
+            if(args.Items.Count > 0)
+                SaveData();
+        }
     }
 }
