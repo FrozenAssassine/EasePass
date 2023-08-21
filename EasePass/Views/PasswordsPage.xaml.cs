@@ -1,14 +1,12 @@
 using EasePass.Dialogs;
+using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Security;
 
 namespace EasePass.Views
@@ -52,25 +50,6 @@ namespace EasePass.Views
         {
             passwordItemListView.ItemsSource = null;
             passwordItemListView.ItemsSource = PasswordItems;
-        }
-
-        public void Sort()
-        {
-            Sort(PasswordItems, (PasswordManagerItem pmi1, PasswordManagerItem pmi2) =>
-            {
-                return pmi1.DisplayName.CompareTo(pmi2.DisplayName);
-            });
-        }
-
-        public static void Sort<T>(ObservableCollection<T> collection, Comparison<T> comparison)
-        {
-            var sortableList = new List<T>(collection);
-            sortableList.Sort(comparison);
-
-            for (int i = 0; i < sortableList.Count; i++)
-            {
-                collection.Move(collection.IndexOf(sortableList[i]), i);
-            }
         }
 
         private void LoadData(SecureString pw)
@@ -153,7 +132,7 @@ namespace EasePass.Views
                 {
                     ObservableCollection<PasswordManagerItem> items = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
                     passwordItemListView.ItemsSource = items;
-                    searchbox.SetInfo(Convert.ToString(items.Count));
+                    searchbox.SetInfo(items.Count.ToString());
                 }
                 
                 SaveData();
@@ -262,7 +241,7 @@ namespace EasePass.Views
 
         private async void GenPassword_Click(object sender, RoutedEventArgs e)
         {
-            //retunrs true when the regenerate button was pressed
+            //returns true when the regenerate button was pressed
             var res = await new GenPasswordDialog().ShowAsync();
             if (res)
                 GenPassword_Click(this, null);
@@ -283,7 +262,7 @@ namespace EasePass.Views
 
         private void sortAlphabetical_Click(object sender, RoutedEventArgs e)
         {
-            Sort();
+            PasswordItems.SortAlphabetic();
             Reload();
             SaveData();
         }
