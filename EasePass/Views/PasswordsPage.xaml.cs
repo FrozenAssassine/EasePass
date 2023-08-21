@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.Security;
+using System.Threading.Tasks;
 
 namespace EasePass.Views
 {
@@ -51,7 +52,6 @@ namespace EasePass.Views
             passwordItemListView.ItemsSource = null;
             passwordItemListView.ItemsSource = PasswordItems;
         }
-
         private void LoadData(SecureString pw)
         {
             var data = DatabaseHelper.LoadDatabase(pw);
@@ -60,12 +60,10 @@ namespace EasePass.Views
 
             PasswordItems = data;
         }
-
         public void SaveData()
         {
             DatabaseHelper.SaveDatabase(PasswordItems, masterPassword);
         }
-
         private void ShowPasswordItem(PasswordManagerItem item)
         {
             notesTB.Text = item.Notes;
@@ -90,8 +88,81 @@ namespace EasePass.Views
             if(totpTokenUpdater != null)
                 totpTokenUpdater.StopTimer();
         }
+        private async Task DeletePasswordItem(PasswordManagerItem item)
+        {
+            if (item == null)
+                return;
 
-        private void passwordItemListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+            if (await new DeleteConfirmationDialog().ShowAsync(item))
+            {
+                int index = passwordItemListView.SelectedIndex;
+                PasswordItemsManager.DeleteItem(PasswordItems, item);
+
+                if (passwordItemListView.Items.Count >= 1)
+                    passwordItemListView.SelectedIndex = index - 1 > 0 ? index - 1 : index + 1 < passwordItemListView.Items.Count ? index + 1 : 0;
+                else
+                    passwordShowArea.Visibility = Visibility.Collapsed;
+
+                //update searchbox:
+                if (searchbox.Text.Length > 0)
+                {
+                    ObservableCollection<PasswordManagerItem> items = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
+                    passwordItemListView.ItemsSource = items;
+                    searchbox.SetInfo(items.Count.ToString());
+                }
+
+                SaveData();
+            }
+        }
+        private async Task EditPasswordItem(PasswordManagerItem item)
+        {
+            if (item == null)
+                return;
+
+            var editItem = await new EditItemDialog().ShowAsync(item);
+            if (editItem == null)
+                return;
+
+            ShowPasswordItem(SelectedItem);
+            SaveData();
+        }
+        private async Task AddPasswordItem()
+        {
+            var newItem = await new AddItemDialog().ShowAsync();
+            if (newItem == null)
+                return;
+
+            PasswordItemsManager.AddItem(PasswordItems, newItem);
+            SaveData();
+        }
+        private async Task Add2FAPasswordItem(PasswordManagerItem item)
+        {
+            if (item == null)
+                return;
+
+            if (!await new Add2FADialog().ShowAsync(item))
+                return;
+
+            ShowPasswordItem(item);
+            SaveData();
+        }
+        private async Task GeneratePassword()
+        {
+            //returns true when the regenerate button was pressed
+            var res = await new GenPasswordDialog().ShowAsync();
+            if (res)
+                await GeneratePassword();
+        }
+        private void ShowSettingsPage()
+        {
+            App.m_frame.Navigate(typeof(SettingsPage), new SettingsNavigationParameters
+            {
+                PasswordPage = this,
+                PwItems = PasswordItems
+            });
+        }
+
+        private void PasswordItemListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(passwordItemListView.Items.Count == 0)
             {
@@ -111,58 +182,14 @@ namespace EasePass.Views
             }
         }
 
-        private async void DeletePasswordItem_Click(object sender, RoutedEventArgs e)
-        {
-            if (SelectedItem == null)
-                return;
+        private async void DeletePasswordItem_Click(object sender, RoutedEventArgs e) => await DeletePasswordItem(SelectedItem);
+        private async void AddPasswordItem_Click(object sender, RoutedEventArgs e) => await AddPasswordItem();
+        private async void EditPasswordItem_Click(object sender, RoutedEventArgs e) => await EditPasswordItem(SelectedItem);
+        private async void Add2FAPasswordItem_Click(object sender, RoutedEventArgs e) => await Add2FAPasswordItem(SelectedItem);
+        private async void GenPassword_Click(object sender, RoutedEventArgs e) => await GeneratePassword();
+        private void Settings_Click(object sender, RoutedEventArgs e) => ShowSettingsPage();
 
-            if (await new DeleteConfirmationDialog().ShowAsync(SelectedItem))
-            {
-                int index = passwordItemListView.SelectedIndex;
-                PasswordItemsManager.DeleteItem(PasswordItems, SelectedItem);
-
-                if (passwordItemListView.Items.Count >= 1)
-                    passwordItemListView.SelectedIndex = index - 1 > 0 ? index - 1 :
-                        index + 1 < passwordItemListView.Items.Count ? index + 1 : 0;
-                else
-                    passwordShowArea.Visibility = Visibility.Collapsed;
-
-                //update searchbox:
-                if(searchbox.Text.Length > 0)
-                {
-                    ObservableCollection<PasswordManagerItem> items = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
-                    passwordItemListView.ItemsSource = items;
-                    searchbox.SetInfo(items.Count.ToString());
-                }
-                
-                SaveData();
-            }
-        }
-
-        private async void AddPasswordItem_Click(object sender, RoutedEventArgs e)
-        {
-            var newItem = await new AddItemDialog().ShowAsync();
-            if (newItem == null)
-                return;
-
-            PasswordItemsManager.AddItem(PasswordItems, newItem);
-            SaveData();
-        }
-
-        private async void EditPasswordItem_Click(object sender, RoutedEventArgs e)
-        {
-            if (SelectedItem == null)
-                return;
-
-            var editItem = await new EditItemDialog().ShowAsync(SelectedItem);
-            if (editItem == null)
-                return;
-
-            ShowPasswordItem(SelectedItem);
-            SaveData();
-        }
-
-        private void searchbox_TextChanged(object sender, TextChangedEventArgs e)
+        private void Searchbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if(searchbox.Text.Length == 0)
             {
@@ -173,15 +200,6 @@ namespace EasePass.Views
             var search_res = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
             passwordItemListView.ItemsSource = search_res;
             searchbox.SetInfo(Convert.ToString(search_res.Count));
-        }
-
-        private void Settings_Click(object sender, RoutedEventArgs e)
-        {
-            App.m_frame.Navigate(typeof(SettingsPage), new SettingsNavigationParameters
-            {
-                PasswordPage = this,
-                PwItems = PasswordItems
-            });
         }
 
         private void AboutPage_Click(object sender, RoutedEventArgs e)
@@ -227,26 +245,7 @@ namespace EasePass.Views
             }
         }
 
-        private async void Add2FAPasswordItem_Click(object sender, RoutedEventArgs e)
-        {
-            if (SelectedItem == null)
-                return;
-
-            if (!await new Add2FADialog().ShowAsync(SelectedItem))
-                return;
-
-            ShowPasswordItem(SelectedItem);
-            SaveData();
-        }
-
-        private async void GenPassword_Click(object sender, RoutedEventArgs e)
-        {
-            //returns true when the regenerate button was pressed
-            var res = await new GenPasswordDialog().ShowAsync();
-            if (res)
-                GenPassword_Click(this, null);
-        }
-        private void searchbox_PreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+        private void Searchbox_PreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Down)
             {
@@ -267,10 +266,17 @@ namespace EasePass.Views
             SaveData();
         }
 
-        private void passwordItemListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
+        private void PasswordItemListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
         {
             if(args.Items.Count > 0)
                 SaveData();
         }
+
+
+        private void RightclickedItem_CopyUsername_Click(object sender, RoutedEventArgs e) => ClipboardHelper.Copy(((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem)?.Username);
+        private void RightclickedItem_CopyEmail_Click(object sender, RoutedEventArgs e) => ClipboardHelper.Copy(((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem)?.Email);
+        private void RightclickedItem_CopyPassword_Click(object sender, RoutedEventArgs e) => ClipboardHelper.Copy(((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem)?.Password);
+        private async void RightclickedItem_Delete_Click(object sender, RoutedEventArgs e) => await DeletePasswordItem((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem);
+        private async void RightclickedItem_Edit_Click(object sender, RoutedEventArgs e) => await EditPasswordItem((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem);
     }
 }
