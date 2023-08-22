@@ -7,7 +7,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Security;
 using System.Threading.Tasks;
 
@@ -269,10 +268,10 @@ namespace EasePass.Views
             }
         }
 
-        private void SortName_Click(object sender, RoutedEventArgs e) => SortClickAction(ObservableCollectionExtension.ByDisplayName, sortname);
-        private void SortUsername_Click(object sender, RoutedEventArgs e) => SortClickAction(ObservableCollectionExtension.ByUsername, sortusername);
-        private void SortNotes_Click(object sender, RoutedEventArgs e) => SortClickAction(ObservableCollectionExtension.ByNotes, sortnotes);
-        private void SortWebsite_Click(object sender, RoutedEventArgs e) => SortClickAction(ObservableCollectionExtension.ByWebsite, sortwebsite);
+        private void SortName_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByDisplayName, sortname);
+        private void SortUsername_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByUsername, sortusername);
+        private void SortNotes_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByNotes, sortnotes);
+        private void SortWebsite_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByWebsite, sortwebsite);
         private void SortClickAction(Comparison<PasswordManagerItem> comparison, FontIcon icon)
         {
             PasswordItems.Sort(comparison);
