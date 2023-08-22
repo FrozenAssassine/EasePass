@@ -4,6 +4,8 @@ using EasePass.Settings;
 using EasePass.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System.IO;
+using Windows.ApplicationModel;
 
 namespace EasePass
 {
@@ -19,6 +21,9 @@ namespace EasePass
         public MainWindow()
         {
             this.InitializeComponent();
+
+            Title = Package.Current.DisplayName;
+            this.AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets\\AppIcon\\appicon.ico"));
 
             inactivityHelper.InactivityStarted += InactivityHelper_InactivityStarted; 
 
