@@ -35,6 +35,7 @@ namespace EasePass.Views
             showIcons.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons);
             pswd_chars.Text = AppSettings.GetSettings(AppSettingsValues.passwordChars, DefaultSettingsValues.PasswordChars);
             pswd_length.Text = Convert.ToString(AppSettings.GetSettingsAsInt(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength));
+            disableLeakedPasswords.IsOn = !AppSettings.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -212,6 +213,11 @@ namespace EasePass.Views
         {
             if (pswd_chars.Text.Length == 0) AppSettings.SaveSettings(AppSettingsValues.passwordChars, DefaultSettingsValues.PasswordChars);
             else AppSettings.SaveSettings(AppSettingsValues.passwordChars, pswd_chars.Text);
+        }
+
+        private void disableLeakedPasswords_Toggled(object sender, RoutedEventArgs e)
+        {
+            AppSettings.SaveSettings(AppSettingsValues.disableLeakedPasswords, !disableLeakedPasswords.IsOn);
         }
     }
 }

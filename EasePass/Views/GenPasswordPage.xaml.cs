@@ -13,9 +13,12 @@ namespace EasePass.Views
 {
     public sealed partial class GenPasswordPage : Page
     {
+        readonly bool disableLeakedPasswords = false;
+
         public GenPasswordPage()
         {
             this.InitializeComponent();
+            disableLeakedPasswords = AppSettings.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords);
         }
 
         public async void GeneratePassword()
@@ -56,7 +59,8 @@ namespace EasePass.Views
 
         private async Task<bool> IsSecure(string chars, int length, string password)
         {
-            int maxpoints = 2; // 2 because of length and pwned passwords
+            int maxpoints = 1; // 1 because of length
+            if (!disableLeakedPasswords) maxpoints++;
             if (chars.Any(char.IsDigit)) maxpoints++;
             if (chars.Any(char.IsLower)) maxpoints++;
             if (chars.Any(char.IsUpper)) maxpoints++;
@@ -67,7 +71,7 @@ namespace EasePass.Views
             if (password.Any(char.IsUpper)) securepoints++;
             if (password.Any(char.IsPunctuation) || password.Any(char.IsWhiteSpace)) securepoints++;
             if (password.Length >= length) securepoints++;
-            if (!await IsPwned(password)) securepoints++;
+            if (!disableLeakedPasswords && !await IsPwned(password)) securepoints++;
             return securepoints == Math.Min(maxpoints, length);
         }
 
