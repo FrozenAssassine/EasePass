@@ -17,8 +17,8 @@ namespace EasePass.Views
         private ObservableCollection<PasswordManagerItem> PasswordItems = new ObservableCollection<PasswordManagerItem>();
         private PasswordManagerItem SelectedItem = null;
         public SecureString masterPassword = null;
-        private AutoBackupHelper autoBackupHelper = new AutoBackupHelper();
         public const int TOTP_SPACING = 3;
+        private readonly AutoBackupHelper autoBackupHelper = new AutoBackupHelper();
         private TOTPTokenUpdater totpTokenUpdater;
 
         public PasswordsPage()
@@ -149,8 +149,7 @@ namespace EasePass.Views
         private async Task GeneratePassword()
         {
             //returns true when the regenerate button was pressed
-            var res = await new GenPasswordDialog().ShowAsync();
-            if (res)
+            if (await new GenPasswordDialog().ShowAsync())
                 await GeneratePassword();
         }
         private void ShowSettingsPage()

@@ -12,7 +12,7 @@ namespace EasePass.Views
 {
     public sealed partial class GenPasswordPage : Page
     {
-        private int length = 15;
+        private readonly int  length = 15;
 
         public GenPasswordPage()
         {
@@ -21,7 +21,7 @@ namespace EasePass.Views
             length = AppSettings.GetSettingsAsInt(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength);
             string chars = AppSettings.GetSettings(AppSettingsValues.passwordChars, DefaultSettingsValues.PasswordChars);
             Random r = new Random();
-            while (!isSecure(chars, length, password))
+            while (!IsSecure(chars, length, password))
             {
                 if (password.Length > length) 
                     password = "";
@@ -44,7 +44,7 @@ namespace EasePass.Views
             return passwordTB.Text;
         }
 
-        private bool isSecure(string chars, int length, string password)
+        private bool IsSecure(string chars, int length, string password)
         {
             int maxpoints = 2; // 2 because of length and pwned passwords
             if (chars.Any(char.IsDigit)) maxpoints++;
@@ -57,11 +57,11 @@ namespace EasePass.Views
             if (password.Any(char.IsUpper)) securepoints++;
             if (password.Any(char.IsPunctuation) || password.Any(char.IsWhiteSpace)) securepoints++;
             if (password.Length >= length) securepoints++;
-            if (!isPwned(password)) securepoints++;
+            if (!IsPwned(password)) securepoints++;
             return securepoints == Math.Min(maxpoints, length);
         }
 
-        private bool isPwned(string passwort)
+        private bool IsPwned(string passwort)
         {
             try
             {
