@@ -9,13 +9,15 @@ namespace EasePass.Dialogs
     {
         public async Task<bool> ShowAsync()
         {
+            GenPasswordPage page = new GenPasswordPage();
+            page.GeneratePassword();
             var dialog = new ContentDialog
             {
                 Title = "Password generator",
                 PrimaryButtonText = "New",
                 CloseButtonText = "Done",
                 XamlRoot = App.m_window.Content.XamlRoot,
-                Content = new GenPasswordPage()
+                Content = page
             };
 
             return await dialog.ShowAsync() == ContentDialogResult.Primary;
