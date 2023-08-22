@@ -7,26 +7,36 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EasePass.Views
 {
     public sealed partial class GenPasswordPage : Page
     {
-        private readonly int  length = 15;
-
         public GenPasswordPage()
         {
             this.InitializeComponent();
+        }
+
+        public async void GeneratePassword()
+        {
+            await _GeneratePassword();
+            progressBar.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+        }
+
+        public async Task _GeneratePassword()
+        {
             string password = "";
-            length = AppSettings.GetSettingsAsInt(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength);
+            int length = AppSettings.GetSettingsAsInt(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength);
             string chars = AppSettings.GetSettings(AppSettingsValues.passwordChars, DefaultSettingsValues.PasswordChars);
             Random r = new Random();
-            while (!IsSecure(chars, length, password))
+            while (!await IsSecure(chars, length, password))
             {
-                if (password.Length > length) 
+                if (password.Length > length)
                     password = "";
                 password += chars[r.Next(chars.Length)];
             }
+
             passwordTB.Text = password;
 
             info.Text =
@@ -35,7 +45,7 @@ namespace EasePass.Views
                 (chars.Any(char.IsLower) ? "- lowercase characters" + Environment.NewLine : "") +
                 (chars.Any(char.IsUpper) ? "- uppercase characters" + Environment.NewLine : "") +
                 (chars.Any(char.IsPunctuation) ? "- punctuation" + Environment.NewLine : "") + Environment.NewLine +
-                "Length: " + password.Length + Environment.NewLine + Environment.NewLine+
+                "Length: " + password.Length + Environment.NewLine + Environment.NewLine +
                 "This password is not known from leaks.";
         }
 
@@ -44,7 +54,7 @@ namespace EasePass.Views
             return passwordTB.Text;
         }
 
-        private bool IsSecure(string chars, int length, string password)
+        private async Task<bool> IsSecure(string chars, int length, string password)
         {
             int maxpoints = 2; // 2 because of length and pwned passwords
             if (chars.Any(char.IsDigit)) maxpoints++;
@@ -57,25 +67,25 @@ namespace EasePass.Views
             if (password.Any(char.IsUpper)) securepoints++;
             if (password.Any(char.IsPunctuation) || password.Any(char.IsWhiteSpace)) securepoints++;
             if (password.Length >= length) securepoints++;
-            if (!IsPwned(password)) securepoints++;
+            if (!await IsPwned(password)) securepoints++;
             return securepoints == Math.Min(maxpoints, length);
         }
 
-        private bool IsPwned(string passwort)
+        private async Task<bool> IsPwned(string passwort)
         {
             try
             {
                 string hash = GetSha1Hash(passwort);
                 string hashPrefix = hash.Substring(0, 5);
-                string hashSufix = hash.Substring(5);
+                string hashSuffix = hash.Substring(5);
 
-                using (var client = new WebClient())
-                using (var data = client.OpenRead("https://api.pwnedpasswords.com/range/" + hashPrefix))
+                using (var client = new HttpClient())
+                using (var data = await client.GetAsync("https://api.pwnedpasswords.com/range/" + hashPrefix))
                 {
                     if (data == null)
                         return false;
 
-                    using (var reader = new StreamReader(data))
+                    using (var reader = new StreamReader(data.Content.ReadAsStream()))
                         while (!reader.EndOfStream)
                         {
                             var line = reader.ReadLine();
@@ -91,7 +101,7 @@ namespace EasePass.Views
                             var lineHashedSuffix = splitLIne[0];
                             var numberOfTimesPasswordPwned = int.Parse(splitLIne[1]);
 
-                            if (lineHashedSuffix == hashSufix)
+                            if (lineHashedSuffix == hashSuffix)
                                 return true;
                         }
 
@@ -117,22 +127,5 @@ namespace EasePass.Views
                 return hashHex;
             }
         }
-
-        /*private string GetSha1Hash(string input)
-        {
-            using (var sha1 = new SHA1Managed())
-            {
-                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(input));
-                var stringBuilder = new StringBuilder(hash.Length * 2);
-
-                foreach (var b in hash)
-                {
-                    // can be "x2" if you want lowercase
-                    stringBuilder.Append(b.ToString("X2"));
-                }
-
-                return stringBuilder.ToString();
-            }
-        }*/
     }
 }
