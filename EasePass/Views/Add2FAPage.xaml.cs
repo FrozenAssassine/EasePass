@@ -1,6 +1,7 @@
 using EasePass.Helper;
 using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
+using QRCodeScannerFor2FA;
 using System;
 using System.Text;
 
@@ -63,16 +64,16 @@ namespace EasePass.Views
 
         private void Screen_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            // TODO: Scan qr-code from somewhere on the screen.
-            //       The result is an url.
-            //       Call the function LoadFromUrl(string url)
+            MainWindow.CurrentInstance.AppWindow.Hide();
+            string res = ScannerManager.ScanScreen();
+            MainWindow.CurrentInstance.AppWindow.Show();
+            if (res != "") LoadFromUrl(res);
         }
 
         private void Webcam_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            // TODO: Scan qr-code using webcam.
-            //       The result is an url.
-            //       Call the function LoadFromUrl(string url)
+            string res = ScannerManager.ScanWebCam();
+            if (res != "") LoadFromUrl(res);
         }
 
         private void LoadFromUrl(string url)

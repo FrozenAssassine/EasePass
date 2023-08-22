@@ -7,14 +7,14 @@
     mc:Ignorable="d">
 
     <StackPanel>
-        <!--<Button x:Name="screen" Click="screen_Click" Margin="0,10,0,0" Content="QR Code from screen" HorizontalAlignment="Stretch"/>
-        <Button x:Name="webcam" Click="webcam_Click" Margin="0,10,0,0" Content="QR Code from webcam" HorizontalAlignment="Stretch"/>
+        <Button x:Name="screen" Click="Screen_Click" Margin="0,10,0,0" Content="QR Code from screen" HorizontalAlignment="Stretch"/>
+        <Button x:Name="webcam" Click="Webcam_Click" Margin="0,10,0,0" Content="QR Code from webcam" HorizontalAlignment="Stretch"/>
 
         <StackPanel Margin="0,20,0,0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Line X1="0" X2="50" Stroke="Gray" StrokeThickness="2" VerticalAlignment="Center"/>
             <TextBlock Text="or" Margin="10,0" VerticalAlignment="Center"/>
             <Line X1="0" X2="50" Stroke="Gray" StrokeThickness="2" VerticalAlignment="Center"/>
-        </StackPanel>-->
+        </StackPanel>
 
         <!--<Line Stretch="Fill" Margin="0,10,0,0" X1="0" X2="1" Stroke="Gray" StrokeThickness="2" />-->
 
