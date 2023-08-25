@@ -6,6 +6,8 @@
         public const string pSalt = "pSalt";
         public const string windowWidth = "windowWidth";
         public const string windowHeight = "windowHeight";
+        public const string windowLeft = "windowLeft";
+        public const string windowTop = "windowTop";
         public const string passwordLength = "passwordLength";
         public const string passwordChars = "passwordChars";
         public const string inactivityLogoutTime = "inactivityLogoutTime";
