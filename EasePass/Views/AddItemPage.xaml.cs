@@ -1,3 +1,5 @@
+using EasePass.Dialogs;
+using EasePass.Helper;
 using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
 
@@ -98,6 +100,12 @@ namespace EasePass.Views
         {
             secretTB.Password = "";
             Hide2FA();
+        }
+
+        private void exp2FA_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            qrcode.Source = QRCodeScanner.GenerateQRCode(TOTP.EncodeUrl(nameTB.Text, usernameTB.Text, secretTB.Password, TOTP.StringToHashMode((string)algorithmTB.SelectedItem), ConvertHelper.ToInt(digitsTB.Text, 6), ConvertHelper.ToInt(intervalTB.Text, 30)));
+            qrcode.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
         }
     }
 }

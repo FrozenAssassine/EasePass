@@ -1,3 +1,4 @@
+using EasePass.Extensions;
 using EasePass.Helper;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -34,6 +35,10 @@ namespace EasePass.AppWindows
         public ScreenScannerWindow()
         {
             this.InitializeComponent();
+            this.SetTopmost();
+            this.ExtendsContentIntoTitleBar = true;
+            this.SetTitleBar(panel);
+            this.AppWindow.Resize(new Windows.Graphics.SizeInt32(400, 70));
         }
 
         private void Window_Activated(object sender, WindowActivatedEventArgs args)
