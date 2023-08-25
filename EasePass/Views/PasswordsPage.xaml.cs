@@ -25,7 +25,6 @@ namespace EasePass.Views
         {
             this.InitializeComponent();
 
-            autoBackupHelper.Start(this, PasswordItems);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -59,6 +58,8 @@ namespace EasePass.Views
                 return;
 
             PasswordItems = data;
+
+            autoBackupHelper.Start(this, PasswordItems);
         }
         public void SaveData()
         {
