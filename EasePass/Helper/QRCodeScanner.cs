@@ -1,11 +1,17 @@
-﻿using System;
+﻿using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
+using Windows.Storage.Streams;
 using ZXing;
+using ZXing.QrCode;
+using ZXing.Windows.Compatibility;
 
 namespace EasePass.Helper
 {
@@ -27,6 +33,32 @@ namespace EasePass.Helper
         {
             var res = _reader.Decode(bmp);
             return res != null ? res.Text : "";
+        }
+
+        public static ImageSource GenerateQRCode(string content)
+        {
+            QrCodeEncodingOptions options = new QrCodeEncodingOptions()
+            {
+                DisableECI = true,
+                CharacterSet = "UTF-8",
+                Width = 500,
+                Height = 500
+            };
+
+            BarcodeWriter writer = new BarcodeWriter()
+            {
+                Format = BarcodeFormat.QR_CODE,
+                Options = options
+            };
+
+            BitmapImage bitmapImage = new BitmapImage();
+            using (MemoryStream stream = new MemoryStream())
+            {
+                writer.Write(content).Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                stream.Position = 0;
+                bitmapImage.SetSource(stream.AsRandomAccessStream());
+            }
+            return bitmapImage;
         }
     }
 

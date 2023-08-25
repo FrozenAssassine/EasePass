@@ -37,7 +37,18 @@ namespace EasePass.AppWindows
         {
             this.InitializeComponent();
 
+            this.ExtendsContentIntoTitleBar = true;
+
+            this.AppWindow.Resize(new Windows.Graphics.SizeInt32(620, 660));
+
+            this.AppWindow.Closing += AppWindow_Closing;
+
             scanner = new QRCodeScanner();
+        }
+
+        private async void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
+        {
+            await TerminateCaptureAsync();
         }
 
         private async void Close_Btn_Click(object sender, RoutedEventArgs e)
@@ -61,32 +72,36 @@ namespace EasePass.AppWindows
         {
             if (!closing)
             {
-                if (_capture != null) await TerminateCaptureAsync();
-
-                // get first capture device (change this if you want)
-                var sourceGroup = (await MediaFrameSourceGroup.FindAllAsync())[cameras.SelectedIndex];
-                if (sourceGroup == null)
-                    return; // not found!
-
-                // init capture & initialize
-                _capture = new MediaCapture();
-                await _capture.InitializeAsync(new MediaCaptureInitializationSettings
+                try
                 {
-                    SourceGroup = sourceGroup,
-                    SharingMode = MediaCaptureSharingMode.SharedReadOnly,
-                    MemoryPreference = MediaCaptureMemoryPreference.Cpu, // to ensure we get SoftwareBitmaps
-                });
+                    if (_capture != null) await TerminateCaptureAsync();
 
-                // initialize source
-                var source = _capture.FrameSources[sourceGroup.SourceInfos[0].Id];
+                    // get first capture device (change this if you want)
+                    var sourceGroup = (await MediaFrameSourceGroup.FindAllAsync())[cameras.SelectedIndex];
+                    if (sourceGroup == null)
+                        return; // not found!
 
-                // create reader to get frames & pass reader to player to visualize the webcam
-                _frameReader = await _capture.CreateFrameReaderAsync(source, MediaEncodingSubtypes.Bgra8);
-                _frameReader.FrameArrived += OnFrameArrived;
-                await _frameReader.StartAsync();
+                    // init capture & initialize
+                    _capture = new MediaCapture();
+                    await _capture.InitializeAsync(new MediaCaptureInitializationSettings
+                    {
+                        SourceGroup = sourceGroup,
+                        SharingMode = MediaCaptureSharingMode.SharedReadOnly,
+                        MemoryPreference = MediaCaptureMemoryPreference.Cpu, // to ensure we get SoftwareBitmaps
+                    });
 
-                _mediaSource = MediaSource.CreateFromMediaFrameSource(source);
-                player.Source = _mediaSource;
+                    // initialize source
+                    var source = _capture.FrameSources[sourceGroup.SourceInfos[0].Id];
+
+                    // create reader to get frames & pass reader to player to visualize the webcam
+                    _frameReader = await _capture.CreateFrameReaderAsync(source, MediaEncodingSubtypes.Bgra8);
+                    _frameReader.FrameArrived += OnFrameArrived;
+                    await _frameReader.StartAsync();
+
+                    _mediaSource = MediaSource.CreateFromMediaFrameSource(source);
+                    player.Source = _mediaSource;
+                }
+                catch { }
             }
         }
 
@@ -94,21 +109,25 @@ namespace EasePass.AppWindows
         {
             if (!closing)
             {
-                var bmp = sender.TryAcquireLatestFrame()?.VideoMediaFrame?.SoftwareBitmap;
-                if (bmp == null)
-                    return;
-
-                string result = scanner.Scan(bmp);
-                if (result != "")
+                try
                 {
-                    DispatcherQueue.TryEnqueue(async () =>
+                    var bmp = sender.TryAcquireLatestFrame()?.VideoMediaFrame?.SoftwareBitmap;
+                    if (bmp == null)
+                        return;
+
+                    string result = scanner.Scan(bmp);
+                    if (result != "")
                     {
-                        this.Result = result;
-                        closing = true;
-                        await TerminateCaptureAsync();
-                        this.Close();
-                    });
+                        DispatcherQueue.TryEnqueue(async () =>
+                        {
+                            this.Result = result;
+                            closing = true;
+                            await TerminateCaptureAsync();
+                            this.Close();
+                        });
+                    }
                 }
+                catch { }
             }
         }
 
