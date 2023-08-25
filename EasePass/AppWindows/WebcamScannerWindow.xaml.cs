@@ -38,24 +38,15 @@ namespace EasePass.AppWindows
             this.InitializeComponent();
 
             this.ExtendsContentIntoTitleBar = true;
-
             this.AppWindow.Resize(new Windows.Graphics.SizeInt32(620, 660));
-
             this.AppWindow.Closing += AppWindow_Closing;
-
             scanner = new QRCodeScanner();
+            WindowHelper.MakeToolWindow(this);
         }
 
         private async void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
         {
             await TerminateCaptureAsync();
-        }
-
-        private async void Close_Btn_Click(object sender, RoutedEventArgs e)
-        {
-            closing = true;
-            await TerminateCaptureAsync();
-            this.Close();
         }
 
         private async Task LoadCameras()

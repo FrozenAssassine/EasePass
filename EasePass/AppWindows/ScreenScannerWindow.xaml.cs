@@ -39,6 +39,7 @@ namespace EasePass.AppWindows
             this.ExtendsContentIntoTitleBar = true;
             this.SetTitleBar(panel);
             this.AppWindow.Resize(new Windows.Graphics.SizeInt32(400, 70));
+            WindowHelper.MakeToolWindow(this);
         }
 
         private void Window_Activated(object sender, WindowActivatedEventArgs args)
