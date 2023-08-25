@@ -2,6 +2,7 @@ using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Settings;
 using EasePass.Views;
+using EasePass.Extensions;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.IO;
@@ -34,6 +35,8 @@ namespace EasePass
             
             var width = AppSettings.GetSettingsAsInt(AppSettingsValues.windowWidth, 1100);
             var height = AppSettings.GetSettingsAsInt(AppSettingsValues.windowHeight, 700);
+            var left = AppSettings.GetSettingsAsInt(AppSettingsValues.windowLeft, -5000);
+            var top = AppSettings.GetSettingsAsInt(AppSettingsValues.windowTop, -5000);
 
             //when closing the window from a minimized state the size will be wrong:
             if (width < 200)
@@ -41,8 +44,16 @@ namespace EasePass
             if (height < 100)
                 height = 700;
 
-            var windowSize = new Windows.Graphics.SizeInt32(width, height);
-            this.AppWindow.Resize(windowSize);
+            if(left != -5000 || top != -5000)
+            {
+                var windowSize = new Windows.Graphics.RectInt32(left, top, width, height);
+                this.AppWindow.MoveAndResize(windowSize);
+            }
+            else
+            {
+                var windowSize = new Windows.Graphics.SizeInt32(width, height);
+                this.AppWindow.Resize(windowSize);
+            }
 
             this.AppWindow.Closing += AppWindow_Closing;
         }
@@ -61,6 +72,8 @@ namespace EasePass
         {
             AppSettings.SaveSettings(AppSettingsValues.windowWidth, this.AppWindow.Size.Width);
             AppSettings.SaveSettings(AppSettingsValues.windowHeight, this.AppWindow.Size.Height);
+            AppSettings.SaveSettings(AppSettingsValues.windowLeft, this.AppWindow.Position.X);
+            AppSettings.SaveSettings(AppSettingsValues.windowTop, this.AppWindow.Position.Y);
         }
 
         private void NavigateBack_Click(object sender, RoutedEventArgs e)
