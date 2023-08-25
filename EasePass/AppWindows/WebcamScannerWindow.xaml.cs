@@ -24,6 +24,7 @@ namespace EasePass.AppWindows
             this.InitializeComponent();
 
             this.ExtendsContentIntoTitleBar = true;
+            this.SetTitleBar(titlebar);
             this.AppWindow.Resize(new Windows.Graphics.SizeInt32(620, 660));
             this.AppWindow.Closing += AppWindow_Closing;
             scanner = new QRCodeScanner();

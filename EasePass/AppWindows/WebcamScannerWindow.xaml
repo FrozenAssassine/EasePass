@@ -14,14 +14,14 @@
     <StackPanel Padding="10">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <ComboBox x:Name="cameras" SelectionChanged="cameras_SelectionChanged" Grid.Column="0"/>
+            <Grid x:Name="titlebar" Grid.Column="1" />
         </Grid>
         <MediaPlayerElement
             x:Name="player"
-            Grid.Row="2"
             Width="600"
             Height="600"
             AutoPlay="True" />
