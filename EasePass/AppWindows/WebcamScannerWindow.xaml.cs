@@ -64,7 +64,11 @@ namespace EasePass.AppWindows
                 if (_capture != null) await TerminateCaptureAsync();
 
                 // get first capture device (change this if you want)
-                var sourceGroup = (await MediaFrameSourceGroup.FindAllAsync())[cameras.SelectedIndex];
+                var mediaframes = await MediaFrameSourceGroup.FindAllAsync();
+                if (mediaframes.Count == 0 || cameras.SelectedIndex < 0)
+                    return;
+
+                var sourceGroup = mediaframes[cameras.SelectedIndex];
                 if (sourceGroup == null)
                     return; // not found!
 
