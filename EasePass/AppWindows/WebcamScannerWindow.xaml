@@ -18,9 +18,6 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <ComboBox x:Name="cameras" SelectionChanged="cameras_SelectionChanged" Grid.Column="0"/>
-            <!--<Button Click="Close_Btn_Click" HorizontalAlignment="Right" Grid.Column="1">
-                <FontIcon Glyph="&#xE8BB;" />
-            </Button>-->
         </Grid>
         <MediaPlayerElement
             x:Name="player"
