@@ -133,6 +133,7 @@ namespace EasePass.Views
                 return;
 
             PasswordItemsManager.AddItem(PasswordItems, newItem);
+            Searchbox_TextChanged(searchbox, null);
             SaveData();
         }
         private async Task Add2FAPasswordItem(PasswordManagerItem item)
