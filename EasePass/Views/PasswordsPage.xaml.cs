@@ -209,6 +209,7 @@ namespace EasePass.Views
             if(searchbox.Text.Length == 0)
             {
                 passwordItemListView.ItemsSource = PasswordItems;
+                searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
                 return;
             }
             var search_res = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
