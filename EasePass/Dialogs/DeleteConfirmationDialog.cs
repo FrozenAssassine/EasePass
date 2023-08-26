@@ -1,4 +1,5 @@
-﻿using EasePass.Models;
+﻿using EasePass.Helper;
+using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace EasePass.Dialogs
     {
         public async Task<bool> ShowAsync(PasswordManagerItem deleteItem)
         {
-            var dialog = new ContentDialog
+            var dialog = new AutoLogoutContentDialog
             {
                 Title = "Confirm Deletion",
                 PrimaryButtonText = "Delete",

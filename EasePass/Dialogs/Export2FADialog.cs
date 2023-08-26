@@ -1,4 +1,5 @@
-﻿using EasePass.Models;
+﻿using EasePass.Helper;
+using EasePass.Models;
 using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -14,7 +15,7 @@ namespace EasePass.Dialogs
         public async Task ShowAsync(string qrcode)
         {
             var page = new Export2FAPage(qrcode);
-            var dialog = new ContentDialog
+            var dialog = new AutoLogoutContentDialog
             {
                 Title = "Export 2FA",
                 PrimaryButtonText = "Done",

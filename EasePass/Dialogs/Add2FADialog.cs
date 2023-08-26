@@ -1,4 +1,5 @@
-﻿using EasePass.Models;
+﻿using EasePass.Helper;
+using EasePass.Models;
 using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -11,7 +12,7 @@ namespace EasePass.Dialogs
         public async Task<bool> ShowAsync(PasswordManagerItem item)
         {
             var page = new Add2FAPage(item);
-            var dialog = new ContentDialog
+            var dialog = new AutoLogoutContentDialog
             {
                 Title = "Add 2FA to " + item.DisplayName,
                 PrimaryButtonText = "Add",

@@ -1,4 +1,5 @@
-﻿using EasePass.Views;
+﻿using EasePass.Helper;
+using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace EasePass.Dialogs
         {
             GenPasswordPage page = new GenPasswordPage();
             page.GeneratePassword();
-            var dialog = new ContentDialog
+            var dialog = new AutoLogoutContentDialog
             {
                 Title = "Password generator",
                 PrimaryButtonText = "New",

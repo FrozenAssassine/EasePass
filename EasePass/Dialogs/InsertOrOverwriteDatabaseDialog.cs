@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using EasePass.Helper;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace EasePass.Dialogs
         }
         public async Task<Result> ShowAsync()
         {
-            var dialog = new ContentDialog
+            var dialog = new AutoLogoutContentDialog
             {
                 Title = "Insert or Overwrite data",
                 PrimaryButtonText = "Insert",

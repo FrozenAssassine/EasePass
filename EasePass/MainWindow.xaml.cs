@@ -73,6 +73,7 @@ namespace EasePass
             if(this.naivgationFrame.CurrentSourcePageType != typeof(LoginPage) &&
                 this.naivgationFrame.CurrentSourcePageType != typeof(RegisterPage))
             {
+                AutoLogoutContentDialog.InactivityStarted();
                 this.naivgationFrame.Navigate(typeof(LoginPage));
                 InfoMessages.AutomaticallyLoggedOut();
             }

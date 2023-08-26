@@ -35,6 +35,7 @@ namespace EasePass.Views
                 }
 
                 App.m_frame.Navigate(typeof(PasswordsPage), pw);
+                AutoLogoutContentDialog.InactivityStopped();
                 return;
             }
             
