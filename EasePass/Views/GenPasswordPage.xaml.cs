@@ -15,6 +15,8 @@ namespace EasePass.Views
     {
         readonly bool disableLeakedPasswords = false;
 
+        bool offline = false;
+
         public GenPasswordPage()
         {
             this.InitializeComponent();
@@ -49,7 +51,7 @@ namespace EasePass.Views
                 (chars.Any(char.IsUpper) ? "- uppercase characters" + Environment.NewLine : "") +
                 (chars.Any(char.IsPunctuation) ? "- punctuation" + Environment.NewLine : "") + Environment.NewLine +
                 "Length: " + password.Length + Environment.NewLine + Environment.NewLine +
-                "This password is not known from leaks.";
+                (offline || disableLeakedPasswords ? "" : "This password is not known from leaks.");
         }
 
         public string GetPassword()
@@ -87,7 +89,10 @@ namespace EasePass.Views
                 using (var data = await client.GetAsync("https://api.pwnedpasswords.com/range/" + hashPrefix))
                 {
                     if (data == null)
+                    {
+                        offline = true;
                         return false;
+                    }
 
                     using (var reader = new StreamReader(data.Content.ReadAsStream()))
                         while (!reader.EndOfStream)
@@ -106,7 +111,10 @@ namespace EasePass.Views
                             var numberOfTimesPasswordPwned = int.Parse(splitLIne[1]);
 
                             if (lineHashedSuffix == hashSuffix)
+                            {
+                                offline = false;
                                 return true;
+                            }
                         }
 
                 }
@@ -115,6 +123,7 @@ namespace EasePass.Views
             }
             catch
             {
+                offline = true;
                 return false;
             }
         }
