@@ -2,11 +2,12 @@ using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Settings;
 using EasePass.Views;
-using EasePass.Extensions;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.IO;
 using Windows.ApplicationModel;
+using System;
+using Microsoft.UI.Windowing;
 
 namespace EasePass
 {
@@ -32,7 +33,16 @@ namespace EasePass
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(titleBar);
             ShowBackArrow = false;
-            
+            RestoreSettings();
+
+            this.AppWindow.Closing += AppWindow_Closing;
+        }
+
+        private void RestoreSettings()
+        {
+            var windowState = (OverlappedPresenterState)Enum.Parse(typeof(OverlappedPresenterState), AppSettings.GetSettings(AppSettingsValues.windowState, "2"));
+            WindowStateHelper.SetWindowState(this, windowState);
+
             var width = AppSettings.GetSettingsAsInt(AppSettingsValues.windowWidth, 1100);
             var height = AppSettings.GetSettingsAsInt(AppSettingsValues.windowHeight, 700);
             var left = AppSettings.GetSettingsAsInt(AppSettingsValues.windowLeft, -5000);
@@ -44,7 +54,7 @@ namespace EasePass
             if (height < 100)
                 height = 700;
 
-            if(left != -5000 || top != -5000)
+            if (left != -5000 || top != -5000)
             {
                 var windowSize = new Windows.Graphics.RectInt32(left, top, width, height);
                 this.AppWindow.MoveAndResize(windowSize);
@@ -54,10 +64,7 @@ namespace EasePass
                 var windowSize = new Windows.Graphics.SizeInt32(width, height);
                 this.AppWindow.Resize(windowSize);
             }
-
-            this.AppWindow.Closing += AppWindow_Closing;
         }
-
         private void InactivityHelper_InactivityStarted()
         {
             if(this.naivgationFrame.CurrentSourcePageType != typeof(LoginPage) &&
@@ -70,10 +77,12 @@ namespace EasePass
 
         private void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
         {
+            //save settings:
             AppSettings.SaveSettings(AppSettingsValues.windowWidth, this.AppWindow.Size.Width);
             AppSettings.SaveSettings(AppSettingsValues.windowHeight, this.AppWindow.Size.Height);
             AppSettings.SaveSettings(AppSettingsValues.windowLeft, this.AppWindow.Position.X);
             AppSettings.SaveSettings(AppSettingsValues.windowTop, this.AppWindow.Position.Y);
+            AppSettings.SaveSettings(AppSettingsValues.windowState, WindowStateHelper.GetWindowState(this));
         }
 
         private void NavigateBack_Click(object sender, RoutedEventArgs e)

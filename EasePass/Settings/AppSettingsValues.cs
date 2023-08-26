@@ -17,5 +17,6 @@
         public const string autoBackupDBTime = "autoBackupDBTime";
         public const string showIcons = "showIcons";
         public const string disableLeakedPasswords = "disableLeakedPasswords";
+        public const string windowState = "windowState";
     }
 }
