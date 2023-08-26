@@ -47,12 +47,10 @@ namespace EasePass.Helper
             {
                 if (!url.ToLower().StartsWith("otpauth://totp/")) throw new InvalidCastException("Unknown url format!");
                 url = url.Substring("otpauth://totp/".Length);
-                int sepInd = url.IndexOf(':');
-                string issuerpart = url.Substring(0, (sepInd < 0 ? url.ToLower().IndexOf("%3a") : sepInd));
-                string Issuer = DecodeUrlStr(issuerpart);
-                url = url.Substring(issuerpart.Length + (sepInd < 0 ? 2 : 0) + 1);
                 string usernamepart = url.Substring(0, url.IndexOf('?'));
-                string Username = DecodeUrlStr(usernamepart);
+                string[] unparts = usernamepart.Split(new string[] { ":", "%3a" }, StringSplitOptions.RemoveEmptyEntries);
+                string Issuer = DecodeUrlStr(unparts[0]);
+                string Username = unparts.Length > 1 ? DecodeUrlStr(usernamepart) : "";
                 url = url.Substring(usernamepart.Length + 1);
                 string Secret = "";
                 HashMode Algorithm = HashMode.SHA1;
@@ -60,7 +58,7 @@ namespace EasePass.Helper
                 int Period = 30;
                 while (true)
                 {
-                    if (url.Contains("&"))
+                    if (!url.Contains("&"))
                     {
                         if (url.Length <= 3)
                             break;

@@ -1,3 +1,4 @@
+using EasePass.AppWindows;
 using EasePass.Helper;
 using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
@@ -63,16 +64,22 @@ namespace EasePass.Views
 
         private void Screen_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            // TODO: Scan qr-code from somewhere on the screen.
-            //       The result is an url.
-            //       Call the function LoadFromUrl(string url)
+            ScreenScannerWindow screen = new ScreenScannerWindow();
+            screen.Closed += ScannerWindow_Closed;
+            screen.AppWindow.Show();
         }
 
         private void Webcam_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            // TODO: Scan qr-code using webcam.
-            //       The result is an url.
-            //       Call the function LoadFromUrl(string url)
+            WebcamScannerWindow webcam = new WebcamScannerWindow();
+            webcam.Closed += ScannerWindow_Closed;
+            webcam.AppWindow.Show();
+        }
+
+        private void ScannerWindow_Closed(object sender, Microsoft.UI.Xaml.WindowEventArgs args)
+        {
+            if (!string.IsNullOrEmpty(((IScannerWindow)sender).Result))
+                LoadFromUrl(((IScannerWindow)sender).Result);
         }
 
         private void LoadFromUrl(string url)
