@@ -1,7 +1,5 @@
 ﻿using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using System;
-using System.Runtime.InteropServices;
 
 namespace EasePass.Helper
 {

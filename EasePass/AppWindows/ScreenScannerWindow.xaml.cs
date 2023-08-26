@@ -1,13 +1,10 @@
 using EasePass.Extensions;
 using EasePass.Helper;
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Graphics.Imaging;
 using WindowsDisplayAPI;
