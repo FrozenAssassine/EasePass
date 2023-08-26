@@ -109,7 +109,6 @@ namespace EasePass.Views
                 {
                     ObservableCollection<PasswordManagerItem> items = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
                     passwordItemListView.ItemsSource = items;
-                    searchbox.SetInfo(items.Count.ToString());
                 }
 
                 SaveData();
@@ -210,12 +209,11 @@ namespace EasePass.Views
             if(searchbox.Text.Length == 0)
             {
                 passwordItemListView.ItemsSource = PasswordItems;
-                searchbox.SetInfo(Convert.ToString(PasswordItems.Count));
                 return;
             }
             var search_res = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
             passwordItemListView.ItemsSource = search_res;
-            searchbox.SetInfo(Convert.ToString(search_res.Count));
+            searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
         }
         private void Searchbox_PreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
@@ -228,7 +226,7 @@ namespace EasePass.Views
       
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            searchbox.SetInfo(Convert.ToString(PasswordItems.Count));
+            searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
         }
         private void Page_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {

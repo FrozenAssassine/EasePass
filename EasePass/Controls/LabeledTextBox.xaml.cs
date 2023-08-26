@@ -15,13 +15,7 @@ namespace EasePass.Controls
             this.InitializeComponent();
         }
 
-        public void SetInfo(string str)
-        {
-            if (infoLabel != null)
-            {
-                infoLabel.Text = str;
-            }
-        }
+        public string InfoLabel { get => infoLabel.Text; set { if (infoLabel != null) infoLabel.Text = value; } }
 
         protected override void OnApplyTemplate()
         {
