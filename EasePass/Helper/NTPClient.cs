@@ -10,6 +10,8 @@ namespace EasePass.Helper
 
         public static DateTime GetTime(string NTP_Server = "", int timeout = 3000)
         {
+            return DateTime.Now; // I disabled online time to prevent flickering through fast switching between online time and local time.
+
             if (NTP_Server.Length == 0) 
                 NTP_Server = DEFAULT_SERVER;
 
