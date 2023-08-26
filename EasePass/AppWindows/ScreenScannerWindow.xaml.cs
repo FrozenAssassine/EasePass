@@ -56,7 +56,7 @@ namespace EasePass.AppWindows
                     Result = scanner.Scan(softwareBitmap);
                     if (Result != "")
                     {
-                        DispatcherQueue.TryEnqueue(async () =>
+                        DispatcherQueue.TryEnqueue(() =>
                         {
                             timer.Stop();
                             this.Close();
