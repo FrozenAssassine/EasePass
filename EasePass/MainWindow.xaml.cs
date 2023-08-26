@@ -19,10 +19,13 @@ namespace EasePass
         public Frame MainFrame => naivgationFrame;
         public bool ShowBackArrow { get => navigateBackButton.Visibility == Visibility.Visible; set => navigateBackButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
 
+        public static MainWindow CurrentInstance = null;
 
         public MainWindow()
         {
             this.InitializeComponent();
+
+            MainWindow.CurrentInstance = this;
 
             Title = Package.Current.DisplayName;
             this.AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets\\AppIcon\\appicon.ico"));

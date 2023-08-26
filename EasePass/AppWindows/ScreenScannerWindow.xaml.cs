@@ -1,11 +1,13 @@
 using EasePass.Extensions;
 using EasePass.Helper;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using Windows.Graphics.Imaging;
 using WindowsDisplayAPI;
 
@@ -26,6 +28,8 @@ namespace EasePass.AppWindows
             this.SetTitleBar(panel);
             this.AppWindow.Resize(new Windows.Graphics.SizeInt32(400, 70));
             this.AppWindow.Closing += AppWindow_Closing;
+            InteropHelper.SetWindowLongPtr(InteropHelper.GetWindowHandle(this), InteropHelper.GWLP_HWNDPARENT, InteropHelper.GetWindowHandle(MainWindow.CurrentInstance));
+            (this.AppWindow.Presenter as OverlappedPresenter).IsModal = true;
 
             WindowHelper.MakeToolWindow(this);
         }
@@ -56,7 +60,7 @@ namespace EasePass.AppWindows
                     Result = scanner.Scan(softwareBitmap);
                     if (Result != "")
                     {
-                        DispatcherQueue.TryEnqueue(async () =>
+                        DispatcherQueue.TryEnqueue(() =>
                         {
                             timer.Stop();
                             this.Close();

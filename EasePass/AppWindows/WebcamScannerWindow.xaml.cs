@@ -7,6 +7,7 @@ using Windows.Media.Core;
 using System.Threading.Tasks;
 using Windows.Media.MediaProperties;
 using EasePass.Helper;
+using Microsoft.UI.Windowing;
 
 namespace EasePass.AppWindows
 {
@@ -27,6 +28,8 @@ namespace EasePass.AppWindows
             this.SetTitleBar(titlebar);
             this.AppWindow.Resize(new Windows.Graphics.SizeInt32(620, 660));
             this.AppWindow.Closing += AppWindow_Closing;
+            InteropHelper.SetWindowLongPtr(InteropHelper.GetWindowHandle(this), InteropHelper.GWLP_HWNDPARENT, InteropHelper.GetWindowHandle(MainWindow.CurrentInstance));
+            (this.AppWindow.Presenter as OverlappedPresenter).IsModal = true;
             scanner = new QRCodeScanner();
             WindowHelper.MakeToolWindow(this);
         }
