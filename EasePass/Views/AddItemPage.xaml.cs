@@ -2,6 +2,8 @@ using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
+using Windows.UI;
 
 namespace EasePass.Views
 {
@@ -9,16 +11,23 @@ namespace EasePass.Views
     {
         PasswordManagerItem input = null;
 
-        public AddItemPage()
+        PasswordsPage.PasswordExists pe;
+
+        Brush original = null;
+
+        public AddItemPage(PasswordsPage.PasswordExists pe)
         {
             this.InitializeComponent();
-
+            original = pwTB.BorderBrush;
+            this.pe = pe;
             Hide2FA();
         }
 
-        public AddItemPage(PasswordManagerItem input = null)
+        public AddItemPage(PasswordsPage.PasswordExists pe, PasswordManagerItem input = null)
         {
             this.InitializeComponent();
+            original = pwTB.Foreground;
+            this.pe = pe;
 
             if (input == null)
                 return;
@@ -106,6 +115,18 @@ namespace EasePass.Views
         {
             qrcode.Source = QRCodeScanner.GenerateQRCode(TOTP.EncodeUrl(nameTB.Text, usernameTB.Text, secretTB.Password, TOTP.StringToHashMode((string)algorithmTB.SelectedItem), ConvertHelper.ToInt(digitsTB.Text, 6), ConvertHelper.ToInt(intervalTB.Text, 30)));
             qrcode.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+        }
+
+        private void pwTB_PasswordChanged(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            if (pe(pwTB.Password))
+            {
+                pwTB.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
+            }
+            else
+            {
+                pwTB.BorderBrush = original;
+            }
         }
     }
 }

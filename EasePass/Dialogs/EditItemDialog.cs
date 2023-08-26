@@ -9,9 +9,9 @@ namespace EasePass.Dialogs
 {
     internal class EditItemDialog
     {
-        public async Task<PasswordManagerItem> ShowAsync(PasswordManagerItem item)
+        public async Task<PasswordManagerItem> ShowAsync(PasswordsPage.PasswordExists pe, PasswordManagerItem item)
         {
-            var page = new AddItemPage(item);
+            var page = new AddItemPage(pe, item);
             var dialog = new AutoLogoutContentDialog
             {
                 Title = "Edit item",

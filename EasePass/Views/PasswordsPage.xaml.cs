@@ -14,6 +14,8 @@ namespace EasePass.Views
 {
     public sealed partial class PasswordsPage : Page
     {
+        public delegate bool PasswordExists(string password);
+
         private ObservableCollection<PasswordManagerItem> PasswordItems = new ObservableCollection<PasswordManagerItem>();
         private PasswordManagerItem SelectedItem = null;
         public SecureString masterPassword = null;
@@ -25,6 +27,15 @@ namespace EasePass.Views
         {
             this.InitializeComponent();
 
+        }
+
+        public bool PasswordAlreadyExists(string password)
+        {
+            foreach(var item in PasswordItems)
+            {
+                if (item.Password == password) return true;
+            }
+            return false;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -119,7 +130,7 @@ namespace EasePass.Views
             if (item == null)
                 return;
 
-            var editItem = await new EditItemDialog().ShowAsync(item);
+            var editItem = await new EditItemDialog().ShowAsync(PasswordAlreadyExists, item);
             if (editItem == null)
                 return;
 
@@ -128,7 +139,7 @@ namespace EasePass.Views
         }
         private async Task AddPasswordItem()
         {
-            var newItem = await new AddItemDialog().ShowAsync();
+            var newItem = await new AddItemDialog().ShowAsync(PasswordAlreadyExists);
             if (newItem == null)
                 return;
 
