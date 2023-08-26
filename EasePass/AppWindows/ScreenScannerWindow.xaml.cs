@@ -48,7 +48,7 @@ namespace EasePass.AppWindows
             {
                 Bitmap bmp = new Bitmap(display.CurrentSetting.Resolution.Width, display.CurrentSetting.Resolution.Height);
                 Graphics g = Graphics.FromImage(bmp);
-                g.CopyFromScreen(display.CurrentSetting.Position, display.CurrentSetting.Position, display.CurrentSetting.Resolution);
+                g.CopyFromScreen(display.CurrentSetting.Position, new Point(0, 0), display.CurrentSetting.Resolution);
                 g.Flush();
                 g.Dispose();
                 using (var stream = new Windows.Storage.Streams.InMemoryRandomAccessStream())
