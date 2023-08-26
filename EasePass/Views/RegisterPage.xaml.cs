@@ -34,6 +34,8 @@ namespace EasePass.Views
             {
                 pw.AppendChar(character);
             }
+
+            DatabaseHelper.CreateInitialDatabaseFile(pw);
             App.m_frame.Navigate(typeof(PasswordsPage), pw);
         }
 

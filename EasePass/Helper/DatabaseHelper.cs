@@ -35,7 +35,7 @@ namespace EasePass.Helper
             }
         }
 
-        private static string ReadFile(string path, SecureString pw, bool checkOldFileExt)
+        private static string ReadFile(string path, SecureString pw, bool checkOldFileExtension)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace EasePass.Helper
 
                 //Alternative open old .db file:
                 var oldPath = Path.ChangeExtension(path, ".db");
-                if (checkOldFileExt && File.Exists(oldPath) && !File.Exists(path)) 
+                if (checkOldFileExtension && File.Exists(oldPath) && !File.Exists(path)) 
                 {
                     fileData = File.ReadAllBytes(oldPath);
                     File.Delete(oldPath);
@@ -93,6 +93,12 @@ namespace EasePass.Helper
                 return null;
 
             return LoadItems(data);
+        }
+        
+        //Used to create a file for the database on the very first start, so no error will be send, that the database was not found:
+        public static void CreateInitialDatabaseFile(SecureString pw)
+        {
+            SaveDatabase(new ObservableCollection<PasswordManagerItem>(), pw);
         }
     }
 }
