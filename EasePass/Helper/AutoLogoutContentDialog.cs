@@ -15,17 +15,8 @@ namespace EasePass.Helper
         {
             for(int i = 0; i < Dialogs.Count;i++)
             {
-                //dialog.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
                 Dialogs[i].Hide();
             }
-        }
-
-        public static void InactivityStopped()
-        {
-            //foreach(AutoLogoutContentDialog dialog in Dialogs)
-            //{
-            //    dialog.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
-            //}
         }
 
         public AutoLogoutContentDialog() : base()
