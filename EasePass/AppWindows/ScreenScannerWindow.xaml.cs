@@ -21,9 +21,6 @@ namespace EasePass.AppWindows
         private DispatcherTimer timer = new DispatcherTimer();
         private QRCodeScanner scanner;
 
-        int width = 0;
-        int height = 0;
-
         public ScreenScannerWindow()
         {
             this.InitializeComponent();
@@ -39,10 +36,6 @@ namespace EasePass.AppWindows
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-            // TODO init width and height with screen bounds
-            width = 2000;
-            height = 2000;
-
             scanner = new QRCodeScanner();
             timer.Interval = new TimeSpan(0,0,5);
             timer.Tick += Timer_Tick; 
@@ -51,24 +44,27 @@ namespace EasePass.AppWindows
 
         private async void Timer_Tick(object sender, object e)
         {
-            Bitmap bmp = new Bitmap(width, height);
-            Graphics g = Graphics.FromImage(bmp);
-            g.CopyFromScreen(new System.Drawing.Point(0, 0), new System.Drawing.Point(0, 0), new System.Drawing.Size(width, height));
-            g.Flush();
-            g.Dispose();
-            using (var stream = new Windows.Storage.Streams.InMemoryRandomAccessStream())
+            foreach(Display display in Display.GetDisplays())
             {
-                bmp.Save(stream.AsStream(), ImageFormat.Bmp);
-                BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
-                SoftwareBitmap softwareBitmap = await decoder.GetSoftwareBitmapAsync();
-                Result = scanner.Scan(softwareBitmap);
-                if (Result != "")
+                Bitmap bmp = new Bitmap(display.CurrentSetting.Resolution.Width, display.CurrentSetting.Resolution.Height);
+                Graphics g = Graphics.FromImage(bmp);
+                g.CopyFromScreen(display.CurrentSetting.Position, display.CurrentSetting.Position, display.CurrentSetting.Resolution);
+                g.Flush();
+                g.Dispose();
+                using (var stream = new Windows.Storage.Streams.InMemoryRandomAccessStream())
                 {
-                    DispatcherQueue.TryEnqueue(async () =>
+                    bmp.Save(stream.AsStream(), ImageFormat.Bmp);
+                    BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
+                    SoftwareBitmap softwareBitmap = await decoder.GetSoftwareBitmapAsync();
+                    Result = scanner.Scan(softwareBitmap);
+                    if (Result != "")
                     {
-                        timer.Stop();
-                        this.Close();
-                    });
+                        DispatcherQueue.TryEnqueue(async () =>
+                        {
+                            timer.Stop();
+                            this.Close();
+                        });
+                    }
                 }
             }
         }
