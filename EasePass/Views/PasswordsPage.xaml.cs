@@ -289,12 +289,14 @@ namespace EasePass.Views
             Reload();
             SaveData();
             SetVis(icon);
+            Searchbox_TextChanged(this, null);
         }
         private void SwitchOrder_Click(object sender, RoutedEventArgs e)
         {
             PasswordItems = PasswordItems.ReverseSelf();
             Reload();
             SaveData();
+            Searchbox_TextChanged(this, null);
         }
 
         private void RightclickedItem_CopyUsername_Click(object sender, RoutedEventArgs e) => ClipboardHelper.Copy(((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem)?.Username);
