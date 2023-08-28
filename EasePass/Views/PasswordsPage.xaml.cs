@@ -78,6 +78,9 @@ namespace EasePass.Views
         }
         private void ShowPasswordItem(PasswordManagerItem item)
         {
+            if (item == null)
+                return;
+
             notesTB.Text = item.Notes;
             pwTB.Text = item.Password;
             emailTB.Text = item.Email;

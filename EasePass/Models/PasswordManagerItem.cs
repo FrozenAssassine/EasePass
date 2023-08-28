@@ -38,6 +38,8 @@ namespace EasePass.Models
             {
                 _DisplayName = value;
                 NotifyPropertyChanged("DisplayName");
+                NotifyPropertyChanged("Website");
+                NotifyPropertyChanged("FirstChar");
             }
         }
         [JsonIgnore]
@@ -48,13 +50,17 @@ namespace EasePass.Models
             set
             {
                 _Website = value;
-                if (!AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons)) return;
+                if (!AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons))
+                    return;
                 if (!string.IsNullOrEmpty(WebsiteFix))
                 {
                     try
                     {
                         Icon = new BitmapImage(new Uri(WebsiteFix + "/favicon.ico"));
                         Icon.ImageFailed += Icon_ImageFailed;
+                        NotifyPropertyChanged("Icon");
+                        NotifyPropertyChanged("ImgVisibility");
+                        NotifyPropertyChanged("CharVisibility");
                         return;
                     }
                     catch { }
@@ -72,8 +78,11 @@ namespace EasePass.Models
         {
             get
             {
-                if (string.IsNullOrEmpty(Website)) return "";
-                if (Website.ToLower().StartsWith("http")) return Website; else return "http://" + Website;
+                if (string.IsNullOrEmpty(Website)) 
+                    return "";
+                if (Website.ToLower().StartsWith("http")) 
+                    return Website;  
+                return "http://" + Website;
             }
         }
 
@@ -89,24 +98,10 @@ namespace EasePass.Models
         }
 
         [JsonIgnore]
-        public Visibility ImgVisibility
-        {
-            get
-            {
-                return AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons) && Icon != null ? Visibility.Visible : Visibility.Collapsed;
-            }
-            set { }
-        }
+        public Visibility ImgVisibility => AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons) && Icon != null ? Visibility.Visible : Visibility.Collapsed;
 
         [JsonIgnore]
-        public Visibility CharVisibility
-        {
-            get
-            {
-                return ImgVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-            }
-            set { }
-        }
+        public Visibility CharVisibility => ImgVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
 
         [JsonIgnore]
         public Brush BackColor
@@ -117,7 +112,6 @@ namespace EasePass.Models
                 byte[] bytes = md5Hasher.ComputeHash(Encoding.UTF8.GetBytes(DisplayName));
                 return new SolidColorBrush(Color.FromArgb(255, bytes[0], bytes[1], bytes[2]));
             }
-            set { }
         }
 
         [JsonIgnore]
@@ -136,19 +130,13 @@ namespace EasePass.Models
         {
             get
             {
+                if(DisplayName.Length == 0)
+                    return "";
                 return DisplayName.Substring(0, 1);
             }
-            set { }
         }
 
         [JsonIgnore]
-        public Visibility ContainsTOTP
-        {
-            get
-            {
-                return ConvertHelper.BoolToVisibility(!string.IsNullOrEmpty(Secret));
-            }
-            set { }
-        }
+        public Visibility ContainsTOTP => ConvertHelper.BoolToVisibility(!string.IsNullOrEmpty(Secret));
     }
 }
