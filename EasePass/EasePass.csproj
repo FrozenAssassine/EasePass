@@ -28,6 +28,8 @@
     <PackageProjectUrl>http://easepass.frozenassassine.de/</PackageProjectUrl>
     <ApplicationIcon>Assets\AppIcon\appicon.ico</ApplicationIcon>
     <UseWindowsForms>False</UseWindowsForms>
+    <AssemblyVersion>1.1.0</AssemblyVersion>
+    <Version>1.1.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Core\**" />
