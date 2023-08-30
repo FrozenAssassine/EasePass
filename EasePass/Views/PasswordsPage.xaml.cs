@@ -93,6 +93,8 @@ namespace EasePass.Views
             if (!string.IsNullOrEmpty(item.Secret))
             {
                 totpTB.Visibility = totpLB.Visibility = Visibility.Visible;
+                if (totpTokenUpdater != null)
+                    totpTokenUpdater.StopTimer();
                 totpTokenUpdater = new TOTPTokenUpdater(item, totpTB);
                 totpTokenUpdater.StartTimer();
                 totpTokenUpdater.SimulateTickEvent();
