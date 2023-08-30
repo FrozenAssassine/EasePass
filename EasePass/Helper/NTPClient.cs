@@ -10,7 +10,7 @@ namespace EasePass.Helper
 
         public static DateTime GetTime(string NTP_Server = "", int timeout = 3000)
         {
-            return DateTime.Now; // I disabled online time to prevent flickering through fast switching between online time and local time.
+            //return DateTime.Now; // I disabled online time to prevent flickering through fast switching between online time and local time.
 
             if (NTP_Server.Length == 0) 
                 NTP_Server = DEFAULT_SERVER;
@@ -44,7 +44,7 @@ namespace EasePass.Helper
 
             DateTime onlineTime = networkDateTime.ToLocalTime();
             TimeSpan ts = DateTime.Now - onlineTime;
-            if (ts.TotalSeconds < 5) return onlineTime;
+            if (ts.TotalSeconds < 4) return onlineTime;
             return DateTime.Now;
         }
     }
