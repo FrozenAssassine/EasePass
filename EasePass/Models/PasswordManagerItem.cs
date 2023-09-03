@@ -18,10 +18,6 @@ namespace EasePass.Models
 {
     public class PasswordManagerItem : INotifyPropertyChanged
     {
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         public string Password { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
@@ -37,72 +33,43 @@ namespace EasePass.Models
             set
             {
                 _DisplayName = value;
+                FirstChar = value?.Length == 0 ? "" : value.Substring(0, 1);
                 NotifyPropertyChanged("DisplayName");
                 NotifyPropertyChanged("Website");
                 NotifyPropertyChanged("FirstChar");
             }
         }
         [JsonIgnore]
-        private string _Website { get; set; }
+        private string _Website = "";
         public string Website
         {
             get => _Website;
             set
             {
                 _Website = value;
-                if (!AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons))
-                    return;
-                if (!string.IsNullOrEmpty(WebsiteFix))
+                if (string.IsNullOrEmpty(_Website))
                 {
-                    try
-                    {
-                        Icon = new BitmapImage(new Uri(WebsiteFix + "/favicon.ico"));
-                        Icon.ImageFailed += Icon_ImageFailed;
-                        NotifyPropertyChanged("Icon");
-                        NotifyPropertyChanged("ImgVisibility");
-                        NotifyPropertyChanged("CharVisibility");
-                        return;
-                    }
-                    catch { }
+                    Icon = null;
+                    NotifyPropertyChanged("Icon");
+                    return;
                 }
-                Icon = null;
+
+                if (Website.ToLower().StartsWith("http"))
+                    _Website = "http://" + _Website;
+
+                try
+                {
+                    Icon = new BitmapImage(new Uri(_Website + "/favicon.ico"));
+                    Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; };
+                }
+                catch { /*Invalid URI format*/ }
+
+                NotifyPropertyChanged("Icon");
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-
-
-        // Probably wrong place for this code but needed for showing the icon in the ListBox.
-        [JsonIgnore]
-        public string WebsiteFix
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(Website)) 
-                    return "";
-                if (Website.ToLower().StartsWith("http")) 
-                    return Website;  
-                return "http://" + Website;
-            }
-        }
-
+        
         [JsonIgnore]
         public BitmapImage Icon = null;
-
-        private void Icon_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-            Icon = null;
-            NotifyPropertyChanged("Icon");
-            NotifyPropertyChanged("ImgVisibility");
-            NotifyPropertyChanged("CharVisibility");
-        }
-
-        [JsonIgnore]
-        public Visibility ImgVisibility => AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons) && Icon != null ? Visibility.Visible : Visibility.Collapsed;
-
-        [JsonIgnore]
-        public Visibility CharVisibility => ImgVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-
         [JsonIgnore]
         public Brush BackColor
         {
@@ -113,7 +80,6 @@ namespace EasePass.Models
                 return new SolidColorBrush(Color.FromArgb(255, bytes[0], bytes[1], bytes[2]));
             }
         }
-
         [JsonIgnore]
         public Brush ForeColor
         {
@@ -124,19 +90,15 @@ namespace EasePass.Models
                 return average > 127 ? new SolidColorBrush(Color.FromArgb(255, 255, 255, 255)) : new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
             }
         }
-
         [JsonIgnore]
-        public string FirstChar
+        public string FirstChar = "";
+        [JsonIgnore]
+        public bool ShowIcon => AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons);
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(string propertyName)
         {
-            get
-            {
-                if(DisplayName.Length == 0)
-                    return "";
-                return DisplayName.Substring(0, 1);
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        [JsonIgnore]
-        public Visibility ContainsTOTP => ConvertHelper.BoolToVisibility(!string.IsNullOrEmpty(Secret));
     }
 }

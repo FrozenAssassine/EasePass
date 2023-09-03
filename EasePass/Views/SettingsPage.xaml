@@ -115,7 +115,6 @@
             <controls:SettingsControl Header="Show icons">
                 <ToggleSwitch x:Name="showIcons" Toggled="showIcons_Toggled"/>
             </controls:SettingsControl>
-
         </StackPanel>
     </ScrollViewer>
 </Page>
