@@ -72,6 +72,8 @@
                     <StackPanel>
                         <HyperlinkButton FontSize="16" NavigateUri="https://www.nuget.org/packages/BCrypt.Net/0.1.0" Content="BCrypt.Net"/>
                         <HyperlinkButton FontSize="16" NavigateUri="https://github.com/JamesNK/Newtonsoft.Json" Content="Newtonsoft.Json"/>
+                        <HyperlinkButton FontSize="16" NavigateUri="https://www.nuget.org/packages/ZXing.Net/" Content="ZXing.Net"/>
+                        <HyperlinkButton FontSize="16" NavigateUri="https://www.nuget.org/packages/WindowsDisplayAPI" Content="Windows Display API"/>
                     </StackPanel>
                 </Expander.Content>
             </Expander>
