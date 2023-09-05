@@ -54,7 +54,7 @@ namespace EasePass.Models
                     return;
                 }
 
-                if (Website.ToLower().StartsWith("http"))
+                if (!_Website.ToLower().StartsWith("http"))
                     _Website = "http://" + _Website;
 
                 try
