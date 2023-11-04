@@ -37,7 +37,6 @@ namespace EasePass.Views
                 App.m_frame.Navigate(typeof(PasswordsPage), pw);
                 return;
             }
-            
             WrongCount++;
             InfoMessages.EnteredWrongPassword(WrongCount);
         }

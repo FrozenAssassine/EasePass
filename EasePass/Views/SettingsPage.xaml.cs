@@ -87,33 +87,34 @@ namespace EasePass.Views
             }
 
             var pickerResult = await FilePickerHelper.PickOpenFile(new string[] { ".eped" });
-            if (pickerResult.success)
+            if (!pickerResult.success)
+                return;
+
+            EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(pickerResult.path));
+            if (!AuthenticationHelper.VerifyPassword(decryptedJson.PasswordHash, decryptDBPassword.Password))
             {
-                EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(pickerResult.path));
-                if (AuthenticationHelper.VerifyPassword(decryptedJson.PasswordHash, decryptDBPassword.Password))
-                {
-                    var str = EncryptDecryptHelper.DecryptStringAES(decryptedJson.Data, decryptDBPassword.Password, decryptedJson.Salt);
-                    var importedItems = DatabaseHelper.LoadItems(str);
-
-                    var dialogResult = await new InsertOrOverwriteDatabaseDialog().ShowAsync();
-                    if (dialogResult == InsertOrOverwriteDatabaseDialog.Result.Cancel)
-                        return;
-
-                    if (dialogResult == InsertOrOverwriteDatabaseDialog.Result.Overwrite)
-                    {
-                        passwordItems.Clear();
-                    }
-
-                    foreach (var item in importedItems)
-                    {
-                        passwordItems.Add(item);
-                    }
-                    passwordsPage.SaveData();
-                    InfoMessages.ImportDBSuccess();
-                    return;
-                }
                 InfoMessages.ImportDBWrongPassword();
+                return;
             }
+            var str = EncryptDecryptHelper.DecryptStringAES(decryptedJson.Data, decryptDBPassword.Password, decryptedJson.Salt);
+            var importedItems = DatabaseHelper.LoadItems(str);
+
+            var dialogResult = await new InsertOrOverwriteDatabaseDialog().ShowAsync();
+            if (dialogResult == InsertOrOverwriteDatabaseDialog.Result.Cancel)
+                return;
+
+            if (dialogResult == InsertOrOverwriteDatabaseDialog.Result.Overwrite)
+            {
+                passwordItems.Clear();
+            }
+
+            foreach (var item in importedItems)
+            {
+                passwordItems.Add(item);
+            }
+            passwordsPage.SaveData();
+            InfoMessages.ImportDBSuccess();
+            return;
         }
         private void ChangePassword_Click(object sender, RoutedEventArgs e)
         {
@@ -123,27 +124,29 @@ namespace EasePass.Views
                 return;
             }
 
-            if (AuthenticationHelper.VerifyPassword(changePW_currentPw.Password))
+            if (!AuthenticationHelper.VerifyPassword(changePW_currentPw.Password))
             {
-                if (changePW_newPw.Password.Equals(changePW_repeatPw.Password))
-                {
-                    SecureString newMasterPw = new SecureString();
-                    foreach (var character in changePW_newPw.Password)
-                    {
-                        newMasterPw.AppendChar(character);
-                    }
+                InfoMessages.ChangePasswordWrong();
+                return;
+            }
 
-                    passwordsPage.masterPassword = newMasterPw;
-                    AuthenticationHelper.StorePassword(changePW_newPw.Password);
-                    passwordsPage.SaveData();
-
-                    InfoMessages.SuccessfullyChangedPassword();
-                    return;
-                }
+            if (!changePW_newPw.Password.Equals(changePW_repeatPw.Password))
+            {
                 InfoMessages.PasswordsDoNotMatch();
                 return;
             }
-            InfoMessages.ChangePasswordWrong();
+
+            SecureString newMasterPw = new SecureString();
+            foreach (var character in changePW_newPw.Password)
+            {
+                newMasterPw.AppendChar(character);
+            }
+
+            passwordsPage.masterPassword = newMasterPw;
+            AuthenticationHelper.StorePassword(changePW_newPw.Password);
+            passwordsPage.SaveData();
+
+            InfoMessages.SuccessfullyChangedPassword();
         }
         private void InactivityLogoutTime_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
@@ -175,13 +178,13 @@ namespace EasePass.Views
         private void AutoBackupDBPathTB_TextChanged(object sender, TextChangedEventArgs e)
         {
             AppSettings.SaveSettings(AppSettingsValues.autoBackupDBPath, autoBackupDBPath.Text);
-
         }
 
         private void showIcons_Toggled(object sender, RoutedEventArgs e)
         {
             AppSettings.SaveSettings(AppSettingsValues.showIcons, showIcons.IsOn);
-            if (passwordsPage != null) passwordsPage.Reload();
+            if (passwordsPage != null) 
+                passwordsPage.Reload();
         }
 
         private void pswd_length_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
@@ -202,17 +205,16 @@ namespace EasePass.Views
             if (pswd_length.Text.Length == 0 || pswd_length.Text == "0")
             {
                 AppSettings.SaveSettings(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength);
+                return;
             }
-            else
-            {
-                AppSettings.SaveSettings(AppSettingsValues.passwordLength, Math.Max(ConvertHelper.ToInt(pswd_length.Text, DefaultSettingsValues.PasswordLength), 8));
-            }
+            AppSettings.SaveSettings(AppSettingsValues.passwordLength, Math.Max(ConvertHelper.ToInt(pswd_length.Text, DefaultSettingsValues.PasswordLength), 8));
         }
 
         private void pswd_chars_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (pswd_chars.Text.Length == 0) AppSettings.SaveSettings(AppSettingsValues.passwordChars, DefaultSettingsValues.PasswordChars);
-            else AppSettings.SaveSettings(AppSettingsValues.passwordChars, pswd_chars.Text);
+            AppSettings.SaveSettings(AppSettingsValues.passwordChars, 
+                pswd_chars.Text.Length == 0 ? DefaultSettingsValues.PasswordChars : pswd_chars.Text
+                );
         }
 
         private void disableLeakedPasswords_Toggled(object sender, RoutedEventArgs e)
