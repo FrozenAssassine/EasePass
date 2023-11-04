@@ -18,7 +18,9 @@
             <TextBox x:Name="emailTB" />
 
             <TextBlock Margin="0,10,0,0" Text="Password"/>
-            <PasswordBox x:Name="pwTB" PasswordChanged="pwTB_PasswordChanged"/>
+            <Border x:Name="RedBorder" BorderThickness="0" BorderBrush="Transparent" CornerRadius="4">
+                <PasswordBox x:Name="pwTB" PasswordChanged="pwTB_PasswordChanged" />
+            </Border>
 
             <TextBlock Margin="0,10,0,0" Text="Website"/>
             <TextBox x:Name="websiteTB" />

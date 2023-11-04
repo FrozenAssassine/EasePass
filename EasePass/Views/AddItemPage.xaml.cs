@@ -13,12 +13,9 @@ namespace EasePass.Views
 
         PasswordsPage.PasswordExists pe;
 
-        Brush original = null;
-
         public AddItemPage(PasswordsPage.PasswordExists pe)
         {
             this.InitializeComponent();
-            original = pwTB.BorderBrush;
             this.pe = pe;
             Hide2FA();
         }
@@ -26,7 +23,6 @@ namespace EasePass.Views
         public AddItemPage(PasswordsPage.PasswordExists pe, PasswordManagerItem input = null)
         {
             this.InitializeComponent();
-            original = pwTB.Foreground;
             this.pe = pe;
 
             if (input == null)
@@ -70,7 +66,9 @@ namespace EasePass.Views
             input.Digits = digitsTB.Text;
             input.Interval = intervalTB.Text;
             input.Algorithm = (string)algorithmTB.SelectedItem;
-            
+
+            if (pe(pwTB.Password)) InfoMessages.PasswordAlreadyUsed();
+
             return input;
         }
 
@@ -121,11 +119,13 @@ namespace EasePass.Views
         {
             if (pe(pwTB.Password))
             {
-                pwTB.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
+                RedBorder.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
+                RedBorder.BorderThickness = new Microsoft.UI.Xaml.Thickness(2);
             }
             else
             {
-                pwTB.BorderBrush = original;
+                RedBorder.BorderBrush = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+                RedBorder.BorderThickness = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 2);
             }
         }
     }

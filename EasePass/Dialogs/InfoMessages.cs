@@ -11,6 +11,7 @@ namespace EasePass.Dialogs
         public static void ImportDBSuccess() => new InfoBar().Show("Imported successfully", "Imported data successfully", InfoBarSeverity.Success);
         public static void ExportDBSuccess() => new InfoBar().Show("Exported successfully", "Exported data successfully", InfoBarSeverity.Success);
         public static void PasswordTooShort() => new InfoBar().Show("Password too short", "The password is too short", InfoBarSeverity.Error);
+        public static void PasswordAlreadyUsed() => new InfoBar().Show("Password already used", "We highly recommend using a different password for each service!", InfoBarSeverity.Warning, 10);
         public static void ChangePasswordWrong() => new InfoBar().Show("Wrong password", "The current password is incorrect", InfoBarSeverity.Error);
         public static void PasswordsDoNotMatch() => new InfoBar().Show("Passwords do not match", "", InfoBarSeverity.Error);
         public static void SuccessfullyChangedPassword() => new InfoBar().Show("Password successfully changed", "Your password was successfully changed", InfoBarSeverity.Success);
