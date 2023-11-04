@@ -1,10 +1,19 @@
 ﻿using EasePass.Helper;
+using System;
+using System.Collections.Generic;
 using Windows.Storage;
 
 namespace EasePass.Settings
 {
     internal class AppSettings
     {
+        private static Dictionary<string, EventHandler<string>> events = new Dictionary<string, EventHandler<string>>();
+        public static void RegisterSettingsChangedEvent(string Value, EventHandler<string> eventHandler)
+        {
+            if (events.ContainsKey(Value)) events[Value] += eventHandler;
+            else events.Add(Value, eventHandler);
+        }
+        
         public static void SaveSettings(string Value, object data)
         {
             if (data == null)
@@ -15,6 +24,8 @@ namespace EasePass.Settings
                 return;
 
             ApplicationData.Current.LocalSettings.Values[Value] = data.ToString();
+
+            if (events.ContainsKey(Value) && events[Value] != null) events[Value](null, Value);
         }
         public static string GetSettings(string value, string defaultValue = "")
         {

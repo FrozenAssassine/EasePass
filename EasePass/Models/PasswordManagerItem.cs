@@ -14,6 +14,17 @@ namespace EasePass.Models
 {
     public class PasswordManagerItem : INotifyPropertyChanged
     {
+        public PasswordManagerItem()
+        {
+            AppSettings.RegisterSettingsChangedEvent(AppSettingsValues.showIcons, (object o, string setting) =>
+            {
+                Website = _Website;
+                NotifyPropertyChanged("Website");
+                NotifyPropertyChanged("ShowIcon");
+                NotifyPropertyChanged("Icon");
+            });
+        }
+
         public string Password { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
@@ -22,6 +33,7 @@ namespace EasePass.Models
         public string Digits { get; set; } = "6";
         public string Interval { get; set; } = "30";
         public string Algorithm { get; set; } = "SHA1";
+        [JsonIgnore]
         private string _DisplayName;
         public string DisplayName
         {
@@ -43,22 +55,29 @@ namespace EasePass.Models
             set
             {
                 _Website = value;
-                if (string.IsNullOrEmpty(_Website))
+                if (ShowIcon)
+                {
+                    if (string.IsNullOrEmpty(_Website))
+                    {
+                        Icon = null;
+                        NotifyPropertyChanged("Icon");
+                        return;
+                    }
+
+                    if (!_Website.ToLower().StartsWith("http"))
+                        _Website = "http://" + _Website;
+
+                    try
+                    {
+                        Icon = new BitmapImage(new Uri(_Website + "/favicon.ico"));
+                        Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; NotifyPropertyChanged("Icon"); };
+                    }
+                    catch { /*Invalid URI format*/ }
+                }
+                else
                 {
                     Icon = null;
-                    NotifyPropertyChanged("Icon");
-                    return;
                 }
-
-                if (!_Website.ToLower().StartsWith("http"))
-                    _Website = "http://" + _Website;
-
-                try
-                {
-                    Icon = new BitmapImage(new Uri(_Website + "/favicon.ico"));
-                    Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; NotifyPropertyChanged("Icon"); };
-                }
-                catch { /*Invalid URI format*/ }
 
                 NotifyPropertyChanged("Icon");
             }
