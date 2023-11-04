@@ -52,6 +52,8 @@ namespace EasePass.Views
             {
                 masterPassword = pw;
                 LoadData(masterPassword);
+
+                InfobarExtension.ClearInfobarsAfterLogin(MainWindow.InfoMessagesPanel);
             }
    
             base.OnNavigatedTo(e);

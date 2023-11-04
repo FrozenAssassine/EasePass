@@ -1,7 +1,6 @@
 ﻿using EasePass.Extensions;
 using Microsoft.UI.Xaml.Controls;
 
-
 namespace EasePass.Dialogs
 {
     internal class InfoMessages
@@ -15,7 +14,7 @@ namespace EasePass.Dialogs
         public static void ChangePasswordWrong() => new InfoBar().Show("Wrong password", "The current password is incorrect", InfoBarSeverity.Error);
         public static void PasswordsDoNotMatch() => new InfoBar().Show("Passwords do not match", "", InfoBarSeverity.Error);
         public static void SuccessfullyChangedPassword() => new InfoBar().Show("Password successfully changed", "Your password was successfully changed", InfoBarSeverity.Success);
-        public static void AutomaticallyLoggedOut() => new InfoBar().ShowWithoutTimer("We automatically logged you out due to inactivity", "", InfoBarSeverity.Informational);
+        public static void AutomaticallyLoggedOut() => new InfoBar().ShowUntilLogin("We automatically logged you out due to inactivity", "", InfoBarSeverity.Informational);
         public static void NoAccessToPathDatabaseNotSaved(string path) => new InfoBar().Show("Database could not be saved", $"Database could not be saved. No access to the path {path}", InfoBarSeverity.Error, 15);
         public static void NoAccessToPathDatabaseNotLoaded(string path) => new InfoBar().Show("Database could not be loaded", $"Database could not be loaded. No access to the path {path}", InfoBarSeverity.Error, 15);
         public static void DatabaseSaveToFileError(string path) => new InfoBar().Show("Error while saving database", $"Data save error at {path}. Verify connection or device storage, then retry.", InfoBarSeverity.Error, 15);

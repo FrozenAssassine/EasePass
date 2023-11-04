@@ -3,22 +3,29 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml;
 using System;
 using Microsoft.UI.Xaml.Media;
+using EasePass.Helper;
 
 namespace EasePass.Extensions
 {
+    enum InfobarClearCondition
+    {
+        Timer,
+        Login,
+    }
+
     internal static class InfobarExtension
     {
-        public static void ShowWithoutTimer(this InfoBar infobar, string title, string message, InfoBarSeverity severity)
+        public static void ShowUntilLogin(this InfoBar infobar, string title, string message, InfoBarSeverity severity)
         {
-            ShowInfobar(infobar, title, message, null, severity);
+            ShowInfobar(infobar, title, message, null, severity, InfobarClearCondition.Login);
         }
-        public static void Show(this InfoBar infobar, string title, string message, InfoBarSeverity severity, int showSeconds = 5)
+        public static void Show(this InfoBar infobar, string title, string message, InfoBarSeverity severity, int showSeconds = 8)
         {
-            Show(infobar, title, message, null, severity, showSeconds);
+            Show(infobar, title, message, null, severity, InfobarClearCondition.Timer, showSeconds);
         }
-        public static void Show(this InfoBar infobar, string title, string message, ButtonBase actionButton, InfoBarSeverity severity, int showSeconds = 5)
+        public static void Show(this InfoBar infobar, string title, string message, ButtonBase actionButton, InfoBarSeverity severity, InfobarClearCondition clearCondition = InfobarClearCondition.Timer, int showSeconds = 5)
         {
-            ShowInfobar(infobar, title, message, actionButton, severity);
+            ShowInfobar(infobar, title, message, actionButton, severity, clearCondition);
             
             DispatcherTimer autoCloseTimer = new DispatcherTimer();
             autoCloseTimer.Interval = new TimeSpan(0, 0, showSeconds);
@@ -30,15 +37,33 @@ namespace EasePass.Extensions
             };
         }
 
-        private static void ShowInfobar(this InfoBar infobar, string title, string message, ButtonBase actionButton, InfoBarSeverity severity)
+        private static void ShowInfobar(this InfoBar infobar, string title, string message, ButtonBase actionButton, InfoBarSeverity severity, InfobarClearCondition clearCondition)
         {
             infobar.Title = title;
             infobar.Message = message;
             infobar.ActionButton = actionButton;
             infobar.Severity = severity;
+            infobar.Tag = clearCondition;
             infobar.IsOpen = true;
             infobar.Background = Application.Current.Resources["SolidBackgroundFillColorBaseAltBrush"] as Brush;
             MainWindow.InfoMessagesPanel.Children.Add(infobar);
+        }
+
+        public static void ClearInfobarsAfterLogin(StackPanel infobarDisplay)
+        {
+            foreach (InfoBar infobar in infobarDisplay.Children)
+            {
+                if (infobar == null || ConvertHelper.ToEnum(infobar.Tag, InfobarClearCondition.Timer) == InfobarClearCondition.Timer)
+                    continue;
+
+                    DispatcherTimer timer = new DispatcherTimer();
+                timer.Interval += new TimeSpan(0, 0, 8);
+                timer.Start();
+                timer.Tick += (e, i) =>
+                {
+                    infobarDisplay.Children.Remove(infobar);
+                };
+            }
         }
     }
 }
