@@ -56,7 +56,7 @@ namespace EasePass.Models
                 try
                 {
                     Icon = new BitmapImage(new Uri(_Website + "/favicon.ico"));
-                    Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; };
+                    Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; NotifyPropertyChanged("Icon"); };
                 }
                 catch { /*Invalid URI format*/ }
 
