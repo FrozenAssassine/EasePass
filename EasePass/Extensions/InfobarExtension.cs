@@ -57,7 +57,7 @@ namespace EasePass.Extensions
                     continue;
 
                     DispatcherTimer timer = new DispatcherTimer();
-                timer.Interval += new TimeSpan(0, 0, 8);
+                timer.Interval += new TimeSpan(0, 0, 4);
                 timer.Start();
                 timer.Tick += (e, i) =>
                 {
