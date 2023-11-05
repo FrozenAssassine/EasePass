@@ -14,14 +14,21 @@
             <controls:SettingsControl Header="Export Database">
                 <StackPanel Orientation="Horizontal">
                     <PasswordBox MinWidth="150" Margin="5" x:Name="encryptDBPassword" PlaceholderText="Password"/>
-                    <Button Margin="5" Content="Export" Click="ExportEncryptedDatabase_Click"/>
+                    <Button Margin="5" Content="Export" Width="100" Click="ExportEncryptedDatabase_Click"/>
                 </StackPanel>
             </controls:SettingsControl>
 
             <controls:SettingsControl Header="Import Database">
                 <StackPanel Orientation="Horizontal">
                     <PasswordBox MinWidth="150" Margin="5" x:Name="decryptDBPassword" PlaceholderText="Password"/>
-                    <Button Margin="5" Content="Import" Click="ImportEncryptedDatabase_Click"/>
+                    <Button Margin="5" Content="Import" Width="100" Click="ImportEncryptedDatabase_Click"/>
+                </StackPanel>
+            </controls:SettingsControl>
+
+            <controls:SettingsControl Header="Print Database">
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox x:Name="printerSelector" PlaceholderText="Pick a printer" MinWidth="150" Margin="5" SelectionChanged="printerSelector_SelectionChanged" />
+                    <Button Margin="5" Content="Print" Width="100" Click="PrintButton_Click"/>
                 </StackPanel>
             </controls:SettingsControl>
 

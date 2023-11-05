@@ -21,5 +21,7 @@ namespace EasePass.Dialogs
         public static void DatabaseSaveToFileError(string path) => new InfoBar().Show("Error while saving database", $"Data save error at {path}. Verify connection or device storage, then retry.", InfoBarSeverity.Error, 15);
         public static void DatabaseFileNotFoundAt(string path) => new InfoBar().Show("Database not found", $"Your database with the stored passwords could not be found at path {path}", InfoBarSeverity.Error, 15);
         public static void DatabaseInvalidData() => new InfoBar().Show("Invalid Database", $"Database could not be loaded. It may be corrupted or invalid.", InfoBarSeverity.Error, 15);
+        public static void PrinterNotSelected() => new InfoBar().Show("Printer not selected", $"Please select a printer before printing.", InfoBarSeverity.Error, 15);
+        public static void PrinterItemSkipped(string name) => new InfoBar().Show("Password skipped", $"The service\"" + name + "\" was skipped, because it doesn't fit into the page.", InfoBarSeverity.Error, 15);
     }
 }

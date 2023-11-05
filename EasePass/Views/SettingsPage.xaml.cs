@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing.Printing;
 using System.IO;
 using System.Security;
 using System.Text;
@@ -19,6 +20,7 @@ namespace EasePass.Views
     {
         ObservableCollection<PasswordManagerItem> passwordItems = null;
         PasswordsPage passwordsPage = null;
+        string SelectedPrinter = "";
 
         public SettingsPage()
         {
@@ -54,6 +56,12 @@ namespace EasePass.Views
             var navParam = e.Parameter as SettingsNavigationParameters;
             passwordItems = navParam.PwItems;
             passwordsPage = navParam.PasswordPage;
+
+            printerSelector.Items.Clear();
+            foreach(string printer in PrinterSettings.InstalledPrinters)
+            {
+                printerSelector.Items.Add(printer);
+            }
         }
 
         private async void ExportEncryptedDatabase_Click(object sender, RoutedEventArgs e)
@@ -220,6 +228,21 @@ namespace EasePass.Views
         private void disableLeakedPasswords_Toggled(object sender, RoutedEventArgs e)
         {
             AppSettings.SaveSettings(AppSettingsValues.disableLeakedPasswords, !disableLeakedPasswords.IsOn);
+        }
+
+        private void printerSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SelectedPrinter = (string)e.AddedItems[0];
+        }
+
+        private void PrintButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(SelectedPrinter))
+            {
+                InfoMessages.PrinterNotSelected();
+                return;
+            }
+            PrinterHelper.Print(passwordItems, SelectedPrinter);
         }
     }
 }
