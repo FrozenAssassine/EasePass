@@ -24,7 +24,6 @@ namespace EasePass.Controls
             "Punctuation",
             "Digits"
         };
-
         private string[] messagesShort = new string[]
         {
             "Lower case",
@@ -34,7 +33,6 @@ namespace EasePass.Controls
             "Punctuation",
             "Digits"
         };
-
         private string[][] prefixes = new string[][]
         {
             //true, false, null
@@ -45,63 +43,13 @@ namespace EasePass.Controls
             new string[]{ "Contains", "Missing", "Unknown whether it contains" },
             new string[]{ "Contains", "Missing", "Unknown whether it contains" },
         };
-
         private double ChartScale = 10;
-
-        private bool _ShowInfo = true;
-        public bool ShowInfo
-        {
-            get => _ShowInfo;
-            set
-            {
-                _ShowInfo = value;
-                //@FrozenAssassine please have a look at this (binding using BoolToVisibilityConverter not working):
-                //RaisePropertyChanged("_ShowInfo");
-                if (value)
-                {
-                    info_left.Visibility = Visibility.Visible;
-                    info_right.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    info_left.Visibility = Visibility.Collapsed;
-                    info_right.Visibility = Visibility.Collapsed;
-                }
-            }
-        }
-        private bool _SingleHitbox = false;
-        public bool SingleHitbox
-        {
-            get => _SingleHitbox;
-            set
-            {
-                _SingleHitbox = value;
-                //@FrozenAssassine please have a look at this (binding using BoolToVisibilityConverter not working):
-                //RaisePropertyChanged("_SingleHitbox");
-                if (value)
-                {
-                    singleHitbox.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    singleHitbox.Visibility = Visibility.Collapsed;
-                }
-            }
-        }
-
         private Path[] paths = new Path[6];
         private bool?[] checks = new bool?[6];
 
         public bool ShowInfo { get; set; } = true;
         public bool SingleHitbox { get; set; } = false;
         public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged(string name)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
-        }
 
         public PasswordSafetyChart()
         {
@@ -113,7 +61,15 @@ namespace EasePass.Controls
             paths[4] = path5;
             paths[5] = path6;
         }
-
+        
+        private void RaisePropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
+        }
+        
         public void SetHeight(double height)
         {
             ChartScale = height / 10;
@@ -123,7 +79,7 @@ namespace EasePass.Controls
             info_left.Height = height;
             info_right.Height = height;
         }
-
+        
         public void EvaluatePassword(string password)
         {
             if (!AppSettings.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords))
@@ -151,25 +107,14 @@ namespace EasePass.Controls
 
             RaisePropertyChanged("ToString");
         }
-
-        public void Clear(bool? value = null)
-        {
-            for(int i = 0; i < checks.Length; i++)
-            {
-                checks[i] = value;
-                SetChartEntry(i);
-            }
-
-            RaisePropertyChanged("ToString");
-        }
-
+        
         private void SetChartEntry(int index)
         {
-            if (checks[index] == true) paths[index].Fill = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
-            if (checks[index] == false) paths[index].Fill = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
             if (checks[index] == null) paths[index].Fill = new SolidColorBrush(Color.FromArgb(255, 100, 100, 100));
+            else if (checks[index] == true) paths[index].Fill = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
+            else if (checks[index] == false) paths[index].Fill = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
         }
-
+        
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -179,14 +124,17 @@ namespace EasePass.Controls
             }
             return sb.ToString();
         }
-
+        
         private int ToIndex(bool? value)
         {
-            if (value == true) return 0;
-            if (value == false) return 1;
-            return 2;
+            return value switch
+            {
+                null => 2,
+                true => 0,
+                false => 1
+            };
         }
-
+        
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             SetHeight(this.Height);
