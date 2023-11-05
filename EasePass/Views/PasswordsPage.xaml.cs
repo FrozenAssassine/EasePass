@@ -90,6 +90,7 @@ namespace EasePass.Views
             usernameTB.Text = item.Username;
             itemnameTB.Text = item.DisplayName;
             websiteTB.Text = item.Website;
+            psc.EvaluatePassword(item.Password);
 
             passwordShowArea.Visibility = Visibility.Visible;
 
