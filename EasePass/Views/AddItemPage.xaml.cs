@@ -27,6 +27,7 @@ namespace EasePass.Views
             this.InitializeComponent();
             this.pe = pe;
             isEditMode = true;
+            genBtn.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
 
             if (input == null)
                 return;
@@ -130,6 +131,11 @@ namespace EasePass.Views
                 RedBorder.BorderBrush = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
                 RedBorder.BorderThickness = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 2);
             }
+        }
+
+        private async void Button_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            pwTB.Password = await PasswordHelper.GeneratePassword();
         }
     }
 }
