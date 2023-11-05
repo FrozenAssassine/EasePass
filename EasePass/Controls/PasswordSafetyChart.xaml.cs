@@ -92,6 +92,8 @@ namespace EasePass.Controls
         private Path[] paths = new Path[6];
         private bool?[] checks = new bool?[6];
 
+        public bool ShowInfo { get; set; } = true;
+        public bool SingleHitbox { get; set; } = false;
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(string name)
         {
