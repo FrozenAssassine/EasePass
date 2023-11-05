@@ -14,7 +14,7 @@ namespace EasePass.Views
 {
     public sealed partial class PasswordsPage : Page
     {
-        public delegate bool PasswordExists(string password);
+        public delegate int PasswordExists(string password);
 
         private ObservableCollection<PasswordManagerItem> PasswordItems = new ObservableCollection<PasswordManagerItem>();
         private PasswordManagerItem SelectedItem = null;
@@ -29,13 +29,14 @@ namespace EasePass.Views
 
         }
 
-        public bool PasswordAlreadyExists(string password)
+        public int PasswordAlreadyExists(string password)
         {
+            int i = 0;
             foreach(var item in PasswordItems)
             {
-                if (item.Password == password) return true;
+                if (item.Password == password) i++;
             }
-            return false;
+            return i;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

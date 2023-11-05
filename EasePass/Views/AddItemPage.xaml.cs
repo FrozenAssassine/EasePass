@@ -13,6 +13,8 @@ namespace EasePass.Views
 
         PasswordsPage.PasswordExists pe;
 
+        bool isEditMode = false;
+
         public AddItemPage(PasswordsPage.PasswordExists pe)
         {
             this.InitializeComponent();
@@ -24,6 +26,7 @@ namespace EasePass.Views
         {
             this.InitializeComponent();
             this.pe = pe;
+            isEditMode = true;
 
             if (input == null)
                 return;
@@ -67,7 +70,7 @@ namespace EasePass.Views
             input.Interval = intervalTB.Text;
             input.Algorithm = (string)algorithmTB.SelectedItem;
 
-            if (pe(pwTB.Password)) InfoMessages.PasswordAlreadyUsed();
+            if (!(pe(pwTB.Password) == 0 || (isEditMode && pe(pwTB.Password) == 1))) InfoMessages.PasswordAlreadyUsed();
 
             return input;
         }
@@ -117,7 +120,7 @@ namespace EasePass.Views
 
         private void pwTB_PasswordChanged(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            if (pe(pwTB.Password))
+            if (!(pe(pwTB.Password) == 0 || (isEditMode && pe(pwTB.Password) == 1)))
             {
                 RedBorder.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
                 RedBorder.BorderThickness = new Microsoft.UI.Xaml.Thickness(2);
