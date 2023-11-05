@@ -10,6 +10,6 @@ namespace EasePass.Settings
         public const bool autoBackupDatabase = false;
         public const int autoBackupDBTime = 4; //Minutes
         public const bool showIcons = true;
-        public const bool disableLeakedPasswords = true;
+        public const bool disableLeakedPasswords = false;
     }
 }
