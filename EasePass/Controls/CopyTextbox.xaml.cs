@@ -1,3 +1,4 @@
+using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Settings;
 using Microsoft.UI.Xaml.Controls;
@@ -20,7 +21,14 @@ namespace EasePass.Controls
         {
             string txt = this.Text;
             if (!txt.ToLower().StartsWith("http")) txt = "http://" + txt;
-            if (IsUrlAction && !string.IsNullOrEmpty(txt)) await Windows.System.Launcher.LaunchUriAsync(new Uri(txt));
+            if (!IsUrlAction || string.IsNullOrEmpty(txt))
+                return;
+            try
+            {
+                await Windows.System.Launcher.LaunchUriAsync(new Uri(txt));
+            }
+            catch (UriFormatException) { /*Invalid URL*/ return; }
+         
             ClipboardHelper.Copy(RemoveWhitespaceOnCopy ? this.Text.Replace(" ", "") : this.Text);
         }
 
