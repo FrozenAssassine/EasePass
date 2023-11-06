@@ -18,5 +18,6 @@
         public const string showIcons = "showIcons";
         public const string disableLeakedPasswords = "disableLeakedPasswords";
         public const string windowState = "windowState";
+        public const string appVersion = "appVersion";
     }
 }

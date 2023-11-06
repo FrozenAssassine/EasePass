@@ -53,8 +53,8 @@ namespace EasePass.Views
             {
                 masterPassword = pw;
                 LoadData(masterPassword);
-
                 InfobarExtension.ClearInfobarsAfterLogin(MainWindow.InfoMessagesPanel);
+                AppVersionHelper.CheckNewVersion();
             }
    
             base.OnNavigatedTo(e);
