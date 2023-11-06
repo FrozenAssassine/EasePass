@@ -10,5 +10,5 @@
 - Sort and drag drop for the Password items
 - Overall many bug fixes
 
-# Versioon 1.0.0:
+# Version 1.0.0:
 - first release
