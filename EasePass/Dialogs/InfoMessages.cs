@@ -21,5 +21,11 @@ namespace EasePass.Dialogs
         public static void DatabaseSaveToFileError(string path) => new InfoBar().Show("Error while saving database", $"Data save error at {path}. Verify connection or device storage, then retry.", InfoBarSeverity.Error, 15);
         public static void DatabaseFileNotFoundAt(string path) => new InfoBar().Show("Database not found", $"Your database with the stored passwords could not be found at path {path}", InfoBarSeverity.Error, 15);
         public static void DatabaseInvalidData() => new InfoBar().Show("Invalid Database", $"Database could not be loaded. It may be corrupted or invalid.", InfoBarSeverity.Error, 15);
+        public static void NewVersionInfo(string version)
+        {
+            var btn = new HyperlinkButton { Content = "Changelog", NavigateUri = new System.Uri("https://github.com/FrozenAssassine/EasePass/blob/master/changelog.md") };
+
+            new InfoBar().Show("New version", "Welcome to Ease Pass version " + version + "\n", btn, InfoBarSeverity.Success);
+        }
     }
 }

@@ -1,3 +1,4 @@
+using EasePass.Helper;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
@@ -7,11 +8,7 @@ namespace EasePass.Views
 {
     public sealed partial class AboutPage : Page
     {
-        public string AppVersion =>
-                   Package.Current.Id.Version.Major + "." +
-                   Package.Current.Id.Version.Minor + "." +
-                   Package.Current.Id.Version.Build;
-
+        public string AppVersion => AppVersionHelper.GetAppVersion();
         public string DeveloperName => Package.Current.PublisherDisplayName;
 
 
