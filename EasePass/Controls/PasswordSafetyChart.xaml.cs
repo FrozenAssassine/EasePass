@@ -99,6 +99,7 @@ namespace EasePass.Controls
         
         public void EvaluatePassword(string password)
         {
+            checks[3] = null;
             if (!AppSettings.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords))
             {
                 Task<bool?> task = PasswordHelper.IsPwned(password);
