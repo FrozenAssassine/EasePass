@@ -17,13 +17,13 @@ namespace EasePass.Views
         public async void GeneratePassword()
         {
             await _GeneratePassword();
-            safetyChart.EvaluatePassword(passwordTB.Text);
+            safetyChart.EvaluatePassword(passwordTB.Password);
             progressBar.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
         }
 
         public async Task _GeneratePassword()
         {
-            passwordTB.Text = await PasswordHelper.GeneratePassword();
+            passwordTB.Password = await PasswordHelper.GeneratePassword();
         }
     }
 }

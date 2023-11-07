@@ -85,6 +85,7 @@
     <None Remove="Assets\AppIcon\Generated\Wide310x150Logo.scale-400.png" />
     <None Remove="Controls\CopyPasswordbox.xaml" />
     <None Remove="Controls\CopyTextbox.xaml" />
+    <None Remove="Controls\EditPasswordBox.xaml" />
     <None Remove="Controls\PasswordSafetyChart.xaml" />
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\AddItemPage.xaml" />
@@ -117,6 +118,9 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Controls\EditPasswordBox.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="Views\PasswordsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

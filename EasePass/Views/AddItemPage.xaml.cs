@@ -119,7 +119,7 @@ namespace EasePass.Views
             qrcode.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
         }
 
-        private void pwTB_PasswordChanged(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private void pwTB_PasswordChanged(string password)
         {
             if (!(pe(pwTB.Password) == 0 || (isEditMode && pe(pwTB.Password) == 1)))
             {

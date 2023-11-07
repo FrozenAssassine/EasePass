@@ -26,7 +26,6 @@ namespace EasePass.Views
         public PasswordsPage()
         {
             this.InitializeComponent();
-            psc.SetPasswordItems(PasswordItems);
         }
 
         public int PasswordAlreadyExists(string password)
@@ -87,12 +86,11 @@ namespace EasePass.Views
                 return;
 
             notesTB.Text = item.Notes;
-            pwTB.Text = item.Password;
+            pwTB.Password = item.Password;
             emailTB.Text = item.Email;
             usernameTB.Text = item.Username;
             itemnameTB.Text = item.DisplayName;
             websiteTB.Text = item.Website;
-            psc.EvaluatePassword(item.Password);
 
             passwordShowArea.Visibility = Visibility.Visible;
 
