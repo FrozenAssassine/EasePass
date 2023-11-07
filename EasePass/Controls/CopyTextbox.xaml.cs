@@ -21,11 +21,15 @@ namespace EasePass.Controls
         {
             string txt = this.Text;
             if (!txt.ToLower().StartsWith("http")) txt = "http://" + txt;
-            if (!IsUrlAction || string.IsNullOrEmpty(txt))
+            if (string.IsNullOrEmpty(txt))
                 return;
             try
             {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri(txt));
+                if (IsUrlAction)
+                {
+                    await Windows.System.Launcher.LaunchUriAsync(new Uri(txt));
+                    return;
+                }
             }
             catch (UriFormatException) { /*Invalid URL*/ return; }
          
