@@ -72,8 +72,6 @@ namespace EasePass.Views
 
             PasswordItems = data;
 
-            psc.SetPasswordItems(PasswordItems);
-
             autoBackupHelper.Start(this, PasswordItems);
         }
         public void SaveData()
@@ -84,6 +82,8 @@ namespace EasePass.Views
         {
             if (item == null)
                 return;
+
+            pwTB.SetPasswordItems(PasswordItems);
 
             notesTB.Text = item.Notes;
             pwTB.Password = item.Password;

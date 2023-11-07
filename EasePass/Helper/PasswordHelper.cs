@@ -51,7 +51,7 @@ namespace EasePass.Helper
             for(int i = 0; i < username.Length; i++)
             {
                 bool isNumber = int.TryParse(username[i], out int value);
-                if (!isNumber) CommonSequences.Add(new CommonSequence(username[i]));
+                if (!isNumber) CommonSequences.Add(new CommonSequence(username[i].ToLower()));
             }
             for(int i = 0; i < ABC.Length; i++) // repeating character, i.e. 'aaaaaaa'
             {
