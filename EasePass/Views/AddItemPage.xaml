@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Controls="using:EasePass.Controls"
     mc:Ignorable="d">
 
     <ScrollViewer x:Name="scroll">
@@ -24,7 +24,7 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <Border x:Name="RedBorder" Grid.Column="0" BorderThickness="0" BorderBrush="Transparent" CornerRadius="4">
-                    <PasswordBox x:Name="pwTB" PasswordChanged="pwTB_PasswordChanged" />
+                    <Controls:EditPasswordBox x:Name="pwTB" PasswordChanged="pwTB_PasswordChanged" />
                 </Border>
                 <Button x:Name="genBtn" Grid.Column="1" Margin="10,0,0,0" BorderThickness="1" Click="Button_Click">
                     <FontIcon Glyph="&#xEB97;" />
@@ -39,7 +39,7 @@
                 <Expander.Content>
                     <StackPanel HorizontalAlignment="Stretch">
                         <TextBlock x:Name="secretLB" Text="Secret"/>
-                        <PasswordBox Width="200" x:Name="secretTB" Password=""/>
+                        <Controls:EditPasswordBox Width="200" x:Name="secretTB"/>
 
                         <TextBlock Margin="0,5,0,0" x:Name="digitsLB" Text="Digits"/>
                         <TextBox x:Name="digitsTB" Text="6" TextChanging="DigitsTB_TextChanged"/>
