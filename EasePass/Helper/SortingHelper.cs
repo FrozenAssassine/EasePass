@@ -36,5 +36,22 @@ namespace EasePass.Helper
             if (pmi2.Website == null) pmi2.Website = "";
             return pmi1.Website.CompareTo(pmi2.Website);
         }
+
+        public static int ByPasswordStrength(PasswordManagerItem pmi1, PasswordManagerItem pmi2)
+        {
+            bool?[] strength1 = PasswordHelper.EvaluatePassword(pmi1.Password);
+            bool?[] strength2 = PasswordHelper.EvaluatePassword(pmi2.Password);
+            if (strength1.Length != strength2.Length) return 0;
+            int pmi1_res = 0;
+            int pmi2_res = 0;
+            for(int i = 0; i < strength1.Length; i++)
+            {
+                if (strength1[i] == true) pmi1_res++;
+                if (strength1[i] == false) pmi1_res--;
+                if (strength2[i] == true) pmi2_res++;
+                if (strength2[i] == false) pmi2_res--;
+            }
+            return -pmi1_res.CompareTo(pmi2_res);
+        }
     }
 }
