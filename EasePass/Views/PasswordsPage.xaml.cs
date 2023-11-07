@@ -26,7 +26,7 @@ namespace EasePass.Views
         public PasswordsPage()
         {
             this.InitializeComponent();
-
+            psc.SetPasswordItems(PasswordItems);
         }
 
         public int PasswordAlreadyExists(string password)
@@ -72,6 +72,8 @@ namespace EasePass.Views
                 return;
 
             PasswordItems = data;
+
+            psc.SetPasswordItems(PasswordItems);
 
             autoBackupHelper.Start(this, PasswordItems);
         }
@@ -170,7 +172,7 @@ namespace EasePass.Views
         private async Task GeneratePassword()
         {
             //returns true when the regenerate button was pressed
-            if (await new GenPasswordDialog().ShowAsync())
+            if (await new GenPasswordDialog().ShowAsync(PasswordItems))
                 await GeneratePassword();
         }
         private void ShowSettingsPage()
