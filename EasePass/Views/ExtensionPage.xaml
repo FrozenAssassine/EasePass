@@ -27,11 +27,12 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Image Grid.Row="0" x:Name="extensionIcon" Source="{x:Bind IconSource, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,25,0,0" ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}" Stretch="UniformToFill" Width="150" Height="150" />
-                        <TextBlock Grid.Row="1" x:Name="pluginName" Text="{x:Bind AboutPlugin.PluginName, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,20,0,0" FontWeight="Bold" ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}" FontSize="20" />
-                        <TextBlock Grid.Row="2" x:Name="authorName" Text="{x:Bind AboutPlugin.PluginAuthor, Mode=OneWay}" HorizontalAlignment="Center" Tag="{x:Bind}" Tapped="authorName_Tapped"  ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginAuthorURL, Mode=OneWay}" />
+                        <StackPanel Grid.Row="1">
+                            <TextBlock x:Name="pluginName" TextWrapping="WrapWholeWords" TextAlignment="Center" Text="{x:Bind AboutPlugin.PluginName, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,20,0,0" FontWeight="Bold" ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}" FontSize="20" />
+                            <TextBlock x:Name="authorName" Text="{x:Bind AboutPlugin.PluginAuthor, Mode=OneWay}" HorizontalAlignment="Center" Tag="{x:Bind}" Tapped="authorName_Tapped"  ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginAuthorURL, Mode=OneWay}" />
+                        </StackPanel>
                     </Grid>
                 </Grid>
             </Border>
