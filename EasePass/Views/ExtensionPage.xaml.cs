@@ -14,6 +14,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -58,9 +59,17 @@ namespace EasePass.Views
             await Windows.System.Launcher.LaunchUriAsync(new Uri(extension.AboutPlugin.PluginAuthorURL));
         }
 
-        private void AddExtension_Click(object sender, RoutedEventArgs e)
+        private async void AddExtension_Click(object sender, RoutedEventArgs e)
         {
-            string path = ""; // @FrozenAssassine load dll from file picker and copy it to appdata folder
+            var res = await FilePickerHelper.PickOpenFile(new string[] { ".dll" });
+            if (!res.success) //Todo errormessage:
+                return;
+
+            string path = res.path; // @FrozenAssassine load dll from file picker and copy it to appdata folder
+
+            var destinationPath = ApplicationData.Current.LocalFolder.Path;
+            File.Copy(path, destinationPath);
+            
             ExtensionHelper.Extensions.Add(new Extension(ReflectionHelper.GetAllExternalInstances(path)));
             extensionView.Items.Add(ExtensionHelper.Extensions[ExtensionHelper.Extensions.Count - 1]);
         }
