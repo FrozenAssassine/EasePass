@@ -36,7 +36,7 @@ namespace EasePass.Controls
         private bool _ShowPassword = false;
         public bool ShowPassword { get => _ShowPassword; set { _ShowPassword = value; ToggleShowPassword(value); } }
 
-        private void CopyText() => ClipboardHelper.Copy(this.Password);
+        private void CopyText() => ClipboardHelper.Copy(this.Password, true);
 
         private void TextBox_DoubleTapped(object sender, Microsoft.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
         {
