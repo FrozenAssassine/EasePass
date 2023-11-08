@@ -244,5 +244,13 @@ namespace EasePass.Views
             }
             PrinterHelper.Print(passwordItems, SelectedPrinter);
         }
+
+        private void ExtensionManage_Click(object sender, RoutedEventArgs e)
+        {
+            App.m_frame.Navigate(typeof(ExtensionPage), new SettingsNavigationParameters
+            {
+                
+            });
+        }
     }
 }

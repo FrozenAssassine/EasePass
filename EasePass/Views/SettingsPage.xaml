@@ -122,6 +122,9 @@
             <controls:SettingsControl Header="Show icons">
                 <ToggleSwitch x:Name="showIcons" Toggled="showIcons_Toggled"/>
             </controls:SettingsControl>
+            <controls:SettingsControl Header="Extensions">
+                <Button Content="Manage" Width="100" Click="ExtensionManage_Click" />
+            </controls:SettingsControl>
         </StackPanel>
     </ScrollViewer>
 </Page>

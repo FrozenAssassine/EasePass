@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="EasePass.Views.ExtensionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EasePass.Views"
+    xmlns:models="using:EasePass.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    
+    <Page.Resources>
+        <DataTemplate x:Key="ExtensionTemplate" x:DataType="models:Extension">
+            <Border CornerRadius="8" Padding="10" BorderBrush="Gray" BorderThickness="2" Width="100" Height="150">
+                <Grid>
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Top" Tag="{x:Bind}" Click="Settings_Click">
+                        <FontIcon Glyph="&#xE713;" />
+                    </Button>
+                    <StackPanel ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}">
+                        <Image x:Name="extensionIcon" HorizontalAlignment="Center" ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}" />
+                        <TextBlock x:Name="pluginName" Text="Plugin Name" HorizontalAlignment="Center" FontWeight="Bold" ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}" />
+                        <TextBlock x:Name="authorName" Text="Author" HorizontalAlignment="Center" Tag="{x:Bind}" Tapped="authorName_Tapped"  ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginAuthorURL, Mode=OneWay}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Button Content="Add extension" Click="AddExtension_Click" />
+        <ScrollViewer Margin="0,10,0,0" VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled">
+            <GridView x:Name="extensionView" SelectionMode="None" ItemTemplate="{StaticResource ExtensionTemplate}" IsItemClickEnabled="False" />
+        </ScrollViewer>
+    </Grid>
+</Page>

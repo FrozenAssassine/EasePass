@@ -86,10 +86,12 @@
     <None Remove="Controls\CopyPasswordbox.xaml" />
     <None Remove="Controls\CopyTextbox.xaml" />
     <None Remove="Controls\EditPasswordBox.xaml" />
+    <None Remove="Controls\ExtensionView.xaml" />
     <None Remove="Controls\PasswordSafetyChart.xaml" />
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\AddItemPage.xaml" />
     <None Remove="Views\Export2FAPage.xaml" />
+    <None Remove="Views\ExtensionPage.xaml" />
     <None Remove="Views\GenPasswordPage.xaml" />
     <None Remove="Views\LoginPage.xaml" />
     <None Remove="Views\PasswordsPage.xaml" />
@@ -160,9 +162,22 @@
     <Content Remove="Assets\AppIcon\Generated\Square44x44Logo.altform-unplated_targetsize-48.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EasePassExtensibility\EasePassExtensibility.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Update="Assets\AppIcon\appicon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\ExtensionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ExtensionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\PasswordSafetyChart.xaml">
