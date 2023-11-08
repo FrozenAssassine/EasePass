@@ -11,25 +11,37 @@
     
     <Page.Resources>
         <DataTemplate x:Key="ExtensionTemplate" x:DataType="models:Extension">
-            <Border CornerRadius="8" Padding="10" BorderBrush="Gray" BorderThickness="2" Width="100" Height="150">
+            <Border CornerRadius="8" Margin="20" Padding="10" BorderBrush="Gray" BorderThickness="2" Width="250" Height="300">
                 <Grid>
-                    <Button HorizontalAlignment="Right" VerticalAlignment="Top" Tag="{x:Bind}" Click="Settings_Click">
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="Uninstall" Tag="{x:Bind}" Click="Uninstall_Click" />
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutItem Text="Show requested authorizations" Tag="{x:Bind}" Click="ShowRequestedAuthorizations_Click" />
+                            </MenuFlyout>
+                        </Button.Flyout>
                         <FontIcon Glyph="&#xE713;" />
                     </Button>
-                    <StackPanel ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}">
-                        <Image x:Name="extensionIcon" HorizontalAlignment="Center" ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}" />
-                        <TextBlock x:Name="pluginName" Text="Plugin Name" HorizontalAlignment="Center" FontWeight="Bold" ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}" />
-                        <TextBlock x:Name="authorName" Text="Author" HorizontalAlignment="Center" Tag="{x:Bind}" Tapped="authorName_Tapped"  ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginAuthorURL, Mode=OneWay}" />
-                    </StackPanel>
+                    <Grid ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0" x:Name="extensionIcon" Source="{x:Bind IconSource, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,25,0,0" ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}" Stretch="UniformToFill" Width="150" Height="150" />
+                        <TextBlock Grid.Row="1" x:Name="pluginName" Text="{x:Bind AboutPlugin.PluginName, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,20,0,0" FontWeight="Bold" ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}" FontSize="20" />
+                        <TextBlock Grid.Row="2" x:Name="authorName" Text="{x:Bind AboutPlugin.PluginAuthor, Mode=OneWay}" HorizontalAlignment="Center" Tag="{x:Bind}" Tapped="authorName_Tapped"  ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginAuthorURL, Mode=OneWay}" />
+                    </Grid>
                 </Grid>
             </Border>
         </DataTemplate>
     </Page.Resources>
 
     <Grid>
-        <Button Content="Add extension" Click="AddExtension_Click" />
-        <ScrollViewer Margin="0,10,0,0" VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled">
-            <GridView x:Name="extensionView" SelectionMode="None" ItemTemplate="{StaticResource ExtensionTemplate}" IsItemClickEnabled="False" />
+        <Button Content="Add extension" Margin="0,50,0,0" Click="AddExtension_Click" Width="150" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <ScrollViewer Margin="0,80,0,0" Padding="50,0,50,50" VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled">
+            <GridView x:Name="extensionView" Margin="50" SelectionMode="None" ItemTemplate="{StaticResource ExtensionTemplate}" IsItemClickEnabled="False" />
         </ScrollViewer>
     </Grid>
 </Page>

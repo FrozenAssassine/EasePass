@@ -30,7 +30,9 @@ namespace EasePass
             Title = Package.Current.DisplayName;
             this.AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets\\AppIcon\\appicon.ico"));
 
-            inactivityHelper.InactivityStarted += InactivityHelper_InactivityStarted; 
+            ExtensionHelper.Init();
+
+            inactivityHelper.InactivityStarted += InactivityHelper_InactivityStarted;
 
             InfoMessagesPanel = infoMessagesPanel;
             ExtendsContentIntoTitleBar = true;

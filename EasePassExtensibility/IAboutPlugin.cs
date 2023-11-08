@@ -13,6 +13,6 @@ namespace EasePassExtensibility
         string PluginDescription { get; }
         string PluginAuthor { get; }
         string PluginAuthorURL { get; }
-        ImageSource PluginIcon { get; }
+        Uri PluginIcon { get; }
     }
 }

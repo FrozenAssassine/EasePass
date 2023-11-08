@@ -1,3 +1,4 @@
+using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
 using Microsoft.UI.Xaml;
@@ -48,30 +49,44 @@ namespace EasePass.Views
                 extensionView.Items.Add(ExtensionHelper.Extensions[i]);
         }
 
-        private void Settings_Click(object sender, RoutedEventArgs e)
+        private async void Uninstall_Click(object sender, RoutedEventArgs e)
         {
-            Extension extension = (sender as Button).Tag as Extension;
+            Extension extension = (sender as MenuFlyoutItem).Tag as Extension;
+            DeleteExtensionConfirmationDialog dialog = new DeleteExtensionConfirmationDialog();
+            if (await dialog.ShowAsync(extension))
+            {
+                ExtensionHelper.Extensions.Remove(extension);
+                extensionView.Items.Remove(extension);
+                File.AppendAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", new string[] { extension.ID });
+            }
         }
 
         private async void authorName_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Extension extension = (sender as Button).Tag as Extension;
+            Extension extension = (sender as TextBlock).Tag as Extension;
             await Windows.System.Launcher.LaunchUriAsync(new Uri(extension.AboutPlugin.PluginAuthorURL));
         }
 
         private async void AddExtension_Click(object sender, RoutedEventArgs e)
         {
             var res = await FilePickerHelper.PickOpenFile(new string[] { ".dll" });
-            if (!res.success) //Todo errormessage:
+            if (!res.success)
                 return;
 
-            string path = res.path; // @FrozenAssassine load dll from file picker and copy it to appdata folder
+            string path = res.path;
 
-            var destinationPath = ApplicationData.Current.LocalFolder.Path;
-            File.Copy(path, destinationPath);
+            var destinationPath = ApplicationData.Current.LocalFolder.Path + "\\extensions\\";
+            if (!Directory.Exists(destinationPath)) Directory.CreateDirectory(destinationPath);
+            File.Copy(path, destinationPath + Guid.NewGuid().ToString().Replace('-', '_').Replace(' ', '_') + ".dll");
             
-            ExtensionHelper.Extensions.Add(new Extension(ReflectionHelper.GetAllExternalInstances(path)));
+            ExtensionHelper.Extensions.Add(new Extension(ReflectionHelper.GetAllExternalInstances(path), Path.GetFileNameWithoutExtension(path)));
             extensionView.Items.Add(ExtensionHelper.Extensions[ExtensionHelper.Extensions.Count - 1]);
+        }
+
+        private async void ShowRequestedAuthorizations_Click(object sender, RoutedEventArgs e)
+        {
+            Extension extension = (sender as MenuFlyoutItem).Tag as Extension;
+            await new InfoDialog().ShowAsync(extension.ToString(), extension.AboutPlugin.PluginName);
         }
     }
 }

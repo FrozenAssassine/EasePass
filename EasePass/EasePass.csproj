@@ -86,7 +86,6 @@
     <None Remove="Controls\CopyPasswordbox.xaml" />
     <None Remove="Controls\CopyTextbox.xaml" />
     <None Remove="Controls\EditPasswordBox.xaml" />
-    <None Remove="Controls\ExtensionView.xaml" />
     <None Remove="Controls\PasswordSafetyChart.xaml" />
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\AddItemPage.xaml" />
@@ -97,6 +96,7 @@
     <None Remove="Views\PasswordsPage.xaml" />
     <None Remove="Views\RegisterPage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
+    <None Remove="Views\TextInfoPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -170,7 +170,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\ExtensionView.xaml">
+    <Page Update="Views\TextInfoPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

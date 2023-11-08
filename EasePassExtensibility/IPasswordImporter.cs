@@ -10,8 +10,8 @@ namespace EasePassExtensibility
     public interface IPasswordImporter : IExtensionInterface
     {
         string SourceName { get; }
-        ImageSource SourceIcon { get; }
-        PasswordItem ImportPasswords();
+        Uri SourceIcon { get; }
+        PasswordItem[] ImportPasswords();
         bool PasswordsAvailable();
     }
 }
