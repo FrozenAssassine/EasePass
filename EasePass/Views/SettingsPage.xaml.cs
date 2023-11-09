@@ -257,10 +257,7 @@ namespace EasePass.Views
 
         private void ExtensionManage_Click(object sender, RoutedEventArgs e)
         {
-            App.m_frame.Navigate(typeof(ExtensionPage), new SettingsNavigationParameters
-            {
-                
-            });
+            App.m_frame.Navigate(typeof(ExtensionPage), new SettingsNavigationParameters());
         }
 
         private async void ImportPassword_Click(object sender, RoutedEventArgs e)

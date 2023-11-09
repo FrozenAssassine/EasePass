@@ -48,14 +48,22 @@ namespace EasePass.Views
             {
                 if (items != null)
                 {
-                    Checked = new bool[items.Count];
-                    Items.Clear();
-                    for (int i = 0; i < items.Count; i++)
+                    if (items.Count > 0)
                     {
-                        Checked[i] = true;
-                        Items.Add(items[i]);
+                        Checked = new bool[items.Count];
+                        Items.Clear();
+                        for (int i = 0; i < items.Count; i++)
+                        {
+                            Checked[i] = true;
+                            Items.Add(items[i]);
+                        }
+                        items.Clear();
                     }
-                    items.Clear();
+                    else
+                    {
+                        errorMsg.Visibility = Visibility.Visible;
+                        errorMsg.Text = "No passwords available!";
+                    }
                 }
                 else
                 {
