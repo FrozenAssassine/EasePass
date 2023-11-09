@@ -1,4 +1,5 @@
 ﻿using EasePass.Models;
+using EasePassExtensibility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,6 +32,19 @@ namespace EasePass.Helper
                     }
                 }
             }));
+        }
+
+        public static T[] GetAllClassesWithInterface<T>() where T : IExtensionInterface
+        {
+            List<T> result = new List<T>();
+            for(int i = 0; i < Extensions.Count; i++)
+            {
+                for(int j = 0; j < Extensions[i].Interfaces.Length; j++)
+                {
+                    if (Extensions[i].Interfaces[j] is T) result.Add((T)Extensions[i].Interfaces[j]);
+                }
+            }
+            return result.ToArray();
         }
     }
 }

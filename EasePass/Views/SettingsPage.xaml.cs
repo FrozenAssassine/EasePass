@@ -2,6 +2,7 @@ using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
 using EasePass.Settings;
+using EasePassExtensibility;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -20,7 +21,9 @@ namespace EasePass.Views
     {
         ObservableCollection<PasswordManagerItem> passwordItems = null;
         PasswordsPage passwordsPage = null;
+        Action SavePasswordItems = null;
         string SelectedPrinter = "";
+        ObservableCollection<PasswordImporterBase> passwordImporter = null;
 
         public SettingsPage()
         {
@@ -56,11 +59,18 @@ namespace EasePass.Views
             var navParam = e.Parameter as SettingsNavigationParameters;
             passwordItems = navParam.PwItems;
             passwordsPage = navParam.PasswordPage;
+            SavePasswordItems = navParam.SavePwItems;
 
             printerSelector.Items.Clear();
             foreach(string printer in PrinterSettings.InstalledPrinters)
             {
                 printerSelector.Items.Add(printer);
+            }
+
+            passwordImporter = new ObservableCollection<PasswordImporterBase>();
+            foreach(IPasswordImporter importer in ExtensionHelper.GetAllClassesWithInterface<IPasswordImporter>())
+            {
+                passwordImporter.Add(new PasswordImporterBase(importer));
             }
         }
 
@@ -251,6 +261,67 @@ namespace EasePass.Views
             {
                 
             });
+        }
+
+        private async void ImportPassword_Click(object sender, RoutedEventArgs e)
+        {
+            PasswordImporterBase piBase = (PasswordImporterBase)(sender as Button).Tag;
+            var res = await new ImportDialog().ShowAsync(piBase.PasswordImporter);
+            if (res.Override)
+            {
+                for(int i = 0; i < res.Items.Length; i++)
+                {
+                    bool found = false;
+                    for(int j = 0; j < passwordItems.Count; j++)
+                    {
+                        if (passwordItems[j].DisplayName.Equals(res.Items[i].DisplayName))
+                        {
+                            passwordItems[j] = ToPMI(res.Items[i]);
+                            found = true;
+                        }
+                    }
+                    if (!found)
+                        passwordItems.Add(ToPMI(res.Items[i]));
+                }
+            }
+            else
+            {
+                for(int i = 0; i < res.Items.Length; i++)
+                {
+                    passwordItems.Add(ToPMI(res.Items[i]));
+                }
+            }
+            SavePasswordItems();
+        }
+
+        private PasswordManagerItem ToPMI(PasswordItem item)
+        {
+            PasswordManagerItem pmi = new PasswordManagerItem();
+            pmi.DisplayName = item.DisplayName;
+            pmi.Email = item.EMail;
+            pmi.Username = item.UserName;
+            pmi.Password = item.Password;
+            pmi.Notes = item.Notes;
+            pmi.Secret = item.TOTPSecret;
+            pmi.Interval = Convert.ToString(item.TOTPInterval);
+            pmi.Digits = Convert.ToString(item.TOTPDigits);
+            try
+            {
+                switch (item.TOTPAlgorithm)
+                {
+                    case PasswordItem.Algorithm.SHA1:
+                        pmi.Algorithm = "SHA1";
+                        break;
+                    case PasswordItem.Algorithm.SHA256:
+                        pmi.Algorithm = "SHA256";
+                        break;
+                    case PasswordItem.Algorithm.SHA512:
+                        pmi.Algorithm = "SHA512";
+                        break;
+                }
+            }
+            catch { }
+            return pmi;
         }
     }
 }
