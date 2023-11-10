@@ -298,6 +298,7 @@ namespace EasePass.Views
             pmi.Email = item.EMail;
             pmi.Username = item.UserName;
             pmi.Password = item.Password;
+            pmi.Website = item.Website;
             pmi.Notes = item.Notes;
             pmi.Secret = item.TOTPSecret;
             pmi.Interval = Convert.ToString(item.TOTPInterval);
