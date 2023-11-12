@@ -262,8 +262,9 @@ namespace EasePass.Views
 
         private async void ImportPassword_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow.XamlRoot = App.m_window.Content.XamlRoot;
             PasswordImporterBase piBase = (PasswordImporterBase)(sender as Button).Tag;
-            var res = await new ImportDialog().ShowAsync(piBase.PasswordImporter);
+            var res = await PasswordImportManager.ManageImport(piBase.PasswordImporter);
             if (res.Override)
             {
                 for(int i = 0; i < res.Items.Length; i++)
@@ -273,53 +274,22 @@ namespace EasePass.Views
                     {
                         if (passwordItems[j].DisplayName.Equals(res.Items[i].DisplayName))
                         {
-                            passwordItems[j] = ToPMI(res.Items[i]);
+                            passwordItems[j] = res.Items[i];
                             found = true;
                         }
                     }
                     if (!found)
-                        passwordItems.Add(ToPMI(res.Items[i]));
+                        passwordItems.Add(res.Items[i]);
                 }
             }
             else
             {
                 for(int i = 0; i < res.Items.Length; i++)
                 {
-                    passwordItems.Add(ToPMI(res.Items[i]));
+                    passwordItems.Add(res.Items[i]);
                 }
             }
             SavePasswordItems();
-        }
-
-        private PasswordManagerItem ToPMI(PasswordItem item)
-        {
-            PasswordManagerItem pmi = new PasswordManagerItem();
-            pmi.DisplayName = item.DisplayName;
-            pmi.Email = item.EMail;
-            pmi.Username = item.UserName;
-            pmi.Password = item.Password;
-            pmi.Website = item.Website;
-            pmi.Notes = item.Notes;
-            pmi.Secret = item.TOTPSecret;
-            pmi.Interval = Convert.ToString(item.TOTPInterval);
-            pmi.Digits = Convert.ToString(item.TOTPDigits);
-            try
-            {
-                switch (item.TOTPAlgorithm)
-                {
-                    case PasswordItem.Algorithm.SHA1:
-                        pmi.Algorithm = "SHA1";
-                        break;
-                    case PasswordItem.Algorithm.SHA256:
-                        pmi.Algorithm = "SHA256";
-                        break;
-                    case PasswordItem.Algorithm.SHA512:
-                        pmi.Algorithm = "SHA512";
-                        break;
-                }
-            }
-            catch { }
-            return pmi;
         }
     }
 }

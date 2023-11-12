@@ -11,11 +11,14 @@ using System.Threading.Tasks;
 
 namespace EasePass.Dialogs
 {
-    internal class ImportDialog
+    public class ImportDialog
     {
-        public async Task<(PasswordItem[] Items, bool Override)> ShowAsync(IPasswordImporter importer)
+        private ImportPage page;
+
+        public async Task<(PasswordManagerItem[] Items, bool Override)> ShowAsync(MsgType msg = MsgType.None)
         {
-            var page = new ImportPage(importer);
+            page = new ImportPage();
+            SetPageMessage(msg);
             var dialog = new AutoLogoutContentDialog
             {
                 Title = "Import passwords",
@@ -27,13 +30,30 @@ namespace EasePass.Dialogs
             };
 
             var res = await dialog.ShowAsync();
-            PasswordItem[] items = page.GetSelectedPasswords();
+            PasswordManagerItem[] items = page.GetSelectedPasswords();
 
             if (res == ContentDialogResult.Primary)
                 return (items, false);
             if (res == ContentDialogResult.Secondary)
                 return (items, true);
-            return (new PasswordItem[0], false);
+            return (new PasswordManagerItem[0], false);
+        }
+
+        public void SetPageMessage(MsgType msg)
+        {
+            page.SetMessage(msg);
+        }
+
+        public void SetPagePasswords(PasswordManagerItem[] items)
+        {
+            page.SetPasswords(items);
+        }
+
+        public enum MsgType
+        {
+            None,
+            Error,
+            NoPasswords
         }
     }
 }

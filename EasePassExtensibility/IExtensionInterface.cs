@@ -8,6 +8,6 @@ namespace EasePassExtensibility
 {
     public interface IExtensionInterface
     {
-
+        
     }
 }

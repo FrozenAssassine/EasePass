@@ -1,4 +1,5 @@
-using EasePassExtensibility;
+using EasePass.Dialogs;
+using EasePass.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -12,10 +13,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.UI.Core;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -27,55 +31,49 @@ namespace EasePass.Views
     /// </summary>
     public sealed partial class ImportPage : Page
     {
-        ObservableCollection<PasswordItem> Items = new ObservableCollection<PasswordItem>();
-        ObservableCollection<PasswordItem> items;
+        ObservableCollection<PasswordManagerItem> Items = new ObservableCollection<PasswordManagerItem>();
         bool[] Checked = null;
 
-        public ImportPage(IPasswordImporter importer)
+        public ImportPage()
         {
             this.InitializeComponent();
-            Task.Run(new Action(() =>
-            {
-                try // catch exceptions from plugin
-                {
-                    items = new ObservableCollection<PasswordItem>(importer.ImportPasswords());
-                }
-                catch
-                {
-                    items = null;
-                }
-            })).GetAwaiter().OnCompleted(new Action(() =>
-            {
-                if (items != null)
-                {
-                    if (items.Count > 0)
-                    {
-                        Checked = new bool[items.Count];
-                        Items.Clear();
-                        for (int i = 0; i < items.Count; i++)
-                        {
-                            Checked[i] = true;
-                            Items.Add(items[i]);
-                        }
-                        items.Clear();
-                    }
-                    else
-                    {
-                        errorMsg.Visibility = Visibility.Visible;
-                        errorMsg.Text = "No passwords available!";
-                    }
-                }
-                else
-                {
-                    errorMsg.Visibility = Visibility.Visible;
-                }
-                progress.Visibility = Visibility.Collapsed;
-            }));
         }
 
-        public PasswordItem[] GetSelectedPasswords()
+        public void SetMessage(ImportDialog.MsgType msg)
         {
-            List<PasswordItem> result = new List<PasswordItem>();
+            switch (msg)
+            {
+                case ImportDialog.MsgType.None:
+                    progress.Visibility = Visibility.Visible;
+                    break;
+                case ImportDialog.MsgType.Error:
+                    progress.Visibility = Visibility.Collapsed;
+                    errorMsg.Text = "An error has occured!";
+                    errorMsg.Visibility = Visibility.Visible;
+                    break;
+                case ImportDialog.MsgType.NoPasswords:
+                    progress.Visibility = Visibility.Collapsed;
+                    errorMsg.Text = "No passwords available!";
+                    errorMsg.Visibility = Visibility.Visible;
+                    break;
+            }
+        }
+
+        public void SetPasswords(PasswordManagerItem[] items)
+        {
+            Items.Clear();
+            Checked = new bool[items.Length];
+            for(int i = 0; i < items.Length; i++)
+            {
+                Items.Add(items[i]);
+                Checked[i] = true;
+            }
+            progress.Visibility = Visibility.Collapsed;
+        }
+
+        public PasswordManagerItem[] GetSelectedPasswords()
+        {
+            List<PasswordManagerItem> result = new List<PasswordManagerItem>();
             for(int i = 0; i < Items.Count; i++)
             {
                 if (Checked[i]) result.Add(Items[i]);
@@ -85,13 +83,13 @@ namespace EasePass.Views
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            PasswordItem item = (PasswordItem)(sender as CheckBox).Tag;
+            PasswordManagerItem item = (PasswordManagerItem)(sender as CheckBox).Tag;
             if (item != null) Checked[Items.IndexOf(item)] = true;
         }
 
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            PasswordItem item = (PasswordItem)(sender as CheckBox).Tag;
+            PasswordManagerItem item = (PasswordManagerItem)(sender as CheckBox).Tag;
             if (item != null) Checked[Items.IndexOf(item)] = false;
         }
     }

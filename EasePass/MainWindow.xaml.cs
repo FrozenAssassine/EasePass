@@ -8,6 +8,7 @@ using System.IO;
 using Windows.ApplicationModel;
 using System;
 using Microsoft.UI.Windowing;
+using Microsoft.UI.Dispatching;
 
 namespace EasePass
 {
@@ -21,11 +22,15 @@ namespace EasePass
 
         public static MainWindow CurrentInstance = null;
 
+        public static DispatcherQueue UIDispatcherQueue = null;
+        public static XamlRoot XamlRoot = null;
+
         public MainWindow()
         {
             this.InitializeComponent();
 
-            MainWindow.CurrentInstance = this;
+            CurrentInstance = this;
+            UIDispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
             Title = Package.Current.DisplayName;
             this.AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets\\AppIcon\\appicon.ico"));

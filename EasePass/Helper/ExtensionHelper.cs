@@ -20,15 +20,17 @@ namespace EasePass.Helper
             {
                 if(Directory.Exists(ApplicationData.Current.LocalFolder.Path + "\\extensions\\"))
                 {
-                    if(File.Exists(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat"))
+                    if (File.Exists(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat"))
                         foreach (string extensionID in File.ReadLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat"))
                             if (File.Exists(ApplicationData.Current.LocalFolder.Path + "\\extensions\\" + extensionID + ".dll"))
                                 await (await (await ApplicationData.Current.LocalFolder.GetFolderAsync("extensions")).GetFileAsync(extensionID + ".dll")).DeleteAsync();
+                    File.WriteAllText(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", "");
                     string[] extensionPaths = Directory.GetFiles(ApplicationData.Current.LocalFolder.Path + "\\extensions\\");
                     Extensions.Clear();
                     for (int i = 0; i < extensionPaths.Length; i++)
                     {
-                        Extensions.Add(new Extension(ReflectionHelper.GetAllExternalInstances(extensionPaths[i]), Path.GetFileNameWithoutExtension(extensionPaths[i])));
+                        if (Path.GetExtension(extensionPaths[i]) == ".dll")
+                            Extensions.Add(new Extension(ReflectionHelper.GetAllExternalInstances(extensionPaths[i]), Path.GetFileNameWithoutExtension(extensionPaths[i])));
                     }
                 }
             }));

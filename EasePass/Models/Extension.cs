@@ -41,13 +41,20 @@ namespace EasePass.Models
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Authorizations requested by plugin:");
-            for(int i = 0; i < Interfaces.Length; i++)
+            List<string> items = new List<string>();
+            for (int i = 0; i < Interfaces.Length; i++)
             {
-                if (Interfaces[i] is IPasswordImporter) sb.AppendLine("• register new passwords");
+                if (Interfaces[i] is IPasswordImporter) items.Add("• register new passwords");
                 // fill up with other interfaces
             }
+            List<string> itemsFinal = new List<string>();
+            for (int i = 0; i < items.Count; i++)
+                if (!itemsFinal.Contains(items[i]))
+                    itemsFinal.Add(items[i]);
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Authorizations requested by plugin:");
+            for (int i = 0; i < itemsFinal.Count; i++)
+                sb.AppendLine(itemsFinal[i]);
             return sb.ToString();
         }
     }
