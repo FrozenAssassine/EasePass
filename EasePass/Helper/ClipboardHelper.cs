@@ -34,7 +34,6 @@ namespace EasePass.Helper
             dp.Tick += async (s, e) =>
             {
                 var removeItem = ClipboardHistoryItems.Pop();
-                Debug.WriteLine(await removeItem.Content.GetTextAsync());
                 Clipboard.DeleteItemFromHistory(removeItem);
                 dp.Stop();
             };
