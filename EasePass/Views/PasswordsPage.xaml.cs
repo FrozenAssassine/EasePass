@@ -49,7 +49,7 @@ namespace EasePass.Views
             {
                 var dbData = DatabaseHelper.LoadDatabase(masterPassword);
                 if (dbData == null)
-                    return;
+                    dbData = new ObservableCollection<PasswordManagerItem>();
 
                 passwordItemsManager.Load(dbData);
                 autoBackupHelper.Start(this, passwordItemsManager);
