@@ -272,7 +272,8 @@ namespace EasePass.Views
                     case Windows.System.VirtualKey.L:
                         LogoutHelper.Logout();
                         break;
-                    default: return;
+                    default: 
+                        return;
                 }
             }
 
