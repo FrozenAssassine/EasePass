@@ -91,8 +91,7 @@ namespace EasePass.Helper
 
         private static async Task<bool> IsSecure(string chars, int length, string password)
         {
-            int maxpoints = 2; // 1 because of length and common sequences
-            if (!disableLeakedPasswords) maxpoints++;
+            int maxpoints = 1; // 1 because of length
             if (chars.Any(char.IsDigit)) maxpoints++;
             if (chars.Any(char.IsLower)) maxpoints++;
             if (chars.Any(char.IsUpper)) maxpoints++;
@@ -107,6 +106,7 @@ namespace EasePass.Helper
             if (securepoints + 1 < Math.Min(maxpoints, length)) return false; // Skip Request if not necessary
             if (!disableLeakedPasswords)
             {
+                maxpoints++;
                 bool? r = await IsPwned(password);
                 if (r != true) securepoints++;
             }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="EasePass.Views.ExtensionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EasePass.Views"
+    xmlns:models="using:EasePass.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    
+    <Page.Resources>
+        <DataTemplate x:Key="ExtensionTemplate" x:DataType="models:Extension">
+            <Border CornerRadius="8" Margin="20" Padding="10" BorderBrush="Gray" BorderThickness="2" Width="250" Height="300">
+                <Grid>
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="Uninstall" Tag="{x:Bind}" Click="Uninstall_Click" />
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutItem Text="Show requested authorizations" Tag="{x:Bind}" Click="ShowRequestedAuthorizations_Click" />
+                            </MenuFlyout>
+                        </Button.Flyout>
+                        <FontIcon Glyph="&#xE713;" />
+                    </Button>
+                    <Grid ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0" x:Name="extensionIcon" Source="{x:Bind IconSource, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,25,0,0" ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}" Stretch="UniformToFill" Width="150" Height="150" />
+                        <StackPanel Grid.Row="1">
+                            <TextBlock x:Name="pluginName" TextWrapping="WrapWholeWords" TextAlignment="Center" Text="{x:Bind AboutPlugin.PluginName, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,20,0,0" FontWeight="Bold" ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}" FontSize="20" />
+                            <TextBlock x:Name="authorName" Text="{x:Bind AboutPlugin.PluginAuthor, Mode=OneWay}" HorizontalAlignment="Center" Tag="{x:Bind}" Tapped="authorName_Tapped"  ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginAuthorURL, Mode=OneWay}" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Button Content="Add extension" Margin="0,50,0,0" Click="AddExtension_Click" Width="150" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <ScrollViewer Margin="0,80,0,0" Padding="50,0,50,50" VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled">
+            <GridView x:Name="extensionView" Margin="50" SelectionMode="None" ItemTemplate="{StaticResource ExtensionTemplate}" IsItemClickEnabled="False" />
+        </ScrollViewer>
+    </Grid>
+</Page>

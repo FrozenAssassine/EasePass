@@ -2,6 +2,7 @@ using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
 using EasePass.Settings;
+using EasePassExtensibility;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -20,7 +21,9 @@ namespace EasePass.Views
     {
         ObservableCollection<PasswordManagerItem> passwordItems = null;
         PasswordsPage passwordsPage = null;
+        Action SavePasswordItems = null;
         string SelectedPrinter = "";
+        ObservableCollection<PasswordImporterBase> passwordImporter = null;
 
         public SettingsPage()
         {
@@ -56,11 +59,18 @@ namespace EasePass.Views
             var navParam = e.Parameter as SettingsNavigationParameters;
             passwordItems = navParam.PwItems;
             passwordsPage = navParam.PasswordPage;
+            SavePasswordItems = navParam.SavePwItems;
 
             printerSelector.Items.Clear();
             foreach(string printer in PrinterSettings.InstalledPrinters)
             {
                 printerSelector.Items.Add(printer);
+            }
+
+            passwordImporter = new ObservableCollection<PasswordImporterBase>();
+            foreach(IPasswordImporter importer in ExtensionHelper.GetAllClassesWithInterface<IPasswordImporter>())
+            {
+                passwordImporter.Add(new PasswordImporterBase(importer));
             }
         }
 
@@ -243,6 +253,43 @@ namespace EasePass.Views
                 return;
             }
             PrinterHelper.Print(passwordItems, SelectedPrinter);
+        }
+
+        private void ExtensionManage_Click(object sender, RoutedEventArgs e)
+        {
+            App.m_frame.Navigate(typeof(ExtensionPage), new SettingsNavigationParameters());
+        }
+
+        private async void ImportPassword_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.XamlRoot = App.m_window.Content.XamlRoot;
+            PasswordImporterBase piBase = (PasswordImporterBase)(sender as Button).Tag;
+            var res = await PasswordImportManager.ManageImport(piBase.PasswordImporter);
+            if (res.Override)
+            {
+                for(int i = 0; i < res.Items.Length; i++)
+                {
+                    bool found = false;
+                    for(int j = 0; j < passwordItems.Count; j++)
+                    {
+                        if (passwordItems[j].DisplayName.Equals(res.Items[i].DisplayName))
+                        {
+                            passwordItems[j] = res.Items[i];
+                            found = true;
+                        }
+                    }
+                    if (!found)
+                        passwordItems.Add(res.Items[i]);
+                }
+            }
+            else
+            {
+                for(int i = 0; i < res.Items.Length; i++)
+                {
+                    passwordItems.Add(res.Items[i]);
+                }
+            }
+            SavePasswordItems();
         }
     }
 }

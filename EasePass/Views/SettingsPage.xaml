@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:controls="using:EasePass.Controls"
+    xmlns:controls="using:EasePass.Controls" xmlns:models="using:EasePass.Models"
     mc:Ignorable="d">
 
     <ScrollViewer Margin="0,50,0,0" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">
@@ -32,7 +32,36 @@
                 </StackPanel>
             </controls:SettingsControl>
 
-            <Expander Margin="0,5,0,5" HorizontalAlignment="Stretch">
+            <Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Height="70">
+                        <TextBlock FontSize="20" Margin="10" VerticalAlignment="Center" Text="Import passwords (pertaining plugins required)" />
+                    </StackPanel>
+                </Expander.Header>
+                <Expander.Content>
+                    <ContentControl>
+                        <ListView MaxWidth="600" ItemsSource="{x:Bind passwordImporter}" HorizontalAlignment="Stretch">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:PasswordImporterBase">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                            <Image Margin="20" Width="40" Height="40" Stretch="UniformToFill" Source="{x:Bind IconSource}" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                            <TextBlock FontSize="20" Text="{x:Bind SourceName}" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" />
+                                        </StackPanel>
+                                        <Button Grid.Column="1" Content="Import" Margin="100,0,20,0" Tag="{x:Bind}" IsEnabled="{x:Bind PasswordsAvailable()}" Click="ImportPassword_Click" Width="100" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ContentControl>
+                </Expander.Content>
+            </Expander>
+
+            <Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
                 <Expander.Header>
                     <Grid VerticalAlignment="Center" Height="70">
                         <Grid.ColumnDefinitions>
@@ -121,6 +150,9 @@
             </controls:SettingsControl>
             <controls:SettingsControl Header="Show icons">
                 <ToggleSwitch x:Name="showIcons" Toggled="showIcons_Toggled"/>
+            </controls:SettingsControl>
+            <controls:SettingsControl Header="Extensions">
+                <Button Content="Manage" Width="100" Click="ExtensionManage_Click" />
             </controls:SettingsControl>
         </StackPanel>
     </ScrollViewer>

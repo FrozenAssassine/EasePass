@@ -174,7 +174,8 @@ namespace EasePass.Views
             App.m_frame.Navigate(typeof(SettingsPage), new SettingsNavigationParameters
             {
                 PasswordPage = this,
-                PwItems = PasswordItems
+                PwItems = PasswordItems,
+                SavePwItems = SaveData
             });
         }
         private void SetVis(FontIcon icon)
