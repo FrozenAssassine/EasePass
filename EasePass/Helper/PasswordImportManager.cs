@@ -23,16 +23,23 @@ namespace EasePass.Helper
                     items = importer.ImportPasswords();
                 })).GetAwaiter().OnCompleted(new Action(() =>
                 {
-                    if (items.Length > 0)
+                    if(items != null)
                     {
-                        PasswordManagerItem[] pwItems = new PasswordManagerItem[items.Length];
-                        for (int i = 0; i < items.Length; i++)
-                            pwItems[i] = ToPMI(items[i]);
-                        dlg.SetPagePasswords(pwItems);
+                        if (items.Length > 0)
+                        {
+                            PasswordManagerItem[] pwItems = new PasswordManagerItem[items.Length];
+                            for (int i = 0; i < items.Length; i++)
+                                pwItems[i] = ToPMI(items[i]);
+                            dlg.SetPagePasswords(pwItems);
+                        }
+                        else
+                        {
+                            dlg.SetPageMessage(ImportDialog.MsgType.NoPasswords);
+                        }
                     }
                     else
                     {
-                        dlg.SetPageMessage(ImportDialog.MsgType.NoPasswords);
+                        dlg.SetPageMessage(ImportDialog.MsgType.Error);
                     }
                 }));
             }
