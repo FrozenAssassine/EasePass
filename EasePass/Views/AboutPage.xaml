@@ -9,7 +9,7 @@
     <ScrollViewer Margin="0,30,0,0" HorizontalScrollMode="Enabled" VerticalScrollMode="Enabled">
         <StackPanel Margin="20">
             <TextBlock TextAlignment="Center" FontSize="36" Text="About"/>
-            <controls:SetingsItemSeparator/>
+            <controls:SettingsItemSeparator/>
             <Grid VerticalAlignment="Stretch" MinWidth="{ThemeResource FlyoutThemeMinWidth}" Margin="0,5,0,0" CornerRadius="5" Padding="{StaticResource ExpanderHeaderPadding}" HorizontalAlignment="Stretch" Background="{ThemeResource ExpanderHeaderBackground}" BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}" BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}">
                 <StackPanel Height="70" Padding="0" Orientation="Horizontal">
                     <Image HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Width="50" Height="50" Source="ms-appx:///Assets/AppIcon/Icon.png"/>
@@ -37,7 +37,7 @@
                 </Grid>
             </Grid>
 
-            <controls:SetingsItemSeparator Header="More"/>
+            <controls:SettingsItemSeparator Header="More"/>
             <controls:SettingsControl Tag="http://easepass.frozenassassine.de" Clickable="True" Clicked="NavigateToLink_Click" Glyph="&#xEA8A;" Header="Website" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <controls:SettingsControl.Content>
                     <TextBlock Text="&#xe8a7;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
@@ -77,7 +77,7 @@
                     </StackPanel>
                 </Expander.Content>
             </Expander>
-            <controls:SetingsItemSeparator Header="Legal"/>
+            <controls:SettingsItemSeparator Header="Legal"/>
 
             <Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
                 <Expander.Header>

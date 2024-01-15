@@ -3,9 +3,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace EasePass.Controls
 {
-    public sealed partial class SetingsItemSeparator : UserControl
+    public sealed partial class SettingsItemSeparator : UserControl
     {
-        public SetingsItemSeparator()
+        public SettingsItemSeparator()
         {
             this.InitializeComponent();
         }

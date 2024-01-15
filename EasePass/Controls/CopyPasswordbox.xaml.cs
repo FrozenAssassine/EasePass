@@ -2,6 +2,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using EasePass.Helper;
 using EasePass.Settings;
+using System.Collections.ObjectModel;
+using EasePass.Models;
 
 namespace EasePass.Controls
 {
@@ -74,6 +76,12 @@ namespace EasePass.Controls
         {
             base.OnApplyTemplate();
             PasswordSafetyChart = GetTemplateChild("passwordSafetyChart") as PasswordSafetyChart;
+        }
+
+        public void SetPasswordItems(ObservableCollection<PasswordManagerItem> items)
+        {
+            if (PasswordSafetyChart != null)
+                PasswordSafetyChart.SetPasswordItems(items);
         }
     }
 }

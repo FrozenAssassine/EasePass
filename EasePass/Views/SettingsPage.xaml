@@ -10,7 +10,7 @@
     <ScrollViewer Margin="0,50,0,0" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">
         <StackPanel Margin="20">
             <TextBlock TextAlignment="Center" FontSize="36" Text="Settings"/>
-            <controls:SetingsItemSeparator Header="Database"/>
+            <controls:SettingsItemSeparator Header="Database"/>
             <controls:SettingsControl Header="Export Database">
                 <StackPanel Orientation="Horizontal">
                     <PasswordBox MinWidth="150" Margin="5" x:Name="encryptDBPassword" PlaceholderText="Password"/>
@@ -89,7 +89,7 @@
                 </Expander.Content>
             </Expander>
             
-            <controls:SetingsItemSeparator Header="Security"/>
+            <controls:SettingsItemSeparator Header="Security"/>
             <controls:SettingsControl Header="Inactivity Logout">
                 <NumberBox SpinButtonPlacementMode="Inline" ValueChanged="InactivityLogoutTime_ValueChanged" Maximum="1000" Minimum="1" MinWidth="150" Margin="5" x:Name="inactivityLogoutTime" PlaceholderText="Logout time" Header="Minutes"/>
             </controls:SettingsControl>
@@ -144,7 +144,7 @@
                 </Expander.Content>
             </Expander>
 
-            <controls:SetingsItemSeparator Header="Miscellaneous"/>
+            <controls:SettingsItemSeparator Header="Miscellaneous"/>
             <controls:SettingsControl Header="Quick Copy on Double Click">
                 <ToggleSwitch x:Name="doubleTapToCopySW" Toggled="DoubleTapToCopySW_Toggled"/>
             </controls:SettingsControl>

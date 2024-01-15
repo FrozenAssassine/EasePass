@@ -36,8 +36,9 @@ namespace EasePass
             this.AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets\\AppIcon\\appicon.ico"));
 
             ExtensionHelper.Init();
-
             inactivityHelper.InactivityStarted += InactivityHelper_InactivityStarted;
+
+            PasswordHelper.Init();
 
             InfoMessagesPanel = infoMessagesPanel;
             ExtendsContentIntoTitleBar = true;
@@ -81,7 +82,7 @@ namespace EasePass
                 this.naivgationFrame.CurrentSourcePageType != typeof(RegisterPage))
             {
                 AutoLogoutContentDialog.InactivityStarted();
-                this.naivgationFrame.Navigate(typeof(LoginPage));
+                LogoutHelper.Logout();
                 InfoMessages.AutomaticallyLoggedOut();
             }
         }

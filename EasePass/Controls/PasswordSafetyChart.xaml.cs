@@ -1,10 +1,12 @@
 using EasePass.Helper;
+using EasePass.Models;
 using EasePass.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -22,16 +24,20 @@ namespace EasePass.Controls
             "Password length",
             "Leaked or exploited",
             "Punctuation",
-            "Digits"
+            "Digits",
+            "Predictability",
+            "Seen before"
         };
         private string[] messagesShort = new string[]
         {
             "Lower case",
             "Upper case",
             "Password length",
-            "Leaked",
+            "Leaked (or not)",
             "Punctuation",
-            "Digits"
+            "Digits",
+            "Predictability",
+            "Seen before"
         };
         private string[][] prefixes = new string[][]
         {
@@ -42,14 +48,18 @@ namespace EasePass.Controls
             new string[]{ "Not", "Is already", "Unknown whether it has already been" },
             new string[]{ "Contains", "Missing", "Unknown whether it contains" },
             new string[]{ "Contains", "Missing", "Unknown whether it contains" },
+            new string[]{ "Low", "High", "Unknown " },
+            new string[]{ "Not yet", "Already", "Unknown whether" },
         };
         private double ChartScale = 10;
-        private Path[] paths = new Path[6];
-        private bool?[] checks = new bool?[6];
+        private Path[] paths = new Path[8];
+        private bool?[] checks = new bool?[8];
 
         public bool ShowInfo { get; set; } = true;
         public bool SingleHitbox { get; set; } = false;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private ObservableCollection<PasswordManagerItem> items;
 
         public PasswordSafetyChart()
         {
@@ -60,6 +70,13 @@ namespace EasePass.Controls
             paths[3] = path4;
             paths[4] = path5;
             paths[5] = path6;
+            paths[6] = path7;
+            paths[7] = path8;
+        }
+
+        public void SetPasswordItems(ObservableCollection<PasswordManagerItem> items)
+        {
+            this.items = items;
         }
         
         private void RaisePropertyChanged(string name)
@@ -70,18 +87,19 @@ namespace EasePass.Controls
             }
         }
         
-        public void SetHeight(double height)
+        public void SetHeight(double chartHeight)
         {
-            ChartScale = height / 10;
+            ChartScale = chartHeight / 10;
             RaisePropertyChanged("ChartScale");
-            pathGrid.Height = height;
-            pathGrid.Width = height;
-            info_left.Height = height;
-            info_right.Height = height;
+            pathGrid.Height = chartHeight;
+            pathGrid.Width = chartHeight;
+            info_left.Height = chartHeight;
+            info_right.Height = chartHeight;
         }
         
         public void EvaluatePassword(string password)
         {
+            checks[3] = null;
             if (!AppSettings.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords))
             {
                 Task<bool?> task = PasswordHelper.IsPwned(password);
@@ -95,10 +113,22 @@ namespace EasePass.Controls
             }
 
             bool?[] res = PasswordHelper.EvaluatePassword(password);
-            for(int i = 0; i < 5; i++)
+            for(int i = 0; i < 6; i++)
             {
                 checks[i >= 3 ? i + 1 : i] = res[i];
             }
+
+            checks[7] = null;
+            if(items != null)
+            {
+                int amount = 0;
+                for(int i = 0; i < items.Count; i++)
+                {
+                    if (items[i].Password == password) amount++;
+                }
+                checks[7] = amount < 2;
+            }
+            
 
             for(int i = 0; i < checks.Length; i++)
             {

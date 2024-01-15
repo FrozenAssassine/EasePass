@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Security;
 using System.Threading.Tasks;
 
@@ -30,12 +31,7 @@ namespace EasePass.Views
 
         public int PasswordAlreadyExists(string password)
         {
-            int i = 0;
-            foreach(var item in PasswordItems)
-            {
-                if (item.Password == password) i++;
-            }
-            return i;
+            return PasswordItems.Count(x => x.Password == password);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -82,6 +78,8 @@ namespace EasePass.Views
         {
             if (item == null)
                 return;
+
+            pwTB.SetPasswordItems(PasswordItems);
 
             notesTB.Text = item.Notes;
             pwTB.Password = item.Password;
@@ -168,7 +166,7 @@ namespace EasePass.Views
         private async Task GeneratePassword()
         {
             //returns true when the regenerate button was pressed
-            if (await new GenPasswordDialog().ShowAsync())
+            if (await new GenPasswordDialog().ShowAsync(PasswordItems))
                 await GeneratePassword();
         }
         private void ShowSettingsPage()
@@ -272,7 +270,11 @@ namespace EasePass.Views
                         if (passwordItemListView.SelectedIndex > 0 && passwordItemListView.SelectedIndex < passwordItemListView.Items.Count)
                             passwordItemListView.SelectedIndex--;
                         break;
-                    default: return;
+                    case Windows.System.VirtualKey.L:
+                        LogoutHelper.Logout();
+                        break;
+                    default: 
+                        return;
                 }
             }
 
@@ -291,6 +293,7 @@ namespace EasePass.Views
         private void SortUsername_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByUsername, sortusername);
         private void SortNotes_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByNotes, sortnotes);
         private void SortWebsite_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByWebsite, sortwebsite);
+        private void SortPasswordStrength(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByPasswordStrength, sortpasswordstrength);
         private void SortClickAction(Comparison<PasswordManagerItem> comparison, FontIcon icon)
         {
             PasswordItems.Sort(comparison);
