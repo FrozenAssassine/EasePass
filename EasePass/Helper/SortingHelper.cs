@@ -37,6 +37,35 @@ namespace EasePass.Helper
             return pmi1.Website.CompareTo(pmi2.Website);
         }
 
+        public static int ByPopularAllTime(PasswordManagerItem pmi1, PasswordManagerItem pmi2)
+        {
+            if (pmi1.Clicks == null) pmi1.Clicks = new List<string>();
+            if (pmi2.Clicks == null) pmi2.Clicks = new List<string>();
+            return -pmi1.Clicks.Count.CompareTo(pmi2.Clicks.Count);
+        }
+
+        public static int ByPopularLast30Days(PasswordManagerItem pmi1, PasswordManagerItem pmi2)
+        {
+            int DaysDeadline = 30;
+
+            DateTime now = DateTime.Now;
+            int pmi1Count = 0;
+            for(int i = 0; i < pmi1.Clicks.Count; i++)
+            {
+                string[] splitted = pmi1.Clicks[i].Split('.');
+                DateTime date = new DateTime(Convert.ToInt32(splitted[2]), Convert.ToInt32(splitted[1]), Convert.ToInt32(splitted[0]));
+                if (now - date < TimeSpan.FromDays(DaysDeadline)) pmi1Count++;
+            }
+            int pmi2Count = 0;
+            for (int i = 0; i < pmi2.Clicks.Count; i++)
+            {
+                string[] splitted = pmi2.Clicks[i].Split('.');
+                DateTime date = new DateTime(Convert.ToInt32(splitted[2]), Convert.ToInt32(splitted[1]), Convert.ToInt32(splitted[0]));
+                if (now - date < TimeSpan.FromDays(DaysDeadline)) pmi2Count++;
+            }
+            return -pmi1Count.CompareTo(pmi2Count);
+        }
+
         public static int ByPasswordStrength(PasswordManagerItem pmi1, PasswordManagerItem pmi2)
         {
             bool?[] strength1 = PasswordHelper.EvaluatePassword(pmi1.Password);
