@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Security;
 using System.Threading.Tasks;
 
@@ -30,12 +31,7 @@ namespace EasePass.Views
 
         public int PasswordAlreadyExists(string password)
         {
-            int i = 0;
-            foreach(var item in PasswordItems)
-            {
-                if (item.Password == password) i++;
-            }
-            return i;
+            return PasswordItems.Count(x => x.Password == password);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -273,6 +269,8 @@ namespace EasePass.Views
                         if (passwordItemListView.SelectedIndex > 0 && passwordItemListView.SelectedIndex < passwordItemListView.Items.Count)
                             passwordItemListView.SelectedIndex--;
                         break;
+                    case Windows.System.VirtualKey.L:
+                        
                     default: return;
                 }
             }
