@@ -1,2 +1,2 @@
-EasePassBrowserPasswordImporter.dll
-EasePassWLANPasswordImporter.dll
+Browser Password Importer|https://github.com/FrozenAssassine/EasePass/raw/master/Plugins/EasePassBrowserPasswordImporter.dll
+WLAN Password Importer|https://github.com/FrozenAssassine/EasePass/raw/master/Plugins/EasePassWLANPasswordImporter.dll
