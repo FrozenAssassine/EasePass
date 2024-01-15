@@ -270,7 +270,8 @@ namespace EasePass.Views
                             passwordItemListView.SelectedIndex--;
                         break;
                     case Windows.System.VirtualKey.L:
-                        
+                        LogoutHelper.Logout();
+                        break;
                     default: return;
                 }
             }
