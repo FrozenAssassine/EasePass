@@ -9,15 +9,16 @@ using Windows.ApplicationModel;
 using System;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Dispatching;
+using EasePass.Core;
 
 namespace EasePass
 {
     public sealed partial class MainWindow : Window
     {
         private InactivityHelper inactivityHelper = new InactivityHelper();
-
+        public PasswordItemsManager passwordItemsManager = null;
         public static StackPanel InfoMessagesPanel;
-        public Frame MainFrame => naivgationFrame;
+        public Frame MainFrame => navigationFrame;
         public bool ShowBackArrow { get => navigateBackButton.Visibility == Visibility.Visible; set => navigateBackButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
 
         public static MainWindow CurrentInstance = null;
@@ -78,12 +79,13 @@ namespace EasePass
         }
         private void InactivityHelper_InactivityStarted()
         {
-            if(this.naivgationFrame.CurrentSourcePageType != typeof(LoginPage) &&
-                this.naivgationFrame.CurrentSourcePageType != typeof(RegisterPage))
+            if(this.navigationFrame.CurrentSourcePageType != typeof(LoginPage) &&
+                this.navigationFrame.CurrentSourcePageType != typeof(RegisterPage))
             {
                 AutoLogoutContentDialog.InactivityStarted();
                 LogoutHelper.Logout();
                 InfoMessages.AutomaticallyLoggedOut();
+                passwordItemsManager.Unload();
             }
         }
 
@@ -99,7 +101,7 @@ namespace EasePass
 
         private void NavigateBack_Click(object sender, RoutedEventArgs e)
         {
-            naivgationFrame.GoBack();
+            navigationFrame.GoBack();
         }
 
         private void Window_Activated(object sender, WindowActivatedEventArgs args)

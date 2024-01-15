@@ -1,4 +1,5 @@
-﻿using EasePass.Models;
+﻿using EasePass.Core;
+using EasePass.Models;
 using EasePass.Settings;
 using EasePass.Views;
 using Microsoft.UI.Xaml;
@@ -12,7 +13,7 @@ namespace EasePass.Helper
         private string DatabaseBackupPath => AppSettings.GetSettings(AppSettingsValues.autoBackupDBPath, "");
         private DispatcherTimer timer = new DispatcherTimer();
         private PasswordsPage passwordsPage;
-        ObservableCollection<PasswordManagerItem> passwordItems = null;
+        private PasswordItemsManager pwItemsManager = null;
 
         public void UpdateSettings()
         {
@@ -32,27 +33,27 @@ namespace EasePass.Helper
             }
         }
 
-        public void Start(PasswordsPage pwPage, ObservableCollection<PasswordManagerItem> pwItems)
+        public void Start(PasswordsPage pwPage, PasswordItemsManager pwItemsManager)
         {
             UpdateSettings();
 
             timer.Tick += Timer_Tick;
             timer.Start();
 
-            this.passwordItems = pwItems;
+            this.pwItemsManager = pwItemsManager;
             this.passwordsPage = pwPage;
         }
 
         private void Timer_Tick(object sender, object e)
         {
             timer.Start();
-            if (passwordItems == null)
+            if (pwItemsManager == null)
                 return;
 
             if (DatabaseBackupPath.Length == 0)
                 return;
 
-            DatabaseHelper.SaveDatabase(passwordItems, passwordsPage.masterPassword, DatabaseBackupPath);
+            DatabaseHelper.SaveDatabase(pwItemsManager, passwordsPage.masterPassword, DatabaseBackupPath);
         }
     }
 }

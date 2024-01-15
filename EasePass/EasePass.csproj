@@ -32,12 +32,6 @@
     <Version>1.1.0</Version>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Core\**" />
-    <EmbeddedResource Remove="Core\**" />
-    <None Remove="Core\**" />
-    <Page Remove="Core\**" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="AppWindows\ScreenScannerWindow.xaml" />
     <None Remove="Assets\AppIcon\Generated\LargeTile.scale-100.png" />
     <None Remove="Assets\AppIcon\Generated\LargeTile.scale-125.png" />
@@ -142,9 +136,6 @@
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
-  <ItemGroup>
-    <PRIResource Remove="Core\**" />
-  </ItemGroup>
   <ItemGroup>
     <Content Remove="Assets\AppIcon\Generated\SplashScreen.scale-100.png" />
     <Content Remove="Assets\AppIcon\Generated\SplashScreen.scale-125.png" />

@@ -1,17 +1,16 @@
+using EasePass.Core;
 using EasePass.Helper;
-using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace EasePass.Views
 {
     public sealed partial class GenPasswordPage : Page
     {
-        public GenPasswordPage(ObservableCollection<PasswordManagerItem> items)
+        public GenPasswordPage(PasswordItemsManager pwItemsManager)
         {
             this.InitializeComponent();
-            safetyChart.SetPasswordItems(items);
+            safetyChart.SetPasswordItems(pwItemsManager);
         }
 
         public async void GeneratePassword()
