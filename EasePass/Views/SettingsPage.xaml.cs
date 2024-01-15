@@ -57,7 +57,7 @@ namespace EasePass.Views
 
             App.m_window.ShowBackArrow = true;
             var navParam = e.Parameter as SettingsNavigationParameters;
-            passwordItems = navParam.PwItems;
+            passwordItems = navParam.PwItemsManager.PasswordItems;
             passwordsPage = navParam.PasswordPage;
             SavePasswordItems = navParam.SavePwItems;
 

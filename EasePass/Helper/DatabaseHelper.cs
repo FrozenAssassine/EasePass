@@ -1,4 +1,5 @@
-﻿using EasePass.Dialogs;
+﻿using EasePass.Core;
+using EasePass.Dialogs;
 using EasePass.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -81,9 +82,9 @@ namespace EasePass.Helper
             }
         }
 
-        public static void SaveDatabase(ObservableCollection<PasswordManagerItem> pwItems, SecureString pw, string path = "")
+        public static void SaveDatabase(PasswordItemsManager pwItems, SecureString pw, string path = "")
         {
-            var data = CreateJsonstring(pwItems);
+            var data = CreateJsonstring(pwItems.PasswordItems);
             WriteFile(path: path.Length == 0 ? DatabaseFilePath : path, jsonString: data, pw);
         }
         public static ObservableCollection<PasswordManagerItem> LoadDatabase(SecureString pw, string path = "")
@@ -98,7 +99,7 @@ namespace EasePass.Helper
         //Used to create a file for the database on the very first start, so no error will be send, that the database was not found:
         public static void CreateInitialDatabaseFile(SecureString pw)
         {
-            SaveDatabase(new ObservableCollection<PasswordManagerItem>(), pw);
+            SaveDatabase(new PasswordItemsManager {  PasswordItems = new ObservableCollection<PasswordManagerItem>()}, pw);
         }
     }
 }
