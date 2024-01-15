@@ -8,7 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    
+
     <Page.Resources>
         <DataTemplate x:Key="ExtensionTemplate" x:DataType="models:Extension">
             <Border CornerRadius="8" Margin="20" Padding="10" BorderBrush="Gray" BorderThickness="2" Width="250" Height="300">
@@ -40,9 +40,32 @@
     </Page.Resources>
 
     <Grid>
-        <Button Content="Add extension" Margin="0,50,0,0" Click="AddExtension_Click" Width="150" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" />
-        <ScrollViewer Margin="0,80,0,0" Padding="50,0,50,50" VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Content="Add extension" Click="AddExtension_Click" Width="150" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <ScrollViewer  Grid.Row="1" Padding="50,0,50,50" VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled">
             <GridView x:Name="extensionView" Margin="50" SelectionMode="None" ItemTemplate="{StaticResource ExtensionTemplate}" IsItemClickEnabled="False" />
         </ScrollViewer>
+        <GridView SelectionChanged="fetchedExtensionsGridView_SelectionChanged" Grid.Row="2" Margin="50" x:Name="fetchedExtensionsGridView">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="models:FetchedExtension">
+                    <StackPanel Orientation="Horizontal" MaxWidth="200">
+                        <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{x:Bind Name}"/>
+                        <FontIcon Margin="10,0,0,0" Glyph="&#xE896;"/>
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid
+                           MaximumRowsOrColumns="50"
+                           Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+
+        </GridView>
     </Grid>
 </Page>
