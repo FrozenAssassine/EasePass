@@ -37,35 +37,35 @@
                 </Grid>
             </Border>
         </DataTemplate>
+        <DataTemplate x:Key="ExtensionDownloadTemplate" x:DataType="models:FetchedExtension">
+            <Grid Padding="15" HorizontalAlignment="Stretch" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{x:Bind Name}"/>
+                <FontIcon Grid.Column="1" HorizontalAlignment="Right" Margin="10,0,0,0" Glyph="&#xE896;"/>
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="50"/> <!-- Just for spacing -->
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Content="Add extension" Click="AddExtension_Click" Width="150" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" />
-        <ScrollViewer  Grid.Row="1" Padding="50,0,50,50" VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Row="1" Grid.Column="0" Content="Add extension from file" Click="AddExtension_Click" Padding="15" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <ScrollViewer Grid.Row="2" Grid.Column="0" Padding="50,0,50,50" VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled">
             <GridView x:Name="extensionView" Margin="50" SelectionMode="None" ItemTemplate="{StaticResource ExtensionTemplate}" IsItemClickEnabled="False" />
         </ScrollViewer>
-        <GridView SelectionChanged="fetchedExtensionsGridView_SelectionChanged" Grid.Row="2" Margin="50" x:Name="fetchedExtensionsGridView">
-            <GridView.ItemTemplate>
-                <DataTemplate x:DataType="models:FetchedExtension">
-                    <StackPanel Orientation="Horizontal" MaxWidth="200">
-                        <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{x:Bind Name}"/>
-                        <FontIcon Margin="10,0,0,0" Glyph="&#xE896;"/>
-                    </StackPanel>
-                </DataTemplate>
-            </GridView.ItemTemplate>
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid
-                           MaximumRowsOrColumns="50"
-                           Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-
-        </GridView>
+        <TextBlock Grid.Row="1" Grid.Column="1" Margin="0,0,40,0" FontSize="30" Text="Store:" HorizontalAlignment="Center" />
+        <ScrollViewer Grid.Row="2" Grid.Column="1" VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <GridView x:Name="downloadView" ItemTemplate="{StaticResource ExtensionDownloadTemplate}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        </ScrollViewer>
     </Grid>
 </Page>

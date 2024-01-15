@@ -10,12 +10,12 @@ namespace EasePass.Helper
 {
     internal class ReflectionHelper
     {
-        public static IExtensionInterface[] GetAllExternalInstances(string[] paths)
+        public static IExtensionInterface[] GetAllExternalInstances(string path)
         {
-            List<IExtensionInterface> res = new List<IExtensionInterface>();
-            foreach (string file in paths)
+            try
             {
-                Assembly plugin = Assembly.LoadFrom(file);
+                List<IExtensionInterface> res = new List<IExtensionInterface>();
+                Assembly plugin = Assembly.LoadFrom(path);
                 IEnumerable<System.Type> types = GetLoadableTypes(plugin);
                 foreach (System.Type t in types)
                 {
@@ -25,24 +25,12 @@ namespace EasePass.Helper
                         if (obj != null) res.Add(obj);
                     }
                 }
+                return res.ToArray();
             }
-            return res.ToArray();
-        }
-
-        public static IExtensionInterface[] GetAllExternalInstances(string path)
-        {
-            List<IExtensionInterface> res = new List<IExtensionInterface>();
-            Assembly plugin = Assembly.LoadFrom(path);
-            IEnumerable<System.Type> types = GetLoadableTypes(plugin);
-            foreach (System.Type t in types)
+            catch
             {
-                if (t.GetInterfaces().Contains(typeof(IExtensionInterface)))
-                {
-                    IExtensionInterface obj = (IExtensionInterface)GetInstanceOf(t);
-                    if (obj != null) res.Add(obj);
-                }
+                return new IExtensionInterface[0];
             }
-            return res.ToArray();
         }
 
         private static object GetInstanceOf(Type type)

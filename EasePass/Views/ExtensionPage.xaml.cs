@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -43,7 +44,7 @@ public sealed partial class ExtensionPage : Page
         if (result == null)
             return;
 
-        fetchedExtensionsGridView.ItemsSource = result;
+        downloadView.ItemsSource = result;
     }
 
 
@@ -77,7 +78,7 @@ public sealed partial class ExtensionPage : Page
         if (!Directory.Exists(destinationPath)) Directory.CreateDirectory(destinationPath);
         File.Copy(path, destinationPath + Guid.NewGuid().ToString().Replace('-', '_').Replace(' ', '_') + ".dll");
         
-        ExtensionHelper.Extensions.Add(new Extension(ReflectionHelper.GetAllExternalInstances(path), Path.GetFileNameWithoutExtension(path)));
+        ExtensionHelper.Extensions.Add(new Extension(ReflectionHelper.GetAllExternalInstances(path), System.IO.Path.GetFileNameWithoutExtension(path)));
         extensionView.Items.Add(ExtensionHelper.Extensions[ExtensionHelper.Extensions.Count - 1]);
     }
 
@@ -88,13 +89,19 @@ public sealed partial class ExtensionPage : Page
     }
     private void fetchedExtensionsGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (fetchedExtensionsGridView.SelectedItem == null)
+        if (downloadView.SelectedItem == null)
             return;
 
-        if(fetchedExtensionsGridView.SelectedItem is FetchedExtension fetchedExtension)
+        if(downloadView.SelectedItem is FetchedExtension fetchedExtension)
         {
-            //download Kot here:
-            //fetchedExtension.URL;
+            var destinationPath = ApplicationData.Current.LocalFolder.Path + "\\extensions\\";
+            if (!Directory.Exists(destinationPath)) Directory.CreateDirectory(destinationPath);
+            string p = destinationPath + Guid.NewGuid().ToString().Replace('-', '_').Replace(' ', '_') + ".dll";
+
+            RequestsHelper.DownloadFile(fetchedExtension.URL, p);
+
+            ExtensionHelper.Extensions.Add(new Extension(ReflectionHelper.GetAllExternalInstances(p), System.IO.Path.GetFileNameWithoutExtension(p)));
+            extensionView.Items.Add(ExtensionHelper.Extensions[ExtensionHelper.Extensions.Count - 1]);
         }
     }
 }
