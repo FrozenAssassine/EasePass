@@ -27,7 +27,6 @@ namespace EasePass.Views
             this.InitializeComponent();
             this.pe = pe;
             isEditMode = true;
-            genBtn.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
 
             if (input == null)
                 return;
