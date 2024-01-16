@@ -43,7 +43,9 @@ namespace EasePass.Controls
                     this.SelectAll();
                 else if (e.Key == Windows.System.VirtualKey.C)
                     CopyText();
-
+                else if (e.Key == Windows.System.VirtualKey.V)
+                    this.PasteFromClipboard();
+                
                 e.Handled = true;
                 return;
             }
