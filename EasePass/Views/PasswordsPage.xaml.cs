@@ -243,7 +243,7 @@ namespace EasePass.Views
         }
         private void Page_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-            if (KeyHelper.IsKeyPressed(Windows.System.VirtualKey.Control))
+            if (KeyHelper.IsKeyPressed(Windows.System.VirtualKey.Control) && !KeyHelper.IsKeyPressed(Windows.System.VirtualKey.Menu))
             {
                 switch (e.Key)
                 {

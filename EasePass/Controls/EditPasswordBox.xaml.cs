@@ -37,7 +37,7 @@ namespace EasePass.Controls
 
         private void TextBox_PreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-            if (KeyHelper.IsKeyPressed(Windows.System.VirtualKey.Control))
+            if (KeyHelper.IsKeyPressed(Windows.System.VirtualKey.Control) && !KeyHelper.IsKeyPressed(Windows.System.VirtualKey.Menu))
             {
                 if (e.Key == Windows.System.VirtualKey.A)
                     this.SelectAll();
