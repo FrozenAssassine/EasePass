@@ -10,6 +10,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Security;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace EasePass.Views
 {
@@ -22,6 +23,7 @@ namespace EasePass.Views
         private TOTPTokenUpdater totpTokenUpdater;
         private readonly AutoBackupHelper autoBackupHelper = new AutoBackupHelper();
         public readonly PasswordItemsManager passwordItemsManager = new PasswordItemsManager();
+        private static bool firstLoad = true;
 
         public PasswordsPage()
         {
@@ -56,6 +58,19 @@ namespace EasePass.Views
                 passwordItemListView.ItemsSource = passwordItemsManager.PasswordItems;
             }
 
+            if (firstLoad)
+            {
+                firstLoad = false;
+                ShowPasswordItem(new PasswordManagerItem()
+                {
+                    DisplayName = "",
+                    Username = "",
+                    Password = "",
+                    Email = "",
+                    Notes = ""
+                }, true);
+            }
+
             base.OnNavigatedTo(e);
         }
 
@@ -68,10 +83,12 @@ namespace EasePass.Views
         {
             DatabaseHelper.SaveDatabase(passwordItemsManager, masterPassword);
         }
-        private void ShowPasswordItem(PasswordManagerItem item)
+        private void ShowPasswordItem(PasswordManagerItem item, bool dummy = false)
         {
             if (item == null)
                 return;
+
+            passwordShowArea.Visibility = Visibility.Visible;
 
             pwTB.SetPasswordItems(passwordItemsManager);
 
@@ -82,7 +99,18 @@ namespace EasePass.Views
             itemnameTB.Text = item.DisplayName;
             websiteTB.Text = item.Website;
 
-            passwordShowArea.Visibility = Visibility.Visible;
+            if (dummy)
+            {
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromSeconds(0.5);
+                timer.Tick += (object sender, object e) =>
+                {
+                    passwordShowArea.Visibility = Visibility.Collapsed;
+                    (sender as DispatcherTimer).Stop();
+                };
+                timer.Start();
+                return;
+            }
 
             if (!string.IsNullOrEmpty(item.Secret))
             {
