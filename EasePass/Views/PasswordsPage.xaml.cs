@@ -49,7 +49,7 @@ namespace EasePass.Views
             {
                 var dbData = DatabaseHelper.LoadDatabase(masterPassword);
                 if (dbData == null)
-                    return;
+                    dbData = new ObservableCollection<PasswordManagerItem>();
 
                 passwordItemsManager.Load(dbData);
                 autoBackupHelper.Start(this, passwordItemsManager);
@@ -207,6 +207,7 @@ namespace EasePass.Views
             if (passwordItemListView.SelectedItem is PasswordManagerItem pwItem)
             {
                 SelectedItem = pwItem;
+                SelectedItem.Clicks.Add(DateTime.Now.ToString("d").Replace("/", "."));
                 ShowPasswordItem(pwItem);
             }
         }
@@ -287,6 +288,8 @@ namespace EasePass.Views
         private void SortUsername_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByUsername, sortusername);
         private void SortNotes_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByNotes, sortnotes);
         private void SortWebsite_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByWebsite, sortwebsite);
+        private void SortPopularAll_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByPopularAllTime, sortpopularall);
+        private void SortPopular30_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByPopularLast30Days, sortpopular30);
         private void SortPasswordStrength(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByPasswordStrength, sortpasswordstrength);
         private void SortClickAction(Comparison<PasswordManagerItem> comparison, FontIcon icon)
         {

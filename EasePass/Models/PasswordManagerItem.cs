@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
@@ -33,6 +34,7 @@ namespace EasePass.Models
         public string Digits { get; set; } = "6";
         public string Interval { get; set; } = "30";
         public string Algorithm { get; set; } = "SHA1";
+        public List<string> Clicks = new List<string>();
         [JsonIgnore]
         private string _DisplayName;
         public string DisplayName
