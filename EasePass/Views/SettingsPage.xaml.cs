@@ -291,5 +291,14 @@ namespace EasePass.Views
             }
             SavePasswordItems();
         }
+
+        private void ResetPopularity_Click(object sender, RoutedEventArgs e)
+        {
+            for(int i = 0; i < passwordItems.Count; i++)
+            {
+                passwordItems[i].Clicks.Clear();
+            }
+            SavePasswordItems();
+        }
     }
 }

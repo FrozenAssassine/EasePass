@@ -155,6 +155,9 @@
             <controls:SettingsControl Header="Show icons">
                 <ToggleSwitch x:Name="showIcons" Toggled="showIcons_Toggled"/>
             </controls:SettingsControl>
+            <controls:SettingsControl Header="Password popularity counter">
+                <Button Style="{ThemeResource AccentButtonStyle}" Content="Reset" Width="100" Click="ResetPopularity_Click" />
+            </controls:SettingsControl>
         </StackPanel>
     </ScrollViewer>
 </Page>

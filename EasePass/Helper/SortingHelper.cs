@@ -41,7 +41,14 @@ namespace EasePass.Helper
         {
             if (pmi1.Clicks == null) pmi1.Clicks = new List<string>();
             if (pmi2.Clicks == null) pmi2.Clicks = new List<string>();
-            return -pmi1.Clicks.Count.CompareTo(pmi2.Clicks.Count);
+            int comp = -pmi1.Clicks.Count.CompareTo(pmi2.Clicks.Count);
+            if (comp == 0)
+            {
+                if (pmi1.DisplayName == null) pmi1.DisplayName = "";
+                if (pmi2.DisplayName == null) pmi2.DisplayName = "";
+                return pmi1.DisplayName.CompareTo(pmi2.DisplayName);
+            }
+            return comp;
         }
 
         public static int ByPopularLast30Days(PasswordManagerItem pmi1, PasswordManagerItem pmi2)
@@ -63,7 +70,14 @@ namespace EasePass.Helper
                 DateTime date = new DateTime(Convert.ToInt32(splitted[2]), Convert.ToInt32(splitted[1]), Convert.ToInt32(splitted[0]));
                 if (now - date < TimeSpan.FromDays(DaysDeadline)) pmi2Count++;
             }
-            return -pmi1Count.CompareTo(pmi2Count);
+            int comp = -pmi1Count.CompareTo(pmi2Count);
+            if (comp == 0)
+            {
+                if (pmi1.DisplayName == null) pmi1.DisplayName = "";
+                if (pmi2.DisplayName == null) pmi2.DisplayName = "";
+                return pmi1.DisplayName.CompareTo(pmi2.DisplayName);
+            }
+            return comp;
         }
 
         public static int ByPasswordStrength(PasswordManagerItem pmi1, PasswordManagerItem pmi2)
