@@ -77,8 +77,15 @@ public sealed partial class ExtensionPage : Page
         var destinationPath = ApplicationData.Current.LocalFolder.Path + "\\extensions\\";
         if (!Directory.Exists(destinationPath)) Directory.CreateDirectory(destinationPath);
         File.Copy(path, destinationPath + Guid.NewGuid().ToString().Replace('-', '_').Replace(' ', '_') + ".dll");
-        
-        ExtensionHelper.Extensions.Add(new Extension(ReflectionHelper.GetAllExternalInstances(path), System.IO.Path.GetFileNameWithoutExtension(path)));
+
+        Extension extension = new Extension(ReflectionHelper.GetAllExternalInstances(path), System.IO.Path.GetFileNameWithoutExtension(path));
+        if(extension.Interfaces.Length == 0)
+        {
+            File.AppendAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", new string[] { extension.ID });
+            InfoMessages.FileIsNotAnExtensions();
+            return;
+        }
+        ExtensionHelper.Extensions.Add(extension);
         extensionView.Items.Add(ExtensionHelper.Extensions[ExtensionHelper.Extensions.Count - 1]);
     }
 
@@ -100,7 +107,14 @@ public sealed partial class ExtensionPage : Page
 
             RequestsHelper.DownloadFile(fetchedExtension.URL, p);
 
-            ExtensionHelper.Extensions.Add(new Extension(ReflectionHelper.GetAllExternalInstances(p), System.IO.Path.GetFileNameWithoutExtension(p)));
+            Extension extension = new Extension(ReflectionHelper.GetAllExternalInstances(p), System.IO.Path.GetFileNameWithoutExtension(p));
+            if (extension.Interfaces.Length == 0)
+            {
+                File.AppendAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", new string[] { extension.ID });
+                InfoMessages.FileIsNotAnExtensions();
+                return;
+            }
+            ExtensionHelper.Extensions.Add(extension);
             extensionView.Items.Add(ExtensionHelper.Extensions[ExtensionHelper.Extensions.Count - 1]);
         }
     }
