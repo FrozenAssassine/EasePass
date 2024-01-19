@@ -34,32 +34,34 @@ namespace EasePass.Helper
             }
         }
 
-        [Obsolete]
-        public static void DownloadFile(string url, string path) // WebClient is obsolete. Please find a way to use HttpClient
-        {
-            new WebClient().DownloadFile(url, path);
-        }
 
-        public static async Task<(bool success, Stream result)> MakeRequestRaw(string url) // Doesn't work
+        public static async Task<bool> DownloadFileAsync(string url, string path)
         {
-            using (HttpClient client = new HttpClient())
+            try
             {
-                try
-                {
-                    HttpResponseMessage response = await client.GetAsync(url);
 
-                    if (response.IsSuccessStatusCode)
+                using (HttpClient client = new HttpClient())
+                {
+                    using (HttpResponseMessage response = await client.GetAsync(url))
                     {
-                        Stream result = await response.Content.ReadAsStreamAsync();
-                        return (true, result);
+                        response.EnsureSuccessStatusCode();
+                        using (HttpContent content = response.Content)
+                        {
+                            using (var fileStream = System.IO.File.Create(path))
+                            {
+                                await content.CopyToAsync(fileStream).ConfigureAwait(false);
+                                fileStream.Close();
+                                return true;
+                            }
+                        }
                     }
                 }
-                catch (Exception ex)
-                {
-                    InfoMessages.CouldNotGetExtensions(ex.Message);
-                }
-                return (false, null);
             }
+            catch(Exception ex)
+            {
+                InfoMessages.CouldNotGetExtensions(ex.Message);
+            }
+            return false;
         }
     }
 }

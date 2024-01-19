@@ -87,7 +87,7 @@ public sealed partial class ExtensionPage : Page
         Extension extension = (sender as MenuFlyoutItem).Tag as Extension;
         await new InfoDialog().ShowAsync(extension.ToString(), extension.AboutPlugin.PluginName);
     }
-    private void fetchedExtensionsGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private async void fetchedExtensionsGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (downloadView.SelectedItem == null)
             return;
@@ -98,10 +98,25 @@ public sealed partial class ExtensionPage : Page
             if (!Directory.Exists(destinationPath)) Directory.CreateDirectory(destinationPath);
             string p = destinationPath + Guid.NewGuid().ToString().Replace('-', '_').Replace(' ', '_') + ".dll";
 
-            RequestsHelper.DownloadFile(fetchedExtension.URL, p);
+            var downloadInfoBar = InfoMessages.DownloadingPluginInfo();
 
-            ExtensionHelper.Extensions.Add(new Extension(ReflectionHelper.GetAllExternalInstances(p), System.IO.Path.GetFileNameWithoutExtension(p)));
-            extensionView.Items.Add(ExtensionHelper.Extensions[ExtensionHelper.Extensions.Count - 1]);
+            await Task.Run(async () =>
+            {
+                var res = await RequestsHelper.DownloadFileAsync(fetchedExtension.URL, p);
+                if (!res) //error while downloading plugin to file.
+                {
+                    downloadInfoBar.IsOpen = false;
+                    return;
+                }
+
+                ExtensionHelper.Extensions.Add(new Extension(ReflectionHelper.GetAllExternalInstances(p), System.IO.Path.GetFileNameWithoutExtension(p)));
+
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    extensionView.Items.Add(ExtensionHelper.Extensions[ExtensionHelper.Extensions.Count - 1]);
+                    downloadInfoBar.IsOpen = false;
+                });
+            });
         }
     }
 }

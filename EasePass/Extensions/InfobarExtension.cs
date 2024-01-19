@@ -11,6 +11,7 @@ namespace EasePass.Extensions
     {
         Timer,
         Login,
+        Manual,
     }
 
     internal static class InfobarExtension
@@ -44,6 +45,17 @@ namespace EasePass.Extensions
             infobar.ActionButton = actionButton;
             infobar.Severity = severity;
             infobar.Tag = clearCondition;
+            infobar.IsOpen = true;
+            infobar.Background = Application.Current.Resources["SolidBackgroundFillColorBaseAltBrush"] as Brush;
+            MainWindow.InfoMessagesPanel.Children.Add(infobar);
+        }
+        public static void ShowInfobar(this InfoBar infobar, string title, string message, Control content, InfoBarSeverity severity)
+        {
+            infobar.Title = title;
+            infobar.Message = message;
+            infobar.Severity = severity;
+            infobar.Content = content;
+            infobar.Tag = InfobarClearCondition.Manual;
             infobar.IsOpen = true;
             infobar.Background = Application.Current.Resources["SolidBackgroundFillColorBaseAltBrush"] as Brush;
             MainWindow.InfoMessagesPanel.Children.Add(infobar);

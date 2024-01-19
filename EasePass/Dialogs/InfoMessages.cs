@@ -31,5 +31,14 @@ namespace EasePass.Dialogs
 
             new InfoBar().Show("New version", "Welcome to Ease Pass version " + version + "\n", btn, InfoBarSeverity.Success);
         }
+
+        public static InfoBar DownloadingPluginInfo()
+        {
+            var progressbar = new ProgressBar { ShowPaused = false, ShowError = false, IsIndeterminate = true };
+
+            var infobar = new InfoBar();
+            infobar.ShowInfobar("Downloading plugin in progress", "", progressbar, InfoBarSeverity.Informational);
+            return infobar;
+        }
     }
 }
