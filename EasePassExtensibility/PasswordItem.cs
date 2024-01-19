@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace EasePassExtensibility
 {
+    /// <summary>
+    /// IPasswordImporter uses this class to store a password.
+    /// </summary>
     public class PasswordItem
     {
         public string DisplayName { get; set; }
