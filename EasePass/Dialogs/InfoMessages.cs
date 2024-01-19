@@ -1,4 +1,5 @@
 ﻿using EasePass.Extensions;
+using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
 
 namespace EasePass.Dialogs
@@ -29,7 +30,11 @@ namespace EasePass.Dialogs
         public static void ExtensionAlreadyInstalled() => new InfoBar().Show("Plugin already installed", "The plugin is already installed!", InfoBarSeverity.Error, 10);
         public static void NewVersionInfo(string version)
         {
-            var btn = new HyperlinkButton { Content = "Changelog", NavigateUri = new System.Uri("https://github.com/FrozenAssassine/EasePass/blob/master/changelog.md") };
+            var btn = new Button { Content = "Changelog" };
+            btn.Click += delegate
+            {
+                App.m_frame.Navigate(typeof(AboutPage), 0);
+            };
 
             new InfoBar().Show("New version", "Welcome to Ease Pass version " + version + "\n", btn, InfoBarSeverity.Success);
         }

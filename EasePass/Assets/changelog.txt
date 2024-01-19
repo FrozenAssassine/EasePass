@@ -1,0 +1,24 @@
+﻿#Version 1.2.0 [01/20/2024]
+	• Added logout shortcut by pressing Ctrl + L
+	• Added plugin support and the following plugins:
+	  - Browser password importer
+	  - Wifi password importer
+	• Added sorting method to sort passwords by popularity
+	• Added sorting method to sort passwords by strength
+	• Added message to show after update of the app
+	• Added print function to print your passwords as pdf or paper
+	• Added generate password button in add dialog
+	• Added password pie chart to show the security of the password
+	• Added auto logout message to automatically disappear after login
+	• Fix can not enter letters by pressing Ctrl + Gr in password box
+	• Fix urls not working without http
+
+#Version 1.1.0 [09/28/2023]
+	• 2FA token generator
+	• Password generator 
+	• Icons in menubar
+	• QR code scanner using screenshot or webcam for 2FA
+	• Display for number of passwords in search bar
+	• Red border on password box if the password has been used before
+	• Sort and drag drop for the Password items
+	• Overall many bug fixes
