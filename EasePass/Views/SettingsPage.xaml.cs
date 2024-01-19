@@ -72,6 +72,11 @@ namespace EasePass.Views
             {
                 passwordImporter.Add(new PasswordImporterBase(importer));
             }
+
+            if (passwordImporter.Count == 0)
+            {
+                noPluginsInfo.Visibility = Visibility.Visible;
+            }
         }
 
         private async void ExportEncryptedDatabase_Click(object sender, RoutedEventArgs e)

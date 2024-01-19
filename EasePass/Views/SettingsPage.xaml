@@ -61,17 +61,17 @@
             </Expander>
 
             <controls:SettingsItemSeparator Header="Plugins"/>
-            <controls:SettingsControl Header="Extensions">
+            <controls:SettingsControl Header="Plugins">
                 <Button Style="{ThemeResource AccentButtonStyle}" Content="Manage" Width="100" Click="ExtensionManage_Click" />
             </controls:SettingsControl>
             <Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">
-                        <TextBlock FontSize="20" Margin="10" VerticalAlignment="Center" Text="Import passwords (pertaining plugins required)" />
+                        <TextBlock FontSize="20" Margin="10" VerticalAlignment="Center" Text="Import passwords" />
                     </StackPanel>
                 </Expander.Header>
                 <Expander.Content>
-                    <ContentControl>
+                    <Grid>
                         <ListView MaxWidth="600" ItemsSource="{x:Bind passwordImporter}" HorizontalAlignment="Stretch">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="models:PasswordImporterBase">
@@ -89,7 +89,11 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </ContentControl>
+                        <StackPanel Visibility="Collapsed" x:Name="noPluginsInfo" Orientation="Vertical">
+                            <TextBlock Margin="5" Text="No plugins installed click below to download"/>
+                            <Button Click="ExtensionManage_Click" Content="Download Plugins" Margin="5"/>
+                        </StackPanel>
+                    </Grid>
                 </Expander.Content>
             </Expander>
 
