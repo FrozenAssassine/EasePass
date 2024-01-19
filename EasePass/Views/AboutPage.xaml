@@ -49,6 +49,20 @@
                 </controls:SettingsControl.Content>
             </controls:SettingsControl>
 
+            <Expander x:Name="changelogExpander" HorizontalContentAlignment="Stretch" Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Height="70">
+                        <TextBlock Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xE9D5;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Changelog"/>
+                    </StackPanel>
+                </Expander.Header>
+                <Expander.Content>
+                    <ScrollViewer HorizontalAlignment="Stretch" MaxHeight="400"  HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled">
+                        <RichTextBlock FontSize="16" HorizontalAlignment="Stretch" x:Name="ChangelogDisplay"/>
+                    </ScrollViewer>
+                </Expander.Content>
+            </Expander>
+            
             <Grid VerticalAlignment="Stretch" MinWidth="{ThemeResource FlyoutThemeMinWidth}" Margin="0,5,0,0" CornerRadius="5" Padding="{StaticResource ExpanderHeaderPadding}" HorizontalAlignment="Stretch" Background="{ThemeResource ExpanderHeaderBackground}" BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}" BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}">
                 <StackPanel Height="70" Padding="0" Orientation="Horizontal">
                     <SymbolIcon Margin="0,4,10,0" Symbol="People"/>
