@@ -76,17 +76,22 @@ public sealed partial class ExtensionPage : Page
 
         var destinationPath = ApplicationData.Current.LocalFolder.Path + "\\extensions\\";
         if (!Directory.Exists(destinationPath)) Directory.CreateDirectory(destinationPath);
-        File.Copy(path, destinationPath + Guid.NewGuid().ToString().Replace('-', '_').Replace(' ', '_') + ".dll");
-
-        Extension extension = new Extension(ReflectionHelper.GetAllExternalInstances(path), System.IO.Path.GetFileNameWithoutExtension(path));
-        if(extension.Interfaces.Length == 0)
+        string p = destinationPath + Guid.NewGuid().ToString().Replace('-', '_').Replace(' ', '_') + ".dll";
+        File.Copy(path, p);
+        string hashfilename = System.IO.Path.GetDirectoryName(p) + "\\" + HashHelper.HashFile(p) + ".dll";
+        if (File.Exists(hashfilename))
         {
-            File.AppendAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", new string[] { extension.ID });
-            InfoMessages.FileIsNotAnExtensions();
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                InfoMessages.ExtensionAlreadyInstalled();
+            });
+
+            File.Delete(p);
             return;
         }
-        ExtensionHelper.Extensions.Add(extension);
-        extensionView.Items.Add(ExtensionHelper.Extensions[ExtensionHelper.Extensions.Count - 1]);
+        File.Move(p, hashfilename);
+
+        InstallExtensionFromFile(hashfilename);
     }
 
     private async void ShowRequestedAuthorizations_Click(object sender, RoutedEventArgs e)
@@ -112,25 +117,45 @@ public sealed partial class ExtensionPage : Page
                 var res = await RequestsHelper.DownloadFileAsync(fetchedExtension.URL, p);
                 if (!res) //error while downloading plugin to file.
                 {
-                    downloadInfoBar.IsOpen = false;
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        downloadInfoBar.IsOpen = false;
+                    });
                     return;
                 }
 
-                Extension extension = new Extension(ReflectionHelper.GetAllExternalInstances(p), System.IO.Path.GetFileNameWithoutExtension(p));
-                if (extension.Interfaces.Length == 0)
+                string hashfilename = System.IO.Path.GetDirectoryName(p) + "\\" + HashHelper.HashFile(p) + ".dll";
+                if (File.Exists(hashfilename))
                 {
-                    File.AppendAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", new string[] { extension.ID });
-                    InfoMessages.FileIsNotAnExtensions();
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        InfoMessages.ExtensionAlreadyInstalled();
+                        downloadInfoBar.IsOpen = false;
+                    });
+                    
+                    File.Delete(p);
                     return;
                 }
-                ExtensionHelper.Extensions.Add(extension);
+                File.Move(p, hashfilename);
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    extensionView.Items.Add(ExtensionHelper.Extensions[ExtensionHelper.Extensions.Count - 1]);
+                    InstallExtensionFromFile(hashfilename);
                     downloadInfoBar.IsOpen = false;
                 });
             });
         }
+    }
+    private void InstallExtensionFromFile(string p)
+    {
+        Extension extension = new Extension(ReflectionHelper.GetAllExternalInstances(p), System.IO.Path.GetFileNameWithoutExtension(p));
+        if (extension.Interfaces.Length == 0)
+        {
+            File.AppendAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", new string[] { extension.ID });
+            InfoMessages.FileIsNotAnExtensions();
+            return;
+        }
+        ExtensionHelper.Extensions.Add(extension);
+        extensionView.Items.Add(ExtensionHelper.Extensions[ExtensionHelper.Extensions.Count - 1]);
     }
 }

@@ -26,6 +26,7 @@ namespace EasePass.Dialogs
         public static void PrinterItemSkipped(string name) => new InfoBar().Show("Password skipped", $"The service \"" + name + "\" was skipped, because it doesn't fit into the page.", InfoBarSeverity.Error, 15);
         public static void CouldNotGetExtensions(string exception) => new InfoBar().Show("Could not get Plugins", "Could not get the plugins from the Server:\n" + exception, InfoBarSeverity.Error, 10);
         public static void FileIsNotAnExtensions() => new InfoBar().Show("File is not a plugin", "The selected file is not an Ease Pass plugin!", InfoBarSeverity.Error, 10);
+        public static void ExtensionAlreadyInstalled() => new InfoBar().Show("Plugin already installed", "The plugin is already installed!", InfoBarSeverity.Error, 10);
         public static void NewVersionInfo(string version)
         {
             var btn = new HyperlinkButton { Content = "Changelog", NavigateUri = new System.Uri("https://github.com/FrozenAssassine/EasePass/blob/master/changelog.md") };
