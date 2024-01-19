@@ -24,7 +24,8 @@ namespace EasePass.Dialogs
         public static void DatabaseInvalidData() => new InfoBar().Show("Invalid Database", $"Database could not be loaded. It may be corrupted or invalid.", InfoBarSeverity.Error, 15);
         public static void PrinterNotSelected() => new InfoBar().Show("Printer not selected", $"Please select a printer before printing.", InfoBarSeverity.Error, 15);
         public static void PrinterItemSkipped(string name) => new InfoBar().Show("Password skipped", $"The service \"" + name + "\" was skipped, because it doesn't fit into the page.", InfoBarSeverity.Error, 15);
-        public static void CouldNotGetExtensions(string exception) => new InfoBar().Show("Could not get Extensions", "Could not get the extensions from the Server:\n" + exception, InfoBarSeverity.Error, 10);
+        public static void CouldNotGetExtensions(string exception) => new InfoBar().Show("Could not get Plugins", "Could not get the plugins from the Server:\n" + exception, InfoBarSeverity.Error, 10);
+        public static void FileIsNotAnExtensions() => new InfoBar().Show("File is not a plugin", "The selected file is not an Ease Pass plugin!", InfoBarSeverity.Error, 10);
         public static void NewVersionInfo(string version)
         {
             var btn = new HyperlinkButton { Content = "Changelog", NavigateUri = new System.Uri("https://github.com/FrozenAssassine/EasePass/blob/master/changelog.md") };
