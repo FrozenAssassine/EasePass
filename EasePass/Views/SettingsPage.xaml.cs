@@ -89,7 +89,9 @@ namespace EasePass.Views
 
             var (hash, salt) = AuthenticationHelper.HashPassword(encryptDBPassword.Password);
 
-            var encodedDB = EncryptDecryptHelper.EncryptStringAES(DatabaseHelper.CreateJsonstring(passwordItems), encryptDBPassword.Password, salt);
+            PasswordManagerItem[] passwords = await new SelectExportPasswordsDialog().ShowAsync(passwordItems);
+
+            var encodedDB = EncryptDecryptHelper.EncryptStringAES(DatabaseHelper.CreateJsonstring(new ObservableCollection<PasswordManagerItem>(passwords)), encryptDBPassword.Password, salt);
 
             var encryptedItem = new EncryptedDatabaseItem(hash, salt, encodedDB);
             string fileData = JsonConvert.SerializeObject(encryptedItem, Formatting.Indented);
