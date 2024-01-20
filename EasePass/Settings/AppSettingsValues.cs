@@ -2,7 +2,6 @@
 {
     internal static class AppSettingsValues
     {
-        public const string pHash = "pHash";
         public const string pSalt = "pSalt";
         public const string windowWidth = "windowWidth";
         public const string windowHeight = "windowHeight";

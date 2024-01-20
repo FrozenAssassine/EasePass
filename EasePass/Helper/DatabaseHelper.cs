@@ -13,7 +13,7 @@ namespace EasePass.Helper
 {
     internal class DatabaseHelper
     {
-        private static string DatabaseFilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "easepass.epdb");
+        public static string DatabaseFilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "easepass.epdb");
 
         public static string CreateJsonstring(ObservableCollection<PasswordManagerItem> pwItems)
         {

@@ -27,8 +27,6 @@ namespace EasePass.Views
                 return;
             }
 
-            AuthenticationHelper.StorePassword(passwordBox.Password);
-
             SecureString pw = new SecureString();
             foreach (var character in passwordBox.Password)
             {
