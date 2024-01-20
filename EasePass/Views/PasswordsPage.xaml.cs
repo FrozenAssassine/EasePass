@@ -3,6 +3,7 @@ using EasePass.Dialogs;
 using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Models;
+using EasePass.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -30,6 +31,7 @@ namespace EasePass.Views
         {
             this.InitializeComponent();
             App.m_window.passwordItemsManager = passwordItemsManager;
+            App.m_window.Closed += M_window_Closed;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -46,6 +48,9 @@ namespace EasePass.Views
                 masterPassword = pw;
                 InfobarExtension.ClearInfobarsAfterLogin(MainWindow.InfoMessagesPanel);
                 AppVersionHelper.CheckNewVersion();
+
+                //load the gridsplittervalue back
+                gridSplitterLoadSize.Width = new GridLength(AppSettings.GetSettingsAsInt(AppSettingsValues.gridSplitterWidth), GridUnitType.Pixel);
             }
 
             if (passwordItemsManager.PasswordItems == null)
@@ -89,6 +94,11 @@ namespace EasePass.Views
             }
 
             base.OnNavigatedTo(e);
+        }
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            StoreGridSplitterValue();
         }
 
         public void Reload()
@@ -224,7 +234,15 @@ namespace EasePass.Views
             sortnotes.Visibility = ConvertHelper.BoolToVisibility(icon == sortnotes);
             sortwebsite.Visibility = ConvertHelper.BoolToVisibility(icon == sortwebsite);
         }
+        private void StoreGridSplitterValue()
+        {
+            AppSettings.SaveSettings(AppSettingsValues.gridSplitterWidth, gridSplitterLoadSize.Width);
+        }
 
+        private void M_window_Closed(object sender, WindowEventArgs args)
+        {
+            StoreGridSplitterValue();
+        }
         private async void DeletePasswordItem_Click(object sender, RoutedEventArgs e) => await DeletePasswordItem(SelectedItem);
         private async void AddPasswordItem_Click(object sender, RoutedEventArgs e) => await AddPasswordItem();
         private async void EditPasswordItem_Click(object sender, RoutedEventArgs e) => await EditPasswordItem(SelectedItem);
