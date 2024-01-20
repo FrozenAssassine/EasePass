@@ -9,6 +9,8 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.Intrinsics.X86;
 using System.Security;
 using System.Threading.Tasks;
@@ -158,18 +160,45 @@ namespace EasePass.Views
             if(totpTokenUpdater != null)
                 totpTokenUpdater.StopTimer();
         }
-        private async Task DeletePasswordItem(PasswordManagerItem item)
+        private async Task DeletePasswordItem(PasswordManagerItem deleteItem)
         {
-            if (item == null)
+            if (deleteItem == null)
                 return;
 
-            if (await new DeleteConfirmationDialog().ShowAsync(item))
+            if (await new DeleteConfirmationDialog().ShowAsync(deleteItem))
             {
                 int index = passwordItemListView.SelectedIndex;
-                passwordItemsManager.DeleteItem(item);
+                passwordItemsManager.DeleteItem(deleteItem);
 
                 if (passwordItemListView.Items.Count >= 1)
                     passwordItemListView.SelectedIndex = index - 1 > 0 ? index - 1 : index + 1 < passwordItemListView.Items.Count ? index + 1 : 0;
+                else
+                    passwordShowArea.Visibility = Visibility.Collapsed;
+
+                //update searchbox:
+                if (searchbox.Text.Length > 0)
+                {
+                    ObservableCollection<PasswordManagerItem> items = passwordItemsManager.FindItemsByName(searchbox.Text);
+                    passwordItemListView.ItemsSource = items;
+                }
+
+                SaveData();
+            }
+        }
+        private async Task DeletePasswordItems(PasswordManagerItem[] deleteItems)
+        {
+            if (deleteItems == null || deleteItems.Length == 0) 
+                return;
+
+            if (await new DeleteConfirmationDialog().ShowAsync(deleteItems))
+            {
+                foreach (var item in deleteItems)
+                {
+                    passwordItemsManager.DeleteItem(item);
+                }
+
+                if (passwordItemListView.Items.Count >= 1)
+                    passwordItemListView.SelectedIndex = 0;
                 else
                     passwordShowArea.Visibility = Visibility.Collapsed;
 
@@ -247,7 +276,16 @@ namespace EasePass.Views
         {
             StoreGridSplitterValue();
         }
-        private async void DeletePasswordItem_Click(object sender, RoutedEventArgs e) => await DeletePasswordItem(SelectedItem);
+        private async void DeletePasswordItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (passwordItemListView.SelectedItems.Count == 1)
+            {
+                await DeletePasswordItem(SelectedItem);
+                return;
+            }
+
+            await DeletePasswordItems(passwordItemListView.SelectedItems.Select(x => x as PasswordManagerItem).ToArray());
+        }
         private async void AddPasswordItem_Click(object sender, RoutedEventArgs e) => await AddPasswordItem();
         private async void EditPasswordItem_Click(object sender, RoutedEventArgs e) => await EditPasswordItem(SelectedItem);
         private async void Add2FAPasswordItem_Click(object sender, RoutedEventArgs e) => await Add2FAPasswordItem(SelectedItem);
