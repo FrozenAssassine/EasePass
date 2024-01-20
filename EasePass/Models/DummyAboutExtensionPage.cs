@@ -11,7 +11,7 @@ internal class DummyAboutExtensionPage : IAboutPlugin
 
     public string PluginAuthor => "Unknown author";
 
-    public string PluginAuthorURL => "https://github.com/FrozenAssassine/EasePass";
+    public string PluginAuthorURL => "";
 
     public Uri PluginIcon => new Uri("ms-appx:///Assets/AppIcon/Icon.png");
 }

@@ -63,7 +63,9 @@ public sealed partial class ExtensionPage : Page
     private async void authorName_Tapped(object sender, TappedRoutedEventArgs e)
     {
         Extension extension = (sender as TextBlock).Tag as Extension;
-        await Windows.System.Launcher.LaunchUriAsync(new Uri(extension.AboutPlugin.PluginAuthorURL));
+        string url = extension.AboutPlugin.PluginAuthorURL;
+        if (!string.IsNullOrEmpty(url))
+            await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
     }
 
     private async void AddExtension_Click(object sender, RoutedEventArgs e)

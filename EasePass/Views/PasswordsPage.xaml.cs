@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.ObjectModel;
+using System.Runtime.Intrinsics.X86;
 using System.Security;
 using System.Threading.Tasks;
 using System.Timers;
@@ -53,9 +54,25 @@ namespace EasePass.Views
                 if (dbData == null)
                     dbData = new ObservableCollection<PasswordManagerItem>();
 
+                for(int i = 0; i < dbData.Count; i++)
+                {
+                    for(int j = 0; j < dbData[i].Clicks.Count; j++)
+                    {
+                        string[] splitted = dbData[i].Clicks[j].Split('.');
+                        DateTime date = new DateTime(Convert.ToInt32(splitted[2]), Convert.ToInt32(splitted[1]), Convert.ToInt32(splitted[0]));
+                        if(DateTime.Now - date > TimeSpan.FromDays(365))
+                        {
+                            dbData[i].Clicks.RemoveAt(j);
+                            j--;
+                        }
+                    }
+                }
+
                 passwordItemsManager.Load(dbData);
                 autoBackupHelper.Start(this, passwordItemsManager);
                 passwordItemListView.ItemsSource = passwordItemsManager.PasswordItems;
+
+                SaveData();
             }
 
             if (firstLoad)
@@ -316,7 +333,7 @@ namespace EasePass.Views
         private void SortUsername_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByUsername, sortusername);
         private void SortNotes_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByNotes, sortnotes);
         private void SortWebsite_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByWebsite, sortwebsite);
-        private void SortPopularAll_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByPopularAllTime, sortpopularall);
+        private void SortPopularAll_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByPopularAllTime, sortpopularall); // "popular all time" is equal to "popular last year" to save storage space
         private void SortPopular30_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByPopularLast30Days, sortpopular30);
         private void SortPasswordStrength(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByPasswordStrength, sortpasswordstrength);
         private void SortClickAction(Comparison<PasswordManagerItem> comparison, FontIcon icon)
