@@ -1,6 +1,7 @@
 ﻿using EasePass.Extensions;
 using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
+using System;
 
 namespace EasePass.Dialogs
 {
@@ -48,5 +49,7 @@ namespace EasePass.Dialogs
             infobar.ShowInfobar("Downloading plugin in progress", "", progressbar, InfoBarSeverity.Informational);
             return infobar;
         }
+
+        public static void CouldNotCreateDatabaseBackupFolder(Exception ex) => new InfoBar().Show("Could not create database backup folder", ex.Message, InfoBarSeverity.Error, 10);
     }
 }

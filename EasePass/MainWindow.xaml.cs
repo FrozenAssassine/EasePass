@@ -25,6 +25,7 @@ namespace EasePass
 
         public static DispatcherQueue UIDispatcherQueue = null;
         public static XamlRoot XamlRoot = null;
+        public static DatabaseBackupHelper databaseBackupHelper = null;
 
         public MainWindow()
         {
@@ -32,6 +33,7 @@ namespace EasePass
 
             CurrentInstance = this;
             UIDispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
 
             Title = Package.Current.DisplayName;
             this.AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets\\AppIcon\\appicon.ico"));
