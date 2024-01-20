@@ -50,7 +50,7 @@ namespace EasePass.Views
                 AppVersionHelper.CheckNewVersion();
 
                 //load the gridsplittervalue back
-                gridSplitterLoadSize.Width = new GridLength(AppSettings.GetSettingsAsInt(AppSettingsValues.gridSplitterWidth), GridUnitType.Pixel);
+                gridSplitterLoadSize.Width = new GridLength(AppSettings.GetSettingsAsInt(AppSettingsValues.gridSplitterWidth, 240), GridUnitType.Pixel);
             }
 
             if (passwordItemsManager.PasswordItems == null)
