@@ -3,7 +3,6 @@ using EasePass.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 
 namespace EasePass.Views;
@@ -86,41 +85,11 @@ public sealed partial class ImportPasswordsDialogPage : Page
         confirmOverwritePasswords_Checkbox.Visibility = Visibility.Visible;
     }
 
-    private void selectAll_Checkbox_Checked(object sender, RoutedEventArgs e)
+    private void selectAll_Checkbox_Toggled(object sender, RoutedEventArgs e)
     {
         for(int i = 0; i < Items.Count; i++)
         {
-            Items[i].Checked = true;
+            Items[i].Checked = (sender as CheckBox).IsChecked ?? false;
         }
-    }
-
-    private void selectAll_Checkbox_Unchecked(object sender, RoutedEventArgs e)
-    {
-        for(int i = 0; i < Items.Count; i++)
-        {
-            Items[i].Checked = false;
-        }
-    }
-}
-
-internal class PasswordManagerItemCheck : INotifyPropertyChanged
-{
-    private bool check { get; set; } = true;
-    public bool Checked
-    {
-        get => check;
-        set
-        {
-            check = value;
-            PropertyChanged(this, new PropertyChangedEventArgs("Checked"));
-        }
-    }
-    public PasswordManagerItem Item = null;
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    public PasswordManagerItemCheck(PasswordManagerItem item)
-    {
-        this.Item = item;
     }
 }
