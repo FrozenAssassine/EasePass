@@ -279,6 +279,7 @@
                                 CornerRadius="{TemplateBinding CornerRadius}"
                                 IsTabStop="False"
                                 FontSize="{TemplateBinding FontSize}"
+                                ToolTipService.ToolTip="Copy"
                                 >
                                 <FontIcon Glyph="&#xE8C8;" />
                             </Button>
