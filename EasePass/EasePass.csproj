@@ -84,6 +84,7 @@
     <None Remove="Controls\PasswordSafetyChart.xaml" />
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\AddItemPage.xaml" />
+    <None Remove="Views\DialogPages\SelectExportPasswordsDialogPage.xaml" />
     <None Remove="Views\Export2FAPage.xaml" />
     <None Remove="Views\ExtensionPage.xaml" />
     <None Remove="Views\GenPasswordPage.xaml" />
@@ -165,6 +166,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Views\DialogPages\SelectExportPasswordsDialogPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Views\LoadBackupDatabasePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -233,8 +239,5 @@
     <Page Update="Views\AddItemPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\DialogPages\" />
   </ItemGroup>
 </Project>

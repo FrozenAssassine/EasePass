@@ -27,7 +27,6 @@ namespace EasePass.Views
 
         private void backupDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             if (backupDisplay.SelectedItem == null)
             {
                 selectedFile = null;
