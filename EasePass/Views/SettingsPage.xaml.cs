@@ -122,16 +122,20 @@ namespace EasePass.Views
             var str = EncryptDecryptHelper.DecryptStringAES(decryptedJson.Data, decryptDBPassword.Password, decryptedJson.Salt);
             var importedItems = DatabaseHelper.LoadItems(str);
 
-            var dialogResult = await new InsertOrOverwriteDatabaseDialog().ShowAsync();
-            if (dialogResult == InsertOrOverwriteDatabaseDialog.Result.Cancel)
+            //show dialog to confirm import of selected passwords
+            var importPWDialog = new ImportPasswordsDialog();
+            importPWDialog.SetPagePasswords(importedItems);
+            var dialogResult = await importPWDialog.ShowAsync();
+
+            if (dialogResult.Items == null)
                 return;
 
-            if (dialogResult == InsertOrOverwriteDatabaseDialog.Result.Overwrite)
+            if (dialogResult.Override)
             {
                 passwordItems.Clear();
             }
 
-            foreach (var item in importedItems)
+            foreach (var item in dialogResult.Items)
             {
                 passwordItems.Add(item);
             }
@@ -268,32 +272,24 @@ namespace EasePass.Views
         private async void ImportPassword_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.XamlRoot = App.m_window.Content.XamlRoot;
+
             PasswordImporterBase piBase = (PasswordImporterBase)(sender as Button).Tag;
             var res = await PasswordImportManager.ManageImport(piBase.PasswordImporter);
+            
+            if (res.Items == null)
+                return;
+
+            //when override just clear the items -> will be added down below:
             if (res.Override)
             {
-                for(int i = 0; i < res.Items.Length; i++)
-                {
-                    bool found = false;
-                    for(int j = 0; j < passwordItems.Count; j++)
-                    {
-                        if (passwordItems[j].DisplayName.Equals(res.Items[i].DisplayName))
-                        {
-                            passwordItems[j] = res.Items[i];
-                            found = true;
-                        }
-                    }
-                    if (!found)
-                        passwordItems.Add(res.Items[i]);
-                }
+                passwordItems.Clear();
             }
-            else
+
+            for (int i = 0; i < res.Items.Length; i++)
             {
-                for(int i = 0; i < res.Items.Length; i++)
-                {
-                    passwordItems.Add(res.Items[i]);
-                }
+                passwordItems.Add(res.Items[i]);
             }
+
             SavePasswordItems();
         }
 

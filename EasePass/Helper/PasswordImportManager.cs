@@ -2,10 +2,7 @@
 using EasePass.Models;
 using EasePassExtensibility;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EasePass.Helper
@@ -14,38 +11,27 @@ namespace EasePass.Helper
     {
         public async static Task<(PasswordManagerItem[] Items, bool Override)> ManageImport(IPasswordImporter importer)
         {
-            ImportDialog dlg = new ImportDialog();
+            ImportPasswordsDialog dlg = new ImportPasswordsDialog();
             try
             {
                 PasswordItem[] items = null;
                 Task.Run(new Action(() =>
                 {
                     items = importer.ImportPasswords();
-                })).GetAwaiter().OnCompleted(new Action(() =>
-                {
-                    if(items != null)
+                })).GetAwaiter().OnCompleted(
+                    new Action(() =>
                     {
-                        if (items.Length > 0)
-                        {
-                            PasswordManagerItem[] pwItems = new PasswordManagerItem[items.Length];
-                            for (int i = 0; i < items.Length; i++)
-                                pwItems[i] = ToPMI(items[i]);
-                            dlg.SetPagePasswords(pwItems);
-                        }
+                        if (items == null)
+                            dlg.SetPageMessage(ImportPasswordsDialog.MsgType.Error);
+                        else if(items.Length == 0)
+                            dlg.SetPageMessage(ImportPasswordsDialog.MsgType.NoPasswords);
                         else
-                        {
-                            dlg.SetPageMessage(ImportDialog.MsgType.NoPasswords);
-                        }
-                    }
-                    else
-                    {
-                        dlg.SetPageMessage(ImportDialog.MsgType.Error);
-                    }
-                }));
+                            dlg.SetPagePasswords(items.Select(x => ToPMI(x)).ToArray());
+                    }));
             }
             catch
             {
-                dlg.SetPageMessage(ImportDialog.MsgType.Error);
+                dlg.SetPageMessage(ImportPasswordsDialog.MsgType.Error);
             }
             return await dlg.ShowAsync();
         }
@@ -62,22 +48,8 @@ namespace EasePass.Helper
             pmi.Secret = item.TOTPSecret;
             pmi.Interval = Convert.ToString(item.TOTPInterval);
             pmi.Digits = Convert.ToString(item.TOTPDigits);
-            try
-            {
-                switch (item.TOTPAlgorithm)
-                {
-                    case PasswordItem.Algorithm.SHA1:
-                        pmi.Algorithm = "SHA1";
-                        break;
-                    case PasswordItem.Algorithm.SHA256:
-                        pmi.Algorithm = "SHA256";
-                        break;
-                    case PasswordItem.Algorithm.SHA512:
-                        pmi.Algorithm = "SHA512";
-                        break;
-                }
-            }
-            catch { }
+            pmi.Algorithm = item.TOTPAlgorithm.ToString();
+
             return pmi;
         }
     }

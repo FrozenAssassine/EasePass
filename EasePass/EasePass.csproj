@@ -87,7 +87,7 @@
     <None Remove="Views\Export2FAPage.xaml" />
     <None Remove="Views\ExtensionPage.xaml" />
     <None Remove="Views\GenPasswordPage.xaml" />
-    <None Remove="Views\ImportPage.xaml" />
+    <None Remove="Views\ImportPasswordsDialogPage.xaml" />
     <None Remove="Views\LoginPage.xaml" />
     <None Remove="Views\PasswordsPage.xaml" />
     <None Remove="Views\RegisterPage.xaml" />
@@ -163,7 +163,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\ImportPage.xaml">
+    <Page Update="Views\ImportPasswordsDialogPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
