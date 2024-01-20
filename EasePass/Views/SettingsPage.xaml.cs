@@ -122,19 +122,39 @@ namespace EasePass.Views
             var str = EncryptDecryptHelper.DecryptStringAES(decryptedJson.Data, decryptDBPassword.Password, decryptedJson.Salt);
             var importedItems = DatabaseHelper.LoadItems(str);
 
-            var dialogResult = await new InsertOrOverwriteDatabaseDialog().ShowAsync();
-            if (dialogResult == InsertOrOverwriteDatabaseDialog.Result.Cancel)
+            //show dialog to confirm import of selected passwords
+            var importPWDialog = new ImportPasswordsDialog();
+            importPWDialog.SetPagePasswords(importedItems);
+            var dialogResult = await importPWDialog.ShowAsync();
+
+            if (dialogResult.Items == null)
                 return;
 
-            if (dialogResult == InsertOrOverwriteDatabaseDialog.Result.Overwrite)
+            if (dialogResult.Override)
             {
-                passwordItems.Clear();
+                for (int i = 0; i < dialogResult.Items.Length; i++) // I prefer my way with two loops because it will retain the item order.
+                {
+                    bool found = false;
+                    for (int j = 0; j < passwordItems.Count; j++)
+                    {
+                        if (passwordItems[j].DisplayName.Equals(dialogResult.Items[i].DisplayName))
+                        {
+                            passwordItems[j] = dialogResult.Items[i];
+                            found = true;
+                        }
+                    }
+                    if (!found)
+                        passwordItems.Add(dialogResult.Items[i]);
+                }
+            }
+            else
+            {
+                foreach (var item in dialogResult.Items)
+                {
+                    passwordItems.Add(item);
+                }
             }
 
-            foreach (var item in importedItems)
-            {
-                passwordItems.Add(item);
-            }
             passwordsPage.SaveData();
             InfoMessages.ImportDBSuccess();
             return;
@@ -268,14 +288,19 @@ namespace EasePass.Views
         private async void ImportPassword_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.XamlRoot = App.m_window.Content.XamlRoot;
+
             PasswordImporterBase piBase = (PasswordImporterBase)(sender as Button).Tag;
             var res = await PasswordImportManager.ManageImport(piBase.PasswordImporter);
+            
+            if (res.Items == null)
+                return;
+
             if (res.Override)
             {
-                for(int i = 0; i < res.Items.Length; i++)
+                for (int i = 0; i < res.Items.Length; i++) // I prefer my way with two loops because it will retain the item order.
                 {
                     bool found = false;
-                    for(int j = 0; j < passwordItems.Count; j++)
+                    for (int j = 0; j < passwordItems.Count; j++)
                     {
                         if (passwordItems[j].DisplayName.Equals(res.Items[i].DisplayName))
                         {
@@ -289,11 +314,12 @@ namespace EasePass.Views
             }
             else
             {
-                for(int i = 0; i < res.Items.Length; i++)
+                for (int i = 0; i < res.Items.Length; i++)
                 {
                     passwordItems.Add(res.Items[i]);
                 }
             }
+
             SavePasswordItems();
         }
 
