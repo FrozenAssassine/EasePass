@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -80,16 +81,27 @@ public sealed partial class ExtensionPage : Page
         if (!Directory.Exists(destinationPath)) Directory.CreateDirectory(destinationPath);
         string p = destinationPath + Guid.NewGuid().ToString().Replace('-', '_').Replace(' ', '_') + ".dll";
         File.Copy(path, p);
-        string hashfilename = System.IO.Path.GetDirectoryName(p) + "\\" + HashHelper.HashFile(p) + ".dll";
+        string hashCode = HashHelper.HashFile(p);
+        string hashfilename = System.IO.Path.GetDirectoryName(p) + "\\" + hashCode + ".dll";
         if (File.Exists(hashfilename))
         {
-            DispatcherQueue.TryEnqueue(() =>
+            List<string> deleteExtensions = new List<string>();
+            deleteExtensions.AddRange(File.ReadAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat"));
+            int index = deleteExtensions.IndexOf(hashCode);
+            if (index >= 0)
+            {
+                deleteExtensions.RemoveAt(index);
+                File.WriteAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", deleteExtensions);
+                InstallExtensionFromFile(hashfilename);
+                File.Delete(p);
+                return;
+            }
+            else
             {
                 InfoMessages.ExtensionAlreadyInstalled();
-            });
-
-            File.Delete(p);
-            return;
+                File.Delete(p);
+                return;
+            }
         }
         File.Move(p, hashfilename);
 
@@ -126,17 +138,37 @@ public sealed partial class ExtensionPage : Page
                     return;
                 }
 
-                string hashfilename = System.IO.Path.GetDirectoryName(p) + "\\" + HashHelper.HashFile(p) + ".dll";
+                string hashCode = HashHelper.HashFile(p);
+                string hashfilename = System.IO.Path.GetDirectoryName(p) + "\\" + hashCode + ".dll";
                 if (File.Exists(hashfilename))
                 {
-                    DispatcherQueue.TryEnqueue(() =>
+                    List<string> deleteExtensions = new List<string>();
+                    deleteExtensions.AddRange(File.ReadAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat"));
+                    int index = deleteExtensions.IndexOf(hashCode);
+                    if (index >= 0)
                     {
-                        InfoMessages.ExtensionAlreadyInstalled();
-                        downloadInfoBar.IsOpen = false;
-                    });
-                    
-                    File.Delete(p);
-                    return;
+                        deleteExtensions.RemoveAt(index);
+                        File.WriteAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", deleteExtensions);
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            InstallExtensionFromFile(hashfilename);
+                            downloadInfoBar.IsOpen = false;
+                        });
+
+                        File.Delete(p);
+                        return;
+                    }
+                    else
+                    {
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            InfoMessages.ExtensionAlreadyInstalled();
+                            downloadInfoBar.IsOpen = false;
+                        });
+
+                        File.Delete(p);
+                        return;
+                    }
                 }
                 File.Move(p, hashfilename);
 

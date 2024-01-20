@@ -91,7 +91,7 @@ namespace EasePass.Helper
 
         private static async Task<bool> IsSecure(string chars, int length, string password)
         {
-            int maxpoints = 1; // 1 because of length
+            int maxpoints = 2; // 1 because of length + common sequences
             if (chars.Any(char.IsDigit)) maxpoints++;
             if (chars.Any(char.IsLower)) maxpoints++;
             if (chars.Any(char.IsUpper)) maxpoints++;
@@ -100,7 +100,7 @@ namespace EasePass.Helper
             if (password.Any(char.IsDigit)) securepoints++;
             if (password.Any(char.IsLower)) securepoints++;
             if (password.Any(char.IsUpper)) securepoints++;
-            if (password.Any(char.IsPunctuation) || password.Any(char.IsWhiteSpace)) securepoints++;
+            if (password.Any(char.IsPunctuation)) securepoints++;
             if (password.Length >= length) securepoints++;
             if (!ContainsCommonSequences(password)) securepoints++;
             if (securepoints + 1 < Math.Min(maxpoints, length)) return false; // Skip Request if not necessary

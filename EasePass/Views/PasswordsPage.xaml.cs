@@ -242,6 +242,16 @@ namespace EasePass.Views
             if (!await new Add2FADialog().ShowAsync(item))
                 return;
 
+            try
+            {
+                TOTP.GenerateTOTPToken(DateTime.Now, item.Secret, Convert.ToInt32(item.Digits), Convert.ToInt32(item.Interval), TOTP.StringToHashMode(item.Algorithm));
+            }
+            catch
+            {
+                item.Secret = "";
+                InfoMessages.Invalid2FA();
+            }
+
             ShowPasswordItem(item);
             SaveData();
         }
