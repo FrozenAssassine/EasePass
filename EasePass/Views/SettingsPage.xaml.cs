@@ -132,13 +132,29 @@ namespace EasePass.Views
 
             if (dialogResult.Override)
             {
-                passwordItems.Clear();
+                for (int i = 0; i < dialogResult.Items.Length; i++) // I prefer my way with two loops because it will retain the item order.
+                {
+                    bool found = false;
+                    for (int j = 0; j < passwordItems.Count; j++)
+                    {
+                        if (passwordItems[j].DisplayName.Equals(dialogResult.Items[i].DisplayName))
+                        {
+                            passwordItems[j] = dialogResult.Items[i];
+                            found = true;
+                        }
+                    }
+                    if (!found)
+                        passwordItems.Add(dialogResult.Items[i]);
+                }
+            }
+            else
+            {
+                foreach (var item in dialogResult.Items)
+                {
+                    passwordItems.Add(item);
+                }
             }
 
-            foreach (var item in dialogResult.Items)
-            {
-                passwordItems.Add(item);
-            }
             passwordsPage.SaveData();
             InfoMessages.ImportDBSuccess();
             return;
@@ -279,15 +295,29 @@ namespace EasePass.Views
             if (res.Items == null)
                 return;
 
-            //when override just clear the items -> will be added down below:
             if (res.Override)
             {
-                passwordItems.Clear();
+                for (int i = 0; i < res.Items.Length; i++) // I prefer my way with two loops because it will retain the item order.
+                {
+                    bool found = false;
+                    for (int j = 0; j < passwordItems.Count; j++)
+                    {
+                        if (passwordItems[j].DisplayName.Equals(res.Items[i].DisplayName))
+                        {
+                            passwordItems[j] = res.Items[i];
+                            found = true;
+                        }
+                    }
+                    if (!found)
+                        passwordItems.Add(res.Items[i]);
+                }
             }
-
-            for (int i = 0; i < res.Items.Length; i++)
+            else
             {
-                passwordItems.Add(res.Items[i]);
+                for (int i = 0; i < res.Items.Length; i++)
+                {
+                    passwordItems.Add(res.Items[i]);
+                }
             }
 
             SavePasswordItems();

@@ -3,6 +3,7 @@ using EasePass.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 
 namespace EasePass.Views;
@@ -39,15 +40,27 @@ public sealed partial class ImportPasswordsDialogPage : Page
 
     public void SetPasswords(ObservableCollection<PasswordManagerItem> items)
     {
-        Items = items;
-        Checked = new bool[items.Count].Select(x => true).ToArray();
+        // Do not override "Items" with a new ObservableCollection. It would destroy the binding in GUI.
+        Checked = new bool[items.Count];
+        Items.Clear();
+        for (int i = 0; i < items.Count; i++)
+        {
+            Items.Add(items[i]);
+            Checked[i] = true;
+        }
 
         progress.Visibility = Visibility.Collapsed;
     }
     public void SetPasswords(PasswordManagerItem[] items)
     {
-        Items = new ObservableCollection<PasswordManagerItem>(items);
-        Checked = new bool[items.Length].Select(x => true).ToArray();
+        // Do not override "Items" with a new ObservableCollection. It would destroy the binding in GUI.
+        Items.Clear();
+        Checked = new bool[items.Length];
+        for (int i = 0; i < items.Length; i++)
+        {
+            Items.Add(items[i]);
+            Checked[i] = true;
+        }
 
         progress.Visibility = Visibility.Collapsed;
     }
