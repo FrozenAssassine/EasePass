@@ -4,13 +4,14 @@ using EasePass.Views;
 using EasePass.Views.DialogPages;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs
 {
     internal class SelectExportPasswordsDialog
     {
-        public async Task<PasswordManagerItem[]> ShowAsync(PasswordManagerItem[] items)
+        public async Task<PasswordManagerItem[]> ShowAsync(ObservableCollection<PasswordManagerItem> items)
         {
             var page = new SelectExportPasswordsDialogPage(items);
             var dialog = new AutoLogoutContentDialog
@@ -23,7 +24,7 @@ namespace EasePass.Dialogs
             };
 
             if (await dialog.ShowAsync() == ContentDialogResult.Primary)
-                return page.GetSelectedItems();
+                return page.GetSelectedPasswords();
             return null;
         }
     }

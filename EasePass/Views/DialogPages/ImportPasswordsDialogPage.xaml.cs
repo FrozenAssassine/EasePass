@@ -10,7 +10,6 @@ namespace EasePass.Views;
 public sealed partial class ImportPasswordsDialogPage : Page
 {
     ObservableCollection<PasswordManagerItemCheck> Items = new ObservableCollection<PasswordManagerItemCheck>();
-    //bool[] Checked = null;
 
     public ImportPasswordsDialogPage()
     {
@@ -40,12 +39,10 @@ public sealed partial class ImportPasswordsDialogPage : Page
     public void SetPasswords(ObservableCollection<PasswordManagerItem> items)
     {
         // Do not override "Items" with a new ObservableCollection. It would destroy the binding in GUI.
-        //Checked = new bool[items.Count];
         Items.Clear();
         for (int i = 0; i < items.Count; i++)
         {
             Items.Add(new PasswordManagerItemCheck(items[i]));
-            //Checked[i] = true;
         }
 
         selectAll_Checkbox.Visibility = Visibility.Visible;
@@ -55,11 +52,9 @@ public sealed partial class ImportPasswordsDialogPage : Page
     {
         // Do not override "Items" with a new ObservableCollection. It would destroy the binding in GUI.
         Items.Clear();
-        //Checked = new bool[items.Length];
         for (int i = 0; i < items.Length; i++)
         {
             Items.Add(new PasswordManagerItemCheck(items[i]));
-            //Checked[i] = true;
         }
 
         selectAll_Checkbox.Visibility = Visibility.Visible;
