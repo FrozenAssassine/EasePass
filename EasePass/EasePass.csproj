@@ -88,6 +88,7 @@
     <None Remove="Views\ExtensionPage.xaml" />
     <None Remove="Views\GenPasswordPage.xaml" />
     <None Remove="Views\ImportPasswordsDialogPage.xaml" />
+    <None Remove="Views\LoadBackupDatabasePage.xaml" />
     <None Remove="Views\LoginPage.xaml" />
     <None Remove="Views\PasswordsPage.xaml" />
     <None Remove="Views\RegisterPage.xaml" />
@@ -162,6 +163,11 @@
     <Content Update="Assets\AppIcon\appicon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\LoadBackupDatabasePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\ImportPasswordsDialogPage.xaml">

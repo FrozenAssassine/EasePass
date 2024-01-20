@@ -34,7 +34,7 @@ namespace EasePass.Views
             App.m_window.Closed += M_window_Closed;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             App.m_window.ShowBackArrow = false;
 
@@ -76,6 +76,10 @@ namespace EasePass.Views
                 passwordItemsManager.Load(dbData);
                 autoBackupHelper.Start(this, passwordItemsManager);
                 passwordItemListView.ItemsSource = passwordItemsManager.PasswordItems;
+
+                //enable backups:
+                MainWindow.databaseBackupHelper = new DatabaseBackupHelper(passwordItemsManager, masterPassword, BackupCycle.Daily);
+                await MainWindow.databaseBackupHelper.CheckAndDoBackup();
 
                 SaveData();
             }
@@ -364,7 +368,7 @@ namespace EasePass.Views
         }
         private void SwitchOrder_Click(object sender, RoutedEventArgs e)
         {
-            passwordItemsManager.PasswordItems = passwordItemsManager.PasswordItems.ReverseSelf();
+            passwordItemsManager.SetNew(passwordItemsManager.PasswordItems.ReverseSelf());
             Reload();
             SaveData();
             Searchbox_TextChanged(this, null);

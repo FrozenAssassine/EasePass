@@ -99,7 +99,7 @@ namespace EasePass.Helper
         //Used to create a file for the database on the very first start, so no error will be send, that the database was not found:
         public static void CreateInitialDatabaseFile(SecureString pw)
         {
-            SaveDatabase(new PasswordItemsManager {  PasswordItems = new ObservableCollection<PasswordManagerItem>()}, pw);
+            SaveDatabase(new PasswordItemsManager(new ObservableCollection<PasswordManagerItem>()), pw);
         }
     }
 }

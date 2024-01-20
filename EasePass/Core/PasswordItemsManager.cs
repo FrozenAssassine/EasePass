@@ -6,7 +6,13 @@ namespace EasePass.Core;
 
 public class PasswordItemsManager
 {
-    public ObservableCollection<PasswordManagerItem> PasswordItems = null;
+    public ObservableCollection<PasswordManagerItem> PasswordItems { get; private set; }
+
+    public PasswordItemsManager(ObservableCollection<PasswordManagerItem> passwordItems)
+    {
+        PasswordItems = passwordItems;
+    }
+    public PasswordItemsManager() { }
 
     public void Unload()
     {
@@ -36,5 +42,31 @@ public class PasswordItemsManager
     public int PasswordAlreadyExists(string password)
     {
         return PasswordItems.Count(x => x.Password == password);
+    }
+
+    public void AddRange(PasswordManagerItem[] items)
+    {
+        foreach (var item in items)
+        {
+            PasswordItems.Add(item);
+        }
+    }
+
+    public void AddRange(ObservableCollection<PasswordManagerItem> items)
+    {
+        foreach (var item in items)
+        {
+            PasswordItems.Add(item);
+        }
+    }
+
+    public void SetNew(ObservableCollection<PasswordManagerItem> items)
+    {
+        PasswordItems.Clear();
+
+        foreach (var item in items)
+        {
+            PasswordItems.Add(item);
+        }
     }
 }

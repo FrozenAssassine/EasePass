@@ -331,5 +331,10 @@ namespace EasePass.Views
             }
             SavePasswordItems();
         }
+
+        private async void ShowDatabaseBackups_Click(object sender, RoutedEventArgs e)
+        {
+            await new LoadDatabaseBackupDialog().ShowAsync(MainWindow.databaseBackupHelper);
+        }
     }
 }
