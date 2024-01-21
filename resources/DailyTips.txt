@@ -1,0 +1,2 @@
+You can increase the speed of password generation by turning off the 'Verify that the password was not leaked' setting in the settings.
+By double-clicking on a textbox, you can copy its content.
