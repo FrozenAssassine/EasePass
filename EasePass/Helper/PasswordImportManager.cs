@@ -33,7 +33,7 @@ namespace EasePass.Helper
             {
                 dlg.SetPageMessage(ImportPasswordsDialog.MsgType.Error);
             }
-            return await dlg.ShowAsync();
+            return await dlg.ShowAsync(true);
         }
 
         private static PasswordManagerItem ToPMI(PasswordItem item)

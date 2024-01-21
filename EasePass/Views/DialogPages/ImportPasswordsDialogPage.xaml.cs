@@ -18,12 +18,13 @@ public sealed partial class ImportPasswordsDialogPage : Page
         this.InitializeComponent();
     }
 
-    public void SetMessage(ImportPasswordsDialog.MsgType msg)
+    public void SetMessage(ImportPasswordsDialog.MsgType msg, bool showProgressbar = false)
     {
         switch (msg)
         {
             case ImportPasswordsDialog.MsgType.None:
-                progress.Visibility = Visibility.Visible;
+                if(showProgressbar)
+                    progress.Visibility = Visibility.Visible;
                 break;
             case ImportPasswordsDialog.MsgType.Error:
                 progress.Visibility = Visibility.Collapsed;

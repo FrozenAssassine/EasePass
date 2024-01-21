@@ -92,7 +92,7 @@ public class DatabaseBackupHelper
         ImportPasswordsDialog dialog = new ImportPasswordsDialog();
         dialog.SetPagePasswords(loadedItems);
 
-        var res = await dialog.ShowAsync();
+        var res = await dialog.ShowAsync(false);
         if (res.Items == null)
             return false;
         

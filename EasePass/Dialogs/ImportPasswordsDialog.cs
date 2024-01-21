@@ -19,9 +19,9 @@ namespace EasePass.Dialogs
             importPage = new ImportPasswordsDialogPage();
         }
 
-        public async Task<(PasswordManagerItem[] Items, bool Override)> ShowAsync(MsgType msg = MsgType.None)
+        public async Task<(PasswordManagerItem[] Items, bool Override)> ShowAsync(bool showProgressbar, MsgType msg = MsgType.None)
         {
-            SetPageMessage(msg);
+            SetPageMessage(msg, showProgressbar);
             var dialog = new AutoLogoutContentDialog
             {
                 Title = "Import passwords",
@@ -62,9 +62,9 @@ namespace EasePass.Dialogs
             args.Cancel = true;
         }
 
-        public void SetPageMessage(MsgType msg)
+        public void SetPageMessage(MsgType msg, bool showProgressbar = false)
         {
-            importPage.SetMessage(msg);
+            importPage.SetMessage(msg, showProgressbar);
         }
 
         public void SetPagePasswords(PasswordManagerItem[] items)

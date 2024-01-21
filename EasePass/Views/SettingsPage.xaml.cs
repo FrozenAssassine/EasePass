@@ -149,7 +149,7 @@ namespace EasePass.Views
             //show dialog to confirm import of selected passwords
             var importPWDialog = new ImportPasswordsDialog();
             importPWDialog.SetPagePasswords(importedItems);
-            var dialogResult = await importPWDialog.ShowAsync();
+            var dialogResult = await importPWDialog.ShowAsync(false);
 
             if (dialogResult.Items == null)
                 return;
