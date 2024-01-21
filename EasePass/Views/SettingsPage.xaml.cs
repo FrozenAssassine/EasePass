@@ -96,7 +96,7 @@ namespace EasePass.Views
                     pw.AppendChar(character);
                 }
 
-                DatabaseHelper.SaveDatabase(new Core.PasswordItemsManager(new new ObservableCollection<PasswordManagerItem>(await new SelectExportPasswordsDialog().ShowAsync(passwordItems))), pw, pickerResult.path);
+                DatabaseHelper.SaveDatabase(new Core.PasswordItemsManager(new ObservableCollection<PasswordManagerItem>(await new SelectExportPasswordsDialog().ShowAsync(passwordItems))), pw, pickerResult.path);
                 InfoMessages.ExportDBSuccess();
             }
         }

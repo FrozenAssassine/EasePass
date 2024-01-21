@@ -11,7 +11,7 @@ namespace EasePass.Views;
 
 public sealed partial class ImportPasswordsDialogPage : Page
 {
-    List<PasswordManagerItem> PWItems = new();
+    ObservableCollection<PasswordManagerItem> PWItems = new();
 
     public ImportPasswordsDialogPage()
     {
@@ -27,7 +27,7 @@ public sealed partial class ImportPasswordsDialogPage : Page
                 break;
             case ImportPasswordsDialog.MsgType.Error:
                 progress.Visibility = Visibility.Collapsed;
-                errorMsg.Text = "An error has occured!";
+                errorMsg.Text = "An error has occurred!";
                 errorMsg.Visibility = Visibility.Visible;
                 break;
             case ImportPasswordsDialog.MsgType.NoPasswords:
@@ -40,8 +40,9 @@ public sealed partial class ImportPasswordsDialogPage : Page
 
     public void SetPasswords(ObservableCollection<PasswordManagerItem> items)
     {
-        PWItems.Clear();      
-        PWItems.AddRange(items);
+        PWItems.Clear();
+        for (int i = 0; i < items.Count; i++)
+            PWItems.Add(items[i]);
 
         selectAll_Checkbox.Visibility = Visibility.Visible;
         progress.Visibility = Visibility.Collapsed;
@@ -51,7 +52,8 @@ public sealed partial class ImportPasswordsDialogPage : Page
     public void SetPasswords(PasswordManagerItem[] items)
     {
         PWItems.Clear();
-        PWItems.AddRange(items);
+        for (int i = 0; i < items.Length; i++)
+            PWItems.Add(items[i]);
 
         selectAll_Checkbox.Visibility = Visibility.Visible;
         progress.Visibility = Visibility.Collapsed;
