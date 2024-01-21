@@ -1,4 +1,8 @@
 ﻿#Version 1.2.0 [01/20/2024]
+	• Added feature to create and choose from multiple databases
+	• Added daily tips to the login page
+	• Added dailog to select which passwords to export
+	• Added dialog to select which passwords to import
 	• Added logout shortcut by pressing Ctrl + L
 	• Added plugin support and the following plugins:
 	  - Browser password importer
@@ -10,8 +14,15 @@
 	• Added generate password button in add dialog
 	• Added password pie chart to show the security of the password
 	• Added auto logout message to automatically disappear after login
-	• Fix can not enter letters by pressing Ctrl + Gr in password box
+	• Added password popularity counter
+	• Added splitter to freely size the password list from the password display
+	• Added automatic daily backups which you can simply load.
+	• Unified .eped and .epdb to .epdb files
+	• Moved the infobutton to the statusbar
+	• Removed automatic backups every 4 minutes
 	• Fix urls not working without http
+	• Fix you can now select multiple entries to delete those
+	• Fix can not enter letters by pressing Ctrl + Gr in password box
 
 #Version 1.1.0 [09/28/2023]
 	• 2FA token generator
