@@ -87,19 +87,16 @@ namespace EasePass.Views
                 return;
             }
 
-            var (hash, salt) = AuthenticationHelper.HashPassword(encryptDBPassword.Password);
-
-            PasswordManagerItem[] passwords = await new SelectExportPasswordsDialog().ShowAsync(passwordItems);
-
-            var encodedDB = EncryptDecryptHelper.EncryptStringAES(DatabaseHelper.CreateJsonstring(new ObservableCollection<PasswordManagerItem>(passwords)), encryptDBPassword.Password, salt);
-
-            var encryptedItem = new EncryptedDatabaseItem(hash, salt, encodedDB);
-            string fileData = JsonConvert.SerializeObject(encryptedItem, Formatting.Indented);
-
-            var pickerResult = await FilePickerHelper.PickSaveFile(("Ease Pass Exported Database", new List<string> { ".eped" }));
+            var pickerResult = await FilePickerHelper.PickSaveFile(("Ease Pass Exported Database", new List<string> { ".epdb" }));
             if (pickerResult.success)
             {
-                File.WriteAllText(pickerResult.path, fileData);
+                SecureString pw = new SecureString();
+                foreach (var character in encryptDBPassword.Password)
+                {
+                    pw.AppendChar(character);
+                }
+
+                DatabaseHelper.SaveDatabase(new Core.PasswordItemsManager(new new ObservableCollection<PasswordManagerItem>(await new SelectExportPasswordsDialog().ShowAsync(passwordItems))), pw, pickerResult.path);
                 InfoMessages.ExportDBSuccess();
             }
         }
@@ -111,18 +108,46 @@ namespace EasePass.Views
                 return;
             }
 
-            var pickerResult = await FilePickerHelper.PickOpenFile(new string[] { ".eped" });
+            var pickerResult = await FilePickerHelper.PickOpenFile(new string[] { ".eped", ".epdb" });
             if (!pickerResult.success)
                 return;
 
-            EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(pickerResult.path));
-            if (!AuthenticationHelper.VerifyPassword(decryptedJson.PasswordHash, decryptDBPassword.Password))
+            ObservableCollection<PasswordManagerItem> importedItems = null;
+
+            if (Path.GetExtension(pickerResult.path).ToLower() == ".eped")
             {
-                InfoMessages.ImportDBWrongPassword();
+                EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(pickerResult.path));
+                if (!AuthenticationHelper.VerifyPassword(decryptedJson.PasswordHash, decryptDBPassword.Password))
+                {
+                    InfoMessages.ImportDBWrongPassword();
+                    return;
+                }
+                var str = EncryptDecryptHelper.DecryptStringAES(decryptedJson.Data, decryptDBPassword.Password, decryptedJson.Salt);
+                importedItems = DatabaseHelper.LoadItems(str);
+            }else if(Path.GetExtension(pickerResult.path).ToLower() == ".epdb")
+            {
+                SecureString pw = new SecureString();
+                foreach (var character in decryptDBPassword.Password)
+                {
+                    pw.AppendChar(character);
+                }
+
+                try
+                {
+                    importedItems = DatabaseHelper.LoadDatabase(pw, pickerResult.path);
+                }
+                catch
+                {
+                    InfoMessages.ImportDBWrongPassword();
+                    return;
+                }
+            }
+
+            if(importedItems == null)
+            {
+                InfoMessages.Error();
                 return;
             }
-            var str = EncryptDecryptHelper.DecryptStringAES(decryptedJson.Data, decryptDBPassword.Password, decryptedJson.Salt);
-            var importedItems = DatabaseHelper.LoadItems(str);
 
             //show dialog to confirm import of selected passwords
             var importPWDialog = new ImportPasswordsDialog();
@@ -169,7 +194,17 @@ namespace EasePass.Views
                 return;
             }
 
-            if (!AuthenticationHelper.VerifyPassword(changePW_currentPw.Password))
+            SecureString pw = new SecureString();
+            foreach (var character in changePW_currentPw.Password)
+            {
+                pw.AppendChar(character);
+            }
+
+            try
+            {
+                var dbData = DatabaseHelper.LoadDatabase(pw);
+            }
+            catch
             {
                 InfoMessages.ChangePasswordWrong();
                 return;
@@ -188,7 +223,6 @@ namespace EasePass.Views
             }
 
             passwordsPage.masterPassword = newMasterPw;
-            AuthenticationHelper.StorePassword(changePW_newPw.Password);
             passwordsPage.SaveData();
 
             InfoMessages.SuccessfullyChangedPassword();

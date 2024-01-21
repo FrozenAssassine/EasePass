@@ -30,6 +30,7 @@ namespace EasePass.Dialogs
         public static void FileIsNotAnExtensions() => new InfoBar().Show("File is not a plugin", "The selected file is not an Ease Pass plugin!", InfoBarSeverity.Error, 10);
         public static void ExtensionAlreadyInstalled() => new InfoBar().Show("Plugin already installed", "The plugin is already installed!", InfoBarSeverity.Error, 10);
         public static void Invalid2FA() => new InfoBar().Show("Invalid 2FA secret", "This 2FA secret is not valid!", InfoBarSeverity.Error, 10);
+        public static void Error() => new InfoBar().Show("Error", "An error has occurred!", InfoBarSeverity.Error, 5);
         public static void NewVersionInfo(string version)
         {
             var btn = new Button { Content = "Changelog" };
