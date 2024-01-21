@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBlock TextAlignment="Center" FontSize="36" Text="Login"/>
         <StackPanel Margin="0,70,0,0" Background="{ThemeResource CardBackgroundFillColorDefault}" CornerRadius="10" Padding="30" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Margin="10,0,0,0" Text="Enter your Password"/>
@@ -18,5 +18,8 @@
             </PasswordBox>
             <Button Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Center" Padding="20,5" Margin="10" Click="PWLogin_Click" Content="Login"/>
         </StackPanel>
-    </Grid>
+        <Grid x:Name="dailyTipGrid" Background="{ThemeResource CardBackgroundFillColorDefault}" Width="600" Height="100" CornerRadius="20" Margin="0,100,0,0">
+            <TextBlock x:Name="dailyTipTextBlock" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWholeWords" Width="500" />
+        </Grid>
+    </StackPanel>
 </Page>

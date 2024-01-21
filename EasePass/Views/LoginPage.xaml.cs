@@ -1,7 +1,9 @@
 using EasePass.Dialogs;
 using EasePass.Helper;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using System.Security;
+using System.Threading.Tasks;
 
 namespace EasePass.Views
 {
@@ -14,6 +16,19 @@ namespace EasePass.Views
             this.InitializeComponent();
 
             passwordBox.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
+        }
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            string tip = await DailyTipHelper.GetTodaysTip();
+            if (string.IsNullOrEmpty(tip))
+            {
+                dailyTipGrid.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+                return;
+            }
+            dailyTipTextBlock.Text = tip;
         }
 
         private void PWLogin_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
