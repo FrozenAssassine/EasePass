@@ -34,9 +34,6 @@ namespace EasePass.Views
         {
             inactivityLogoutTime.Value = AppSettings.GetSettingsAsInt(AppSettingsValues.inactivityLogoutTime, DefaultSettingsValues.inactivityLogoutTime);
             doubleTapToCopySW.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.doubleTapToCopy, DefaultSettingsValues.doubleTapToCopy);
-            autoBackupDB.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.autoBackupDB, DefaultSettingsValues.autoBackupDatabase);
-            autoBackupDBPath.Text = AppSettings.GetSettings(AppSettingsValues.autoBackupDBPath, "");
-            autoBackupDBTime.Value = AppSettings.GetSettingsAsInt(AppSettingsValues.autoBackupDBTime, DefaultSettingsValues.autoBackupDBTime);
             showIcons.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons);
             pswd_chars.Text = AppSettings.GetSettings(AppSettingsValues.passwordChars, DefaultSettingsValues.PasswordChars);
             pswd_length.Text = Convert.ToString(AppSettings.GetSettingsAsInt(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength));
@@ -235,28 +232,6 @@ namespace EasePass.Views
         private void DoubleTapToCopySW_Toggled(object sender, RoutedEventArgs e)
         {
             AppSettings.SaveSettings(AppSettingsValues.doubleTapToCopy, doubleTapToCopySW.IsOn);
-        }
-
-        private async void PickAutoBackupDBPath_Click(object sender, RoutedEventArgs e)
-        {
-            var res = await FilePickerHelper.PickSaveFile(("Ease Pass Database", new List<string> { ".epdb" }));
-            if (!res.success)
-                return;
-
-            autoBackupDBPath.Text = res.path;
-        }
-
-        private void AutoBackupDB_Toggled(object sender, RoutedEventArgs e)
-        {
-            AppSettings.SaveSettings(AppSettingsValues.autoBackupDB, autoBackupDB.IsOn);
-        }
-        private void AutoBackupDBTime_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
-        {
-            AppSettings.SaveSettings(AppSettingsValues.autoBackupDBTime, autoBackupDBTime.Value);
-        }
-        private void AutoBackupDBPathTB_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            AppSettings.SaveSettings(AppSettingsValues.autoBackupDBPath, autoBackupDBPath.Text);
         }
 
         private void showIcons_Toggled(object sender, RoutedEventArgs e)

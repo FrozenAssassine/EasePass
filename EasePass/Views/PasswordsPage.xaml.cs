@@ -25,7 +25,6 @@ namespace EasePass.Views
         public const int TOTP_SPACING = 3;
         private PasswordManagerItem SelectedItem = null;
         private TOTPTokenUpdater totpTokenUpdater;
-        private readonly AutoBackupHelper autoBackupHelper = new AutoBackupHelper();
         public readonly PasswordItemsManager passwordItemsManager = new PasswordItemsManager();
         private static bool firstLoad = true;
 
@@ -43,7 +42,6 @@ namespace EasePass.Views
             if (e.NavigationMode == NavigationMode.Back)
             {
                 SaveData();
-                autoBackupHelper.UpdateSettings();
             }
             else if(e.NavigationMode == NavigationMode.New && e.Parameter is SecureString pw)
             {
@@ -76,7 +74,6 @@ namespace EasePass.Views
                 }
 
                 passwordItemsManager.Load(dbData);
-                autoBackupHelper.Start(this, passwordItemsManager);
                 passwordItemListView.ItemsSource = passwordItemsManager.PasswordItems;
 
                 //enable backups:
