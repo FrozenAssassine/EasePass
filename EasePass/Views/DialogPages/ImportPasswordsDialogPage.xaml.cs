@@ -1,7 +1,9 @@
+using CommunityToolkit.WinUI;
 using EasePass.Dialogs;
 using EasePass.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -9,7 +11,7 @@ namespace EasePass.Views;
 
 public sealed partial class ImportPasswordsDialogPage : Page
 {
-    ObservableCollection<PasswordManagerItemCheck> Items = new ObservableCollection<PasswordManagerItemCheck>();
+    List<PasswordManagerItem> PWItems = new();
 
     public ImportPasswordsDialogPage()
     {
@@ -38,32 +40,28 @@ public sealed partial class ImportPasswordsDialogPage : Page
 
     public void SetPasswords(ObservableCollection<PasswordManagerItem> items)
     {
-        // Do not override "Items" with a new ObservableCollection. It would destroy the binding in GUI.
-        Items.Clear();
-        for (int i = 0; i < items.Count; i++)
-        {
-            Items.Add(new PasswordManagerItemCheck(items[i]));
-        }
+        PWItems.Clear();      
+        PWItems.AddRange(items);
 
         selectAll_Checkbox.Visibility = Visibility.Visible;
         progress.Visibility = Visibility.Collapsed;
+
+        listView.SelectAll();
     }
     public void SetPasswords(PasswordManagerItem[] items)
     {
-        // Do not override "Items" with a new ObservableCollection. It would destroy the binding in GUI.
-        Items.Clear();
-        for (int i = 0; i < items.Length; i++)
-        {
-            Items.Add(new PasswordManagerItemCheck(items[i]));
-        }
+        PWItems.Clear();
+        PWItems.AddRange(items);
 
         selectAll_Checkbox.Visibility = Visibility.Visible;
         progress.Visibility = Visibility.Collapsed;
+
+        listView.SelectAll();
     }
 
     public PasswordManagerItem[] GetSelectedPasswords()
     {
-        return Items.Where((x, i) => x.Checked == true).Select(x => x.Item).ToArray();
+        return listView.SelectedItems.Select(x => x as PasswordManagerItem).ToArray();
     }
 
     private void CheckBox_Toggled(object sender, RoutedEventArgs e)
@@ -82,9 +80,9 @@ public sealed partial class ImportPasswordsDialogPage : Page
 
     private void selectAll_Checkbox_Toggled(object sender, RoutedEventArgs e)
     {
-        for(int i = 0; i < Items.Count; i++)
-        {
-            Items[i].Checked = (sender as CheckBox).IsChecked ?? false;
-        }
+        if (selectAll_Checkbox.IsChecked ?? false)
+            listView.SelectAll();
+        else
+            listView.DeselectAll();
     }
 }
