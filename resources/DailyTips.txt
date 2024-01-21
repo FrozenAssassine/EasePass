@@ -1,2 +1,8 @@
 You can increase the speed of password generation by turning off the 'Verify that the password was not leaked' setting in the settings.
 By double-clicking on a textbox, you can copy its content.
+Always use a combination of letters, numbers, and special characters to create a strong password. The longer and more complex your password, the harder it is to crack.
+Avoid using the same password across multiple sites. If one site is compromised, all your accounts are at risk.
+Enable two-factor authentication when available. It adds an extra layer of security to your accounts.
+Avoid using easily guessed passwords like birthdays, names, or addresses.
+If you enter a website with your password, we can try to load a logo.
+If you click on the arrow symbol, you can generate a password directly while you are creating a new entry.
