@@ -1,7 +1,7 @@
 ﻿#Version 1.2.0 [01/20/2024]
-	• Added feature to create and choose from multiple databases
+	• Added option to create and choose from multiple databases
 	• Added daily tips to the login page
-	• Added dailog to select which passwords to export
+	• Added dialog to select which passwords to export
 	• Added dialog to select which passwords to import
 	• Added logout shortcut by pressing Ctrl + L
 	• Added plugin support and the following plugins:
