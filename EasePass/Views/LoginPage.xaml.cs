@@ -24,21 +24,26 @@ namespace EasePass.Views
                 return;
             }
 
-            if (AuthenticationHelper.VerifyPassword(passwordBox.Password))
+            SecureString pw = new SecureString();
+            foreach (var character in passwordBox.Password)
             {
-                WrongCount = 0;
+                pw.AppendChar(character);
+            }
 
-                SecureString pw = new SecureString();
-                foreach (var character in passwordBox.Password)
-                {
-                    pw.AppendChar(character);
-                }
+            try
+            {
+                var dbData = DatabaseHelper.LoadDatabase(pw);
+
+                WrongCount = 0;
 
                 App.m_frame.Navigate(typeof(PasswordsPage), pw);
                 return;
             }
-            WrongCount++;
-            InfoMessages.EnteredWrongPassword(WrongCount);
+            catch
+            {
+                WrongCount++;
+                InfoMessages.EnteredWrongPassword(WrongCount);
+            }
         }
         private void Enter_Invoked(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
