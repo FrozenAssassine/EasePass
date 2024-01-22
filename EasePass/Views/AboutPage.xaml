@@ -85,9 +85,11 @@
                 <Expander.Content>
                     <StackPanel>
                         <HyperlinkButton FontSize="16" NavigateUri="https://www.nuget.org/packages/BCrypt.Net/0.1.0" Content="BCrypt.Net"/>
-                        <HyperlinkButton FontSize="16" NavigateUri="https://github.com/JamesNK/Newtonsoft.Json" Content="Newtonsoft.Json"/>
+                        <HyperlinkButton FontSize="16" NavigateUri="https://www.nuget.org/packages/Newtonsoft.Json" Content="Newtonsoft.Json"/>
                         <HyperlinkButton FontSize="16" NavigateUri="https://www.nuget.org/packages/ZXing.Net/" Content="ZXing.Net"/>
-                        <HyperlinkButton FontSize="16" NavigateUri="https://www.nuget.org/packages/WindowsDisplayAPI" Content="Windows Display API"/>
+                        <HyperlinkButton FontSize="16" NavigateUri="https://www.nuget.org/packages/WindowsDisplayAPI" Content="WindowsDisplayAPI"/>
+                        <HyperlinkButton FontSize="16" NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Controls.Sizers" Content="CommunityToolkit.WinUI.Controls.Sizers"/>
+                        <HyperlinkButton FontSize="16" NavigateUri="https://www.nuget.org/packages/System.Drawing.Common/" Content="System.Drawing.Common"/>
                     </StackPanel>
                 </Expander.Content>
             </Expander>
