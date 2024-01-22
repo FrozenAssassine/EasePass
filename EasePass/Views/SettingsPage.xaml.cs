@@ -22,7 +22,6 @@ namespace EasePass.Views
         ObservableCollection<PasswordManagerItem> passwordItems = null;
         PasswordsPage passwordsPage = null;
         Action SavePasswordItems = null;
-        string SelectedPrinter = "";
         ObservableCollection<PasswordImporterBase> passwordImporter = null;
 
         public SettingsPage()
@@ -58,12 +57,6 @@ namespace EasePass.Views
             passwordsPage = navParam.PasswordPage;
             SavePasswordItems = navParam.SavePwItems;
 
-            printerSelector.Items.Clear();
-            foreach(string printer in PrinterSettings.InstalledPrinters)
-            {
-                printerSelector.Items.Add(printer);
-            }
-
             passwordImporter = new ObservableCollection<PasswordImporterBase>();
             foreach(IPasswordImporter importer in ExtensionHelper.GetAllClassesWithInterface<IPasswordImporter>())
             {
@@ -76,113 +69,7 @@ namespace EasePass.Views
             }
         }
 
-        private async void ExportEncryptedDatabase_Click(object sender, RoutedEventArgs e)
-        {
-            if (encryptDBPassword.Password.Length < 4)
-            {
-                InfoMessages.PasswordTooShort();
-                return;
-            }
 
-            var pickerResult = await FilePickerHelper.PickSaveFile(("Ease Pass Exported Database", new List<string> { ".epdb" }));
-            if (pickerResult.success)
-            {
-                SecureString pw = new SecureString();
-                foreach (var character in encryptDBPassword.Password)
-                {
-                    pw.AppendChar(character);
-                }
-
-                DatabaseHelper.SaveDatabase(new Core.PasswordItemsManager(new ObservableCollection<PasswordManagerItem>(await new SelectExportPasswordsDialog().ShowAsync(passwordItems))), pw, pickerResult.path);
-                InfoMessages.ExportDBSuccess();
-            }
-        }
-        private async void ImportEncryptedDatabase_Click(object sender, RoutedEventArgs e)
-        {
-            if (decryptDBPassword.Password.Length < 4)
-            {
-                InfoMessages.PasswordTooShort();
-                return;
-            }
-
-            var pickerResult = await FilePickerHelper.PickOpenFile(new string[] { ".eped", ".epdb" });
-            if (!pickerResult.success)
-                return;
-
-            ObservableCollection<PasswordManagerItem> importedItems = null;
-
-            if (Path.GetExtension(pickerResult.path).ToLower() == ".eped")
-            {
-                EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(pickerResult.path));
-                if (!AuthenticationHelper.VerifyPassword(decryptedJson.PasswordHash, decryptDBPassword.Password))
-                {
-                    InfoMessages.ImportDBWrongPassword();
-                    return;
-                }
-                var str = EncryptDecryptHelper.DecryptStringAES(decryptedJson.Data, decryptDBPassword.Password, decryptedJson.Salt);
-                importedItems = DatabaseHelper.LoadItems(str);
-            }else if(Path.GetExtension(pickerResult.path).ToLower() == ".epdb")
-            {
-                SecureString pw = new SecureString();
-                foreach (var character in decryptDBPassword.Password)
-                {
-                    pw.AppendChar(character);
-                }
-
-                try
-                {
-                    importedItems = DatabaseHelper.LoadDatabase(pw, pickerResult.path);
-                }
-                catch
-                {
-                    InfoMessages.ImportDBWrongPassword();
-                    return;
-                }
-            }
-
-            if(importedItems == null)
-            {
-                InfoMessages.Error();
-                return;
-            }
-
-            //show dialog to confirm import of selected passwords
-            var importPWDialog = new ImportPasswordsDialog();
-            importPWDialog.SetPagePasswords(importedItems);
-            var dialogResult = await importPWDialog.ShowAsync(false);
-
-            if (dialogResult.Items == null)
-                return;
-
-            if (dialogResult.Override)
-            {
-                for (int i = 0; i < dialogResult.Items.Length; i++) // I prefer my way with two loops because it will retain the item order.
-                {
-                    bool found = false;
-                    for (int j = 0; j < passwordItems.Count; j++)
-                    {
-                        if (passwordItems[j].DisplayName.Equals(dialogResult.Items[i].DisplayName))
-                        {
-                            passwordItems[j] = dialogResult.Items[i];
-                            found = true;
-                        }
-                    }
-                    if (!found)
-                        passwordItems.Add(dialogResult.Items[i]);
-                }
-            }
-            else
-            {
-                foreach (var item in dialogResult.Items)
-                {
-                    passwordItems.Add(item);
-                }
-            }
-
-            passwordsPage.SaveData();
-            InfoMessages.ImportDBSuccess();
-            return;
-        }
         private void ChangePassword_Click(object sender, RoutedEventArgs e)
         {
             if (changePW_newPw.Password.Length < 4)
@@ -276,33 +163,13 @@ namespace EasePass.Views
             AppSettings.SaveSettings(AppSettingsValues.disableLeakedPasswords, !disableLeakedPasswords.IsOn);
         }
 
-        private void printerSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SelectedPrinter = (string)e.AddedItems[0];
-        }
-
-        private void PrintButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(SelectedPrinter))
-            {
-                InfoMessages.PrinterNotSelected();
-                return;
-            }
-            PrinterHelper.Print(passwordItems, SelectedPrinter);
-        }
-
-        private void ExtensionManage_Click(object sender, RoutedEventArgs e)
-        {
-            App.m_frame.Navigate(typeof(ExtensionPage), new SettingsNavigationParameters());
-        }
-
         private async void ImportPassword_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.XamlRoot = App.m_window.Content.XamlRoot;
 
             PasswordImporterBase piBase = (PasswordImporterBase)(sender as Button).Tag;
             var res = await PasswordImportManager.ManageImport(piBase.PasswordImporter);
-            
+
             if (res.Items == null)
                 return;
 
@@ -334,6 +201,11 @@ namespace EasePass.Views
             SavePasswordItems();
         }
 
+        private void ExtensionManage_Click(object sender, RoutedEventArgs e)
+        {
+            App.m_frame.Navigate(typeof(ExtensionPage), new SettingsNavigationParameters());
+        }
+
         private void ResetPopularity_Click(object sender, RoutedEventArgs e)
         {
             for(int i = 0; i < passwordItems.Count; i++)
@@ -343,9 +215,9 @@ namespace EasePass.Views
             SavePasswordItems();
         }
 
-        private async void ShowDatabaseBackups_Click(object sender, RoutedEventArgs e)
+        private void ManageDatabases_Click(object sender, RoutedEventArgs e)
         {
-            await new LoadDatabaseBackupDialog().ShowAsync(MainWindow.databaseBackupHelper);
+            App.m_frame.Navigate(typeof(ManageDatabasePage));
         }
     }
 }

@@ -5,8 +5,8 @@ namespace EasePass.Models;
 public class DatabaseBackupFile
 {
     public string FileName { get; set; }
-    public string DisplayText => FileName + " [" + GetBackupDate() + "]";
     public string FilePath { get; }
+    public string BackupDate => GetBackupDate();
     public DatabaseBackupFile(string filePath)
     {
         this.FilePath = filePath;

@@ -8,5 +8,8 @@
     d:DesignHeight="300"
     d:DesignWidth="400" Margin="0,30,0,0">
 
-    <TextBlock Text="{x:Bind Header}" FontSize="24"/>
+    <StackPanel Orientation="Horizontal">
+        <TextBlock Text="{x:Bind Header}" FontSize="24"/>
+        <ContentControl Margin="10,0,0,0" Content="{x:Bind Content}"/>
+    </StackPanel>
 </UserControl>

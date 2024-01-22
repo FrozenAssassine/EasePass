@@ -10,31 +10,10 @@
     <ScrollViewer Margin="0,50,0,0" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">
         <StackPanel Margin="20">
             <TextBlock TextAlignment="Center" FontSize="36" Text="Settings"/>
-            <controls:SettingsItemSeparator Header="Database"/>
-            <controls:SettingsControl Header="Export Database">
-                <StackPanel Orientation="Horizontal">
-                    <PasswordBox MinWidth="150" Margin="5" x:Name="encryptDBPassword" PlaceholderText="Password"/>
-                    <Button Margin="5" Content="Export" Width="100" Click="ExportEncryptedDatabase_Click"/>
-                </StackPanel>
-            </controls:SettingsControl>
 
-            <controls:SettingsControl Header="Import Database">
-                <StackPanel Orientation="Horizontal">
-                    <PasswordBox MinWidth="150" Margin="5" x:Name="decryptDBPassword" PlaceholderText="Password"/>
-                    <Button Margin="5" Content="Import" Width="100" Click="ImportEncryptedDatabase_Click"/>
-                </StackPanel>
+            <controls:SettingsControl Header="Database">
+                <Button Style="{ThemeResource AccentButtonStyle}" Content="Manage" Width="100" Click="ManageDatabases_Click" />
             </controls:SettingsControl>
-
-            <controls:SettingsControl Header="Print Database">
-                <StackPanel Orientation="Horizontal">
-                    <ComboBox x:Name="printerSelector" PlaceholderText="Pick a printer" MinWidth="150" Margin="5" SelectionChanged="printerSelector_SelectionChanged" />
-                    <Button Margin="5" Content="Print" Width="100" Click="PrintButton_Click"/>
-                </StackPanel>
-            </controls:SettingsControl>
-            <controls:SettingsControl Header="Database Backups">
-                <Button Content="Show" Style="{ThemeResource AccentButtonStyle}" Click="ShowDatabaseBackups_Click"/>
-            </controls:SettingsControl>
-
             <controls:SettingsItemSeparator Header="Plugins"/>
             <controls:SettingsControl Header="Plugins">
                 <Button Style="{ThemeResource AccentButtonStyle}" Content="Manage" Width="100" Click="ExtensionManage_Click" />

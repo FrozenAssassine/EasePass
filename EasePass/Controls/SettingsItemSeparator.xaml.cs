@@ -10,6 +10,8 @@ namespace EasePass.Controls
             this.InitializeComponent();
         }
 
+        public new object Content { get; set; }
+
         public string Header { get; set; }
     }
 }
