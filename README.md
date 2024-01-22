@@ -17,6 +17,19 @@
 ### What is Ease Pass?
 Ease Pass is a simple password manager designed to streamline password management. With this application, you can conveniently store, edit, and organize your passwords securely. The project is a work in progress, focusing on providing a user-friendly interface to save and manage passwords, and future enhancements are underway to further enhance its capabilities.
 
+### Features:
+- Offline and Secure
+- Simple but intuitive and clean-looking design
+- Generate Secure Passwords
+- Generate 2FA tokens
+- Fast search
+- Print your database as PDF or on Paper
+- Export and Import your passwords encrypted
+- Sort and order your passwords
+- Plugin support to extend the functionality.
+- Import your passwords from the Browser
+- Import your wifi passwords from Windows
+
 ## Images
 
 <img src="Images/img1.png"/>
