@@ -107,10 +107,10 @@
             </Expander>
 
             <controls:SettingsItemSeparator Header="Miscellaneous"/>
-            <controls:SettingsControl Header="Quick Copy on Double Click">
+            <controls:SettingsControl Header="Quick Copy on Double Click" ToolTipService.ToolTip="Enable quick copy to copy text by double clicking on the textbox">
                 <ToggleSwitch x:Name="doubleTapToCopySW" Toggled="DoubleTapToCopySW_Toggled"/>
             </controls:SettingsControl>
-            <controls:SettingsControl Header="Show icons">
+            <controls:SettingsControl Header="Show icons" ToolTipService.ToolTip="Show or hide the icons in the password list">
                 <ToggleSwitch x:Name="showIcons" Toggled="showIcons_Toggled"/>
             </controls:SettingsControl>
             <controls:SettingsControl Header="Password popularity counter">

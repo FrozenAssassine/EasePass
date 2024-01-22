@@ -26,7 +26,7 @@
                 <Border x:Name="RedBorder" Grid.Column="0" BorderThickness="0" BorderBrush="Transparent" CornerRadius="4">
                     <Controls:EditPasswordBox x:Name="pwTB" PasswordChanged="pwTB_PasswordChanged" />
                 </Border>
-                <Button x:Name="genBtn" Grid.Column="1" Margin="10,0,0,0" BorderThickness="1" Click="Button_Click">
+                <Button ToolTipService.ToolTip="Generate a Password" x:Name="genBtn" Grid.Column="1" Margin="10,0,0,0" BorderThickness="1" Click="Button_Click">
                     <FontIcon Glyph="&#xEB97;" />
                 </Button>
             </Grid>
