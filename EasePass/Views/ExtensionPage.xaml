@@ -59,7 +59,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="1" Grid.Column="0" Content="Add extension from file" Click="AddExtension_Click" Padding="15" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Button Grid.Row="1" Grid.Column="0" Content="Add plugins from file" Click="AddExtension_Click" Padding="15" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" />
         <ScrollViewer Margin="0,10,0,0" Grid.Row="2" Grid.Column="0" Padding="50,0,50,50" VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled">
             <GridView x:Name="extensionView" Margin="50" SelectionMode="None" ItemTemplate="{StaticResource ExtensionTemplate}" IsItemClickEnabled="False" />
         </ScrollViewer>
