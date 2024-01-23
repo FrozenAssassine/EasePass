@@ -32,5 +32,6 @@ Ease Pass is a simple password manager designed to streamline password managemen
 
 ## Images
 
-<img src="Images/img1.png"/>
-<img src="Images/img4.png"/>
+<img src="Images/image8.png"/>
+<img src="Images/image1.png"/>
+<img src="Images/image9.png"/>
