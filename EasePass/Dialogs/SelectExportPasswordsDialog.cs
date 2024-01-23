@@ -1,6 +1,6 @@
-﻿using EasePass.Helper;
+﻿using EasePass.Extensions;
+using EasePass.Helper;
 using EasePass.Models;
-using EasePass.Views;
 using EasePass.Views.DialogPages;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -16,9 +16,9 @@ namespace EasePass.Dialogs
             var page = new SelectExportPasswordsDialogPage(items);
             var dialog = new AutoLogoutContentDialog
             {
-                Title = "Select items to export",
-                PrimaryButtonText = "Export",
-                CloseButtonText = "Cancel",
+                Title = "Select items to export".Localized("Dialog_Export_Headline/Text"),
+                PrimaryButtonText = "Export".Localized("Dialog_Button_Export/Text"),
+                CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
                 XamlRoot = App.m_window.Content.XamlRoot,
                 Content = page
             };

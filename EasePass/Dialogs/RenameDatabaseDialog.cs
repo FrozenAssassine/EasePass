@@ -1,4 +1,5 @@
-﻿using EasePass.Helper;
+﻿using EasePass.Extensions;
+using EasePass.Helper;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
@@ -11,15 +12,15 @@ internal class RenameDatabaseDialog
     {
         TextBox dbName = new TextBox
         {
-            PlaceholderText = "Database name",
+            PlaceholderText = "Database name".Localized("Dialog_RenameDB_Name/Text"),
             Text = "", //databaseItem.Name
         };
 
         var dialog = new AutoLogoutContentDialog
         {
-            Title = "Rename Database",
-            PrimaryButtonText = "Rename",
-            CloseButtonText = "Cancel",
+            Title = "Rename Database".Localized("Dialog_RenameDB_Headline/Text"),
+            PrimaryButtonText = "Rename".Localized("Dialog_Button_Rename/Text"),
+            CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
             XamlRoot = App.m_window.Content.XamlRoot,
             Content = dbName
         };

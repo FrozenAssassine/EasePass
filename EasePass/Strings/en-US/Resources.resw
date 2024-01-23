@@ -129,6 +129,9 @@
   <data name="Dialog_Add2FA_Digits.Text" xml:space="preserve">
     <value>Digits</value>
   </data>
+  <data name="Dialog_Add2FA_Headline.Text" xml:space="preserve">
+    <value>Add 2FA to</value>
+  </data>
   <data name="Dialog_Add2FA_Interval.Text" xml:space="preserve">
     <value>Interval (sec)</value>
   </data>
@@ -165,6 +168,9 @@
   <data name="Dialog_AddItem_Export2FA.Content" xml:space="preserve">
     <value>Export 2FA</value>
   </data>
+  <data name="Dialog_AddItem_Headline.Text" xml:space="preserve">
+    <value>Add Password</value>
+  </data>
   <data name="Dialog_AddItem_Interval.Text" xml:space="preserve">
     <value>Interval</value>
   </data>
@@ -185,6 +191,48 @@
   </data>
   <data name="Dialog_AddItem_Website.Text" xml:space="preserve">
     <value>Website</value>
+  </data>
+  <data name="Dialog_Button_Add.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Dialog_Button_Cancel.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Dialog_Button_Close.Text" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Dialog_Button_Create.Text" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Dialog_Button_Delete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Dialog_Button_Done.Text" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="Dialog_Button_Export.Text" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Dialog_Button_New.Text" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Dialog_Button_Override.Text" xml:space="preserve">
+    <value>Override</value>
+  </data>
+  <data name="Dialog_Button_Rename.Text" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="Dialog_ConfirmDelete_Extension.Text" xml:space="preserve">
+    <value>Are you sure you want to delete the extension:</value>
+  </data>
+  <data name="Dialog_ConfirmDelete_Headline.Text" xml:space="preserve">
+    <value>Confirm Deletion</value>
+  </data>
+  <data name="Dialog_ConfirmDelete_Item.Text" xml:space="preserve">
+    <value>Are you sure you want to delete the item:</value>
+  </data>
+  <data name="Dialog_ConfirmDelete_Items.Text" xml:space="preserve">
+    <value>Are you sure you want to delete the items:</value>
   </data>
   <data name="Dialog_CreateDB_ChooseLocation.Text" xml:space="preserve">
     <value>Choose</value>
@@ -207,11 +255,23 @@
   <data name="Dialog_CreateDB_EnterPW.PlaceholderText" xml:space="preserve">
     <value>Enter Password</value>
   </data>
+  <data name="Dialog_CreateDB_Headline.Text" xml:space="preserve">
+    <value>Create Database</value>
+  </data>
   <data name="Dialog_CreateDB_RepeatPW.Header" xml:space="preserve">
     <value>Repeat Password</value>
   </data>
   <data name="Dialog_CreateDB_RepeatPW.PlaceholderText" xml:space="preserve">
     <value>Repeat Password</value>
+  </data>
+  <data name="Dialog_EditItem_Headline.Text" xml:space="preserve">
+    <value>Edit item</value>
+  </data>
+  <data name="Dialog_Export2FA_Headline.Text" xml:space="preserve">
+    <value>Export 2FA</value>
+  </data>
+  <data name="Dialog_Export_Headline.Text" xml:space="preserve">
+    <value>Select items to export</value>
   </data>
   <data name="Dialog_ImportPW_ConfirmOverride1.Text" xml:space="preserve">
     <value>All passwords with the same display name will be overwritten!</value>
@@ -222,8 +282,23 @@
   <data name="Dialog_ImportPW_ErrorMessage.Text" xml:space="preserve">
     <value>An error has occured!</value>
   </data>
+  <data name="Dialog_ImportPW_Headline.Text" xml:space="preserve">
+    <value>Import passwords</value>
+  </data>
   <data name="Dialog_ImportPW_SelectAll.Content" xml:space="preserve">
     <value>Select All</value>
+  </data>
+  <data name="Dialog_Info_Headline.Text" xml:space="preserve">
+    <value>info</value>
+  </data>
+  <data name="Dialog_PWGenerator_New.Text" xml:space="preserve">
+    <value>Password generator</value>
+  </data>
+  <data name="Dialog_RenameDB_Headline.Text" xml:space="preserve">
+    <value>Rename Database</value>
+  </data>
+  <data name="Dialog_RenameDB_Name.Text" xml:space="preserve">
+    <value>Database name</value>
   </data>
   <data name="Dialog_SelectExport_SelectAll.Content" xml:space="preserve">
     <value>SelectAll</value>
@@ -486,7 +561,7 @@
   <data name="View_SettingsPage_PossiblePWCharacters.PlaceholderText" xml:space="preserve">
     <value>Some letters, digits and punctation...</value>
   </data>
-  <data name="View_SettingsPage_PWPopularityCounter" xml:space="preserve">
+  <data name="View_SettingsPage_PWPopularityCounter.Content" xml:space="preserve">
     <value>Password popularity counter</value>
   </data>
   <data name="View_SettingsPage_QuickCopy.Header" xml:space="preserve">
