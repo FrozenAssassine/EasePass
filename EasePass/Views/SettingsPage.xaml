@@ -9,19 +9,19 @@
 
     <ScrollViewer Margin="0,50,0,0" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">
         <StackPanel Margin="20">
-            <TextBlock TextAlignment="Center" FontSize="36" Text="Settings"/>
+            <TextBlock TextAlignment="Center" FontSize="36" x:Uid="View_SettingsPage_Headline" Text="Settings"/>
 
-            <controls:SettingsControl Header="Database">
-                <Button Style="{ThemeResource AccentButtonStyle}" Content="Manage" Width="100" Click="ManageDatabases_Click" />
+            <controls:SettingsControl Header="Database" x:Uid="View_SettingsPage_HeadlineDatabase">
+                <Button Style="{ThemeResource AccentButtonStyle}" x:Uid="View_SettingsPage_Manage" Content="Manage" Width="100" Click="ManageDatabases_Click" />
             </controls:SettingsControl>
-            <controls:SettingsItemSeparator Header="Plugins"/>
-            <controls:SettingsControl Header="Plugins">
-                <Button Style="{ThemeResource AccentButtonStyle}" Content="Manage" Width="100" Click="ExtensionManage_Click" />
+            <controls:SettingsItemSeparator Header="Plugins" x:Uid="View_SettingsPage_HeadlinePlugins"/>
+            <controls:SettingsControl Header="Plugins" x:Uid="View_SettingsPage_HeadlinePlugins">
+                <Button Style="{ThemeResource AccentButtonStyle}" x:Uid="View_SettingsPage_Manage" Content="Manage" Width="100" Click="ExtensionManage_Click" />
             </controls:SettingsControl>
             <Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">
-                        <TextBlock FontSize="20" Margin="10" VerticalAlignment="Center" Text="Import passwords" />
+                        <TextBlock x:Uid="View_SettingsPage_ImportPasswords" FontSize="20" Margin="10" VerticalAlignment="Center" Text="Import passwords" />
                     </StackPanel>
                 </Expander.Header>
                 <Expander.Content>
@@ -38,33 +38,33 @@
                                             <Image Margin="20" Width="40" Height="40" Stretch="UniformToFill" Source="{x:Bind IconSource}" VerticalAlignment="Center" HorizontalAlignment="Left" />
                                             <TextBlock FontSize="20" Text="{x:Bind SourceName}" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" />
                                         </StackPanel>
-                                        <Button Grid.Column="1" Content="Import" Margin="100,0,20,0" Tag="{x:Bind}" IsEnabled="{x:Bind PasswordsAvailable()}" Click="ImportPassword_Click" Width="100" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                                        <Button x:Uid="View_SettingsPage_Import" Grid.Column="1" Content="Import" Margin="100,0,20,0" Tag="{x:Bind}" IsEnabled="{x:Bind PasswordsAvailable()}" Click="ImportPassword_Click" Width="100" VerticalAlignment="Center" HorizontalAlignment="Right" />
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
                         <StackPanel Visibility="Collapsed" x:Name="noPluginsInfo" Orientation="Vertical">
-                            <TextBlock Margin="5" Text="No plugins installed click below to download"/>
-                            <Button Click="ExtensionManage_Click" Content="Download Plugins" Margin="5"/>
+                            <TextBlock x:Uid="View_SettingsPage_NoPluginsInfo" Margin="5" Text="No plugins installed click below to download"/>
+                            <Button x:Uid="View_SettingsPage_DownloadPlugins" Click="ExtensionManage_Click" Content="Download Plugins" Margin="5"/>
                         </StackPanel>
                     </Grid>
                 </Expander.Content>
             </Expander>
 
-            <controls:SettingsItemSeparator Header="Security"/>
-            <controls:SettingsControl Header="Inactivity Logout">
-                <NumberBox SpinButtonPlacementMode="Inline" ValueChanged="InactivityLogoutTime_ValueChanged" Maximum="1000" Minimum="1" MinWidth="150" Margin="5" x:Name="inactivityLogoutTime" PlaceholderText="Logout time" Header="Minutes"/>
+            <controls:SettingsItemSeparator Header="Security" x:Uid="View_SettingsPage_HeadlineSecurity"/>
+            <controls:SettingsControl Header="Inactivity Logout" x:Uid="View_SettingsPage_InactivityLogout">
+                <NumberBox x:Uid="View_SettingsPage_InactivityLogoutTime" SpinButtonPlacementMode="Inline" ValueChanged="InactivityLogoutTime_ValueChanged" Maximum="1000" Minimum="1" MinWidth="150" Margin="5" x:Name="inactivityLogoutTime" PlaceholderText="Logout time" Header="Minutes"/>
             </controls:SettingsControl>
             <Expander Margin="0,5,0,5" HorizontalAlignment="Stretch">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">
                         <TextBlock Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xE785;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
-                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Change Password"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Change Password" x:Uid="View_SettingsPage_ChangePassword"/>
                     </StackPanel>
                 </Expander.Header>
                 <Expander.Content>
                     <StackPanel MaxWidth="600">
-                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="Be sure to select a password that you'll always remember. If the password is lost, so are all your stored credentials, with no means of recovery. Additionally, ensure you back up your passwords either to an external offline drive or the cloud."/>
+                        <TextBlock x:Uid="View_SettingsPage_ChangePassword_Warning" Grid.Column="1" TextWrapping="Wrap" Text="Be sure to select a password that you'll always remember. If the password is lost, so are all your stored credentials, with no means of recovery. Additionally, ensure you back up your passwords either to an external offline drive or the cloud."/>
                         <Grid Margin="0,20,0,0" Grid.Column="1" Grid.Row="0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -76,11 +76,11 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <PasswordBox Margin="5" Grid.Row="0" Grid.Column="0" Header="Current Password" x:Name="changePW_currentPw" PlaceholderText="Current Password"/>
-                            <PasswordBox Margin="5" Grid.Row="0" Grid.Column="2" Header="New Password" x:Name="changePW_newPw" PlaceholderText="New Password"/>
-                            <PasswordBox Margin="5" Grid.Row="1" Grid.Column="2" Header="Repeat Password" x:Name="changePW_repeatPw" PlaceholderText="Repeat new Password"/>
+                            <PasswordBox x:Uid="View_SettingsPage_CurrentPassword" Margin="5" Grid.Row="0" Grid.Column="0" Header="Current Password" x:Name="changePW_currentPw" PlaceholderText="Current Password"/>
+                            <PasswordBox x:Uid="View_SettingsPage_NewPassword" Margin="5" Grid.Row="0" Grid.Column="2" Header="New Password" x:Name="changePW_newPw" PlaceholderText="New Password"/>
+                            <PasswordBox x:Uid="View_SettingsPage_RepeatPassword" Margin="5" Grid.Row="1" Grid.Column="2" Header="Repeat Password" x:Name="changePW_repeatPw" PlaceholderText="Repeat new Password"/>
                         </Grid>
-                        <Button Grid.Row="2" Margin="0,20,0,0" Style="{ThemeResource AccentButtonStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Content="Change Password" Click="ChangePassword_Click"/>
+                        <Button x:Uid="View_SettingsPage_ChangePasswordButton" Grid.Row="2" Margin="0,20,0,0" Style="{ThemeResource AccentButtonStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Content="Change Password" Click="ChangePassword_Click"/>
                     </StackPanel>
                 </Expander.Content>
             </Expander>
@@ -88,7 +88,7 @@
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">
                         <TextBlock Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xE7B3;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
-                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Password Generator"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Password Generator" x:Uid="View_SettingsPage_PasswordGenerator"/>
                     </StackPanel>
                 </Expander.Header>
                 <Expander.Content>
@@ -99,22 +99,22 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <TextBox Margin="5" Grid.Row="0" Header="Possible characters in password" x:Name="pswd_chars" PlaceholderText="Some letters, digits and punctuation..." TextChanged="pswd_chars_TextChanged"/>
-                        <TextBox Margin="5" Grid.Row="1" Header="Password length (min: 8)" x:Name="pswd_length" PlaceholderText="Length of the password..." TextChanging="pswd_length_TextChanging" TextChanged="pswd_length_TextChanged"/>
-                        <ToggleSwitch Margin="5" Grid.Row="2" Header="Verify that the password was not leaked" x:Name="disableLeakedPasswords" Toggled="disableLeakedPasswords_Toggled"/>
+                        <TextBox x:Uid="View_SettingsPage_PossiblePWCharacters" Margin="5" Grid.Row="0" Header="Possible characters in password" x:Name="pswd_chars" PlaceholderText="Some letters, digits and punctuation..." TextChanged="pswd_chars_TextChanged"/>
+                        <TextBox x:Uid="View_SettingsPage_PasswordLength" Margin="5" Grid.Row="1" Header="Password length (min: 8)" x:Name="pswd_length" PlaceholderText="Length of the password..." TextChanging="pswd_length_TextChanging" TextChanged="pswd_length_TextChanged"/>
+                        <ToggleSwitch x:Uid="View_SettingsPage_VerifyPWLeaked" Margin="5" Grid.Row="2" Header="Verify that the password was not leaked" x:Name="disableLeakedPasswords" Toggled="disableLeakedPasswords_Toggled"/>
                     </Grid>
                 </Expander.Content>
             </Expander>
 
-            <controls:SettingsItemSeparator Header="Miscellaneous"/>
-            <controls:SettingsControl Header="Quick Copy on Double Click" ToolTipService.ToolTip="Enable quick copy to copy text by double clicking on the textbox">
+            <controls:SettingsItemSeparator Header="Miscellaneous" x:Uid="View_SettingsPage_HeadlineMiscellaneous"/>
+            <controls:SettingsControl x:Uid="View_SettingsPage_QuickCopy" Header="Quick Copy on Double Click" ToolTipService.ToolTip="Enable quick copy to copy text by double clicking on the textbox">
                 <ToggleSwitch x:Name="doubleTapToCopySW" Toggled="DoubleTapToCopySW_Toggled"/>
             </controls:SettingsControl>
-            <controls:SettingsControl Header="Show icons" ToolTipService.ToolTip="Show or hide the icons in the password list">
+            <controls:SettingsControl x:Uid="View_SettingsPage_ShowIcons" Header="Show icons" ToolTipService.ToolTip="Show or hide the icons in the password list">
                 <ToggleSwitch x:Name="showIcons" Toggled="showIcons_Toggled"/>
             </controls:SettingsControl>
-            <controls:SettingsControl Header="Password popularity counter">
-                <Button Style="{ThemeResource AccentButtonStyle}" Content="Reset" Width="100" Click="ResetPopularity_Click" />
+            <controls:SettingsControl Header="Password popularity counter" x:Uid="View_SettingsPage_PWPopularityCounter">
+                <Button x:Uid="View_SettingsPage_ResetPopularityCounter" Style="{ThemeResource AccentButtonStyle}" Content="Reset" Width="100" Click="ResetPopularity_Click" />
             </controls:SettingsControl>
         </StackPanel>
     </ScrollViewer>
