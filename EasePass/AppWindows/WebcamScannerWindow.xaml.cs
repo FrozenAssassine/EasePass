@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.Media.MediaProperties;
 using EasePass.Helper;
 using Microsoft.UI.Windowing;
+using System.Diagnostics;
 
 namespace EasePass.AppWindows
 {
@@ -17,7 +18,6 @@ namespace EasePass.AppWindows
         private MediaCapture _capture;
         private MediaFrameReader _frameReader;
         private MediaSource _mediaSource;
-        private bool closing = false;
         public string Result { get; set; } = "";
 
         public WebcamScannerWindow()
@@ -51,9 +51,6 @@ namespace EasePass.AppWindows
 
         private async Task InitializeCaptureAsync()
         {
-            if (closing)
-                return;
-
             try
             {
                 if (_capture != null) await TerminateCaptureAsync();
@@ -90,11 +87,9 @@ namespace EasePass.AppWindows
             catch { }
         }
 
-        private void OnFrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
+        private async void OnFrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
         {
-            if (closing)
-                return;
-
+            Debug.WriteLine("Got Frame");
             try
             {
                 var bmp = sender.TryAcquireLatestFrame()?.VideoMediaFrame?.SoftwareBitmap;
@@ -104,13 +99,9 @@ namespace EasePass.AppWindows
                 string result = scanner.Scan(bmp);
                 if (result != "")
                 {
-                    DispatcherQueue.TryEnqueue(async () =>
-                    {
-                        this.Result = result;
-                        closing = true;
-                        await TerminateCaptureAsync();
-                        this.Close();
-                    });
+                    this.Result = result;
+                    await TerminateCaptureAsync();
+                    this.Close();
                 }
             }
             catch { }
@@ -123,27 +114,28 @@ namespace EasePass.AppWindows
             _mediaSource?.Dispose();
             _mediaSource = null;
 
-            if (_frameReader != null)
-            {
-                _frameReader.FrameArrived -= OnFrameArrived;
-                await _frameReader.StopAsync();
-                _frameReader?.Dispose();
-                _frameReader = null;
-            }
+            _frameReader.FrameArrived -= OnFrameArrived;
+            await _frameReader.StopAsync();
+            _frameReader.Dispose();
 
             _capture?.Dispose();
             _capture = null;
         }
 
-        private async void Window_Activated(object sender, WindowActivatedEventArgs args)
+        private async void cameras_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            await LoadCameras();
+            if (cameras.SelectedIndex == -1)
+                return;
+            if(_capture != null)
+                await TerminateCaptureAsync();
+            
             await InitializeCaptureAsync();
         }
 
-        private async void cameras_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void StackPanel_Loaded(object sender, RoutedEventArgs e)
         {
-            await InitializeCaptureAsync();
+            await LoadCameras();
+            //await InitializeCaptureAsync();
         }
     }
 }
