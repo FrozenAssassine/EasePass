@@ -9,7 +9,20 @@
 
     <ScrollViewer Margin="0,50,0,0" VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">
         <StackPanel Margin="20">
-            <TextBlock TextAlignment="Center" FontSize="36" x:Uid="View_SettingsPage_Headline" Text="Settings"/>
+            <TextBlock TextAlignment="Center" Margin="0,0,0,50" FontSize="36" x:Uid="View_SettingsPage_Headline" Text="Settings"/>
+
+            <controls:SettingsControl Header="Language" x:Uid="View_SettingsPage_Language">
+                <StackPanel Orientation="Vertical">
+                    <ComboBox Width="200" x:Name="selectLanguageBox" SelectionChanged="selectLanguageBox_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:LanguageItem">
+                                <TextBlock Text="{x:Bind DisplayName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock Text="To apply please restart the app" TextWrapping="Wrap"/>
+                </StackPanel>
+            </controls:SettingsControl>
 
             <controls:SettingsControl Header="Database" x:Uid="View_SettingsPage_HeadlineDatabase">
                 <Button Style="{ThemeResource AccentButtonStyle}" x:Uid="View_SettingsPage_Manage" Content="Manage" Width="100" Click="ManageDatabases_Click" />

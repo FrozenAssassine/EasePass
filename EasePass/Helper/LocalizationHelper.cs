@@ -13,7 +13,7 @@ public class LocalizationHelper
     private LanguageItem currentLanguageItem = null;
     public ResourceMap resourceMap = null;
 
-    private List<LanguageItem> languages = new();
+    public List<LanguageItem> languages = new();
 
     public LocalizationHelper()
     {
