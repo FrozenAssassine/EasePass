@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml;
 using System;
 using Microsoft.UI.Xaml.Media;
 using EasePass.Helper;
+using CommunityToolkit.WinUI;
 
 namespace EasePass.Extensions
 {
@@ -16,9 +17,17 @@ namespace EasePass.Extensions
 
     internal static class InfobarExtension
     {
+        public static void ShowUntilLogin(this InfoBar infobar, string localizationKey, InfoBarSeverity severity)
+        {
+            ShowInfobar(infobar, "".GetLocalized(localizationKey + "/Headline"), "".GetLocalized(localizationKey + "/Text"), null, severity, InfobarClearCondition.Login);
+        }
         public static void ShowUntilLogin(this InfoBar infobar, string title, string message, InfoBarSeverity severity)
         {
             ShowInfobar(infobar, title, message, null, severity, InfobarClearCondition.Login);
+        }
+        public static void Show(this InfoBar infobar, string localizationKey, InfoBarSeverity severity, int showSeconds = 8)
+        {
+            Show(infobar, "".GetLocalized(localizationKey + "/Headline"), "".GetLocalized(localizationKey + "/Text"), null, severity, InfobarClearCondition.Timer, showSeconds);
         }
         public static void Show(this InfoBar infobar, string title, string message, InfoBarSeverity severity, int showSeconds = 8)
         {

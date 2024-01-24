@@ -8,15 +8,15 @@
     mc:Ignorable="d">
 
     <StackPanel>
-        <TextBox Margin="0,10,0,0" x:Name="databaseName" Header="Database Name" PlaceholderText="Database Name"/>
-        <PasswordBox Header="Enter Password" PlaceholderText="Enter Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBox"/>
-        <PasswordBox Header="Repeat Password" PlaceholderText="Repeat Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBoxRepeat"/>
+        <TextBox x:Uid="Dialog_CreateDB_DBName" Margin="0,10,0,0" x:Name="databaseName" Header="Database Name" PlaceholderText="Database Name"/>
+        <PasswordBox x:Uid="Dialog_CreateDB_EnterPW" Header="Enter Password" PlaceholderText="Enter Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBox"/>
+        <PasswordBox x:Uid="Dialog_CreateDB_RepeatPW" Header="Repeat Password" PlaceholderText="Repeat Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBoxRepeat"/>
 
-        <DropDownButton Margin="0,10,0,0" Content="Database Location">
+        <DropDownButton Margin="0,10,0,0" Content="Database Location" x:Uid="Dialog_CreateDB_DBLocation">
             <DropDownButton.Flyout>
                 <MenuFlyout Placement="Bottom">
-                    <MenuFlyoutItem Text="Default" Click="Default_DatabaseLocation_Click"/>
-                    <MenuFlyoutItem Text="Choose" Click="Choose_DatabaseLocation_Click"/>
+                    <MenuFlyoutItem x:Uid="Dialog_CreateDB_DefaultLocation" Text="Default" Click="Default_DatabaseLocation_Click"/>
+                    <MenuFlyoutItem x:Uid="Dialog_CreateDB_ChooseLocation" Text="Choose" Click="Choose_DatabaseLocation_Click"/>
                 </MenuFlyout>
             </DropDownButton.Flyout>
         </DropDownButton>

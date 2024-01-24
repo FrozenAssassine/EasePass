@@ -8,15 +8,15 @@
     mc:Ignorable="d">
 
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock TextAlignment="Center" FontSize="36" Text="Login"/>
+        <TextBlock x:Uid="View_LoginPage_Login" TextAlignment="Center" FontSize="36" Text="Login"/>
         <StackPanel Margin="0,70,0,0" Background="{ThemeResource CardBackgroundFillColorDefault}" CornerRadius="10" Padding="30" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Margin="10,0,0,0" Text="Enter your Password"/>
+            <TextBlock x:Uid="View_LoginPage_EnterPW" Margin="10,0,0,0" Text="Enter your Password"/>
             <PasswordBox Margin="10" x:Name="passwordBox" MinWidth="150">
                 <PasswordBox.KeyboardAccelerators>
                     <KeyboardAccelerator Key="Enter" Invoked="Enter_Invoked"/>
                 </PasswordBox.KeyboardAccelerators>
             </PasswordBox>
-            <Button Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Center" Padding="20,5" Margin="10" Click="PWLogin_Click" Content="Login"/>
+            <Button x:Uid="View_LoginPage_LoginButton" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Center" Padding="20,5" Margin="10" Click="PWLogin_Click" Content="Login"/>
         </StackPanel>
         <Grid x:Name="dailyTipGrid" Background="{ThemeResource CardBackgroundFillColorDefault}" Width="600" Height="100" CornerRadius="20" Margin="0,100,0,0">
             <TextBlock x:Name="dailyTipTextBlock" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWholeWords" Width="500" />

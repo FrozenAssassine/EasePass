@@ -8,7 +8,7 @@
     mc:Ignorable="d">
     <ScrollViewer Margin="0,30,0,0" HorizontalScrollMode="Enabled" VerticalScrollMode="Enabled">
         <StackPanel Margin="20">
-            <TextBlock TextAlignment="Center" FontSize="36" Text="About"/>
+            <TextBlock TextAlignment="Center" FontSize="36" Text="About" x:Uid="View_About_Headline"/>
             <controls:SettingsItemSeparator/>
             <Grid VerticalAlignment="Stretch" MinWidth="{ThemeResource FlyoutThemeMinWidth}" Margin="0,5,0,0" CornerRadius="5" Padding="{StaticResource ExpanderHeaderPadding}" HorizontalAlignment="Stretch" Background="{ThemeResource ExpanderHeaderBackground}" BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}" BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}">
                 <StackPanel Height="70" Padding="0" Orientation="Horizontal">
@@ -25,20 +25,20 @@
                     </Grid.ColumnDefinitions>
                     <FontIcon Margin="0,0,5,0" Grid.Column="0" Glyph="&#xE946;" VerticalAlignment="Center" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
                     <StackPanel Grid.Column="1">
-                        <TextBlock FontSize="16" TextAlignment="Center" Text="Version"/>
+                        <TextBlock FontSize="16" TextAlignment="Center" Text="Version" x:Uid="View_About_Version"/>
                         <TextBlock TextAlignment="Center" Text="{x:Bind AppVersion}"/>
                     </StackPanel>
 
                     <FontIcon Margin="0,0,5,0" Grid.Column="3" Glyph="&#xE77B;" VerticalAlignment="Center" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
                     <StackPanel Grid.Column="4">
-                        <TextBlock TextAlignment="Left" FontSize="16" Text="Developers"/>
+                        <TextBlock TextAlignment="Left" FontSize="16" Text="Developers"  x:Uid="View_About_Developer"/>
                         <TextBlock TextAlignment="Left" Text="{x:Bind DeveloperName}"/>
                     </StackPanel>
                 </Grid>
             </Grid>
 
-            <controls:SettingsItemSeparator Header="More"/>
-            <controls:SettingsControl Tag="http://easepass.frozenassassine.de" Clickable="True" Clicked="NavigateToLink_Click" Glyph="&#xEA8A;" Header="Website" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <controls:SettingsItemSeparator Header="More" x:Uid="View_About_HeadlineMore"/>
+            <controls:SettingsControl  x:Uid="View_About_Website" Tag="http://easepass.frozenassassine.de" Clickable="True" Clicked="NavigateToLink_Click" Glyph="&#xEA8A;" Header="Website" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <controls:SettingsControl.Content>
                     <TextBlock Text="&#xe8a7;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
                 </controls:SettingsControl.Content>
@@ -53,7 +53,7 @@
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">
                         <TextBlock Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xE9D5;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
-                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Changelog"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Changelog" x:Uid="View_About_Changelog"/>
                     </StackPanel>
                 </Expander.Header>
                 <Expander.Content>
@@ -66,12 +66,12 @@
             <Grid VerticalAlignment="Stretch" MinWidth="{ThemeResource FlyoutThemeMinWidth}" Margin="0,5,0,0" CornerRadius="5" Padding="{StaticResource ExpanderHeaderPadding}" HorizontalAlignment="Stretch" Background="{ThemeResource ExpanderHeaderBackground}" BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}" BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}">
                 <StackPanel Height="70" Padding="0" Orientation="Horizontal">
                     <SymbolIcon Margin="0,4,10,0" Symbol="People"/>
-                    <TextBlock Text="Contribute" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Contribute" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" x:Uid="View_About_Contribute"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <HyperlinkButton NavigateUri="https://github.com/FrozenAssassine/EasePass/issues/new" Margin="5" Content="Report Bug"></HyperlinkButton>
-                    <HyperlinkButton NavigateUri="https://github.com/FrozenAssassine/EasePass/issues/new" Margin="5" Content="Request Feature"></HyperlinkButton>
+                    <HyperlinkButton NavigateUri="https://github.com/FrozenAssassine/EasePass/issues/new" Margin="5" Content="Report Bug" x:Uid="View_About_ReportBug"></HyperlinkButton>
+                    <HyperlinkButton NavigateUri="https://github.com/FrozenAssassine/EasePass/issues/new" Margin="5" Content="Request Feature"  x:Uid="View_About_RequestFeature"></HyperlinkButton>
                 </StackPanel>
             </Grid>
 
@@ -79,7 +79,7 @@
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">
                         <TextBlock Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xf6fa;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
-                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Additional dependencies used"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Additional dependencies used" x:Uid="View_About_DependenciesUsed"/>
                     </StackPanel>
                 </Expander.Header>
                 <Expander.Content>
@@ -93,7 +93,7 @@
                     </StackPanel>
                 </Expander.Content>
             </Expander>
-            <controls:SettingsItemSeparator Header="Legal"/>
+            <controls:SettingsItemSeparator Header="Legal"  x:Uid="View_About_HeadlineLegal"/>
 
             <Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
                 <Expander.Header>

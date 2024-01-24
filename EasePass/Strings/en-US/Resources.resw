@@ -1,0 +1,837 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CopyPasswordBox_Copy.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="CopyTextbox_Copy.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Dialog_Add2FA_Algorithm.Text" xml:space="preserve">
+    <value>Algorithm</value>
+  </data>
+  <data name="Dialog_Add2FA_Digits.Text" xml:space="preserve">
+    <value>Digits</value>
+  </data>
+  <data name="Dialog_Add2FA_Headline.Text" xml:space="preserve">
+    <value>Add 2FA to</value>
+  </data>
+  <data name="Dialog_Add2FA_Interval.Text" xml:space="preserve">
+    <value>Interval (sec)</value>
+  </data>
+  <data name="Dialog_Add2FA_ScreenButton.Content" xml:space="preserve">
+    <value>QR Code from screen</value>
+  </data>
+  <data name="Dialog_Add2FA_ScreenButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Scan a QR code on the screen</value>
+  </data>
+  <data name="Dialog_Add2FA_Secret.Text" xml:space="preserve">
+    <value>Secret</value>
+  </data>
+  <data name="Dialog_Add2FA_WebcamButton.Content" xml:space="preserve">
+    <value>QR Code from webcam</value>
+  </data>
+  <data name="Dialog_Add2FA_WebcamButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Use your webcam to scan the QR code</value>
+  </data>
+  <data name="Dialog_AddItem_2FATitle.Text" xml:space="preserve">
+    <value>Two Factor Authentification</value>
+  </data>
+  <data name="Dialog_AddItem_Algorithm.Text" xml:space="preserve">
+    <value>Algorithm</value>
+  </data>
+  <data name="Dialog_AddItem_Digits.Text" xml:space="preserve">
+    <value>Digits</value>
+  </data>
+  <data name="Dialog_AddItem_DisplayName.Text" xml:space="preserve">
+    <value>Display Name</value>
+  </data>
+  <data name="Dialog_AddItem_Email.Text" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Dialog_AddItem_Export2FA.Content" xml:space="preserve">
+    <value>Export 2FA</value>
+  </data>
+  <data name="Dialog_AddItem_Headline.Text" xml:space="preserve">
+    <value>Add Password</value>
+  </data>
+  <data name="Dialog_AddItem_Interval.Text" xml:space="preserve">
+    <value>Interval</value>
+  </data>
+  <data name="Dialog_AddItem_Notes.Text" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Dialog_AddItem_Password.Text" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Dialog_AddItem_Remove2FA.Content" xml:space="preserve">
+    <value>Remove 2FA</value>
+  </data>
+  <data name="Dialog_AddItem_Secret.Text" xml:space="preserve">
+    <value>Secret</value>
+  </data>
+  <data name="Dialog_AddItem_Username.Text" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="Dialog_AddItem_Website.Text" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="Dialog_Button_Add.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Dialog_Button_Cancel.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Dialog_Button_Close.Text" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Dialog_Button_Create.Text" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Dialog_Button_Delete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Dialog_Button_Done.Text" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="Dialog_Button_Export.Text" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Dialog_Button_New.Text" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Dialog_Button_Override.Text" xml:space="preserve">
+    <value>Override</value>
+  </data>
+  <data name="Dialog_Button_Rename.Text" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="Dialog_ConfirmDelete_Extension.Text" xml:space="preserve">
+    <value>Are you sure you want to delete the extension:</value>
+  </data>
+  <data name="Dialog_ConfirmDelete_Headline.Text" xml:space="preserve">
+    <value>Confirm Deletion</value>
+  </data>
+  <data name="Dialog_ConfirmDelete_Item.Text" xml:space="preserve">
+    <value>Are you sure you want to delete the item:</value>
+  </data>
+  <data name="Dialog_ConfirmDelete_Items.Text" xml:space="preserve">
+    <value>Are you sure you want to delete the items:</value>
+  </data>
+  <data name="Dialog_CreateDB_ChooseLocation.Text" xml:space="preserve">
+    <value>Choose</value>
+  </data>
+  <data name="Dialog_CreateDB_DBLocation.Content" xml:space="preserve">
+    <value>Database Location</value>
+  </data>
+  <data name="Dialog_CreateDB_DBName.Header" xml:space="preserve">
+    <value>Database Name</value>
+  </data>
+  <data name="Dialog_CreateDB_DBName.PlaceholderText" xml:space="preserve">
+    <value>Database Name</value>
+  </data>
+  <data name="Dialog_CreateDB_DefaultLocation.Text" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="Dialog_CreateDB_EnterPW.Header" xml:space="preserve">
+    <value>Enter Password</value>
+  </data>
+  <data name="Dialog_CreateDB_EnterPW.PlaceholderText" xml:space="preserve">
+    <value>Enter Password</value>
+  </data>
+  <data name="Dialog_CreateDB_Headline.Text" xml:space="preserve">
+    <value>Create Database</value>
+  </data>
+  <data name="Dialog_CreateDB_RepeatPW.Header" xml:space="preserve">
+    <value>Repeat Password</value>
+  </data>
+  <data name="Dialog_CreateDB_RepeatPW.PlaceholderText" xml:space="preserve">
+    <value>Repeat Password</value>
+  </data>
+  <data name="Dialog_EditItem_Headline.Text" xml:space="preserve">
+    <value>Edit item</value>
+  </data>
+  <data name="Dialog_Export2FA_Headline.Text" xml:space="preserve">
+    <value>Export 2FA</value>
+  </data>
+  <data name="Dialog_Export_Headline.Text" xml:space="preserve">
+    <value>Select items to export</value>
+  </data>
+  <data name="Dialog_ImportPW_ConfirmOverride1.Text" xml:space="preserve">
+    <value>All passwords with the same display name will be overwritten!</value>
+  </data>
+  <data name="Dialog_ImportPW_ConfirmOverride2.Text" xml:space="preserve">
+    <value>Confirm override?</value>
+  </data>
+  <data name="Dialog_ImportPW_ErrorMessage.Text" xml:space="preserve">
+    <value>An error has occured!</value>
+  </data>
+  <data name="Dialog_ImportPW_Headline.Text" xml:space="preserve">
+    <value>Import passwords</value>
+  </data>
+  <data name="Dialog_ImportPW_SelectAll.Content" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="Dialog_Info_Headline.Text" xml:space="preserve">
+    <value>info</value>
+  </data>
+  <data name="Dialog_PWGenerator_New.Text" xml:space="preserve">
+    <value>Password generator</value>
+  </data>
+  <data name="Dialog_RenameDB_Headline.Text" xml:space="preserve">
+    <value>Rename Database</value>
+  </data>
+  <data name="Dialog_RenameDB_Name.Text" xml:space="preserve">
+    <value>Database name</value>
+  </data>
+  <data name="Dialog_SelectExport_SelectAll.Content" xml:space="preserve">
+    <value>SelectAll</value>
+  </data>
+  <data name="InfoMessages_AutomaticallyLoggedOut.Headline" xml:space="preserve">
+    <value>We automatically logged you out due to inactivity</value>
+  </data>
+  <data name="InfoMessages_ChangePasswordWrong.Headline" xml:space="preserve">
+    <value>Wrong password</value>
+  </data>
+  <data name="InfoMessages_ChangePasswordWrong.Text" xml:space="preserve">
+    <value>The current password is incorrect</value>
+  </data>
+  <data name="InfoMessages_CouldNotCreateDBBackupFolder.Headline" xml:space="preserve">
+    <value>Could not create database backup folder</value>
+  </data>
+  <data name="InfoMessages_CouldNotGetExtensions.Headline" xml:space="preserve">
+    <value>Could not get Plugins</value>
+  </data>
+  <data name="InfoMessages_CouldNotGetExtensions.Text" xml:space="preserve">
+    <value>Could not get the plugins from the Server:\n</value>
+  </data>
+  <data name="InfoMessages_DatabaseFileNotFoundAt.Headline" xml:space="preserve">
+    <value>Database not found</value>
+  </data>
+  <data name="InfoMessages_DatabaseFileNotFoundAt.Text" xml:space="preserve">
+    <value>Your database with the stored passwords could not be found at path {path}</value>
+  </data>
+  <data name="InfoMessages_DatabaseInvalidData.Headline" xml:space="preserve">
+    <value>Invalid Database</value>
+  </data>
+  <data name="InfoMessages_DatabaseInvalidData.Text" xml:space="preserve">
+    <value>Database could not be loaded. It may be corrupted or invalid.</value>
+  </data>
+  <data name="InfoMessages_DatabaseSaveToFileError.Headline" xml:space="preserve">
+    <value>Error while saving database</value>
+  </data>
+  <data name="InfoMessages_DatabaseSaveToFileError.Text" xml:space="preserve">
+    <value>Data save error at {path}. Verify connection or device storage, then retry.</value>
+  </data>
+  <data name="InfoMessages_DownloadPluginProgress.Headline" xml:space="preserve">
+    <value>Downloading plugin in progress</value>
+  </data>
+  <data name="InfoMessages_EnteredWrongPW.Headline" xml:space="preserve">
+    <value>Wrong password</value>
+  </data>
+  <data name="InfoMessages_EnteredWrongPW.Text" xml:space="preserve">
+    <value>You entered the wrong password.\nPlease try again\n({attempts}/3)</value>
+  </data>
+  <data name="InfoMessages_Error.Headline" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="InfoMessages_Error.Text" xml:space="preserve">
+    <value>An error has occurred!</value>
+  </data>
+  <data name="InfoMessages_ExportDBSuccess.Headline" xml:space="preserve">
+    <value>Exported successfully</value>
+  </data>
+  <data name="InfoMessages_ExportDBSuccess.Text" xml:space="preserve">
+    <value>Exported data successfully</value>
+  </data>
+  <data name="InfoMessages_ExtensionAlreadyInstalled.Headline" xml:space="preserve">
+    <value>Plugin already installed</value>
+  </data>
+  <data name="InfoMessages_ExtensionAlreadyInstalled.Text" xml:space="preserve">
+    <value>The plugin is already installed!</value>
+  </data>
+  <data name="InfoMessages_FileIsNotAnExtensions.Headline" xml:space="preserve">
+    <value>File is not a plugin</value>
+  </data>
+  <data name="InfoMessages_FileIsNotAnExtensions.Text" xml:space="preserve">
+    <value>The selected file is not an Ease Pass plugin!</value>
+  </data>
+  <data name="InfoMessages_ImportDBSuccess.Headline" xml:space="preserve">
+    <value>Imported successfully</value>
+  </data>
+  <data name="InfoMessages_ImportDBSuccess.Text" xml:space="preserve">
+    <value>Imported data successfully</value>
+  </data>
+  <data name="InfoMessages_ImportDBWrongPassword.Headline" xml:space="preserve">
+    <value>Wrong password</value>
+  </data>
+  <data name="InfoMessages_ImportDBWrongPassword.Text" xml:space="preserve">
+    <value>Could not import database, because you've entered the wrong password.</value>
+  </data>
+  <data name="InfoMessages_Invalid2FA.Headline" xml:space="preserve">
+    <value>Invalid 2FA secret</value>
+  </data>
+  <data name="InfoMessages_Invalid2FA.Text" xml:space="preserve">
+    <value>This 2FA secret is not valid!</value>
+  </data>
+  <data name="InfoMessages_NewVersion.Content" xml:space="preserve">
+    <value>Changelog</value>
+  </data>
+  <data name="InfoMessages_NewVersion.Headline" xml:space="preserve">
+    <value>New version</value>
+  </data>
+  <data name="InfoMessages_NewVersion.Text" xml:space="preserve">
+    <value>Welcome to Ease Pass version {version}</value>
+  </data>
+  <data name="InfoMessages_NoAccessToPathDatabaseNotLoaded.Headline" xml:space="preserve">
+    <value>Database could not be loaded</value>
+  </data>
+  <data name="InfoMessages_NoAccessToPathDatabaseNotLoaded.Text" xml:space="preserve">
+    <value>Database could not be loaded. No access to the path {path}</value>
+  </data>
+  <data name="InfoMessages_NoAccessToPathDatabaseNotSaved.Headline" xml:space="preserve">
+    <value>Database could not be saved</value>
+  </data>
+  <data name="InfoMessages_NoAccessToPathDatabaseNotSaved.Text" xml:space="preserve">
+    <value>Database could not be saved. No access to the path {path}</value>
+  </data>
+  <data name="InfoMessages_PasswordAlreadyUsed.Headline" xml:space="preserve">
+    <value>Password already used</value>
+  </data>
+  <data name="InfoMessages_PasswordAlreadyUsed.Text" xml:space="preserve">
+    <value>We highly recommend using a different password for each service!</value>
+  </data>
+  <data name="InfoMessages_PasswordsDoNotMatch.Headline" xml:space="preserve">
+    <value>Passwords do not match</value>
+  </data>
+  <data name="InfoMessages_PasswordTooShort.Headline" xml:space="preserve">
+    <value>Password too short</value>
+  </data>
+  <data name="InfoMessages_PasswordTooShort.Text" xml:space="preserve">
+    <value>The password is too short</value>
+  </data>
+  <data name="InfoMessages_PrinterItemSkipped.Headline" xml:space="preserve">
+    <value>Password skipped</value>
+  </data>
+  <data name="InfoMessages_PrinterItemSkipped.Text" xml:space="preserve">
+    <value>The service "{name}" was skipped, because it doesn't fit into the page.</value>
+  </data>
+  <data name="InfoMessages_PrinterNotSelected.Headline" xml:space="preserve">
+    <value>Printer not selected</value>
+  </data>
+  <data name="InfoMessages_PrinterNotSelected.Text" xml:space="preserve">
+    <value>Please select a printer before printing.</value>
+  </data>
+  <data name="InfoMessages_SuccessfullyChangedPassword.Headline" xml:space="preserve">
+    <value>Password successfully changed</value>
+  </data>
+  <data name="InfoMessages_SuccessfullyChangedPassword.Text" xml:space="preserve">
+    <value>Your password was successfully changed</value>
+  </data>
+  <data name="InfoMessages_TooManyPasswordAttempts.Headline" xml:space="preserve">
+    <value>Too many attempts</value>
+  </data>
+  <data name="InfoMessages_TooManyPasswordAttempts.Text" xml:space="preserve">
+    <value>You entered the password wrong three times.</value>
+  </data>
+  <data name="PrintDB_Email.Text" xml:space="preserve">
+    <value>E-Mail:</value>
+  </data>
+  <data name="PrintDB_Notes.Text" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="PrintDB_Password.Text" xml:space="preserve">
+    <value>Password:</value>
+  </data>
+  <data name="PrintDB_TOTPAlgorithm.Text" xml:space="preserve">
+    <value>TOTP-Algorithm:</value>
+  </data>
+  <data name="PrintDB_TOTPInterval.Text" xml:space="preserve">
+    <value>TOTP-Interval:</value>
+  </data>
+  <data name="PrintDB_TOTPSecret.Text" xml:space="preserve">
+    <value>TOTP-Secret:</value>
+  </data>
+  <data name="PrintDB_Username.Text" xml:space="preserve">
+    <value>Username:</value>
+  </data>
+  <data name="PrintDB_Website.Text" xml:space="preserve">
+    <value>Website:</value>
+  </data>
+  <data name="PW_SafetyChart_Already.Text" xml:space="preserve">
+    <value>Already</value>
+  </data>
+  <data name="PW_SafetyChart_Contains.Text" xml:space="preserve">
+    <value>Contains</value>
+  </data>
+  <data name="PW_SafetyChart_Digits.Text" xml:space="preserve">
+    <value>Digits</value>
+  </data>
+  <data name="PW_SafetyChart_DoesNotMeetMinimum.Text" xml:space="preserve">
+    <value>Does not meet the minimum</value>
+  </data>
+  <data name="PW_SafetyChart_High.Text" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="PW_SafetyChart_IsAlready.Text" xml:space="preserve">
+    <value>Is already</value>
+  </data>
+  <data name="PW_SafetyChart_LeakedExploited.Text" xml:space="preserve">
+    <value>Leaked or exploited</value>
+  </data>
+  <data name="PW_SafetyChart_Low.Text" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="PW_SafetyChart_LowerCaseLetters.Text" xml:space="preserve">
+    <value>Lower case letters</value>
+  </data>
+  <data name="PW_SafetyChart_MeetsMinimum.Text" xml:space="preserve">
+    <value>Meets the minimum</value>
+  </data>
+  <data name="PW_SafetyChart_Missing.Text" xml:space="preserve">
+    <value>Missing</value>
+  </data>
+  <data name="PW_SafetyChart_Not.Text" xml:space="preserve">
+    <value>Not</value>
+  </data>
+  <data name="PW_SafetyChart_NotYet.Text" xml:space="preserve">
+    <value>Not yet</value>
+  </data>
+  <data name="PW_SafetyChart_Predictability.Text" xml:space="preserve">
+    <value>Predictability</value>
+  </data>
+  <data name="PW_SafetyChart_Punctation.Text" xml:space="preserve">
+    <value>Punctuation</value>
+  </data>
+  <data name="PW_SafetyChart_PWLength.Text" xml:space="preserve">
+    <value>Password length</value>
+  </data>
+  <data name="PW_SafetyChart_Seenbefore.Text" xml:space="preserve">
+    <value>Seen before</value>
+  </data>
+  <data name="PW_SafetyChart_Short_LowerCaseLetters.Text" xml:space="preserve">
+    <value>Lower case</value>
+  </data>
+  <data name="PW_SafetyChart_Short_UpperCaseLetters.Text" xml:space="preserve">
+    <value>Upper case</value>
+  </data>
+  <data name="PW_SafetyChart_Unknown.Text" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="PW_SafetyChart_UnknownAlready.Text" xml:space="preserve">
+    <value>Unknown whether it has already been</value>
+  </data>
+  <data name="PW_SafetyChart_UnknownContains.Text" xml:space="preserve">
+    <value>Unknown whether it contains</value>
+  </data>
+  <data name="PW_SafetyChart_UnknownMeetsMinimum.Text" xml:space="preserve">
+    <value>Unknown whether it meets the minimum</value>
+  </data>
+  <data name="PW_SafetyChart_UnknownWhether.Text" xml:space="preserve">
+    <value>Unknown whether</value>
+  </data>
+  <data name="PW_SafetyChart_UpperCaseLetters.Text" xml:space="preserve">
+    <value>Upper case letters</value>
+  </data>
+  <data name="ScreenScannerWindow_InfoText.Text" xml:space="preserve">
+    <value>Show you QR-Code somewhere on you screen!</value>
+  </data>
+  <data name="View_About_Changelog.Text" xml:space="preserve">
+    <value>Changelog</value>
+  </data>
+  <data name="View_About_Contribute.Text" xml:space="preserve">
+    <value>Contribute</value>
+  </data>
+  <data name="View_About_DependenciesUsed.Text" xml:space="preserve">
+    <value>Additional dependencies used</value>
+  </data>
+  <data name="View_About_Developer.Text" xml:space="preserve">
+    <value>Developers</value>
+  </data>
+  <data name="View_About_Headline.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="View_About_HeadlineLegal.Header" xml:space="preserve">
+    <value>Legal</value>
+  </data>
+  <data name="View_About_HeadlineMore.Header" xml:space="preserve">
+    <value>More</value>
+  </data>
+  <data name="View_About_ReportBug.Content" xml:space="preserve">
+    <value>Report Bug</value>
+  </data>
+  <data name="View_About_RequestFeature.Content" xml:space="preserve">
+    <value>Request Feature</value>
+  </data>
+  <data name="View_About_Version.Text" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="View_About_Website.Header" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="View_ExtensionPage_AddPluginFromFile.Content" xml:space="preserve">
+    <value>Add plugins from file</value>
+  </data>
+  <data name="View_ExtensionPage_ShowAuthorizations.Text" xml:space="preserve">
+    <value>Show requested authorizations</value>
+  </data>
+  <data name="View_ExtensionPage_Store.Text" xml:space="preserve">
+    <value>Store:</value>
+  </data>
+  <data name="View_ExtensionPage_Uninstall.Text" xml:space="preserve">
+    <value>Uninstall</value>
+  </data>
+  <data name="View_LoginPage_EnterPW.Text" xml:space="preserve">
+    <value>Enter your Password</value>
+  </data>
+  <data name="View_LoginPage_Login.Text" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="View_LoginPage_LoginButton.Content" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="View_PasswordPage_CMDBar_About.Label" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="View_PasswordPage_CMDBar_About.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Open About page</value>
+  </data>
+  <data name="View_PasswordPage_CMDBar_Add2FA.Label" xml:space="preserve">
+    <value>Add 2FA</value>
+  </data>
+  <data name="View_PasswordPage_CMDBar_Add2FA.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Enable Two-Factor Authentication</value>
+  </data>
+  <data name="View_PasswordPage_CMDBar_Delete.Label" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="View_PasswordPage_CMDBar_Delete.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete Entry</value>
+  </data>
+  <data name="View_PasswordPage_CMDBar_Edit.Label" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="View_PasswordPage_CMDBar_Edit.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Edit Entry</value>
+  </data>
+  <data name="View_PasswordPage_CMDBar_GeneratePW.Label" xml:space="preserve">
+    <value>Generate</value>
+  </data>
+  <data name="View_PasswordPage_CMDBar_GeneratePW.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Generate Password</value>
+  </data>
+  <data name="View_PasswordPage_CMDBar_New.Label" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="View_PasswordPage_CMDBar_New.ToolTipService.ToolTip" xml:space="preserve">
+    <value>New Entry</value>
+  </data>
+  <data name="View_PasswordPage_CMDBar_Settings.Label" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="View_PasswordPage_CMDBar_Settings.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Open Settings</value>
+  </data>
+  <data name="View_PasswordPage_Flyout_CopyEmail.Text" xml:space="preserve">
+    <value>Copy Email</value>
+  </data>
+  <data name="View_PasswordPage_Flyout_CopyPW.Text" xml:space="preserve">
+    <value>Copy Password</value>
+  </data>
+  <data name="View_PasswordPage_Flyout_CopyTOTPToken.Text" xml:space="preserve">
+    <value>Copy TOTP Token</value>
+  </data>
+  <data name="View_PasswordPage_Flyout_CopyUsername.Text" xml:space="preserve">
+    <value>Copy Username</value>
+  </data>
+  <data name="View_PasswordPage_Flyout_Delete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="View_PasswordPage_Flyout_Edit.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="View_PasswordPage_Searchbox.PlaceholderText" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="View_PasswordPage_SortName.Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="View_PasswordPage_SortNotes.Text" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="View_PasswordPage_SortPasswords.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Sort Passwords</value>
+  </data>
+  <data name="View_PasswordPage_SortPopular30Days.Text" xml:space="preserve">
+    <value>Popular last 30 days</value>
+  </data>
+  <data name="View_PasswordPage_SortPopularLastYear.Text" xml:space="preserve">
+    <value>Popular last year</value>
+  </data>
+  <data name="View_PasswordPage_SortStrength.Text" xml:space="preserve">
+    <value>Password Strength</value>
+  </data>
+  <data name="View_PasswordPage_SortStrength.ToolTipService.ToolTip" xml:space="preserve">
+    <value>The sort function contain no check for duplicate passwords and leaked passwords due to performance drops.</value>
+  </data>
+  <data name="View_PasswordPage_SortUsername.Text" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="View_PasswordPage_SortWebsite.Text" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="View_PasswordPage_SwitchAscendingDescending.Text" xml:space="preserve">
+    <value>Switch ascending/descending</value>
+  </data>
+  <data name="View_PasswordPage_ViewEmail.Text" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="View_PasswordPage_ViewNotes.Text" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="View_PasswordPage_ViewPassword.Text" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="View_PasswordPage_ViewTOTP.Text" xml:space="preserve">
+    <value>TOTP</value>
+  </data>
+  <data name="View_PasswordPage_ViewUsername.Text" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="View_PasswordPage_ViewWebsite.Text" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="View_RegisterPage_ChoosePasswordInfo.Text" xml:space="preserve">
+    <value>Please choose a master password to begin using the password manager. Without this password, you will never be able to retrieve your saved passwords.</value>
+  </data>
+  <data name="View_RegisterPage_EnterPW.PlaceholderText" xml:space="preserve">
+    <value>Enter Password</value>
+  </data>
+  <data name="View_RegisterPage_Register.Content" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="View_RegisterPage_RepeatPW.PlaceholderText" xml:space="preserve">
+    <value>Repeat Password</value>
+  </data>
+  <data name="View_RegisterPage_Welcome.Text" xml:space="preserve">
+    <value>Welcome to Ease Pass - Your open source password manager</value>
+  </data>
+  <data name="View_SettingsPage_ChangePassword.Text" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="View_SettingsPage_ChangePasswordButton.Content" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="View_SettingsPage_ChangePassword_Warning.Text" xml:space="preserve">
+    <value>Be sure to select a password that you'll always remember. If the password is lost, so are all your stored credentials, with no means of recovery. Additionally, ensure you back up your passwords either to an external offline drive or the cloud.</value>
+  </data>
+  <data name="View_SettingsPage_CurrentPassword.Header" xml:space="preserve">
+    <value>Current Password</value>
+  </data>
+  <data name="View_SettingsPage_CurrentPassword.PlaceholderText" xml:space="preserve">
+    <value>Current Password</value>
+  </data>
+  <data name="View_SettingsPage_DownloadPlugins.Content" xml:space="preserve">
+    <value>Download Plugins</value>
+  </data>
+  <data name="View_SettingsPage_Headline.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="View_SettingsPage_HeadlineDatabase.Header" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="View_SettingsPage_HeadlineMiscellaneous.Header" xml:space="preserve">
+    <value>Miscellaneous</value>
+  </data>
+  <data name="View_SettingsPage_HeadlinePlugins.Header" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="View_SettingsPage_HeadlineSecurity.Header" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="View_SettingsPage_Import.Content" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="View_SettingsPage_ImportPasswords.Text" xml:space="preserve">
+    <value>Import passwords</value>
+  </data>
+  <data name="View_SettingsPage_InactivityLogout.Header" xml:space="preserve">
+    <value>Inactivity Logout</value>
+  </data>
+  <data name="View_SettingsPage_InactivityLogoutTime.Header" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="View_SettingsPage_InactivityLogoutTime.PlaceholderText" xml:space="preserve">
+    <value>Logout time</value>
+  </data>
+  <data name="View_SettingsPage_Manage.Content" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="View_SettingsPage_NewPassword.Header" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="View_SettingsPage_NewPassword.PlaceholderText" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="View_SettingsPage_NoPluginsInfo.Text" xml:space="preserve">
+    <value>No plugins installed click below to download</value>
+  </data>
+  <data name="View_SettingsPage_PasswordGenerator.Text" xml:space="preserve">
+    <value>Password Generator</value>
+  </data>
+  <data name="View_SettingsPage_PasswordLength.Header" xml:space="preserve">
+    <value>Password length (min: 8)</value>
+  </data>
+  <data name="View_SettingsPage_PasswordLength.PlaceholderText" xml:space="preserve">
+    <value>Length of the password</value>
+  </data>
+  <data name="View_SettingsPage_PossiblePWCharacters.Header" xml:space="preserve">
+    <value>Possible characters in password</value>
+  </data>
+  <data name="View_SettingsPage_PossiblePWCharacters.PlaceholderText" xml:space="preserve">
+    <value>Some letters, digits and punctation...</value>
+  </data>
+  <data name="View_SettingsPage_PWPopularityCounter.Header" xml:space="preserve">
+    <value>Password popularity counter</value>
+  </data>
+  <data name="View_SettingsPage_QuickCopy.Header" xml:space="preserve">
+    <value>Quick Copy on Double Click</value>
+  </data>
+  <data name="View_SettingsPage_QuickCopy.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Enable quick copy to copy text by double clicking on the textbox</value>
+  </data>
+  <data name="View_SettingsPage_RepeatPassword.Header" xml:space="preserve">
+    <value>Repeat Password</value>
+  </data>
+  <data name="View_SettingsPage_RepeatPassword.PlaceholderText" xml:space="preserve">
+    <value>Repeat new Password</value>
+  </data>
+  <data name="View_SettingsPage_ResetPopularityCounter.Content" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="View_SettingsPage_ShowIcons.Header" xml:space="preserve">
+    <value>Show icons</value>
+  </data>
+  <data name="View_SettingsPage_ShowIcons.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Show or hide the icons in the password list</value>
+  </data>
+  <data name="View_SettingsPage_VerifyPWLeaked.Header" xml:space="preserve">
+    <value>Verify that the password was not leaked</value>
+  </data>
+</root>

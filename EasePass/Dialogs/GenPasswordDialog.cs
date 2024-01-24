@@ -1,4 +1,5 @@
 ﻿using EasePass.Core;
+using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
@@ -15,9 +16,9 @@ namespace EasePass.Dialogs
             page.GeneratePassword();
             var dialog = new AutoLogoutContentDialog
             {
-                Title = "Password generator",
-                PrimaryButtonText = "New",
-                CloseButtonText = "Done",
+                Title = "Password generator".Localized("Dialog_PWGenerator_New"),
+                PrimaryButtonText = "New".Localized("Dialog_Button_New/Text"),
+                CloseButtonText = "Done".Localized("Dialog_Button_Done/Text"),
                 XamlRoot = App.m_window.Content.XamlRoot,
                 Content = page
             };

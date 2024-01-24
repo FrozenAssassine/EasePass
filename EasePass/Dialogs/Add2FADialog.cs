@@ -1,4 +1,5 @@
-﻿using EasePass.Helper;
+﻿using EasePass.Extensions;
+using EasePass.Helper;
 using EasePass.Models;
 using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
@@ -14,9 +15,9 @@ namespace EasePass.Dialogs
             var page = new Add2FAPage(item);
             var dialog = new AutoLogoutContentDialog
             {
-                Title = "Add 2FA to " + item.DisplayName,
-                PrimaryButtonText = "Add",
-                CloseButtonText = "Cancel",
+                Title = "Add 2FA to".Localized("Dialog_Add2FA_Headline/Text") + " " + item.DisplayName,
+                PrimaryButtonText = "Add".Localized("Dialog_Button_Add/Text"),
+                CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
                 XamlRoot = App.m_window.Content.XamlRoot,
                 Content = page
             };

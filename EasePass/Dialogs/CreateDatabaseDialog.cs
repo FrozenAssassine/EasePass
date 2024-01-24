@@ -1,4 +1,5 @@
-﻿using EasePass.Helper;
+﻿using EasePass.Extensions;
+using EasePass.Helper;
 using EasePass.Views;
 using System;
 using System.Threading.Tasks;
@@ -12,9 +13,9 @@ namespace EasePass.Dialogs
         {
             var dialog = new AutoLogoutContentDialog
             {
-                Title = "Create Database",
-                CloseButtonText = "Close",
-                PrimaryButtonText = "Create",
+                Title = "Create Database".Localized("Dialog_CreateDB_Headline/Text"),
+                PrimaryButtonText = "Create".Localized("Dialog_Button_Create/Text"),
+                CloseButtonText = "Close".Localized("Dialog_Button_Close/Text"),
                 XamlRoot = App.m_window.Content.XamlRoot,
             };
             page = new CreateDatabaseDialogPage();
