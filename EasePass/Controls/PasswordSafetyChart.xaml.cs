@@ -19,37 +19,37 @@ namespace EasePass.Controls
     {
         private string[] messages = new string[]
         {
-            "Lower case letters",
-            "Upper case letters",
-            "Password length",
-            "Leaked or exploited",
-            "Punctuation",
-            "Digits",
-            "Predictability",
-            "Seen before"
+            "Lower case letters".Localized("PW_SafetyChart_LowerCaseLetters/Text"),
+            "Upper case letters".Localized("PW_SafetyChart_UpperCaseLetters/Text"),
+            "Password length".Localized("PW_SafetyChart_PWLength/Text"),
+            "Leaked or exploited".Localized("PW_SafetyChart_LeakedExploited/Text"),
+            "Punctuation".Localized("PW_SafetyChart_Punctation/Text"),
+            "Digits".Localized("PW_SafetyChart_Digits/Text"),
+            "Predictability".Localized("PW_SafetyChart_Predictability/Text"),
+            "Seen before".Localized("PW_SafetyChart_Seenbefore/Text")
         };
         private string[] messagesShort = new string[]
         {
-            "Lower case",
-            "Upper case",
-            "Password length",
-            "Leaked (or not)",
-            "Punctuation",
-            "Digits",
-            "Predictability",
-            "Seen before"
+            "Lower case".Localized("PW_SafetyChart_Short_LowerCase/Text"),
+            "Upper case".Localized("PW_SafetyChart_Short_UpperCase/Text"),
+            "Password length".Localized("PW_SafetyChart_PWLength/Text"),
+            "Leaked or exploited".Localized("PW_SafetyChart_LeakedExploited/Text"),
+            "Punctuation".Localized("PW_SafetyChart_Punctation/Text"),
+            "Digits".Localized("PW_SafetyChart_Digits/Text"),
+            "Predictability".Localized("PW_SafetyChart_Predictability/Text"),
+            "Seen before".Localized("PW_SafetyChart_Seenbefore/Text")
         };
         private string[][] prefixes = new string[][]
         {
             //true, false, null
-            new string[]{ "Contains", "Missing", "Unknown whether it contains" },
-            new string[]{ "Contains", "Missing", "Unknown whether it contains" },
-            new string[]{ "Meets the minimum", "Does not meet the minimum", "Unknown whether it meets the minimum" },
-            new string[]{ "Not", "Is already", "Unknown whether it has already been" },
-            new string[]{ "Contains", "Missing", "Unknown whether it contains" },
-            new string[]{ "Contains", "Missing", "Unknown whether it contains" },
-            new string[]{ "Low", "High", "Unknown " },
-            new string[]{ "Not yet", "Already", "Unknown whether" },
+            new string[]{ "Contains".Localized("PW_SafetyChart_Contains/Text"), "Missing".Localized("PW_SafetyChart_Missing/Text"), "Unknown whether it contains".Localized("PW_SafetyChart_UnknownContains/Text") },
+            new string[]{ "Contains".Localized("PW_SafetyChart_Contains/Text"), "Missing".Localized("PW_SafetyChart_Missing/Text"), "Unknown whether it contains".Localized("PW_SafetyChart_UnknownContains/Text") },
+            new string[]{ "Meets the minimum".Localized("PW_SafetyChart_MeetsMinimum/Text"), "Does not meet the minimum".Localized("PW_SafetyChart_DoesNotMeetMinimum/Text"), "Unknown whether it meets the minimum".Localized("PW_SafetyChart_UnknownMeetsMinimum/Text") },
+            new string[]{ "Not".Localized("PW_SafetyChart_Not/Text"), "Is already".Localized("PW_SafetyChart_IsAlready/Text"), "Unknown whether it has already been".Localized("PW_SafetyChart_UnknownAlready/Text") },
+            new string[]{ "Contains".Localized("PW_SafetyChart_Contains/Text"), "Missing".Localized("PW_SafetyChart_Missing/Text"), "Unknown whether it contains".Localized("PW_SafetyChart_UnknownContains/Text") },
+            new string[]{ "Contains".Localized("PW_SafetyChart_Contains/Text"), "Missing".Localized("PW_SafetyChart_Missing/Text"), "Unknown whether it contains".Localized("PW_SafetyChart_UnknownContains/Text") },
+            new string[]{ "Low".Localized("PW_SafetyChart_Low/Text"), "High".Localized("PW_SafetyChart_High/Text"), "Unknown ".Localized("PW_SafetyChart_Unknown/Text") },
+            new string[]{ "Not yet".Localized("PW_SafetyChart_NotYet/Text"), "Already".Localized("PW_SafetyChart_Already/Text"), "Unknown whether".Localized("PW_SafetyChart_UnknownWhether/Text") },
         };
         private double ChartScale = 10;
         private Path[] paths = new Path[8];

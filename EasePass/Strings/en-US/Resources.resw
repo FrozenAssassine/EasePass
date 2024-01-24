@@ -303,6 +303,81 @@
   <data name="Dialog_SelectExport_SelectAll.Content" xml:space="preserve">
     <value>SelectAll</value>
   </data>
+  <data name="PW_SafetyChart_Already.Text" xml:space="preserve">
+    <value>Already</value>
+  </data>
+  <data name="PW_SafetyChart_Contains.Text" xml:space="preserve">
+    <value>Contains</value>
+  </data>
+  <data name="PW_SafetyChart_Digits.Text" xml:space="preserve">
+    <value>Digits</value>
+  </data>
+  <data name="PW_SafetyChart_DoesNotMeetMinimum.Text" xml:space="preserve">
+    <value>Does not meet the minimum</value>
+  </data>
+  <data name="PW_SafetyChart_High.Text" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="PW_SafetyChart_IsAlready.Text" xml:space="preserve">
+    <value>Is already</value>
+  </data>
+  <data name="PW_SafetyChart_LeakedExploited.Text" xml:space="preserve">
+    <value>Leaked or exploited</value>
+  </data>
+  <data name="PW_SafetyChart_Low.Text" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="PW_SafetyChart_LowerCaseLetters.Text" xml:space="preserve">
+    <value>Lower case letters</value>
+  </data>
+  <data name="PW_SafetyChart_MeetsMinimum.Text" xml:space="preserve">
+    <value>Meets the minimum</value>
+  </data>
+  <data name="PW_SafetyChart_Missing.Text" xml:space="preserve">
+    <value>Missing</value>
+  </data>
+  <data name="PW_SafetyChart_Not.Text" xml:space="preserve">
+    <value>Not</value>
+  </data>
+  <data name="PW_SafetyChart_NotYet.Text" xml:space="preserve">
+    <value>Not yet</value>
+  </data>
+  <data name="PW_SafetyChart_Predictability.Text" xml:space="preserve">
+    <value>Predictability</value>
+  </data>
+  <data name="PW_SafetyChart_Punctation.Text" xml:space="preserve">
+    <value>Punctuation</value>
+  </data>
+  <data name="PW_SafetyChart_PWLength.Text" xml:space="preserve">
+    <value>Password length</value>
+  </data>
+  <data name="PW_SafetyChart_Seenbefore.Text" xml:space="preserve">
+    <value>Seen before</value>
+  </data>
+  <data name="PW_SafetyChart_Short_LowerCaseLetters.Text" xml:space="preserve">
+    <value>Lower case</value>
+  </data>
+  <data name="PW_SafetyChart_Short_UpperCaseLetters.Text" xml:space="preserve">
+    <value>Upper case</value>
+  </data>
+  <data name="PW_SafetyChart_Unknown.Text" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="PW_SafetyChart_UnknownAlready.Text" xml:space="preserve">
+    <value>Unknown whether it has already been</value>
+  </data>
+  <data name="PW_SafetyChart_UnknownContains.Text" xml:space="preserve">
+    <value>Unknown whether it contains</value>
+  </data>
+  <data name="PW_SafetyChart_UnknownMeetsMinimum.Text" xml:space="preserve">
+    <value>Unknown whether it meets the minimum</value>
+  </data>
+  <data name="PW_SafetyChart_UnknownWhether.Text" xml:space="preserve">
+    <value>Unknown whether</value>
+  </data>
+  <data name="PW_SafetyChart_UpperCaseLetters.Text" xml:space="preserve">
+    <value>Upper case letters</value>
+  </data>
   <data name="ScreenScannerWindow_InfoText.Text" xml:space="preserve">
     <value>Show you QR-Code somewhere on you screen!</value>
   </data>
