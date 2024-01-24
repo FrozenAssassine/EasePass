@@ -2,6 +2,7 @@ using EasePass.Dialogs;
 using EasePass.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,11 +14,16 @@ public sealed partial class ManageDatabasePage : Page
     {
         this.InitializeComponent();
 
-        App.m_window.ShowBackArrow = true;
 
         databaseDisplay.ItemsSource = new List<string> { "Julius", "Ben", "Finn", "Sna8xs" };
+    }
 
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        App.m_window.ShowBackArrow = true;
         LoadBackupsFromFile();
+
+        base.OnNavigatedTo(e);
     }
 
     private async void LoadBackupsFromFile()
