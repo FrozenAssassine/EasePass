@@ -1,4 +1,6 @@
-﻿namespace EasePass.Extensions;
+﻿using System;
+
+namespace EasePass.Extensions;
 
 public static class LocalizationExtension
 {
@@ -8,6 +10,8 @@ public static class LocalizationExtension
         if (res == null)
             return originalString;
 
+        if(res.ValueAsString.Contains("\\n"))
+            return res.ValueAsString.Replace("\\n", Environment.NewLine);
         return res.ValueAsString;
     }
 }

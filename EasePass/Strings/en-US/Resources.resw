@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="&quot;InfoMessages_PasswordsDoNotMatch.Headline" xml:space="preserve">
+    <value>Passwords do not match</value>
+  </data>
   <data name="CopyPasswordBox_Copy.ToolTipService.ToolTip" xml:space="preserve">
     <value>Copy</value>
   </data>
@@ -303,6 +306,150 @@
   <data name="Dialog_SelectExport_SelectAll.Content" xml:space="preserve">
     <value>SelectAll</value>
   </data>
+  <data name="InfoMessages_AutomaticallyLoggedOut.Headline" xml:space="preserve">
+    <value>We automatically logged you out due to inactivity</value>
+  </data>
+  <data name="InfoMessages_ChangePasswordWrong.Headline" xml:space="preserve">
+    <value>Wrong password</value>
+  </data>
+  <data name="InfoMessages_ChangePasswordWrong.Text" xml:space="preserve">
+    <value>The current password is incorrect</value>
+  </data>
+  <data name="InfoMessages_CouldNotCreateDBBackupFolder.Headline" xml:space="preserve">
+    <value>Could not create database backup folder</value>
+  </data>
+  <data name="InfoMessages_CouldNotGetExtensions.Headline" xml:space="preserve">
+    <value>Could not get Plugins</value>
+  </data>
+  <data name="InfoMessages_CouldNotGetExtensions.Text" xml:space="preserve">
+    <value>Could not get the plugins from the Server:\n</value>
+  </data>
+  <data name="InfoMessages_DatabaseFileNotFoundAt.Headline" xml:space="preserve">
+    <value>Database not found</value>
+  </data>
+  <data name="InfoMessages_DatabaseFileNotFoundAt.Text" xml:space="preserve">
+    <value>Your database with the stored passwords could not be found at path {path}</value>
+  </data>
+  <data name="InfoMessages_DatabaseInvalidData.Headline" xml:space="preserve">
+    <value>Invalid Database</value>
+  </data>
+  <data name="InfoMessages_DatabaseInvalidData.Text" xml:space="preserve">
+    <value>Database could not be loaded. It may be corrupted or invalid.</value>
+  </data>
+  <data name="InfoMessages_DatabaseSaveToFileError.Headline" xml:space="preserve">
+    <value>Error while saving database</value>
+  </data>
+  <data name="InfoMessages_DatabaseSaveToFileError.Text" xml:space="preserve">
+    <value>Data save error at {path}. Verify connection or device storage, then retry.</value>
+  </data>
+  <data name="InfoMessages_DownloadPluginProgress.Headline" xml:space="preserve">
+    <value>Downloading plugin in progress</value>
+  </data>
+  <data name="InfoMessages_EnteredWrongPW.Headline" xml:space="preserve">
+    <value>Wrong password</value>
+  </data>
+  <data name="InfoMessages_EnteredWrongPW.Text" xml:space="preserve">
+    <value>You entered the wrong password.\nPlease try again\n({attempts}/3)</value>
+  </data>
+  <data name="InfoMessages_Error.Headline" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="InfoMessages_Error.Text" xml:space="preserve">
+    <value>An error has occurred!</value>
+  </data>
+  <data name="InfoMessages_ExportDBSuccess.Headline" xml:space="preserve">
+    <value>Exported successfully</value>
+  </data>
+  <data name="InfoMessages_ExportDBSuccess.Text" xml:space="preserve">
+    <value>Exported data successfully</value>
+  </data>
+  <data name="InfoMessages_ExtensionAlreadyInstalled.Headline" xml:space="preserve">
+    <value>Plugin already installed</value>
+  </data>
+  <data name="InfoMessages_ExtensionAlreadyInstalled.Text" xml:space="preserve">
+    <value>The plugin is already installed!</value>
+  </data>
+  <data name="InfoMessages_FileIsNotAnExtensions.Headline" xml:space="preserve">
+    <value>File is not a plugin</value>
+  </data>
+  <data name="InfoMessages_FileIsNotAnExtensions.Text" xml:space="preserve">
+    <value>The selected file is not an Ease Pass plugin!</value>
+  </data>
+  <data name="InfoMessages_ImportDBSuccess.Headline" xml:space="preserve">
+    <value>Imported successfully</value>
+  </data>
+  <data name="InfoMessages_ImportDBSuccess.Text" xml:space="preserve">
+    <value>Imported data successfully</value>
+  </data>
+  <data name="InfoMessages_ImportDBWrongPassword.Headline" xml:space="preserve">
+    <value>Wrong password</value>
+  </data>
+  <data name="InfoMessages_ImportDBWrongPassword.Text" xml:space="preserve">
+    <value>Could not import database, because you've entered the wrong password.</value>
+  </data>
+  <data name="InfoMessages_Invalid2FA.Headline" xml:space="preserve">
+    <value>Invalid 2FA secret</value>
+  </data>
+  <data name="InfoMessages_Invalid2FA.Text" xml:space="preserve">
+    <value>This 2FA secret is not valid!</value>
+  </data>
+  <data name="InfoMessages_NewVersion.Content" xml:space="preserve">
+    <value>Changelog</value>
+  </data>
+  <data name="InfoMessages_NewVersion.Headline" xml:space="preserve">
+    <value>New version</value>
+  </data>
+  <data name="InfoMessages_NewVersion.Text" xml:space="preserve">
+    <value>Welcome to Ease Pass version {version}</value>
+  </data>
+  <data name="InfoMessages_NoAccessToPathDatabaseNotLoaded.Headline" xml:space="preserve">
+    <value>Database could not be loaded</value>
+  </data>
+  <data name="InfoMessages_NoAccessToPathDatabaseNotLoaded.Text" xml:space="preserve">
+    <value>Database could not be loaded. No access to the path {path}</value>
+  </data>
+  <data name="InfoMessages_NoAccessToPathDatabaseNotSaved.Headline" xml:space="preserve">
+    <value>Database could not be saved</value>
+  </data>
+  <data name="InfoMessages_NoAccessToPathDatabaseNotSaved.Text" xml:space="preserve">
+    <value>Database could not be saved. No access to the path {path}</value>
+  </data>
+  <data name="InfoMessages_PasswordAlreadyUsed.Headline" xml:space="preserve">
+    <value>Password already used</value>
+  </data>
+  <data name="InfoMessages_PasswordAlreadyUsed.Text" xml:space="preserve">
+    <value>We highly recommend using a different password for each service!</value>
+  </data>
+  <data name="InfoMessages_PasswordTooShort.Headline" xml:space="preserve">
+    <value>Password too short</value>
+  </data>
+  <data name="InfoMessages_PasswordTooShort.Text" xml:space="preserve">
+    <value>The password is too short</value>
+  </data>
+  <data name="InfoMessages_PrinterItemSkipped.Headline" xml:space="preserve">
+    <value>Password skipped</value>
+  </data>
+  <data name="InfoMessages_PrinterItemSkipped.Text" xml:space="preserve">
+    <value>The service "{name}" was skipped, because it doesn't fit into the page.</value>
+  </data>
+  <data name="InfoMessages_PrinterNotSelected.Headline" xml:space="preserve">
+    <value>Printer not selected</value>
+  </data>
+  <data name="InfoMessages_PrinterNotSelected.Text" xml:space="preserve">
+    <value>Please select a printer before printing.</value>
+  </data>
+  <data name="InfoMessages_SuccessfullyChangedPassword.Headline" xml:space="preserve">
+    <value>Password successfully changed</value>
+  </data>
+  <data name="InfoMessages_SuccessfullyChangedPassword.Text" xml:space="preserve">
+    <value>Your password was successfully changed</value>
+  </data>
+  <data name="InfoMessages_TooManyPasswordAttempts.Headline" xml:space="preserve">
+    <value>Too many attempts</value>
+  </data>
+  <data name="InfoMessages_TooManyPasswordAttempts.Text" xml:space="preserve">
+    <value>You entered the password wrong three times.</value>
+  </data>
   <data name="PrintDB_Email.Text" xml:space="preserve">
     <value>E-Mail:</value>
   </data>
@@ -311,6 +458,15 @@
   </data>
   <data name="PrintDB_Password.Text" xml:space="preserve">
     <value>Password:</value>
+  </data>
+  <data name="PrintDB_TOTPAlgorithm.Text" xml:space="preserve">
+    <value>TOTP-Algorithm:</value>
+  </data>
+  <data name="PrintDB_TOTPInterval.Text" xml:space="preserve">
+    <value>TOTP-Interval:</value>
+  </data>
+  <data name="PrintDB_TOTPSecret.Text" xml:space="preserve">
+    <value>TOTP-Secret:</value>
   </data>
   <data name="PrintDB_Username.Text" xml:space="preserve">
     <value>Username:</value>
