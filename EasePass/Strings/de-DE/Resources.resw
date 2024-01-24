@@ -118,358 +118,358 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CopyPasswordBox_Copy.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Copy</value>
+    <value>Kopieren</value>
   </data>
   <data name="CopyTextbox_Copy.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Copy</value>
+    <value>Kopieren</value>
   </data>
   <data name="Dialog_Add2FA_Algorithm.Text" xml:space="preserve">
-    <value>Algorithm</value>
+    <value>Algorithmus</value>
   </data>
   <data name="Dialog_Add2FA_Digits.Text" xml:space="preserve">
-    <value>Digits</value>
+    <value>Ziffern</value>
   </data>
   <data name="Dialog_Add2FA_Headline.Text" xml:space="preserve">
-    <value>Add 2FA to</value>
+    <value>2FA hinzufügen zu</value>
   </data>
   <data name="Dialog_Add2FA_Interval.Text" xml:space="preserve">
-    <value>Interval (sec)</value>
+    <value>Interval (sek)</value>
   </data>
   <data name="Dialog_Add2FA_ScreenButton.Content" xml:space="preserve">
-    <value>QR Code from screen</value>
+    <value>QR Code auf dem Bildschirm</value>
   </data>
   <data name="Dialog_Add2FA_ScreenButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Scan a QR code on the screen</value>
+    <value>Scanne den QR code auf dem Bildschirm</value>
   </data>
   <data name="Dialog_Add2FA_Secret.Text" xml:space="preserve">
-    <value>Secret</value>
+    <value>Geheimcode</value>
   </data>
   <data name="Dialog_Add2FA_WebcamButton.Content" xml:space="preserve">
-    <value>QR Code from webcam</value>
+    <value>QR Code mit Webcam</value>
   </data>
   <data name="Dialog_Add2FA_WebcamButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Use your webcam to scan the QR code</value>
+    <value>Nutze deine Webcam zum Scannen des QR Codes</value>
   </data>
   <data name="Dialog_AddItem_2FATitle.Text" xml:space="preserve">
-    <value>Two Factor Authentification</value>
+    <value>Zwei-Faktor-Authentifizierung</value>
   </data>
   <data name="Dialog_AddItem_Algorithm.Text" xml:space="preserve">
-    <value>Algorithm</value>
+    <value>Algorithmus</value>
   </data>
   <data name="Dialog_AddItem_Digits.Text" xml:space="preserve">
-    <value>Digits</value>
+    <value>Ziffern</value>
   </data>
   <data name="Dialog_AddItem_DisplayName.Text" xml:space="preserve">
-    <value>Display Name</value>
+    <value>Anzeige Name</value>
   </data>
   <data name="Dialog_AddItem_Email.Text" xml:space="preserve">
-    <value>Email</value>
+    <value>E-Mail</value>
   </data>
   <data name="Dialog_AddItem_Export2FA.Content" xml:space="preserve">
-    <value>Export 2FA</value>
+    <value>2FA Exportieren</value>
   </data>
   <data name="Dialog_AddItem_Headline.Text" xml:space="preserve">
-    <value>Add Password</value>
+    <value>Passwort hinzufügen</value>
   </data>
   <data name="Dialog_AddItem_Interval.Text" xml:space="preserve">
     <value>Interval</value>
   </data>
   <data name="Dialog_AddItem_Notes.Text" xml:space="preserve">
-    <value>Notes</value>
+    <value>Notizen</value>
   </data>
   <data name="Dialog_AddItem_Password.Text" xml:space="preserve">
-    <value>Password</value>
+    <value>Passwort</value>
   </data>
   <data name="Dialog_AddItem_Remove2FA.Content" xml:space="preserve">
-    <value>Remove 2FA</value>
+    <value>2FA Entfernen</value>
   </data>
   <data name="Dialog_AddItem_Secret.Text" xml:space="preserve">
-    <value>Secret</value>
+    <value>Geheimcode</value>
   </data>
   <data name="Dialog_AddItem_Username.Text" xml:space="preserve">
-    <value>Username</value>
+    <value>Nutzername</value>
   </data>
   <data name="Dialog_AddItem_Website.Text" xml:space="preserve">
-    <value>Website</value>
+    <value>Webseite</value>
   </data>
   <data name="Dialog_Button_Add.Text" xml:space="preserve">
-    <value>Add</value>
+    <value>Hinzufügen</value>
   </data>
   <data name="Dialog_Button_Cancel.Text" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="Dialog_Button_Close.Text" xml:space="preserve">
-    <value>Close</value>
+    <value>Schließen</value>
   </data>
   <data name="Dialog_Button_Create.Text" xml:space="preserve">
-    <value>Create</value>
+    <value>Erstellen</value>
   </data>
   <data name="Dialog_Button_Delete.Text" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="Dialog_Button_Done.Text" xml:space="preserve">
-    <value>Done</value>
+    <value>Fertig</value>
   </data>
   <data name="Dialog_Button_Export.Text" xml:space="preserve">
-    <value>Export</value>
+    <value>Exportieren</value>
   </data>
   <data name="Dialog_Button_New.Text" xml:space="preserve">
-    <value>New</value>
+    <value>Neu</value>
   </data>
   <data name="Dialog_Button_Override.Text" xml:space="preserve">
-    <value>Override</value>
+    <value>Überschreiben</value>
   </data>
   <data name="Dialog_Button_Rename.Text" xml:space="preserve">
-    <value>Rename</value>
+    <value>Umbenennen</value>
   </data>
   <data name="Dialog_ConfirmDelete_Extension.Text" xml:space="preserve">
-    <value>Are you sure you want to delete the extension:</value>
+    <value>Bist du sicher, dass du die Erweiterung löschen möchten:</value>
   </data>
   <data name="Dialog_ConfirmDelete_Headline.Text" xml:space="preserve">
-    <value>Confirm Deletion</value>
+    <value>Löschen bestätigen</value>
   </data>
   <data name="Dialog_ConfirmDelete_Item.Text" xml:space="preserve">
-    <value>Are you sure you want to delete the item:</value>
+    <value>Bist du sicher, dass du das Element löschen möchtest:</value>
   </data>
   <data name="Dialog_ConfirmDelete_Items.Text" xml:space="preserve">
-    <value>Are you sure you want to delete the items:</value>
+    <value>Bist du sicher, dass du die Elemente löschen möchtest:</value>
   </data>
   <data name="Dialog_CreateDB_ChooseLocation.Text" xml:space="preserve">
-    <value>Choose</value>
+    <value>Wählen</value>
   </data>
   <data name="Dialog_CreateDB_DBLocation.Content" xml:space="preserve">
-    <value>Database Location</value>
+    <value>Datenbank Speicherort</value>
   </data>
   <data name="Dialog_CreateDB_DBName.Header" xml:space="preserve">
-    <value>Database Name</value>
+    <value>Datenbank Name</value>
   </data>
   <data name="Dialog_CreateDB_DBName.PlaceholderText" xml:space="preserve">
-    <value>Database Name</value>
+    <value>Datenbank Name</value>
   </data>
   <data name="Dialog_CreateDB_DefaultLocation.Text" xml:space="preserve">
-    <value>Default</value>
+    <value>Standard</value>
   </data>
   <data name="Dialog_CreateDB_EnterPW.Header" xml:space="preserve">
-    <value>Enter Password</value>
+    <value>Passwort eingeben</value>
   </data>
   <data name="Dialog_CreateDB_EnterPW.PlaceholderText" xml:space="preserve">
-    <value>Enter Password</value>
+    <value>Passwort eingeben</value>
   </data>
   <data name="Dialog_CreateDB_Headline.Text" xml:space="preserve">
-    <value>Create Database</value>
+    <value>Datenbank erstellen</value>
   </data>
   <data name="Dialog_CreateDB_RepeatPW.Header" xml:space="preserve">
-    <value>Repeat Password</value>
+    <value>Passwort wiederholen</value>
   </data>
   <data name="Dialog_CreateDB_RepeatPW.PlaceholderText" xml:space="preserve">
-    <value>Repeat Password</value>
+    <value>Passwort wiederholen</value>
   </data>
   <data name="Dialog_EditItem_Headline.Text" xml:space="preserve">
-    <value>Edit item</value>
+    <value>Element bearbeiten</value>
   </data>
   <data name="Dialog_Export2FA_Headline.Text" xml:space="preserve">
-    <value>Export 2FA</value>
+    <value>2FA Exportieren</value>
   </data>
   <data name="Dialog_Export_Headline.Text" xml:space="preserve">
-    <value>Select items to export</value>
+    <value>Wähle die zu exportierenden Elemente</value>
   </data>
   <data name="Dialog_ImportPW_ConfirmOverride1.Text" xml:space="preserve">
-    <value>All passwords with the same display name will be overwritten!</value>
+    <value>Alle Passwörter mit dem gleichen Anzeigenamen werden überschrieben!</value>
   </data>
   <data name="Dialog_ImportPW_ConfirmOverride2.Text" xml:space="preserve">
-    <value>Confirm override?</value>
+    <value>Überschreiben bestätigen?</value>
   </data>
   <data name="Dialog_ImportPW_ErrorMessage.Text" xml:space="preserve">
-    <value>An error has occured!</value>
+    <value>Ein Fehler ist aufgetreten!</value>
   </data>
   <data name="Dialog_ImportPW_Headline.Text" xml:space="preserve">
-    <value>Import passwords</value>
+    <value>Passwörter importieren</value>
   </data>
   <data name="Dialog_ImportPW_SelectAll.Content" xml:space="preserve">
-    <value>Select All</value>
+    <value>Alles auswählen</value>
   </data>
   <data name="Dialog_Info_Headline.Text" xml:space="preserve">
     <value>info</value>
   </data>
   <data name="Dialog_PWGenerator_New.Text" xml:space="preserve">
-    <value>Password generator</value>
+    <value>Passwort Generator</value>
   </data>
   <data name="Dialog_RenameDB_Headline.Text" xml:space="preserve">
-    <value>Rename Database</value>
+    <value>Datenbank umbenennen</value>
   </data>
   <data name="Dialog_RenameDB_Name.Text" xml:space="preserve">
-    <value>Database name</value>
+    <value>Datenbank Name</value>
   </data>
   <data name="Dialog_SelectExport_SelectAll.Content" xml:space="preserve">
-    <value>SelectAll</value>
+    <value>Alles auswählen</value>
   </data>
   <data name="InfoMessages_AutomaticallyLoggedOut.Headline" xml:space="preserve">
-    <value>We automatically logged you out due to inactivity</value>
+    <value>Du wurdest automatisch ausgeloogt</value>
   </data>
   <data name="InfoMessages_ChangePasswordWrong.Headline" xml:space="preserve">
-    <value>Wrong password</value>
+    <value>Falsches Passwort</value>
   </data>
   <data name="InfoMessages_ChangePasswordWrong.Text" xml:space="preserve">
-    <value>The current password is incorrect</value>
+    <value>Das aktuelle Passwort ist falsch</value>
   </data>
   <data name="InfoMessages_CouldNotCreateDBBackupFolder.Headline" xml:space="preserve">
-    <value>Could not create database backup folder</value>
+    <value>Konnte den Datenbank Backup Ordner nicht erstellen</value>
   </data>
   <data name="InfoMessages_CouldNotGetExtensions.Headline" xml:space="preserve">
-    <value>Could not get Plugins</value>
+    <value>Konnte die Plugins nicht laden</value>
   </data>
   <data name="InfoMessages_CouldNotGetExtensions.Text" xml:space="preserve">
-    <value>Could not get the plugins from the Server:\n</value>
+    <value>Konnte die Plugins nicht vom Server laden: \n</value>
   </data>
   <data name="InfoMessages_DatabaseFileNotFoundAt.Headline" xml:space="preserve">
-    <value>Database not found</value>
+    <value>Datenbank wurde nicht gefunden</value>
   </data>
   <data name="InfoMessages_DatabaseFileNotFoundAt.Text" xml:space="preserve">
-    <value>Your database with the stored passwords could not be found at path {path}</value>
+    <value>Deine Datenbank mit den gespeicherten Passwörtern konnte nicht im Pfad gefunden werden: \n{path}</value>
   </data>
   <data name="InfoMessages_DatabaseInvalidData.Headline" xml:space="preserve">
-    <value>Invalid Database</value>
+    <value>Ungültige Datenbank</value>
   </data>
   <data name="InfoMessages_DatabaseInvalidData.Text" xml:space="preserve">
-    <value>Database could not be loaded. It may be corrupted or invalid.</value>
+    <value>Datenbank konnte nicht geladen werden, sie könnte kaputt sein.</value>
   </data>
   <data name="InfoMessages_DatabaseSaveToFileError.Headline" xml:space="preserve">
-    <value>Error while saving database</value>
+    <value>Fehler beim Speichern der Datenbank</value>
   </data>
   <data name="InfoMessages_DatabaseSaveToFileError.Text" xml:space="preserve">
-    <value>Data save error at {path}. Verify connection or device storage, then retry.</value>
+    <value>Data save error at {path}. Verify connection or device storage, then retry. Konnte Datenbank nicht in {path} speichern. Überprüfe deine Verbindung oder das Speichergerät.</value>
   </data>
   <data name="InfoMessages_DownloadPluginProgress.Headline" xml:space="preserve">
-    <value>Downloading plugin in progress</value>
+    <value>Das Plugin wird heruntergeladen</value>
   </data>
   <data name="InfoMessages_EnteredWrongPW.Headline" xml:space="preserve">
-    <value>Wrong password</value>
+    <value>Falsches Passwort</value>
   </data>
   <data name="InfoMessages_EnteredWrongPW.Text" xml:space="preserve">
-    <value>You entered the wrong password.\nPlease try again\n({attempts}/3)</value>
+    <value>Du hast das falsche Passwort eingegeben.\nBitte versuche es erneut\n({attempts}/3)</value>
   </data>
   <data name="InfoMessages_Error.Headline" xml:space="preserve">
-    <value>Error</value>
+    <value>Fehler</value>
   </data>
   <data name="InfoMessages_Error.Text" xml:space="preserve">
-    <value>An error has occurred!</value>
+    <value>Es ist ein Fehler aufgetreten!</value>
   </data>
   <data name="InfoMessages_ExportDBSuccess.Headline" xml:space="preserve">
-    <value>Exported successfully</value>
+    <value>Erfolgreich exportiert</value>
   </data>
   <data name="InfoMessages_ExportDBSuccess.Text" xml:space="preserve">
-    <value>Exported data successfully</value>
+    <value>Datenbank erfolgreich exportiert</value>
   </data>
   <data name="InfoMessages_ExtensionAlreadyInstalled.Headline" xml:space="preserve">
-    <value>Plugin already installed</value>
+    <value>Plugin ist schon installiert</value>
   </data>
   <data name="InfoMessages_ExtensionAlreadyInstalled.Text" xml:space="preserve">
-    <value>The plugin is already installed!</value>
+    <value>Das Plugin wurde bereits installiert</value>
   </data>
   <data name="InfoMessages_FileIsNotAnExtensions.Headline" xml:space="preserve">
-    <value>File is not a plugin</value>
+    <value>Die Datei ist kein Plugin</value>
   </data>
   <data name="InfoMessages_FileIsNotAnExtensions.Text" xml:space="preserve">
-    <value>The selected file is not an Ease Pass plugin!</value>
+    <value>Die angegebene Datei ist kein Ease Pass plugin</value>
   </data>
   <data name="InfoMessages_ImportDBSuccess.Headline" xml:space="preserve">
-    <value>Imported successfully</value>
+    <value>Erfolgreich importiert</value>
   </data>
   <data name="InfoMessages_ImportDBSuccess.Text" xml:space="preserve">
-    <value>Imported data successfully</value>
+    <value>Die Datenbank wurde erfolgreich importiert</value>
   </data>
   <data name="InfoMessages_ImportDBWrongPassword.Headline" xml:space="preserve">
-    <value>Wrong password</value>
+    <value>Falsches Passwort</value>
   </data>
   <data name="InfoMessages_ImportDBWrongPassword.Text" xml:space="preserve">
-    <value>Could not import database, because you've entered the wrong password.</value>
+    <value>Konnte die Datenbank nicht importieren weil du das falsche Passwort eingegeben hast.</value>
   </data>
   <data name="InfoMessages_Invalid2FA.Headline" xml:space="preserve">
-    <value>Invalid 2FA secret</value>
+    <value>Ungültiger 2FA-Geheimcode</value>
   </data>
   <data name="InfoMessages_Invalid2FA.Text" xml:space="preserve">
-    <value>This 2FA secret is not valid!</value>
+    <value>Der angegebene 2FA-Geheimcode ist falsch</value>
   </data>
   <data name="InfoMessages_NewVersion.Content" xml:space="preserve">
-    <value>Changelog</value>
+    <value>Änderungsliste</value>
   </data>
   <data name="InfoMessages_NewVersion.Headline" xml:space="preserve">
-    <value>New version</value>
+    <value>Neue Version</value>
   </data>
   <data name="InfoMessages_NewVersion.Text" xml:space="preserve">
-    <value>Welcome to Ease Pass version {version}</value>
+    <value>Willkommen zu Ease Pass Version {version}</value>
   </data>
   <data name="InfoMessages_NoAccessToPathDatabaseNotLoaded.Headline" xml:space="preserve">
-    <value>Database could not be loaded</value>
+    <value>Datenbank konnte nicht geladen werden</value>
   </data>
   <data name="InfoMessages_NoAccessToPathDatabaseNotLoaded.Text" xml:space="preserve">
-    <value>Database could not be loaded. No access to the path {path}</value>
+    <value>Die Datenbank konnte nicht geladen werden. Kein Zugriff auf den Pfad {path}</value>
   </data>
   <data name="InfoMessages_NoAccessToPathDatabaseNotSaved.Headline" xml:space="preserve">
-    <value>Database could not be saved</value>
+    <value>Datenbank konnte nicht gespeichert werden</value>
   </data>
   <data name="InfoMessages_NoAccessToPathDatabaseNotSaved.Text" xml:space="preserve">
-    <value>Database could not be saved. No access to the path {path}</value>
+    <value>Datenbank konnte nicht gespeichert werden. Kein Zugriff auf den Pfad {path}</value>
   </data>
   <data name="InfoMessages_PasswordAlreadyUsed.Headline" xml:space="preserve">
-    <value>Password already used</value>
+    <value>Das Passwort existiert schon</value>
   </data>
   <data name="InfoMessages_PasswordAlreadyUsed.Text" xml:space="preserve">
-    <value>We highly recommend using a different password for each service!</value>
+    <value>Wir empfehlen dringend, für jeden Dienst ein anderes Passwort zu verwenden!</value>
   </data>
   <data name="InfoMessages_PasswordsDoNotMatch.Headline" xml:space="preserve">
-    <value>Passwords do not match</value>
+    <value>Passwörter stimmen nicht überein</value>
   </data>
   <data name="InfoMessages_PasswordTooShort.Headline" xml:space="preserve">
-    <value>Password too short</value>
+    <value>Passwort zu kurz</value>
   </data>
   <data name="InfoMessages_PasswordTooShort.Text" xml:space="preserve">
-    <value>The password is too short</value>
+    <value>Das Passwort ist zu kurz</value>
   </data>
   <data name="InfoMessages_PrinterItemSkipped.Headline" xml:space="preserve">
-    <value>Password skipped</value>
+    <value>Passwort übersprungen</value>
   </data>
   <data name="InfoMessages_PrinterItemSkipped.Text" xml:space="preserve">
-    <value>The service "{name}" was skipped, because it doesn't fit into the page.</value>
+    <value>Der Dienst "{name}" wurde übersprungen, da er nicht in die Seite passt.</value>
   </data>
   <data name="InfoMessages_PrinterNotSelected.Headline" xml:space="preserve">
-    <value>Printer not selected</value>
+    <value>Kein Drucker ausgewählt</value>
   </data>
   <data name="InfoMessages_PrinterNotSelected.Text" xml:space="preserve">
-    <value>Please select a printer before printing.</value>
+    <value>Bitte wähle einen Drucker bevor du druckst</value>
   </data>
   <data name="InfoMessages_SuccessfullyChangedPassword.Headline" xml:space="preserve">
-    <value>Password successfully changed</value>
+    <value>Das Passwort wurde geändert</value>
   </data>
   <data name="InfoMessages_SuccessfullyChangedPassword.Text" xml:space="preserve">
-    <value>Your password was successfully changed</value>
+    <value>Ihr Passwort wurde erfolgreich geändert.</value>
   </data>
   <data name="InfoMessages_TooManyPasswordAttempts.Headline" xml:space="preserve">
-    <value>Too many attempts</value>
+    <value>Zu viele Versuche</value>
   </data>
   <data name="InfoMessages_TooManyPasswordAttempts.Text" xml:space="preserve">
-    <value>You entered the password wrong three times.</value>
+    <value>Sie haben das Passwort dreimal falsch eingegeben.</value>
   </data>
   <data name="PrintDB_Email.Text" xml:space="preserve">
     <value>E-Mail:</value>
   </data>
   <data name="PrintDB_Notes.Text" xml:space="preserve">
-    <value>Notes</value>
+    <value>Notizen</value>
   </data>
   <data name="PrintDB_Password.Text" xml:space="preserve">
-    <value>Password:</value>
+    <value>Passwort:</value>
   </data>
   <data name="PrintDB_TOTPAlgorithm.Text" xml:space="preserve">
-    <value>TOTP-Algorithm:</value>
+    <value>TOTP-Algorithmus:</value>
   </data>
   <data name="PrintDB_TOTPInterval.Text" xml:space="preserve">
-    <value>TOTP-Interval:</value>
+    <value>TOTP-Intervall:</value>
   </data>
   <data name="PrintDB_TOTPSecret.Text" xml:space="preserve">
-    <value>TOTP-Secret:</value>
+    <value>TOTP-Schlüssel:</value>
   </data>
   <data name="PrintDB_Username.Text" xml:space="preserve">
-    <value>Username:</value>
+    <value>Benutzername</value>
   </data>
   <data name="PrintDB_Website.Text" xml:space="preserve">
     <value>Website:</value>
@@ -550,288 +550,288 @@
     <value>Upper case letters</value>
   </data>
   <data name="ScreenScannerWindow_InfoText.Text" xml:space="preserve">
-    <value>Show you QR-Code somewhere on you screen!</value>
+    <value>Zeige deinen QR Code irgendwo auf de, Bildschirm</value>
   </data>
   <data name="View_About_Changelog.Text" xml:space="preserve">
-    <value>Changelog</value>
+    <value>Änderungsliste</value>
   </data>
   <data name="View_About_Contribute.Text" xml:space="preserve">
-    <value>Contribute</value>
+    <value>Beitragen</value>
   </data>
   <data name="View_About_DependenciesUsed.Text" xml:space="preserve">
-    <value>Additional dependencies used</value>
+    <value>Zusätzliche benutzte Abhängigkeiten </value>
   </data>
   <data name="View_About_Developer.Text" xml:space="preserve">
-    <value>Developers</value>
+    <value>Entwickler</value>
   </data>
   <data name="View_About_Headline.Text" xml:space="preserve">
-    <value>About</value>
+    <value>Über</value>
   </data>
   <data name="View_About_HeadlineLegal.Header" xml:space="preserve">
     <value>Legal</value>
   </data>
   <data name="View_About_HeadlineMore.Header" xml:space="preserve">
-    <value>More</value>
+    <value>Weiteres</value>
   </data>
   <data name="View_About_ReportBug.Content" xml:space="preserve">
-    <value>Report Bug</value>
+    <value>Bug melden</value>
   </data>
   <data name="View_About_RequestFeature.Content" xml:space="preserve">
-    <value>Request Feature</value>
+    <value>Feature vorschlagen</value>
   </data>
   <data name="View_About_Version.Text" xml:space="preserve">
     <value>Version</value>
   </data>
   <data name="View_About_Website.Header" xml:space="preserve">
-    <value>Website</value>
+    <value>Webseite</value>
   </data>
   <data name="View_ExtensionPage_AddPluginFromFile.Content" xml:space="preserve">
-    <value>Add plugins from file</value>
+    <value>Plugin aus Datei laden</value>
   </data>
   <data name="View_ExtensionPage_ShowAuthorizations.Text" xml:space="preserve">
-    <value>Show requested authorizations</value>
+    <value>Angefragte Berechtigungen</value>
   </data>
   <data name="View_ExtensionPage_Store.Text" xml:space="preserve">
     <value>Store:</value>
   </data>
   <data name="View_ExtensionPage_Uninstall.Text" xml:space="preserve">
-    <value>Uninstall</value>
+    <value>Deinstallieren</value>
   </data>
   <data name="View_LoginPage_EnterPW.Text" xml:space="preserve">
-    <value>Enter your Password</value>
+    <value>Passwort eingeben</value>
   </data>
   <data name="View_LoginPage_Login.Text" xml:space="preserve">
-    <value>Login</value>
+    <value>Einloggen</value>
   </data>
   <data name="View_LoginPage_LoginButton.Content" xml:space="preserve">
-    <value>Login</value>
+    <value>Einloggen</value>
   </data>
   <data name="View_PasswordPage_CMDBar_About.Label" xml:space="preserve">
-    <value>About</value>
+    <value>Über</value>
   </data>
   <data name="View_PasswordPage_CMDBar_About.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Open About page</value>
+    <value>Öffne Über Seite</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Add2FA.Label" xml:space="preserve">
-    <value>Add 2FA</value>
+    <value>2FA Hinzufügen</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Add2FA.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Enable Two-Factor Authentication</value>
+    <value>Zwei-Faktor-Authentifizierung aktivieren</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Delete.Label" xml:space="preserve">
-    <value>Delete</value>
+    <value>Entfernen</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Delete.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Delete Entry</value>
+    <value>Eintrag entfernen</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Edit.Label" xml:space="preserve">
-    <value>Edit</value>
+    <value>Bearbeiten</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Edit.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Edit Entry</value>
+    <value>Eintrag Bearbeiten</value>
   </data>
   <data name="View_PasswordPage_CMDBar_GeneratePW.Label" xml:space="preserve">
-    <value>Generate</value>
+    <value>Generieren</value>
   </data>
   <data name="View_PasswordPage_CMDBar_GeneratePW.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Generate Password</value>
+    <value>Passwort Generieren</value>
   </data>
   <data name="View_PasswordPage_CMDBar_New.Label" xml:space="preserve">
-    <value>New</value>
+    <value>Neu</value>
   </data>
   <data name="View_PasswordPage_CMDBar_New.ToolTipService.ToolTip" xml:space="preserve">
-    <value>New Entry</value>
+    <value>Neuen Eintrag</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Settings.Label" xml:space="preserve">
-    <value>Settings</value>
+    <value>Einstellungen</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Settings.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Open Settings</value>
+    <value>Einstellungen öffnen</value>
   </data>
   <data name="View_PasswordPage_Flyout_CopyEmail.Text" xml:space="preserve">
-    <value>Copy Email</value>
+    <value>Email kopieren</value>
   </data>
   <data name="View_PasswordPage_Flyout_CopyPW.Text" xml:space="preserve">
-    <value>Copy Password</value>
+    <value>Passwort kopieren</value>
   </data>
   <data name="View_PasswordPage_Flyout_CopyTOTPToken.Text" xml:space="preserve">
-    <value>Copy TOTP Token</value>
+    <value>TOTP-Token kopieren</value>
   </data>
   <data name="View_PasswordPage_Flyout_CopyUsername.Text" xml:space="preserve">
-    <value>Copy Username</value>
+    <value>Benutzernamen kopieren</value>
   </data>
   <data name="View_PasswordPage_Flyout_Delete.Text" xml:space="preserve">
-    <value>Delete</value>
+    <value>Entfernen</value>
   </data>
   <data name="View_PasswordPage_Flyout_Edit.Text" xml:space="preserve">
-    <value>Edit</value>
+    <value>Bearbeiten</value>
   </data>
   <data name="View_PasswordPage_Searchbox.PlaceholderText" xml:space="preserve">
-    <value>Search</value>
+    <value>Suchen</value>
   </data>
   <data name="View_PasswordPage_SortName.Text" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="View_PasswordPage_SortNotes.Text" xml:space="preserve">
-    <value>Notes</value>
+    <value>Notizen</value>
   </data>
   <data name="View_PasswordPage_SortPasswords.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Sort Passwords</value>
+    <value>Passwörter sortieren</value>
   </data>
   <data name="View_PasswordPage_SortPopular30Days.Text" xml:space="preserve">
-    <value>Popular last 30 days</value>
+    <value>Beliebt letzten 30 Tage</value>
   </data>
   <data name="View_PasswordPage_SortPopularLastYear.Text" xml:space="preserve">
-    <value>Popular last year</value>
+    <value>Beliebt letztes Jahr</value>
   </data>
   <data name="View_PasswordPage_SortStrength.Text" xml:space="preserve">
-    <value>Password Strength</value>
+    <value>Passwort stärke</value>
   </data>
   <data name="View_PasswordPage_SortStrength.ToolTipService.ToolTip" xml:space="preserve">
-    <value>The sort function contain no check for duplicate passwords and leaked passwords due to performance drops.</value>
+    <value>Die Sortierfunktion enthält keine Prüfung auf doppelte Passwörter und geleakte Passwörter aufgrund von Performance-Einbrüchen</value>
   </data>
   <data name="View_PasswordPage_SortUsername.Text" xml:space="preserve">
-    <value>Username</value>
+    <value>Benutzername</value>
   </data>
   <data name="View_PasswordPage_SortWebsite.Text" xml:space="preserve">
-    <value>Website</value>
+    <value>Webseite</value>
   </data>
   <data name="View_PasswordPage_SwitchAscendingDescending.Text" xml:space="preserve">
-    <value>Switch ascending/descending</value>
+    <value>Umschalten aufsteigend/absteigend</value>
   </data>
   <data name="View_PasswordPage_ViewEmail.Text" xml:space="preserve">
-    <value>Email</value>
+    <value>E-Mail</value>
   </data>
   <data name="View_PasswordPage_ViewNotes.Text" xml:space="preserve">
-    <value>Notes</value>
+    <value>Notizen</value>
   </data>
   <data name="View_PasswordPage_ViewPassword.Text" xml:space="preserve">
-    <value>Password</value>
+    <value>Passwort</value>
   </data>
   <data name="View_PasswordPage_ViewTOTP.Text" xml:space="preserve">
     <value>TOTP</value>
   </data>
   <data name="View_PasswordPage_ViewUsername.Text" xml:space="preserve">
-    <value>Username</value>
+    <value>Nutzername</value>
   </data>
   <data name="View_PasswordPage_ViewWebsite.Text" xml:space="preserve">
-    <value>Website</value>
+    <value>Webseite</value>
   </data>
   <data name="View_RegisterPage_ChoosePasswordInfo.Text" xml:space="preserve">
-    <value>Please choose a master password to begin using the password manager. Without this password, you will never be able to retrieve your saved passwords.</value>
+    <value>Bitte wählen Sie ein Master-Passwort, um den Passwort-Manager nutzen zu können. Ohne dieses Passwort können Sie Ihre gespeicherten Passwörter niemals abrufen.</value>
   </data>
   <data name="View_RegisterPage_EnterPW.PlaceholderText" xml:space="preserve">
-    <value>Enter Password</value>
+    <value>Passwort eingeben</value>
   </data>
   <data name="View_RegisterPage_Register.Content" xml:space="preserve">
-    <value>Register</value>
+    <value>Registrieren</value>
   </data>
   <data name="View_RegisterPage_RepeatPW.PlaceholderText" xml:space="preserve">
-    <value>Repeat Password</value>
+    <value>Passwort wiederholen</value>
   </data>
   <data name="View_RegisterPage_Welcome.Text" xml:space="preserve">
-    <value>Welcome to Ease Pass - Your open source password manager</value>
+    <value>Willkommen bei Ease Pass - Dein Quell offenener Passwort Manager</value>
   </data>
   <data name="View_SettingsPage_ChangePassword.Text" xml:space="preserve">
-    <value>Change Password</value>
+    <value>Passwort ändern</value>
   </data>
   <data name="View_SettingsPage_ChangePasswordButton.Content" xml:space="preserve">
-    <value>Change Password</value>
+    <value>Passwort ändern</value>
   </data>
   <data name="View_SettingsPage_ChangePassword_Warning.Text" xml:space="preserve">
-    <value>Be sure to select a password that you'll always remember. If the password is lost, so are all your stored credentials, with no means of recovery. Additionally, ensure you back up your passwords either to an external offline drive or the cloud.</value>
+    <value>Achte darauf, ein Passwort zu wählen, das du dir immer merken wirst. Wenn das Passwort verloren geht, gehen auch alle deine gespeicherten Anmeldeinformationen verloren, ohne dass eine Wiederherstellung möglich ist. Stelle außerdem sicher, dass deine Passwörter entweder auf einem externen Offline-Laufwerk oder in der Cloud gesichert sind.</value>
   </data>
   <data name="View_SettingsPage_CurrentPassword.Header" xml:space="preserve">
-    <value>Current Password</value>
+    <value>Aktuelles Passwort</value>
   </data>
   <data name="View_SettingsPage_CurrentPassword.PlaceholderText" xml:space="preserve">
-    <value>Current Password</value>
+    <value>Aktuelles Passwort</value>
   </data>
   <data name="View_SettingsPage_DownloadPlugins.Content" xml:space="preserve">
-    <value>Download Plugins</value>
+    <value>Plugins herunterladen</value>
   </data>
   <data name="View_SettingsPage_Headline.Text" xml:space="preserve">
-    <value>Settings</value>
+    <value>Einstellungen</value>
   </data>
   <data name="View_SettingsPage_HeadlineDatabase.Header" xml:space="preserve">
-    <value>Database</value>
+    <value>Datenbank</value>
   </data>
   <data name="View_SettingsPage_HeadlineMiscellaneous.Header" xml:space="preserve">
-    <value>Miscellaneous</value>
+    <value>Verschiedenes</value>
   </data>
   <data name="View_SettingsPage_HeadlinePlugins.Header" xml:space="preserve">
     <value>Plugins</value>
   </data>
   <data name="View_SettingsPage_HeadlineSecurity.Header" xml:space="preserve">
-    <value>Security</value>
+    <value>Sicherheit</value>
   </data>
   <data name="View_SettingsPage_Import.Content" xml:space="preserve">
-    <value>Import</value>
+    <value>Importieren</value>
   </data>
   <data name="View_SettingsPage_ImportPasswords.Text" xml:space="preserve">
-    <value>Import passwords</value>
+    <value>Passwörter importieren</value>
   </data>
   <data name="View_SettingsPage_InactivityLogout.Header" xml:space="preserve">
-    <value>Inactivity Logout</value>
+    <value>Abmeldung bei Inaktivität</value>
   </data>
   <data name="View_SettingsPage_InactivityLogoutTime.Header" xml:space="preserve">
-    <value>Minutes</value>
+    <value>Minuten</value>
   </data>
   <data name="View_SettingsPage_InactivityLogoutTime.PlaceholderText" xml:space="preserve">
-    <value>Logout time</value>
+    <value>Zeit bis zum Abmelden</value>
   </data>
   <data name="View_SettingsPage_Manage.Content" xml:space="preserve">
-    <value>Manage</value>
+    <value>Verwalten</value>
   </data>
   <data name="View_SettingsPage_NewPassword.Header" xml:space="preserve">
-    <value>New Password</value>
+    <value>Neues Passwort</value>
   </data>
   <data name="View_SettingsPage_NewPassword.PlaceholderText" xml:space="preserve">
-    <value>New Password</value>
+    <value>Neues Passwort</value>
   </data>
   <data name="View_SettingsPage_NoPluginsInfo.Text" xml:space="preserve">
-    <value>No plugins installed click below to download</value>
+    <value>Keine Plugins installiert, klicke unten zum Herunterladen</value>
   </data>
   <data name="View_SettingsPage_PasswordGenerator.Text" xml:space="preserve">
-    <value>Password Generator</value>
+    <value>Passwort Generator</value>
   </data>
   <data name="View_SettingsPage_PasswordLength.Header" xml:space="preserve">
-    <value>Password length (min: 8)</value>
+    <value>Passwort länge (min: 8)</value>
   </data>
   <data name="View_SettingsPage_PasswordLength.PlaceholderText" xml:space="preserve">
-    <value>Length of the password</value>
+    <value>Länge des Passworts</value>
   </data>
   <data name="View_SettingsPage_PossiblePWCharacters.Header" xml:space="preserve">
-    <value>Possible characters in password</value>
+    <value>Mögliche Buchstaben im Passwort</value>
   </data>
   <data name="View_SettingsPage_PossiblePWCharacters.PlaceholderText" xml:space="preserve">
-    <value>Some letters, digits and punctation...</value>
+    <value>Einige Buchstaben, Ziffern und Satzzeichen...</value>
   </data>
   <data name="View_SettingsPage_PWPopularityCounter.Header" xml:space="preserve">
-    <value>Password popularity counter</value>
+    <value>Indikator für die Beliebtheit von Passwörtern</value>
   </data>
   <data name="View_SettingsPage_QuickCopy.Header" xml:space="preserve">
-    <value>Quick Copy on Double Click</value>
+    <value>Schnelles Kopieren per Doppelklick</value>
   </data>
   <data name="View_SettingsPage_QuickCopy.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Enable quick copy to copy text by double clicking on the textbox</value>
+    <value>Schnelles Kopieren aktivieren, um Text durch Doppelklick auf das Textfeld zu kopieren</value>
   </data>
   <data name="View_SettingsPage_RepeatPassword.Header" xml:space="preserve">
-    <value>Repeat Password</value>
+    <value>Passwort wiederholen</value>
   </data>
   <data name="View_SettingsPage_RepeatPassword.PlaceholderText" xml:space="preserve">
-    <value>Repeat new Password</value>
+    <value>Neues Passwort wiederholen</value>
   </data>
   <data name="View_SettingsPage_ResetPopularityCounter.Content" xml:space="preserve">
-    <value>Reset</value>
+    <value>Zurücksetzen</value>
   </data>
   <data name="View_SettingsPage_ShowIcons.Header" xml:space="preserve">
-    <value>Show icons</value>
+    <value>Icons anzeigen</value>
   </data>
   <data name="View_SettingsPage_ShowIcons.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Show or hide the icons in the password list</value>
+    <value>Ein- oder Ausblenden der Symbole in der Passwort Liste</value>
   </data>
   <data name="View_SettingsPage_VerifyPWLeaked.Header" xml:space="preserve">
-    <value>Verify that the password was not leaked</value>
+    <value>Stellen Sie sicher, dass das Kennwort nicht geleakt wurde</value>
   </data>
 </root>

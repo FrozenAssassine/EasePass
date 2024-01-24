@@ -19,6 +19,7 @@ public class LocalizationHelper
     {
         resourceContext = resourceManager.CreateResourceContext();
         resourceMap = new ResourceManager().MainResourceMap;
+
     }
 
     public void SetLanguage(LanguageItem languageItem)
@@ -41,7 +42,8 @@ public class LocalizationHelper
         if (res == null)
             return;
 
-        SetLanguage(res);
+        SetLanguage(languages.Find(x => x.Tag == "de-DE"));
+        //SetLanguage(res);
     }
 
     private void RegisterLanguageFromResource()
