@@ -1,4 +1,5 @@
 ﻿using EasePass.Dialogs;
+using EasePass.Extensions;
 using EasePass.Models;
 using System;
 using System.Collections.Generic;
@@ -102,19 +103,19 @@ namespace EasePass.Helper
         private static (string name, string body) BuildServiceString(PasswordManagerItem item)
         {
             StringBuilder sb = new StringBuilder();
-            if (!string.IsNullOrEmpty(item.Username)) sb.AppendLine("Username: " + item.Username);
-            if (!string.IsNullOrEmpty(item.Email)) sb.AppendLine("E-Mail: " + item.Email);
-            if (!string.IsNullOrEmpty(item.Password)) sb.AppendLine("Password: " + item.Password);
-            if (!string.IsNullOrEmpty(item.Website)) sb.AppendLine("Website: " + item.Website);
+            if (!string.IsNullOrEmpty(item.Username)) sb.AppendLine("Username:".Localized("PrintDB_Username/Text") + " " + item.Username);
+            if (!string.IsNullOrEmpty(item.Email)) sb.AppendLine("E-Mail:".Localized("PrintDB_Email/Text") + " " + item.Email);
+            if (!string.IsNullOrEmpty(item.Password)) sb.AppendLine("Password:".Localized("PrintDB_Password/Text") + " " + item.Password);
+            if (!string.IsNullOrEmpty(item.Website)) sb.AppendLine("Website:".Localized("PrintDB_Website/Text") + " " + item.Website);
             if (!string.IsNullOrEmpty(item.Secret))
             {
-                sb.AppendLine("TOTP-Secret: " + item.Secret);
-                sb.AppendLine("TOTP-Algorithm: " + item.Algorithm);
-                sb.AppendLine("TOTP-Interval: " + item.Interval);
+                sb.AppendLine("TOTP-Secret:".Localized("PrintDB_TOTPSecret/Text") + " " + item.Secret);
+                sb.AppendLine("TOTP-Algorithm:".Localized("PrintDB_TOTPAlgorithm/Text") + " " + item.Algorithm);
+                sb.AppendLine("TOTP-Interval:".Localized("PrintDB_TOTPInterval/Text") + " " + item.Interval);
             }
             if (!string.IsNullOrEmpty(item.Notes))
             {
-                sb.AppendLine("Notes:");
+                sb.AppendLine("Notes:".Localized("PrintDB_Notes/Text"));
                 sb.AppendLine(item.Notes);
             }
             return (item.DisplayName, sb.ToString());

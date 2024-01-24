@@ -303,6 +303,21 @@
   <data name="Dialog_SelectExport_SelectAll.Content" xml:space="preserve">
     <value>SelectAll</value>
   </data>
+  <data name="PrintDB_Email.Text" xml:space="preserve">
+    <value>E-Mail:</value>
+  </data>
+  <data name="PrintDB_Notes.Text" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="PrintDB_Password.Text" xml:space="preserve">
+    <value>Password:</value>
+  </data>
+  <data name="PrintDB_Username.Text" xml:space="preserve">
+    <value>Username:</value>
+  </data>
+  <data name="PrintDB_Website.Text" xml:space="preserve">
+    <value>Website:</value>
+  </data>
   <data name="PW_SafetyChart_Already.Text" xml:space="preserve">
     <value>Already</value>
   </data>
