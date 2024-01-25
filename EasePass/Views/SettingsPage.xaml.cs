@@ -19,9 +19,8 @@ namespace EasePass.Views
 {
     public sealed partial class SettingsPage : Page
     {
-        ObservableCollection<PasswordManagerItem> passwordItems = null;
+        Database database = null;
         PasswordsPage passwordsPage = null;
-        Action SavePasswordItems = null;
         ObservableCollection<PasswordImporterBase> passwordImporter = null;
 
         public SettingsPage()
@@ -53,9 +52,8 @@ namespace EasePass.Views
 
             App.m_window.ShowBackArrow = true;
             var navParam = e.Parameter as SettingsNavigationParameters;
-            passwordItems = navParam.PwItemsManager.PasswordItems;
+            database = navParam.Database;
             passwordsPage = navParam.PasswordPage;
-            SavePasswordItems = navParam.SavePwItems;
 
             passwordImporter = new ObservableCollection<PasswordImporterBase>();
             foreach(IPasswordImporter importer in ExtensionHelper.GetAllClassesWithInterface<IPasswordImporter>())
@@ -86,7 +84,7 @@ namespace EasePass.Views
 
             try
             {
-                var dbData = DatabaseHelper.LoadDatabase(pw);
+                new Database(database.Path, pw);
             }
             catch
             {
@@ -106,8 +104,8 @@ namespace EasePass.Views
                 newMasterPw.AppendChar(character);
             }
 
-            passwordsPage.masterPassword = newMasterPw;
-            passwordsPage.SaveData();
+            database.MasterPassword = newMasterPw;
+            database.Save();
 
             InfoMessages.SuccessfullyChangedPassword();
         }
@@ -178,27 +176,27 @@ namespace EasePass.Views
                 for (int i = 0; i < res.Items.Length; i++) // I prefer my way with two loops because it will retain the item order.
                 {
                     bool found = false;
-                    for (int j = 0; j < passwordItems.Count; j++)
+                    for (int j = 0; j < database.Items.Count; j++)
                     {
-                        if (passwordItems[j].DisplayName.Equals(res.Items[i].DisplayName))
+                        if (database.Items[j].DisplayName.Equals(res.Items[i].DisplayName))
                         {
-                            passwordItems[j] = res.Items[i];
+                            database.Items[j] = res.Items[i];
                             found = true;
                         }
                     }
                     if (!found)
-                        passwordItems.Add(res.Items[i]);
+                        database.Items.Add(res.Items[i]);
                 }
             }
             else
             {
                 for (int i = 0; i < res.Items.Length; i++)
                 {
-                    passwordItems.Add(res.Items[i]);
+                    database.Items.Add(res.Items[i]);
                 }
             }
 
-            SavePasswordItems();
+            database.Save();
         }
 
         private void ExtensionManage_Click(object sender, RoutedEventArgs e)
@@ -208,11 +206,11 @@ namespace EasePass.Views
 
         private void ResetPopularity_Click(object sender, RoutedEventArgs e)
         {
-            for(int i = 0; i < passwordItems.Count; i++)
+            for(int i = 0; i < database.Items.Count; i++)
             {
-                passwordItems[i].Clicks.Clear();
+                database.Items[i].Clicks.Clear();
             }
-            SavePasswordItems();
+            database.Save();
         }
 
         private void ManageDatabases_Click(object sender, RoutedEventArgs e)

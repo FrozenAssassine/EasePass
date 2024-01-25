@@ -18,7 +18,7 @@
             </PasswordBox>
             <Button Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Center" Padding="20,5" Margin="10" Click="PWLogin_Click" Content="Login"/>
         </StackPanel>
-        <Grid x:Name="dailyTipGrid" Background="{ThemeResource CardBackgroundFillColorDefault}" Width="600" Height="100" CornerRadius="20" Margin="0,100,0,0">
+        <Grid x:Name="dailyTipGrid" Background="{ThemeResource CardBackgroundFillColorDefault}" Width="600" Height="100" CornerRadius="20" Margin="0,100,0,0" Visibility="Collapsed">
             <TextBlock x:Name="dailyTipTextBlock" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWholeWords" Width="500" />
         </Grid>
     </StackPanel>

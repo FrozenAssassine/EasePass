@@ -1,5 +1,6 @@
 using EasePass.Dialogs;
 using EasePass.Helper;
+using EasePass.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Security;
@@ -33,7 +34,7 @@ namespace EasePass.Views
                 pw.AppendChar(character);
             }
 
-            DatabaseHelper.CreateInitialDatabaseFile(pw);
+            Database.CreateEmptyDatabase(Database.GetAllDatabasePaths()[0], pw);
             App.m_frame.Navigate(typeof(PasswordsPage), pw);
         }
 

@@ -1,4 +1,3 @@
-using EasePass.Core;
 using EasePass.Helper;
 using EasePass.Models;
 using EasePass.Settings;
@@ -59,7 +58,7 @@ namespace EasePass.Controls
         public bool ShowInfo { get; set; } = true;
         public bool SingleHitbox { get; set; } = false;
         public event PropertyChangedEventHandler PropertyChanged;
-        private PasswordItemsManager pwItemsManager;
+        private Database database;
 
 
         public PasswordSafetyChart()
@@ -75,9 +74,9 @@ namespace EasePass.Controls
             paths[7] = path8;
         }
 
-        public void SetPasswordItems(PasswordItemsManager pwItemsManager)
+        public void SetPasswordItems(Database database)
         {
-            this.pwItemsManager = pwItemsManager;
+            this.database = database;
         }
         
         private void RaisePropertyChanged(string name)
@@ -120,12 +119,12 @@ namespace EasePass.Controls
             }
 
             checks[7] = null;
-            if(pwItemsManager.PasswordItems != null)
+            if(database.Items != null)
             {
                 int amount = 0;
-                for(int i = 0; i < pwItemsManager.PasswordItems.Count; i++)
+                for(int i = 0; i < database.Items.Count; i++)
                 {
-                    if (pwItemsManager.PasswordItems[i].Password == password) amount++;
+                    if (database.Items[i].Password == password) amount++;
                 }
                 checks[7] = amount < 2;
             }

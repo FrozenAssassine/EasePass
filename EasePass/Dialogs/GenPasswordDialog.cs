@@ -1,5 +1,5 @@
-﻿using EasePass.Core;
-using EasePass.Helper;
+﻿using EasePass.Helper;
+using EasePass.Models;
 using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -9,9 +9,9 @@ namespace EasePass.Dialogs
 {
     internal class GenPasswordDialog
     {
-        public async Task<bool> ShowAsync(PasswordItemsManager pwItemsManager)
+        public async Task<bool> ShowAsync(Database database)
         {
-            GenPasswordPage page = new GenPasswordPage(pwItemsManager);
+            GenPasswordPage page = new GenPasswordPage(database);
             page.GeneratePassword();
             var dialog = new AutoLogoutContentDialog
             {

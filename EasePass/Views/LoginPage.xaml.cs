@@ -1,5 +1,6 @@
 using EasePass.Dialogs;
 using EasePass.Helper;
+using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System.Security;
@@ -25,10 +26,10 @@ namespace EasePass.Views
             string tip = await DailyTipHelper.GetTodaysTip();
             if (string.IsNullOrEmpty(tip))
             {
-                dailyTipGrid.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
                 return;
             }
             dailyTipTextBlock.Text = tip;
+            dailyTipGrid.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
         }
 
         private void PWLogin_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -47,11 +48,11 @@ namespace EasePass.Views
 
             try
             {
-                var dbData = DatabaseHelper.LoadDatabase(pw);
+                var db = new Database(Database.GetAllDatabasePaths()[0], pw);
 
                 WrongCount = 0;
 
-                App.m_frame.Navigate(typeof(PasswordsPage), pw);
+                App.m_frame.Navigate(typeof(PasswordsPage), db);
                 return;
             }
             catch
