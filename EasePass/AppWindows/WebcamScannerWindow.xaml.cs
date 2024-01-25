@@ -89,27 +89,30 @@ namespace EasePass.AppWindows
 
         private async void OnFrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
         {
-            Debug.WriteLine("Got Frame");
-            try
-            {
-                var bmp = sender.TryAcquireLatestFrame()?.VideoMediaFrame?.SoftwareBitmap;
-                if (bmp == null)
-                    return;
+            var bmp = sender.TryAcquireLatestFrame()?.VideoMediaFrame?.SoftwareBitmap;
+            if (bmp == null)
+                return;
 
-                string result = scanner.Scan(bmp);
-                if (result != "")
+            string result = scanner.Scan(bmp);
+            if (result != "")
+            {
+                this.Result = result;
+                _frameReader.FrameArrived -= OnFrameArrived;
+                await TerminateCaptureAsync();
+
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    this.Result = result;
-                    await TerminateCaptureAsync();
                     this.Close();
-                }
+                });
             }
-            catch { }
         }
 
         private async Task TerminateCaptureAsync()
         {
-            player.Source = null;
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                player.Source = null;
+            });
 
             _mediaSource?.Dispose();
             _mediaSource = null;
@@ -118,7 +121,7 @@ namespace EasePass.AppWindows
             await _frameReader.StopAsync();
             _frameReader.Dispose();
 
-            _capture?.Dispose();
+            _capture.Dispose();
             _capture = null;
         }
 
