@@ -1,31 +1,30 @@
-﻿using EasePass.Helper;
-using EasePass.Views;
+﻿using EasePass.Extensions;
+using EasePass.Helper;
 using EasePass.Views.DialogPages;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Security;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs
 {
     internal class EnterPasswordDialog
     {
-        public async Task<string> ShowAsync()
+        public async Task<SecureString> ShowAsync()
         {
             var page = new EnterPasswordPage();
             var dialog = new AutoLogoutContentDialog
             {
                 Title = "Enter password of the database",
-                CloseButtonText = "Close",
+                CloseButtonText = "Cancel",
+                PrimaryButtonText = "Done",
                 XamlRoot = App.m_window.Content.XamlRoot,
                 Content = page
             };
 
             var res = await dialog.ShowAsync();
 
-            return res == ContentDialogResult.Primary ? page.GetPassword() : "";
+            return res == ContentDialogResult.Primary ? page.GetPassword().ConvertToSecureString() : null;
         }
     }
 }

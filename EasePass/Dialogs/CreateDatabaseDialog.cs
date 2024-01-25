@@ -28,7 +28,8 @@ namespace EasePass.Dialogs
             if(res == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
             {
                 var eval = page.Evaluate();
-                return Database.CreateEmptyDatabase(Path.Combine(Path.GetDirectoryName(eval.path), eval.databaseName + ".epdb"), eval.masterPassword);
+                var path = Path.Combine(eval.path, eval.databaseName + ".epdb");
+                return Database.CreateEmptyDatabase(path, eval.masterPassword);
             }
             return null;
         }

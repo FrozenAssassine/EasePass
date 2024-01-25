@@ -9,11 +9,7 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.Intrinsics.X86;
-using System.Security;
 using System.Threading.Tasks;
-using System.Timers;
 
 namespace EasePass.Views
 {
@@ -23,7 +19,9 @@ namespace EasePass.Views
         public const int TOTP_SPACING = 3;
         private PasswordManagerItem SelectedItem = null;
         private TOTPTokenUpdater totpTokenUpdater;
-        public Database database = null;
+        private Database _database;
+        private Database database { get => _database; set => _database = LoadedDatabase = value; }
+        public static Database LoadedDatabase { get; private set; }
         private static bool firstLoad = true;
 
         public PasswordsPage()

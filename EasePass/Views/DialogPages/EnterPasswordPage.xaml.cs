@@ -1,3 +1,4 @@
+using EasePass.Extensions;
 using Microsoft.UI.Xaml.Controls;
 
 namespace EasePass.Views.DialogPages

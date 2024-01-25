@@ -58,13 +58,8 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     public static void SetAllDatabasePaths(string[] paths)
     {
-        string res = "";
-        for(int i = 0; i < paths.Length; i++)
-        {
-            res += "|" + paths[i];
-        }
-        res = res.Substring(1);
-        AppSettings.GetSettings(res, DefaultSettingsValues.databasePaths);
+        var res = string.Join("|", paths);
+        AppSettings.SaveSettings(AppSettingsValues.databasePaths, res);
     }
 
     public static void AddDatabasePath(string path)

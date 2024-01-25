@@ -5,71 +5,64 @@
     xmlns:local="using:EasePass.Views"
     xmlns:model="using:EasePass.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:EasePass.Models" xmlns:controls="using:EasePass.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:EasePass.Models" xmlns:controls="using:EasePass.Controls" xmlns:controls1="using:CommunityToolkit.WinUI.Controls"
     mc:Ignorable="d">
 
     <ScrollViewer Margin="20">
         <StackPanel>
             <TextBlock TextAlignment="Center" FontSize="36" Text="Manage Database"/>
-
             <controls:SettingsItemSeparator Header="Your Databases">
                 <StackPanel Orientation="Horizontal">
-                    <Button Margin="10,0,0,0" ToolTipService.ToolTip="Create database" Click="CreateDatabase_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <FontIcon Glyph="&#xE710;" />
-                            <TextBlock Margin="10,0,0,0" Text="Create database"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Margin="10,0,0,0" ToolTipService.ToolTip="Add existing database" Click="AddExisting_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <FontIcon Glyph="&#xE710;" />
-                            <TextBlock Margin="10,0,0,0" Text="Add existing database"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Margin="10,0,0,0" ToolTipService.ToolTip="Import database" Click="ImportDatabase_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <FontIcon Glyph="&#xE8B5;" />
-                            <TextBlock Margin="10,0,0,0" Text="Import database"/>
-                        </StackPanel>
-                    </Button>
+                    <controls:IconButton Glyph="&#xE710;" ToolTipService.ToolTip="Create database" Margin="10,0,0,0" Content="Create database" Click="CreateDatabase_Click" />
+                    <controls:IconButton Glyph="&#xE710;" ToolTipService.ToolTip="Add existing database" Margin="10,0,0,0" Content="Add existing database" Click="AddExisting_Click" />
+                    <controls:IconButton Glyph="&#xE8B5;" ToolTipService.ToolTip="Import database" Margin="10,0,0,0" Content="Import database" Click="ImportDatabase_Click" />
                 </StackPanel>
             </controls:SettingsItemSeparator>
-            <GridView Margin="0,20,0,0" x:Name="databaseDisplay">
-                <GridView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Database">
-                        <Grid Width="250" Height="150" Padding="10" Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ContextFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Tag="{x:Bind}" Icon="Delete" Text="Delete" Click="Delete_DatabaseItem_Click"/>
-                                    <MenuFlyoutItem Tag="{x:Bind}" Text="Export" Click="Export_DatabaseItem_Click">
-                                        <MenuFlyoutItem.Icon>
-                                            <FontIcon Glyph="&#xEDE1;" />
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutSeparator/>
-                                    <MenuFlyoutItem Tag="{x:Bind}" Icon="Copy" Text="Copy Path" Click="CopyDatabasePath_Click"/>
-                                </MenuFlyout>
-                            </Grid.ContextFlyout>
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button Margin="5" Width="35" Padding="0" Height="35" Click="Delete_DatabaseItem_Click" ToolTipService.ToolTip="Delete">
-                                    <FontIcon FontSize="14" Glyph="&#xE74D;" />
-                                </Button>
-                                <Button Margin="5" Width="35" Padding="0" Height="35" Click="Export_DatabaseItem_Click" ToolTipService.ToolTip="Export">
-                                    <FontIcon FontSize="14" Glyph="&#xEDE1;" />
-                                </Button>
-                            </StackPanel>
-                            
-                            <TextBlock Grid.Row="1" Text="{x:Bind Name}" FontSize="24"/>
-                            <TextBlock Grid.Row="2" Text="{x:Bind Path}" TextWrapping="Wrap" FontSize="11"/>
-                        </Grid>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
-            </GridView>
+            <Grid Margin="0,20,0,0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <GridView x:Name="databaseDisplay" Grid.Column="0" SelectionChanged="databaseDisplay_SelectionChanged">
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Database">
+                            <Grid Width="250" Height="150" Padding="10" Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ContextFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Tag="{x:Bind}" Icon="Delete" Text="Delete" Click="Delete_DatabaseItem_Click"/>
+                                        <MenuFlyoutItem Tag="{x:Bind}" Text="Export" Click="Export_DatabaseItem_Click">
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xEDE1;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+                                        <MenuFlyoutSeparator/>
+                                        <MenuFlyoutItem Tag="{x:Bind}" Icon="Copy" Text="Copy Path" Click="CopyDatabasePath_Click"/>
+                                    </MenuFlyout>
+                                </Grid.ContextFlyout>
+
+                                <TextBlock Grid.Row="1" Text="{x:Bind Name}" FontSize="24"/>
+                                <TextBlock Grid.Row="2" Text="{x:Bind Path}" TextWrapping="Wrap" FontSize="11"/>
+                            </Grid>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+                <controls1:GridSplitter Orientation="Horizontal" HorizontalContentAlignment="Center" Grid.Column="1"/>
+                <StackPanel Padding="20" CornerRadius="10" Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}" HorizontalAlignment="Center" Orientation="Vertical" Grid.Column="2" x:Name="editDatabaseView" Visibility="Collapsed">
+                    <TextBlock FontSize="20" x:Name="loadedDBName"/>
+                    <controls:IconButton HorizontalAlignment="Right" Glyph="&#xE74D;" Content="Delete Database" ToolTipService.ToolTip="Delete Database" Margin="0,20,0,0" Click="Delete_DatabaseItem_Click" />
+                    <controls:IconButton HorizontalAlignment="Right" Glyph="&#xEDE1;" Content="Export Database" ToolTipService.ToolTip="Export Database" Margin="0,20,0,0" Click="Export_DatabaseItem_Click" />
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <ComboBox x:Name="printerSelector" PlaceholderText="Pick a printer" MinWidth="150" Margin="0,20,0,0" SelectionChanged="printerSelector_SelectionChanged" />
+                        <controls:IconButton Glyph="&#xE749;" Content="Print Database" ToolTipService.ToolTip="Print Database" Margin="10,20,0,0" Click="Print_DatabaseItem_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
 
             <controls:SettingsItemSeparator Header="Your Backups"/>
             <GridView Margin="0,20,0,0" x:Name="databaseBackupDisplay">
