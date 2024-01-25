@@ -94,7 +94,7 @@ namespace EasePass.AppWindows
                 return;
 
             string result = scanner.Scan(bmp);
-            if (result != "")
+            if (result != null)
             {
                 this.Result = result;
                 _frameReader.FrameArrived -= OnFrameArrived;

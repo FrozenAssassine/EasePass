@@ -1,14 +1,8 @@
 ﻿using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
-using Windows.Storage.Streams;
 using ZXing;
 using ZXing.QrCode;
 using ZXing.Windows.Compatibility;
@@ -32,7 +26,7 @@ namespace EasePass.Helper
         public string Scan(SoftwareBitmap bmp)
         {
             var res = _reader.Decode(bmp);
-            return res != null ? res.Text : "";
+            return res != null ? res.Text : null;
         }
 
         public static ImageSource GenerateQRCode(string content)
