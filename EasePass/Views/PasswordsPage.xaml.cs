@@ -28,7 +28,6 @@ namespace EasePass.Views
         private PasswordManagerItem SelectedItem { get => _SelectedItem; set { _SelectedItem = value; RaisePropertyChanged("SelectedItem"); }}
         private TOTPTokenUpdater totpTokenUpdater;
         public readonly PasswordItemsManager passwordItemsManager = new PasswordItemsManager();
-        private static bool firstLoad = true;
 
         public PasswordsPage()
         {
@@ -92,20 +91,6 @@ namespace EasePass.Views
                 await MainWindow.databaseBackupHelper.CheckAndDoBackup();
 
                 SaveData();
-            }
-
-            if (firstLoad)
-            {
-
-                firstLoad = false;
-                /*ShowPasswordItem(new PasswordManagerItem()
-                {
-                    DisplayName = "",
-                    Username = "",
-                    Password = "",
-                    Email = "",
-                    Notes = ""
-                }, true);*/
             }
 
             base.OnNavigatedTo(e);
