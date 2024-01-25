@@ -550,7 +550,7 @@
     <value>Upper case letters</value>
   </data>
   <data name="ScreenScannerWindow_InfoText.Text" xml:space="preserve">
-    <value>Zeige deinen QR Code irgendwo auf de, Bildschirm</value>
+    <value>Zeige deinen QR Code irgendwo auf dem, Bildschirm</value>
   </data>
   <data name="View_About_Changelog.Text" xml:space="preserve">
     <value>Änderungsliste</value>
@@ -601,10 +601,10 @@
     <value>Passwort eingeben</value>
   </data>
   <data name="View_LoginPage_Login.Text" xml:space="preserve">
-    <value>Einloggen</value>
+    <value>Anmelden</value>
   </data>
   <data name="View_LoginPage_LoginButton.Content" xml:space="preserve">
-    <value>Einloggen</value>
+    <value>Anmelden</value>
   </data>
   <data name="View_PasswordPage_CMDBar_About.Label" xml:space="preserve">
     <value>Über</value>
@@ -628,13 +628,13 @@
     <value>Bearbeiten</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Edit.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Eintrag Bearbeiten</value>
+    <value>Eintrag bearbeiten</value>
   </data>
   <data name="View_PasswordPage_CMDBar_GeneratePW.Label" xml:space="preserve">
     <value>Generieren</value>
   </data>
   <data name="View_PasswordPage_CMDBar_GeneratePW.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Passwort Generieren</value>
+    <value>Passwort generieren</value>
   </data>
   <data name="View_PasswordPage_CMDBar_New.Label" xml:space="preserve">
     <value>Neu</value>
@@ -739,7 +739,7 @@
     <value>Passwort ändern</value>
   </data>
   <data name="View_SettingsPage_ChangePassword_Warning.Text" xml:space="preserve">
-    <value>Achte darauf, ein Passwort zu wählen, das du dir immer merken wirst. Wenn das Passwort verloren geht, gehen auch alle deine gespeicherten Anmeldeinformationen verloren, ohne dass eine Wiederherstellung möglich ist. Stelle außerdem sicher, dass deine Passwörter entweder auf einem externen Offline-Laufwerk oder in der Cloud gesichert sind.</value>
+    <value>Achte darauf, ein Passwort zu wählen, welches du dir immer merken wirst. Ohne das Passwort ist keine Wiederherstellung deiner Passwörter möglich. Stelle außerdem sicher, dass deine Passwörter entweder auf einem externen Offline-Laufwerk oder in der Cloud gesichert sind.</value>
   </data>
   <data name="View_SettingsPage_CurrentPassword.Header" xml:space="preserve">
     <value>Aktuelles Passwort</value>
@@ -808,7 +808,7 @@
     <value>Einige Buchstaben, Ziffern und Satzzeichen...</value>
   </data>
   <data name="View_SettingsPage_PWPopularityCounter.Header" xml:space="preserve">
-    <value>Indikator für die Beliebtheit von Passwörtern</value>
+    <value>Passwort Beliebtheitszähler</value>
   </data>
   <data name="View_SettingsPage_QuickCopy.Header" xml:space="preserve">
     <value>Schnelles Kopieren per Doppelklick</value>
@@ -829,7 +829,7 @@
     <value>Icons anzeigen</value>
   </data>
   <data name="View_SettingsPage_ShowIcons.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Ein- oder Ausblenden der Symbole in der Passwort Liste</value>
+    <value>Ein- oder ausblenden der Symbole in der Passwort Liste</value>
   </data>
   <data name="View_SettingsPage_VerifyPWLeaked.Header" xml:space="preserve">
     <value>Stellen Sie sicher, dass das Kennwort nicht geleakt wurde</value>

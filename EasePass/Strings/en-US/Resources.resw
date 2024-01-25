@@ -550,7 +550,7 @@
     <value>Upper case letters</value>
   </data>
   <data name="ScreenScannerWindow_InfoText.Text" xml:space="preserve">
-    <value>Show you QR-Code somewhere on you screen!</value>
+    <value>Show your QR-Code somewhere on the screen!</value>
   </data>
   <data name="View_About_Changelog.Text" xml:space="preserve">
     <value>Changelog</value>

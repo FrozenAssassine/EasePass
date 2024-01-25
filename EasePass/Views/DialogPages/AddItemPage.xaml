@@ -31,7 +31,7 @@
                 </Button>
             </Grid>
 
-            <TextBlock Margin="0,10,0,0" Text="Website" x:Uid="DialogDialog_AddItem_Website"/>
+            <TextBlock Margin="0,10,0,0" Text="Website" x:Uid="Dialog_AddItem_Website"/>
             <TextBox x:Name="websiteTB" />
 
             <TextBlock Margin="0,10,0,0" x:Name="twoFactorAuthTitle" Text="Two Factor Authentification"  x:Uid="Dialog_AddItem_2FATitle"/>
