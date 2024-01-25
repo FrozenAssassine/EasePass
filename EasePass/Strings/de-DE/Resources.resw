@@ -136,16 +136,16 @@
     <value>Interval (sek)</value>
   </data>
   <data name="Dialog_Add2FA_ScreenButton.Content" xml:space="preserve">
-    <value>QR Code auf dem Bildschirm</value>
+    <value>QR Code vom Bildschirm scannen</value>
   </data>
   <data name="Dialog_Add2FA_ScreenButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Scanne den QR code auf dem Bildschirm</value>
+    <value>Scanne den QR Code vom Bildschirm</value>
   </data>
   <data name="Dialog_Add2FA_Secret.Text" xml:space="preserve">
     <value>Geheimcode</value>
   </data>
   <data name="Dialog_Add2FA_WebcamButton.Content" xml:space="preserve">
-    <value>QR Code mit Webcam</value>
+    <value>QR Code von Webcam scannen</value>
   </data>
   <data name="Dialog_Add2FA_WebcamButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Nutze deine Webcam zum Scannen des QR Codes</value>
@@ -223,16 +223,16 @@
     <value>Umbenennen</value>
   </data>
   <data name="Dialog_ConfirmDelete_Extension.Text" xml:space="preserve">
-    <value>Bist du sicher, dass du die Erweiterung löschen möchten:</value>
+    <value>Bist du sicher, dass du die Erweiterung löschen möchten: </value>
   </data>
   <data name="Dialog_ConfirmDelete_Headline.Text" xml:space="preserve">
     <value>Löschen bestätigen</value>
   </data>
   <data name="Dialog_ConfirmDelete_Item.Text" xml:space="preserve">
-    <value>Bist du sicher, dass du das Element löschen möchtest:</value>
+    <value>Bist du sicher, dass du das Element löschen möchtest: </value>
   </data>
   <data name="Dialog_ConfirmDelete_Items.Text" xml:space="preserve">
-    <value>Bist du sicher, dass du die Elemente löschen möchtest:</value>
+    <value>Bist du sicher, dass du die Elemente löschen möchtest: </value>
   </data>
   <data name="Dialog_CreateDB_ChooseLocation.Text" xml:space="preserve">
     <value>Wählen</value>

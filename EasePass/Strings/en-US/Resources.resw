@@ -223,16 +223,16 @@
     <value>Rename</value>
   </data>
   <data name="Dialog_ConfirmDelete_Extension.Text" xml:space="preserve">
-    <value>Are you sure you want to delete the extension:</value>
+    <value>Are you sure you want to delete the extension: </value>
   </data>
   <data name="Dialog_ConfirmDelete_Headline.Text" xml:space="preserve">
     <value>Confirm Deletion</value>
   </data>
   <data name="Dialog_ConfirmDelete_Item.Text" xml:space="preserve">
-    <value>Are you sure you want to delete the item:</value>
+    <value>Are you sure you want to delete the item: </value>
   </data>
   <data name="Dialog_ConfirmDelete_Items.Text" xml:space="preserve">
-    <value>Are you sure you want to delete the items:</value>
+    <value>Are you sure you want to delete the items: </value>
   </data>
   <data name="Dialog_CreateDB_ChooseLocation.Text" xml:space="preserve">
     <value>Choose</value>
