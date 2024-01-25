@@ -96,15 +96,16 @@ namespace EasePass.Views
 
             if (firstLoad)
             {
+
                 firstLoad = false;
-                ShowPasswordItem(new PasswordManagerItem()
+                /*ShowPasswordItem(new PasswordManagerItem()
                 {
                     DisplayName = "",
                     Username = "",
                     Password = "",
                     Email = "",
                     Notes = ""
-                }, true);
+                }, true);*/
             }
 
             base.OnNavigatedTo(e);
@@ -123,50 +124,6 @@ namespace EasePass.Views
         public void SaveData()
         {
             DatabaseHelper.SaveDatabase(passwordItemsManager, masterPassword);
-        }
-        private void ShowPasswordItem(PasswordManagerItem item, bool dummy = false)
-        {
-            if (item == null)
-                return;
-
-            passwordShowArea.Visibility = Visibility.Visible;
-
-            pwTB.SetPasswordItems(passwordItemsManager);
-
-            notesTB.Text = item.Notes;
-            pwTB.Password = item.Password;
-            emailTB.Text = item.Email;
-            usernameTB.Text = item.Username;
-            itemnameTB.Text = item.DisplayName;
-            websiteTB.Text = item.Website;
-
-            if (dummy)
-            {
-                DispatcherTimer timer = new DispatcherTimer();
-                timer.Interval = TimeSpan.FromSeconds(0.5);
-                timer.Tick += (object sender, object e) =>
-                {
-                    passwordShowArea.Visibility = Visibility.Collapsed;
-                    (sender as DispatcherTimer).Stop();
-                };
-                timer.Start();
-                return;
-            }
-
-            if (!string.IsNullOrEmpty(item.Secret))
-            {
-                totpTB.Visibility = totpLB.Visibility = Visibility.Visible;
-                if (totpTokenUpdater != null)
-                    totpTokenUpdater.StopTimer();
-                totpTokenUpdater = new TOTPTokenUpdater(item, totpTB);
-                totpTokenUpdater.StartTimer();
-                totpTokenUpdater.SimulateTickEvent();
-                return;
-            }
-
-            totpTB.Visibility = totpLB.Visibility = Visibility.Collapsed;
-            if(totpTokenUpdater != null)
-                totpTokenUpdater.StopTimer();
         }
         private async Task DeletePasswordItem(PasswordManagerItem deleteItem)
         {
@@ -229,7 +186,6 @@ namespace EasePass.Views
             if (editItem == null)
                 return;
 
-            ShowPasswordItem(SelectedItem);
             SaveData();
         }
         private async Task AddPasswordItem()
@@ -241,6 +197,21 @@ namespace EasePass.Views
             passwordItemsManager.AddItem(newItem);
             Searchbox_TextChanged(searchbox, null);
             SaveData();
+        }
+        private void Update2FATimer()
+        {
+            if (SelectedItem == null)
+                return;
+
+            if (totpTokenUpdater != null)
+                totpTokenUpdater.StopTimer();
+
+            if (!string.IsNullOrEmpty(SelectedItem.Secret))
+            {
+                totpTokenUpdater = new TOTPTokenUpdater(SelectedItem, totpTB);
+                totpTokenUpdater.StartTimer();
+                totpTokenUpdater.SimulateTickEvent();
+            }
         }
         private async Task Add2FAPasswordItem(PasswordManagerItem item)
         {
@@ -260,7 +231,7 @@ namespace EasePass.Views
                 InfoMessages.Invalid2FA();
             }
 
-            ShowPasswordItem(item);
+            Update2FATimer();
             SaveData();
         }
         private async Task GeneratePassword()
@@ -329,9 +300,10 @@ namespace EasePass.Views
 
             if (passwordItemListView.SelectedItem is PasswordManagerItem pwItem)
             {
+                pwTB.SetPasswordItems(passwordItemsManager);
                 SelectedItem = pwItem;
                 SelectedItem.Clicks.Add(DateTime.Now.ToString("d").Replace("/", "."));
-                ShowPasswordItem(pwItem);
+                Update2FATimer();
             }
         }
         private void PasswordItemListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)

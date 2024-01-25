@@ -26,11 +26,19 @@ namespace EasePass.Models
             });
         }
 
-        public string Password { get; set; }
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string Notes { get; set; }
-        public string Secret { get; set; }
+        private string _Password;
+        public string Password { get => _Password; set { _Password = value; NotifyPropertyChanged("Password"); } }
+        private string _Username;
+        public string Username { get => _Username; set { _Username = value; NotifyPropertyChanged("Username"); } }
+
+        private string _Email;
+        public string Email { get => _Email; set { _Email = value; NotifyPropertyChanged("Email"); } }
+
+        private string _Notes;
+        public string Notes { get => _Notes; set { _Notes = value; NotifyPropertyChanged("Notes"); } }
+
+        private string _Secret;
+        public string Secret { get => _Secret; set { _Secret = value; NotifyPropertyChanged("Secret"); } }
         public string Digits { get; set; } = "6";
         public string Interval { get; set; } = "30";
         public string Algorithm { get; set; } = "SHA1";
