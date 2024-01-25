@@ -25,7 +25,7 @@ Ease Pass is a simple password manager designed to streamline password managemen
 </a>
 
 
-## 🔍 Features:
+## 🔍 Features
 - Offline and Secure
 - Simple but intuitive and clean-looking design
 - Generate Secure Passwords
