@@ -58,7 +58,7 @@ namespace EasePass.AppWindows
                     BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
                     SoftwareBitmap softwareBitmap = await decoder.GetSoftwareBitmapAsync();
                     Result = scanner.Scan(softwareBitmap);
-                    if (Result != "")
+                    if (Result != null)
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
