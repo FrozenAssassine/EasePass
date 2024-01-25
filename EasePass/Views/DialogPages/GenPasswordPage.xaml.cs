@@ -7,10 +7,9 @@ namespace EasePass.Views
 {
     public sealed partial class GenPasswordPage : Page
     {
-        public GenPasswordPage(Database database)
+        public GenPasswordPage()
         {
             this.InitializeComponent();
-            safetyChart.SetPasswordItems(database);
         }
 
         public async void GeneratePassword()

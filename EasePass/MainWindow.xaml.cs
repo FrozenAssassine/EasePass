@@ -16,7 +16,6 @@ namespace EasePass
     public sealed partial class MainWindow : Window
     {
         private InactivityHelper inactivityHelper = new InactivityHelper();
-        public Database database = null;
         public static StackPanel InfoMessagesPanel;
         public Frame MainFrame => navigationFrame;
         public bool ShowBackArrow { get => navigateBackButton.Visibility == Visibility.Visible; set => navigateBackButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
@@ -87,7 +86,7 @@ namespace EasePass
                 AutoLogoutContentDialog.InactivityStarted();
                 LogoutHelper.Logout();
                 InfoMessages.AutomaticallyLoggedOut();
-                database.Dispose();
+                Database.LoadedInstance.Dispose();
             }
         }
 

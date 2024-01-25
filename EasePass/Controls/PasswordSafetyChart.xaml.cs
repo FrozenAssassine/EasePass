@@ -58,7 +58,6 @@ namespace EasePass.Controls
         public bool ShowInfo { get; set; } = true;
         public bool SingleHitbox { get; set; } = false;
         public event PropertyChangedEventHandler PropertyChanged;
-        private Database database;
 
 
         public PasswordSafetyChart()
@@ -72,11 +71,6 @@ namespace EasePass.Controls
             paths[5] = path6;
             paths[6] = path7;
             paths[7] = path8;
-        }
-
-        public void SetPasswordItems(Database database)
-        {
-            this.database = database;
         }
         
         private void RaisePropertyChanged(string name)
@@ -119,12 +113,12 @@ namespace EasePass.Controls
             }
 
             checks[7] = null;
-            if(database.Items != null)
+            if(Database.LoadedInstance.Items != null)
             {
                 int amount = 0;
-                for(int i = 0; i < database.Items.Count; i++)
+                for(int i = 0; i < Database.LoadedInstance.Items.Count; i++)
                 {
-                    if (database.Items[i].Password == password) amount++;
+                    if (Database.LoadedInstance.Items[i].Password == password) amount++;
                 }
                 checks[7] = amount < 2;
             }

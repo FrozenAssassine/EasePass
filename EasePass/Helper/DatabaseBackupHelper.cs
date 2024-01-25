@@ -74,7 +74,7 @@ public class DatabaseBackupHelper
         var backupFolder = await GetBackupFolder();
         try
         {
-            return Directory.GetFiles(backupFolder.Path, ".epdb");
+            return Directory.GetFiles(backupFolder.Path, "*.epdb");
         }
         catch
         {

@@ -31,6 +31,10 @@ namespace EasePass.Dialogs
         public static void ExtensionAlreadyInstalled() => new InfoBar().Show("Plugin already installed", "The plugin is already installed!", InfoBarSeverity.Error, 10);
         public static void Invalid2FA() => new InfoBar().Show("Invalid 2FA secret", "This 2FA secret is not valid!", InfoBarSeverity.Error, 10);
         public static void Error() => new InfoBar().Show("Error", "An error has occurred!", InfoBarSeverity.Error, 5);
+        public static void CantDeleteDatabase() => new InfoBar().Show("Can't delete database!", "Create another database to delete this database!", InfoBarSeverity.Error, 5);
+        public static void CantDeleteLoadedDatabase() => new InfoBar().Show("Can't delete database!", "You can't delete a loaded database!", InfoBarSeverity.Error, 5);
+        public static void DatabaseDeleted() => new InfoBar().Show("Database deleted successfully!", "", InfoBarSeverity.Success, 5);
+        public static void DatabaseLoaded() => new InfoBar().Show("Database loaded successfully!", "", InfoBarSeverity.Success, 5);
         public static void NewVersionInfo(string version)
         {
             var btn = new Button { Content = "Changelog" };

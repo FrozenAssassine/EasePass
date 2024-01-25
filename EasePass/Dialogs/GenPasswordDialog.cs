@@ -9,9 +9,9 @@ namespace EasePass.Dialogs
 {
     internal class GenPasswordDialog
     {
-        public async Task<bool> ShowAsync(Database database)
+        public async Task<bool> ShowAsync()
         {
-            GenPasswordPage page = new GenPasswordPage(database);
+            GenPasswordPage page = new GenPasswordPage();
             page.GeneratePassword();
             var dialog = new AutoLogoutContentDialog
             {

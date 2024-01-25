@@ -52,15 +52,14 @@
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>
-                <controls1:GridSplitter Orientation="Horizontal" HorizontalContentAlignment="Center" Grid.Column="1"/>
+                <controls1:GridSplitter Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" Grid.Column="1"/>
                 <StackPanel Padding="20" CornerRadius="10" Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}" HorizontalAlignment="Center" Orientation="Vertical" Grid.Column="2" x:Name="editDatabaseView" Visibility="Collapsed">
                     <TextBlock FontSize="20" x:Name="loadedDBName"/>
-                    <controls:IconButton HorizontalAlignment="Right" Glyph="&#xE74D;" Content="Delete Database" ToolTipService.ToolTip="Delete Database" Margin="0,20,0,0" Click="Delete_DatabaseItem_Click" />
-                    <controls:IconButton HorizontalAlignment="Right" Glyph="&#xEDE1;" Content="Export Database" ToolTipService.ToolTip="Export Database" Margin="0,20,0,0" Click="Export_DatabaseItem_Click" />
-                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                        <ComboBox x:Name="printerSelector" PlaceholderText="Pick a printer" MinWidth="150" Margin="0,20,0,0" SelectionChanged="printerSelector_SelectionChanged" />
-                        <controls:IconButton Glyph="&#xE749;" Content="Print Database" ToolTipService.ToolTip="Print Database" Margin="10,20,0,0" Click="Print_DatabaseItem_Click" />
-                    </StackPanel>
+                    <controls:IconButton HorizontalAlignment="Stretch" Glyph="&#xE74D;" Content="Delete database" ToolTipService.ToolTip="Delete database" Margin="0,20,0,0" Click="Delete_DatabaseItem_Click" />
+                    <controls:IconButton HorizontalAlignment="Stretch" Glyph="&#xEDE1;" Content="Export database" ToolTipService.ToolTip="Export database" Margin="0,20,0,0" Click="Export_DatabaseItem_Click" />
+                    <controls:IconButton HorizontalAlignment="Stretch" Glyph="&#xE8FB;" Content="Load this database" ToolTipService.ToolTip="Load this database" Margin="0,20,0,0" Click="Load_DatabaseItem_Click" />
+                    <ComboBox HorizontalAlignment="Stretch" x:Name="printerSelector" PlaceholderText="Pick a printer" MinWidth="150" Margin="0,20,0,0" SelectionChanged="printerSelector_SelectionChanged" />
+                    <controls:IconButton HorizontalAlignment="Stretch" Glyph="&#xE749;" Content="Print database" ToolTipService.ToolTip="Print database" Margin="0,10,0,0" Click="Print_DatabaseItem_Click" />
                 </StackPanel>
             </Grid>
 

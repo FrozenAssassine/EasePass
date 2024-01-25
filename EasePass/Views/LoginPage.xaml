@@ -9,9 +9,15 @@
 
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBlock TextAlignment="Center" FontSize="36" Text="Login"/>
-        <StackPanel Margin="0,70,0,0" Background="{ThemeResource CardBackgroundFillColorDefault}" CornerRadius="10" Padding="30" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Margin="10,0,0,0" Text="Enter your Password"/>
-            <PasswordBox Margin="10" x:Name="passwordBox" MinWidth="150">
+        <StackPanel Margin="0,70,0,0" Background="{ThemeResource CardBackgroundFillColorDefault}" Width="300" CornerRadius="10" Padding="30" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                <ComboBox x:Name="databasebox" Header="Choose database:" HorizontalAlignment="Stretch" Visibility="Collapsed" Width="190" />
+                <Button Width="60" Click="CreateDatabase_Click" VerticalAlignment="Bottom" Margin="10,0,0,0" ToolTipService.ToolTip="Create new database">
+                    <FontIcon Glyph="&#xE710;" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+            </StackPanel>
+            <TextBlock Margin="0,20,0,0" Text="Enter your Password:" HorizontalAlignment="Center"/>
+            <PasswordBox Margin="0,10,0,0" x:Name="passwordBox" MinWidth="150" HorizontalAlignment="Stretch">
                 <PasswordBox.KeyboardAccelerators>
                     <KeyboardAccelerator Key="Enter" Invoked="Enter_Invoked"/>
                 </PasswordBox.KeyboardAccelerators>

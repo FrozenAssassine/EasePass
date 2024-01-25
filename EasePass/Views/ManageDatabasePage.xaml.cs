@@ -27,6 +27,9 @@ public sealed partial class ManageDatabasePage : Page
         App.m_window.ShowBackArrow = true;
 
         databases = new ObservableCollection<Database>(Database.GetAllUnloadedDatabases());
+        for (int i = 0; i < databases.Count; i++)
+            if (databases[i].Path == Database.LoadedInstance.Path)
+                databases[i] = Database.LoadedInstance;
 
         databaseDisplay.ItemsSource = databases;
 
@@ -55,17 +58,51 @@ public sealed partial class ManageDatabasePage : Page
         if (selectedDatabase == null)
             return;
 
-        //delete here:
+        if(Database.GetAllDatabasePaths().Length == 1)
+        {
+            InfoMessages.CantDeleteDatabase();
+            return;
+        }
+
+        if(Database.LoadedInstance == selectedDatabase)
+        {
+            InfoMessages.CantDeleteLoadedDatabase();
+            return;
+        }
+
+        File.Delete(selectedDatabase.Path);
+        Database.RemoveDatabasePath(selectedDatabase.Path);
+        databases.Remove(selectedDatabase);
+        selectedDatabase = null;
     }
 
-    private void Export_DatabaseItem_Click(object sender, RoutedEventArgs e)
+    private async void Export_DatabaseItem_Click(object sender, RoutedEventArgs e)
     {
         if (selectedDatabase == null)
             return;
 
-        //export here:
-        
+        var res = await FilePickerHelper.PickSaveFile(("Ease Pass database", new List<string>() { ".epdb" }));
+        if (!res.success)
+            return;
+
+        Database export = new Database(res.path);
+        export.MasterPassword = selectedDatabase.MasterPassword;
+        export.SetNew(await new SelectExportPasswordsDialog().ShowAsync(Database.LoadedInstance.Items));
+        export.Save();
+
+        InfoMessages.ExportDBSuccess();
     }
+
+    private void Load_DatabaseItem_Click(object sender, RoutedEventArgs e)
+    {
+        if (selectedDatabase == null)
+            return;
+
+        Database.LoadedInstance = selectedDatabase;
+
+        InfoMessages.DatabaseLoaded();
+    }
+
     private void Print_DatabaseItem_Click(object sender, RoutedEventArgs e)
     {
         if (selectedDatabase == null)
@@ -77,6 +114,23 @@ public sealed partial class ManageDatabasePage : Page
             return;
         }
         PrinterHelper.Print(selectedDatabase.Items);
+    }
+
+    private void ImportDatabase_Click(object sender, RoutedEventArgs e)
+    {
+        if (databaseDisplay.SelectedItem == null)
+            return;
+
+        //import here:
+
+    }
+
+    private void CopyDatabasePath_Click(object sender, RoutedEventArgs e)
+    {
+        if (selectedDatabase == null)
+            return;
+
+        ClipboardHelper.Copy(selectedDatabase.Path);
     }
 
 
@@ -117,23 +171,6 @@ public sealed partial class ManageDatabasePage : Page
         databases.Add(db);
     }
 
-    private void ImportDatabase_Click(object sender, RoutedEventArgs e)
-    {
-        if (databaseDisplay.SelectedItem == null)
-            return;
-
-        //import here:
-        
-    }
-
-    private void CopyDatabasePath_Click(object sender, RoutedEventArgs e)
-    {
-        if (databaseDisplay.SelectedItem == null)
-            return;
-
-        //copy the path of the selected database item
-    }
-
 
     //Backup databases
     private void Export_BackupDatabase_Click(object sender, RoutedEventArgs e)
@@ -161,7 +198,7 @@ public sealed partial class ManageDatabasePage : Page
         }
 
         var db = databaseDisplay.SelectedItem as Database;
-        if (db.Path != PasswordsPage.LoadedDatabase.Path) //check whether the database is already loaded so no need to unlock it.
+        if (db.MasterPassword == null)
         {
             var pw = await new EnterPasswordDialog().ShowAsync();
             if (pw == null)

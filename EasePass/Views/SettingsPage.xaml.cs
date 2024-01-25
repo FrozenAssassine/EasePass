@@ -19,7 +19,6 @@ namespace EasePass.Views
 {
     public sealed partial class SettingsPage : Page
     {
-        Database database = null;
         PasswordsPage passwordsPage = null;
         ObservableCollection<PasswordImporterBase> passwordImporter = null;
 
@@ -52,7 +51,6 @@ namespace EasePass.Views
 
             App.m_window.ShowBackArrow = true;
             var navParam = e.Parameter as SettingsNavigationParameters;
-            database = navParam.Database;
             passwordsPage = navParam.PasswordPage;
 
             passwordImporter = new ObservableCollection<PasswordImporterBase>();
@@ -84,7 +82,7 @@ namespace EasePass.Views
 
             try
             {
-                new Database(database.Path, pw);
+                new Database(Database.LoadedInstance.Path, pw);
             }
             catch
             {
@@ -104,8 +102,8 @@ namespace EasePass.Views
                 newMasterPw.AppendChar(character);
             }
 
-            database.MasterPassword = newMasterPw;
-            database.Save();
+            Database.LoadedInstance.MasterPassword = newMasterPw;
+            Database.LoadedInstance.Save();
 
             InfoMessages.SuccessfullyChangedPassword();
         }
@@ -176,27 +174,27 @@ namespace EasePass.Views
                 for (int i = 0; i < res.Items.Length; i++) // I prefer my way with two loops because it will retain the item order.
                 {
                     bool found = false;
-                    for (int j = 0; j < database.Items.Count; j++)
+                    for (int j = 0; j < Database.LoadedInstance.Items.Count; j++)
                     {
-                        if (database.Items[j].DisplayName.Equals(res.Items[i].DisplayName))
+                        if (Database.LoadedInstance.Items[j].DisplayName.Equals(res.Items[i].DisplayName))
                         {
-                            database.Items[j] = res.Items[i];
+                            Database.LoadedInstance.Items[j] = res.Items[i];
                             found = true;
                         }
                     }
                     if (!found)
-                        database.Items.Add(res.Items[i]);
+                        Database.LoadedInstance.Items.Add(res.Items[i]);
                 }
             }
             else
             {
                 for (int i = 0; i < res.Items.Length; i++)
                 {
-                    database.Items.Add(res.Items[i]);
+                    Database.LoadedInstance.Items.Add(res.Items[i]);
                 }
             }
 
-            database.Save();
+            Database.LoadedInstance.Save();
         }
 
         private void ExtensionManage_Click(object sender, RoutedEventArgs e)
@@ -206,11 +204,11 @@ namespace EasePass.Views
 
         private void ResetPopularity_Click(object sender, RoutedEventArgs e)
         {
-            for(int i = 0; i < database.Items.Count; i++)
+            for(int i = 0; i < Database.LoadedInstance.Items.Count; i++)
             {
-                database.Items[i].Clicks.Clear();
+                Database.LoadedInstance.Items[i].Clicks.Clear();
             }
-            database.Save();
+            Database.LoadedInstance.Save();
         }
 
         private void ManageDatabases_Click(object sender, RoutedEventArgs e)

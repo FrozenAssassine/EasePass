@@ -77,11 +77,5 @@ namespace EasePass.Controls
             base.OnApplyTemplate();
             PasswordSafetyChart = GetTemplateChild("passwordSafetyChart") as PasswordSafetyChart;
         }
-
-        public void SetPasswordItems(Database database)
-        {
-            if (PasswordSafetyChart != null)
-                PasswordSafetyChart.SetPasswordItems(database);
-        }
     }
 }

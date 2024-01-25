@@ -15,12 +15,34 @@ namespace EasePass.Models;
 
 public class Database : IDisposable, INotifyPropertyChanged
 {
-    public string Name = "";
+    public string Name => System.IO.Path.GetFileNameWithoutExtension(Path);
     public string Path = "";
     public SecureString MasterPassword = null;
     public ObservableCollection<PasswordManagerItem> Items = null;
     public DateTime LastModified => File.GetLastWriteTime(Path);
     public string LastModifiedStr => LastModified.ToString("D");
+
+    private static Database loadedInstance = new Database("");
+
+    public static Database LoadedInstance
+    {
+        get => loadedInstance;
+        set // Do not change that! There are faster solutions, but this method retains all xaml bindings.
+        {
+            loadedInstance.Items.Clear();
+            foreach (PasswordManagerItem item in value.Items)
+                loadedInstance.Items.Add(item);
+            loadedInstance.Path = value.Path;
+            //loadedInstance.Name = value.Name;
+            loadedInstance.MasterPassword = value.MasterPassword;
+            if(loadedInstance.PropertyChanged != null)
+            {
+                loadedInstance.PropertyChanged(loadedInstance, new PropertyChangedEventArgs("Path"));
+                loadedInstance.PropertyChanged(loadedInstance, new PropertyChangedEventArgs("Name"));
+                loadedInstance.PropertyChanged(loadedInstance, new PropertyChangedEventArgs("MasterPassword"));
+            }
+        }
+    }
 
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -29,7 +51,7 @@ public class Database : IDisposable, INotifyPropertyChanged
         this.Path = path;
         Items = new ObservableCollection<PasswordManagerItem>();
         Items.CollectionChanged += Items_CollectionChanged;
-        Name = System.IO.Path.GetFileNameWithoutExtension(path);
+        //Name = System.IO.Path.GetFileNameWithoutExtension(path);
         if (masterPassword != null)
             Load(masterPassword);
         CallPropertyChanged("Name");
@@ -46,7 +68,8 @@ public class Database : IDisposable, INotifyPropertyChanged
     public static Database CreateEmptyDatabase(string path, SecureString password)
     {
         Database db = new Database(path);
-        db.Save(password);
+        db.MasterPassword = password;
+        db.Save();
         return db;
     }
 
@@ -174,7 +197,14 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     public void Dispose()
     {
-        Items = null;
+        if(this == Database.LoadedInstance)
+        {
+            Items.Clear();
+        }
+        else
+        {
+            Items = null;
+        }
         MasterPassword = null;
         CallPropertyChanged("Items");
         CallPropertyChanged("MasterPassword");
@@ -224,6 +254,18 @@ public class Database : IDisposable, INotifyPropertyChanged
     }
 
     public void SetNew(ObservableCollection<PasswordManagerItem> items)
+    {
+        Items.Clear();
+
+        foreach (var item in items)
+        {
+            Items.Add(item);
+        }
+
+        CallPropertyChanged("Items");
+    }
+
+    public void SetNew(PasswordManagerItem[] items)
     {
         Items.Clear();
 
