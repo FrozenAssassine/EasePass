@@ -1,4 +1,5 @@
-﻿using EasePass.Settings;
+﻿using EasePass.Extensions;
+using EasePass.Settings;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -23,13 +24,7 @@ namespace EasePass.Helper
 
         public static string DecryptStringAES(byte[] cipherText, string password, string salt)
         {
-            SecureString pw = new SecureString();
-            for (var i = 0; i < password.Length; i++)
-            {
-                pw.AppendChar(password[i]);
-            }
-
-            return DecryptStringAES(cipherText, pw, salt);
+            return DecryptStringAES(cipherText, password.ConvertToSecureString(), salt);
         }
 
 
