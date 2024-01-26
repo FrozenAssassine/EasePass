@@ -6,6 +6,7 @@ using EasePassExtensibility;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
+using Microsoft.UI.Xaml.Navigation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing.Printing;
@@ -24,7 +25,6 @@ public sealed partial class ManageDatabasePage : Page
     {
         this.InitializeComponent();
 
-        App.m_window.ShowBackArrow = true;
 
         databases = new ObservableCollection<Database>(Database.GetAllUnloadedDatabases());
         for (int i = 0; i < databases.Count; i++)
@@ -32,7 +32,11 @@ public sealed partial class ManageDatabasePage : Page
                 databases[i] = Database.LoadedInstance;
 
         databaseDisplay.ItemsSource = databases;
+    }
 
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        App.m_window.ShowBackArrow = true;
         LoadBackupsFromFile();
         LoadPrinter();
     }
@@ -44,6 +48,7 @@ public sealed partial class ManageDatabasePage : Page
         {
             printerSelector.Items.Add(printer);
         }
+        base.OnNavigatedTo(e);
     }
 
     private async void LoadBackupsFromFile()

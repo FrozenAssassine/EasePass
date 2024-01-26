@@ -14,10 +14,18 @@
     <img src="https://img.shields.io/github/repo-size/FrozenAssassine/EasePass?style=flat"/>
 </div>
 
-### What is Ease Pass?
+## 🤔 What is Ease Pass?
 Ease Pass is a simple password manager designed to streamline password management. With this application, you can conveniently store, edit, and organize your passwords securely. The project is a work in progress, focusing on providing a user-friendly interface to save and manage passwords, and future enhancements are underway to further enhance its capabilities.
 
-### Features:
+
+## 📥Download
+<a href="https://apps.microsoft.com/detail/Ease%20Pass/9NQPF80923F5?launch=true
+	&mode=mini">
+	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
+</a>
+
+
+## 🔍 Features
 - Offline and Secure
 - Simple but intuitive and clean-looking design
 - Generate Secure Passwords
@@ -30,7 +38,22 @@ Ease Pass is a simple password manager designed to streamline password managemen
 - Import your passwords from the Browser
 - Import your wifi passwords from Windows
 
-## Images
 
-<img src="Images/img1.png"/>
-<img src="Images/img4.png"/>
+## 👨‍👩‍👧‍👦 Contribute to EasePass
+- Code Contributions: Fork, enhance and submit pull requests on GitHub.
+- Bug Reports: Help us by reporting glitches or bugs on our GitHub repository.
+- Feature Requests: Share your ideas for new features.
+- Translations: Contribute to making EasePass more inclusive.
+
+
+## 🚀 Run on your machine
+1. Clone the repository.
+2. Make sure you have the correct dependencies for Winui3 development installed in Visual Studio
+3. Open the .sln file in the root folder
+4. in Visual Studio start the EasePass package and wait for it to build.
+
+
+## 📸 Images
+<img src="Images/image8.png"/>
+<img src="Images/image1.png"/>
+<img src="Images/image9.png"/>

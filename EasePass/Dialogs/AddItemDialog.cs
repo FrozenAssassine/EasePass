@@ -1,4 +1,5 @@
-﻿using EasePass.Helper;
+﻿using EasePass.Extensions;
+using EasePass.Helper;
 using EasePass.Models;
 using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
@@ -14,9 +15,9 @@ namespace EasePass.Dialogs
             var page = new AddItemPage(pe);
             var dialog = new AutoLogoutContentDialog
             {
-                Title = "Add Password",
-                PrimaryButtonText = "Add",
-                CloseButtonText = "Cancel",
+                Title = "Add Password".Localized("Dialog_AddItem_Headline/Text"),
+                PrimaryButtonText = "Add".Localized("Dialog_Button_Add/Text"),
+                CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
                 XamlRoot = App.m_window.Content.XamlRoot,
                 Content = page
             };

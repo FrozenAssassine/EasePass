@@ -10,6 +10,6 @@
     </Window.SystemBackdrop>
 
     <Grid Loaded="Grid_Loaded" x:Name="panel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <TextBlock x:Name="text" Text="Show you QR-Code somewhere on you screen!" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock x:Uid="ScreenScannerWindow_InfoText" x:Name="text" Text="Show you QR-Code somewhere on you screen!" HorizontalAlignment="Center" VerticalAlignment="Center" />
     </Grid>
 </Window>

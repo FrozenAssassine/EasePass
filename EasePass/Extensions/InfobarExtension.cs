@@ -16,9 +16,17 @@ namespace EasePass.Extensions
 
     internal static class InfobarExtension
     {
+        public static void ShowUntilLogin(this InfoBar infobar, string localizationKey, InfoBarSeverity severity)
+        {
+            ShowInfobar(infobar, "".Localized(localizationKey + "/Headline"), "".Localized(localizationKey + "/Text"), null, severity, InfobarClearCondition.Login);
+        }
         public static void ShowUntilLogin(this InfoBar infobar, string title, string message, InfoBarSeverity severity)
         {
             ShowInfobar(infobar, title, message, null, severity, InfobarClearCondition.Login);
+        }
+        public static void Show(this InfoBar infobar, string localizationKey, InfoBarSeverity severity, int showSeconds = 8)
+        {
+            Show(infobar, "".Localized(localizationKey + "/Headline"), "".Localized(localizationKey + "/Text"), null, severity, InfobarClearCondition.Timer, showSeconds);
         }
         public static void Show(this InfoBar infobar, string title, string message, InfoBarSeverity severity, int showSeconds = 8)
         {

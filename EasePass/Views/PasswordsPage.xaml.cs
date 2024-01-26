@@ -8,16 +8,18 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace EasePass.Views
 {
-    public sealed partial class PasswordsPage : Page
+    public sealed partial class PasswordsPage : Page, INotifyPropertyChanged
     {
         public delegate int PasswordExists(string password);
         public const int TOTP_SPACING = 3;
-        private PasswordManagerItem SelectedItem = null;
+        private PasswordManagerItem _SelectedItem = null;
+        private PasswordManagerItem SelectedItem { get => _SelectedItem; set { _SelectedItem = value; RaisePropertyChanged("SelectedItem"); }}
         private TOTPTokenUpdater totpTokenUpdater;
         private static bool firstLoad = true;
 
@@ -25,6 +27,15 @@ namespace EasePass.Views
         {
             this.InitializeComponent();
             App.m_window.Closed += M_window_Closed;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void RaisePropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)

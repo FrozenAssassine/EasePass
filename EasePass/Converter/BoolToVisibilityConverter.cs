@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System;
 
-namespace Fastedit.Converter
+namespace EasePass.Converter
 {
     public class BoolToVisibilityConverter : IValueConverter
     {

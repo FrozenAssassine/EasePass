@@ -6,12 +6,8 @@ using EasePassExtensibility;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing.Printing;
-using System.IO;
 using System.Security;
 using System.Text;
 
@@ -35,6 +31,11 @@ namespace EasePass.Views
             pswd_chars.Text = AppSettings.GetSettings(AppSettingsValues.passwordChars, DefaultSettingsValues.PasswordChars);
             pswd_length.Text = Convert.ToString(AppSettings.GetSettingsAsInt(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength));
             disableLeakedPasswords.IsOn = !AppSettings.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords);
+
+            selectLanguageBox.ItemsSource = MainWindow.localizationHelper.languages;
+
+            var languageTag = AppSettings.GetSettings(AppSettingsValues.language);
+            selectLanguageBox.SelectedIndex = MainWindow.localizationHelper.languages.FindIndex(x => x.Tag == languageTag);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -214,6 +215,16 @@ namespace EasePass.Views
         private void ManageDatabases_Click(object sender, RoutedEventArgs e)
         {
             App.m_frame.Navigate(typeof(ManageDatabasePage));
+        }
+
+        private void selectLanguageBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (selectLanguageBox.SelectedItem == null)
+                return;
+
+            AppSettings.SaveSettings(AppSettingsValues.language, (selectLanguageBox.SelectedItem as LanguageItem).Tag);
+
+            MainWindow.localizationHelper.SetLanguage(selectLanguageBox.SelectedItem as LanguageItem);
         }
     }
 }

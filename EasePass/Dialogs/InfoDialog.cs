@@ -1,11 +1,8 @@
-﻿using EasePass.Helper;
-using EasePass.Models;
+﻿using EasePass.Extensions;
+using EasePass.Helper;
 using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs
@@ -17,8 +14,8 @@ namespace EasePass.Dialogs
             var page = new TextInfoPage(info);
             var dialog = new AutoLogoutContentDialog
             {
-                Title = extensionName + " info",
-                CloseButtonText = "Close",
+                Title = extensionName + " " + "info".Localized("Dialog_Info_Headline/Text"),
+                CloseButtonText = "Close".Localized("Dialog_Button_Close/Text"),
                 XamlRoot = App.m_window.Content.XamlRoot,
                 Content = page
             };

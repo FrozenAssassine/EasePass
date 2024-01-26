@@ -1,4 +1,5 @@
-﻿using EasePass.Helper;
+﻿using EasePass.Extensions;
+using EasePass.Helper;
 using EasePass.Models;
 using EasePass.Views;
 using Microsoft.UI;
@@ -24,10 +25,10 @@ namespace EasePass.Dialogs
             SetPageMessage(msg, showProgressbar);
             var dialog = new AutoLogoutContentDialog
             {
-                Title = "Import passwords",
-                PrimaryButtonText = "Add",
-                SecondaryButtonText = "Override",
-                CloseButtonText = "Cancel",
+                Title = "Import passwords".Localized("Dialog_ImportPW_Headline/Text"),
+                PrimaryButtonText = "Add".Localized("Dialog_Button_Add/Text"),
+                SecondaryButtonText = "Override".Localized("Dialog_Button_Override/Text"),
+                CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
                 XamlRoot = App.m_window.Content.XamlRoot,
                 Content = importPage
             };
