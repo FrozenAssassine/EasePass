@@ -10,10 +10,11 @@ namespace EasePass.Dialogs
 {
     internal class EnterPasswordDialog
     {
+        private ContentDialog dialog;
         public async Task<SecureString> ShowAsync()
         {
             var page = new EnterPasswordPage();
-            var dialog = new AutoLogoutContentDialog
+            dialog = new AutoLogoutContentDialog
             {
                 Title = "Enter password of the database",
                 CloseButtonText = "Cancel",
@@ -21,10 +22,18 @@ namespace EasePass.Dialogs
                 XamlRoot = App.m_window.Content.XamlRoot,
                 Content = page
             };
-
+            dialog.KeyDown += Dialog_KeyDown;
             var res = await dialog.ShowAsync();
 
             return res == ContentDialogResult.Primary ? page.GetPassword().ConvertToSecureString() : null;
+        }
+
+        private void Dialog_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                dialog.Hide();
+            }
         }
     }
 }
