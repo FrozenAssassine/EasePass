@@ -2,6 +2,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using EasePass.Helper;
 using EasePass.Settings;
+using EasePass.Core;
 using System.Collections.ObjectModel;
 using EasePass.Models;
 
@@ -9,6 +10,15 @@ namespace EasePass.Controls
 {
     public sealed partial class CopyPasswordbox : TextBox
     {
+        private PasswordSafetyChart pwSafetyChart = new PasswordSafetyChart
+        {
+            Margin = new Thickness(6, 2, 5, 2),
+            Height = 30,
+            ShowInfo = false,
+            SingleHitbox = true,
+            HorizontalAlignment = HorizontalAlignment.Right
+        };
+
         public CopyPasswordbox()
         {
             this.InitializeComponent();
@@ -17,10 +27,8 @@ namespace EasePass.Controls
 
         private void ToggleShowPassword(bool show)
         {
-            base.Text = show ? _Password : new string('•', _Password.Length);
+            base.Text = show ? _Password : new string('â€¢', _Password.Length);
         }
-
-        private PasswordSafetyChart PasswordSafetyChart;
 
         private string _Password;
         public string Password
@@ -30,8 +38,8 @@ namespace EasePass.Controls
             {
                 _Password = value;
                 ToggleShowPassword(ShowPassword);
-                if(PasswordSafetyChart != null)
-                    PasswordSafetyChart.EvaluatePassword(_Password);
+
+                pwSafetyChart.EvaluatePassword(_Password);
             }
         }
 
@@ -67,7 +75,7 @@ namespace EasePass.Controls
                     this.SelectAll();
                 else if (e.Key == Windows.System.VirtualKey.C)
                     CopyText();
-                
+
                 e.Handled = true;
                 return;
             }
@@ -75,7 +83,15 @@ namespace EasePass.Controls
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            PasswordSafetyChart = GetTemplateChild("passwordSafetyChart") as PasswordSafetyChart;
+            var sp = GetTemplateChild("pwSafetyChartParentSP") as StackPanel;
+
+            if(!sp.Children.Contains(pwSafetyChart))
+                sp.Children.Add(pwSafetyChart);
+        }
+
+        public void SetPasswordItems(PasswordItemsManager pwItems)
+        {
+            pwSafetyChart.SetPasswordItems(pwItems);
         }
     }
 }
