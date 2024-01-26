@@ -37,6 +37,15 @@ public sealed partial class ManageDatabasePage : Page
         LoadPrinter();
     }
 
+    private Database GetDatabase(object sender)
+    {
+        //either use the selected DB or the rightlicked one
+        var db = selectedDatabase;
+        if (sender is MenuFlyoutItem mf && mf.Tag is Database database)
+            db = database;
+        return db;
+
+    }
     private void LoadPrinter()
     {
         printerSelector.Items.Clear();
@@ -55,7 +64,8 @@ public sealed partial class ManageDatabasePage : Page
 
     private void Delete_DatabaseItem_Click(object sender, RoutedEventArgs e)
     {
-        if (selectedDatabase == null)
+        var db = GetDatabase(sender);
+        if (db == null)
             return;
 
         if (Database.GetAllDatabasePaths().Length == 1)
@@ -64,21 +74,22 @@ public sealed partial class ManageDatabasePage : Page
             return;
         }
 
-        if (Database.LoadedInstance == selectedDatabase)
+        if (Database.LoadedInstance == db)
         {
             InfoMessages.CantDeleteLoadedDatabase();
             return;
         }
 
-        File.Delete(selectedDatabase.Path);
-        Database.RemoveDatabasePath(selectedDatabase.Path);
-        databases.Remove(selectedDatabase);
-        selectedDatabase = null;
+        File.Delete(db.Path);
+        Database.RemoveDatabasePath(db.Path);
+        databases.Remove(db);
+        db = null;
     }
 
     private async void Export_DatabaseItem_Click(object sender, RoutedEventArgs e)
     {
-        if (selectedDatabase == null)
+        var db = GetDatabase(sender);
+        if (db == null)
             return;
 
         var res = await FilePickerHelper.PickSaveFile(("Ease Pass database", new List<string>() { ".epdb" }));
@@ -86,7 +97,7 @@ public sealed partial class ManageDatabasePage : Page
             return;
 
         Database export = new Database(res.path);
-        export.MasterPassword = selectedDatabase.MasterPassword;
+        export.MasterPassword = db.MasterPassword;
         export.SetNew(await new SelectExportPasswordsDialog().ShowAsync(Database.LoadedInstance.Items));
         export.Save();
 
@@ -127,10 +138,11 @@ public sealed partial class ManageDatabasePage : Page
 
     private void CopyDatabasePath_Click(object sender, RoutedEventArgs e)
     {
-        if (selectedDatabase == null)
+        var db = GetDatabase(sender);
+        if (db == null)
             return;
 
-        ClipboardHelper.Copy(selectedDatabase.Path);
+        ClipboardHelper.Copy(db.Path);
     }
 
 
