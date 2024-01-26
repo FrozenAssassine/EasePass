@@ -14,8 +14,8 @@ namespace EasePass.Helper
 {
     internal static class PrinterHelper
     {
+        public static string SelectedPrinter = "";
         private static ObservableCollection<PasswordManagerItem> items;
-
         private static int PageIndex = 0;
         private static int ItemIndex = 0;
 
@@ -30,13 +30,16 @@ namespace EasePass.Helper
         private static readonly Font DisplayNameFont = new Font(FontFamily.GenericSansSerif, 13, FontStyle.Bold);
         private static readonly Font BodyFont = new Font(FontFamily.GenericSansSerif, 13);
 
-        public static async void Print(ObservableCollection<PasswordManagerItem> items, string printer)
+        public static async void Print(ObservableCollection<PasswordManagerItem> items)
         {
+            if (SelectedPrinter == null || SelectedPrinter.Length == 0)
+                return;
+
             await Task.Run(() =>
             {
                 PrinterHelper.items = items;
                 PrintDocument pd = new PrintDocument();
-                pd.PrinterSettings.PrinterName = printer;
+                pd.PrinterSettings.PrinterName = SelectedPrinter;
                 pd.PrintPage += Pd_PrintPage;
                 pd.EndPrint += Pd_EndPrint;
                 PageIndex = 0;

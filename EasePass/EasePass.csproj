@@ -81,9 +81,11 @@
     <None Remove="Controls\CopyPasswordbox.xaml" />
     <None Remove="Controls\CopyTextbox.xaml" />
     <None Remove="Controls\EditPasswordBox.xaml" />
+    <None Remove="Controls\IconButton.xaml" />
     <None Remove="Controls\PasswordSafetyChart.xaml" />
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\AddItemPage.xaml" />
+    <None Remove="Views\DialogPages\EnterPasswordPage.xaml" />
     <None Remove="Views\DialogPages\SelectExportPasswordsDialogPage.xaml" />
     <None Remove="Views\Export2FAPage.xaml" />
     <None Remove="Views\ExtensionPage.xaml" />
@@ -165,6 +167,16 @@
     <Content Update="Assets\AppIcon\appicon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\IconButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\DialogPages\EnterPasswordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\ManageDatabasePage.xaml">

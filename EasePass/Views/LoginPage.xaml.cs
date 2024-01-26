@@ -1,15 +1,17 @@
 using EasePass.Dialogs;
 using EasePass.Helper;
+using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System.Collections.Generic;
 using System.Security;
-using System.Threading.Tasks;
 
 namespace EasePass.Views
 {
     public sealed partial class LoginPage : Page
     {
         int WrongCount = 0;
+        List<Database> databases = null;
 
         public LoginPage()
         {
@@ -22,13 +24,25 @@ namespace EasePass.Views
         {
             base.OnNavigatedTo(e);
 
+            databasebox.Items.Clear();
+            databases = new List<Database>();
+            databases.AddRange(Database.GetAllUnloadedDatabases());
+            foreach (Database db in databases)
+                databasebox.Items.Add(db.Name);
+            databasebox.SelectedIndex = 0;
+            if (databases.Count > 1)
+                databasebox.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+            else
+                databasebox.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+
+
             string tip = await DailyTipHelper.GetTodaysTip();
             if (string.IsNullOrEmpty(tip))
             {
-                dailyTipGrid.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
                 return;
             }
             dailyTipTextBlock.Text = tip;
+            dailyTipGrid.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
         }
 
         private void PWLogin_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -47,11 +61,11 @@ namespace EasePass.Views
 
             try
             {
-                var dbData = DatabaseHelper.LoadDatabase(pw);
+                Database.LoadedInstance = new Database(databases[databasebox.SelectedIndex].Path, pw);
 
                 WrongCount = 0;
 
-                App.m_frame.Navigate(typeof(PasswordsPage), pw);
+                App.m_frame.Navigate(typeof(PasswordsPage));
                 return;
             }
             catch
@@ -63,6 +77,20 @@ namespace EasePass.Views
         private void Enter_Invoked(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
             PWLogin_Click(null, null);
+        }
+
+        private async void CreateDatabase_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            Database newDB = await new CreateDatabaseDialog().ShowAsync();
+            if (newDB == null)
+                return;
+            Database.AddDatabasePath(newDB.Path);
+            databases.Add(newDB);
+            databasebox.Items.Add(newDB.Name);
+            if (databases.Count > 1)
+                databasebox.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+            else
+                databasebox.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
         }
     }
 }

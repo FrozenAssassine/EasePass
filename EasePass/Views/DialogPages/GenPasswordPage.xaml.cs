@@ -1,5 +1,5 @@
-using EasePass.Core;
 using EasePass.Helper;
+using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
 using System.Threading.Tasks;
 
@@ -7,10 +7,9 @@ namespace EasePass.Views
 {
     public sealed partial class GenPasswordPage : Page
     {
-        public GenPasswordPage(PasswordItemsManager pwItemsManager)
+        public GenPasswordPage()
         {
             this.InitializeComponent();
-            safetyChart.SetPasswordItems(pwItemsManager);
         }
 
         public async void GeneratePassword()

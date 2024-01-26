@@ -3,6 +3,8 @@ using Microsoft.UI.Xaml.Controls;
 using EasePass.Helper;
 using EasePass.Settings;
 using EasePass.Core;
+using System.Collections.ObjectModel;
+using EasePass.Models;
 
 namespace EasePass.Controls
 {
@@ -25,7 +27,7 @@ namespace EasePass.Controls
 
         private void ToggleShowPassword(bool show)
         {
-            base.Text = show ? _Password : new string('•', _Password.Length);
+            base.Text = show ? _Password : new string('â€¢', _Password.Length);
         }
 
         private string _Password;

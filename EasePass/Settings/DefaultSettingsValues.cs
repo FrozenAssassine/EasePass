@@ -1,3 +1,5 @@
+using Windows.Storage;
+
 namespace EasePass.Settings
 {
     internal static class DefaultSettingsValues
@@ -9,5 +11,6 @@ namespace EasePass.Settings
         public const bool doubleTapToCopy = true;
         public const bool showIcons = true;
         public const bool disableLeakedPasswords = false;
+        public static readonly string databasePaths = System.IO.Path.Combine(ApplicationData.Current.LocalFolder.Path, "easepass.epdb") + "|";
     }
 }

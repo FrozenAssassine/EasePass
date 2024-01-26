@@ -1,5 +1,4 @@
-﻿using EasePass.Core;
-using EasePass.Dialogs;
+﻿using EasePass.Dialogs;
 using EasePass.Models;
 using EasePass.Settings;
 using System;
@@ -20,14 +19,12 @@ public enum BackupCycle
 
 public class DatabaseBackupHelper
 {
-    private readonly PasswordItemsManager pwItemsManager;
-    private SecureString password;
+    private readonly Database database;
     private BackupCycle backupCycle;
 
-    public DatabaseBackupHelper(PasswordItemsManager pwItemsManager, SecureString pw, BackupCycle backupCycle)
+    public DatabaseBackupHelper(Database database, BackupCycle backupCycle)
     {
-        this.pwItemsManager = pwItemsManager;
-        this.password = pw;
+        this.database = database;
         this.backupCycle = backupCycle;
     }
 
@@ -63,7 +60,10 @@ public class DatabaseBackupHelper
             return false;
 
         var backupPath = folder.Path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + "_Backup.epdb";
-        DatabaseHelper.SaveDatabase(pwItemsManager, password, backupPath);
+        string oldPath = database.Path;
+        database.Path = backupPath;
+        database.Save();
+        database.Path = oldPath;
         AppSettings.SaveSettings(AppSettingsValues.lastBackupDay, CurrentDay);
 
         return true;
@@ -85,12 +85,10 @@ public class DatabaseBackupHelper
 
     public async Task<bool> LoadBackupFromFile(string path)
     {
-        var loadedItems = DatabaseHelper.LoadDatabase(password, path);
-        if (loadedItems == null)
-            return false;
+        Database backup = new Database(path, database.MasterPassword);
 
         ImportPasswordsDialog dialog = new ImportPasswordsDialog();
-        dialog.SetPagePasswords(loadedItems);
+        dialog.SetPagePasswords(backup.Items);
 
         var res = await dialog.ShowAsync(false);
         if (res.Items == null)
@@ -98,10 +96,10 @@ public class DatabaseBackupHelper
         
         if (res.Override)
         {
-            pwItemsManager.PasswordItems.Clear();
+            database.Items.Clear();
         }
 
-        pwItemsManager.AddRange(res.Items);
+        database.AddRange(res.Items);
         return true;
     }
 }
