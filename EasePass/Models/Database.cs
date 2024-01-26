@@ -267,6 +267,9 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     public void SetNew(PasswordManagerItem[] items)
     {
+        if (items == null)
+            return;
+
         Items.Clear();
 
         foreach (var item in items)
