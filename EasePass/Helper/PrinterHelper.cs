@@ -2,11 +2,9 @@
 using EasePass.Extensions;
 using EasePass.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Printing;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -68,7 +66,7 @@ namespace EasePass.Helper
                 e.Graphics.DrawString("Ease Pass", HeadingFont, Brush, new PointF(width / 2 - size.Width / 2, yOffset));
                 yOffset += size.Height + dpiy * 0.75f; // add 3/4 inch spacing
             }
-            
+
             while (ItemIndex < items.Count)
             {
                 var item = BuildServiceString(items[ItemIndex]);

@@ -1,18 +1,14 @@
 using EasePass.Dialogs;
-using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Models;
-using EasePassExtensibility;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Newtonsoft.Json;
 using Microsoft.UI.Xaml.Navigation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
-using System.Security;
 
 namespace EasePass.Views;
 
@@ -48,7 +44,6 @@ public sealed partial class ManageDatabasePage : Page
         {
             printerSelector.Items.Add(printer);
         }
-        base.OnNavigatedTo(e);
     }
 
     private async void LoadBackupsFromFile()
@@ -63,13 +58,13 @@ public sealed partial class ManageDatabasePage : Page
         if (selectedDatabase == null)
             return;
 
-        if(Database.GetAllDatabasePaths().Length == 1)
+        if (Database.GetAllDatabasePaths().Length == 1)
         {
             InfoMessages.CantDeleteDatabase();
             return;
         }
 
-        if(Database.LoadedInstance == selectedDatabase)
+        if (Database.LoadedInstance == selectedDatabase)
         {
             InfoMessages.CantDeleteLoadedDatabase();
             return;

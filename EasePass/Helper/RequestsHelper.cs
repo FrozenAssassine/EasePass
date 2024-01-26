@@ -1,11 +1,6 @@
 ﻿using EasePass.Dialogs;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EasePass.Helper
@@ -57,7 +52,7 @@ namespace EasePass.Helper
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 InfoMessages.CouldNotGetExtensions(ex.Message);
             }

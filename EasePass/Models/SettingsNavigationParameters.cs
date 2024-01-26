@@ -1,5 +1,4 @@
 ﻿using EasePass.Views;
-using System;
 
 namespace EasePass.Models
 {

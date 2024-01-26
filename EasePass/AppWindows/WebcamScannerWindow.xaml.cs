@@ -1,14 +1,13 @@
+using EasePass.Helper;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using Windows.Media.Capture.Frames;
-using Windows.Media.Capture;
-using Windows.Media.Core;
 using System.Threading.Tasks;
+using Windows.Media.Capture;
+using Windows.Media.Capture.Frames;
+using Windows.Media.Core;
 using Windows.Media.MediaProperties;
-using EasePass.Helper;
-using Microsoft.UI.Windowing;
-using System.Diagnostics;
 
 namespace EasePass.AppWindows
 {
@@ -42,7 +41,7 @@ namespace EasePass.AppWindows
         private async Task LoadCameras()
         {
             cameras.Items.Clear();
-            foreach(MediaFrameSourceGroup source in await MediaFrameSourceGroup.FindAllAsync())
+            foreach (MediaFrameSourceGroup source in await MediaFrameSourceGroup.FindAllAsync())
             {
                 cameras.Items.Add(source.DisplayName);
             }
@@ -129,9 +128,9 @@ namespace EasePass.AppWindows
         {
             if (cameras.SelectedIndex == -1)
                 return;
-            if(_capture != null)
+            if (_capture != null)
                 await TerminateCaptureAsync();
-            
+
             await InitializeCaptureAsync();
         }
 

@@ -1,6 +1,5 @@
 ﻿using EasePass.Helper;
 using EasePass.Models;
-using EasePass.Settings;
 using EasePass.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;

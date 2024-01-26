@@ -19,9 +19,8 @@ namespace EasePass.Views
         public delegate int PasswordExists(string password);
         public const int TOTP_SPACING = 3;
         private PasswordManagerItem _SelectedItem = null;
-        private PasswordManagerItem SelectedItem { get => _SelectedItem; set { _SelectedItem = value; RaisePropertyChanged("SelectedItem"); }}
+        private PasswordManagerItem SelectedItem { get => _SelectedItem; set { _SelectedItem = value; RaisePropertyChanged("SelectedItem"); } }
         private TOTPTokenUpdater totpTokenUpdater;
-        public readonly PasswordItemsManager passwordItemsManager = new PasswordItemsManager();
 
         public PasswordsPage()
         {
@@ -46,7 +45,7 @@ namespace EasePass.Views
             {
                 Database.LoadedInstance.Save();
             }
-            else if(e.NavigationMode == NavigationMode.New)
+            else if (e.NavigationMode == NavigationMode.New)
             {
                 passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
                 InfobarExtension.ClearInfobarsAfterLogin(MainWindow.InfoMessagesPanel);
@@ -106,7 +105,7 @@ namespace EasePass.Views
         }
         private async Task DeletePasswordItems(PasswordManagerItem[] deleteItems)
         {
-            if (deleteItems == null || deleteItems.Length == 0) 
+            if (deleteItems == null || deleteItems.Length == 0)
                 return;
 
             if (await new DeleteConfirmationDialog().ShowAsync(deleteItems))
@@ -253,7 +252,6 @@ namespace EasePass.Views
 
             if (passwordItemListView.SelectedItem is PasswordManagerItem pwItem)
             {
-                pwTB.SetPasswordItems(passwordItemsManager);
                 SelectedItem = pwItem;
                 SelectedItem.Clicks.Add(DateTime.Now.ToString("d").Replace("/", "."));
                 Update2FATimer();
@@ -267,7 +265,7 @@ namespace EasePass.Views
 
         private void Searchbox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(searchbox.Text.Length == 0)
+            if (searchbox.Text.Length == 0)
             {
                 passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
                 searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
@@ -285,7 +283,7 @@ namespace EasePass.Views
                 passwordItemListView.SelectedIndex = -1;
             }
         }
-      
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
@@ -316,7 +314,7 @@ namespace EasePass.Views
                     case Windows.System.VirtualKey.L:
                         LogoutHelper.Logout();
                         break;
-                    default: 
+                    default:
                         return;
                 }
             }

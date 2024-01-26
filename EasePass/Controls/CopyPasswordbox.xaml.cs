@@ -1,10 +1,7 @@
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using EasePass.Helper;
 using EasePass.Settings;
-using EasePass.Core;
-using System.Collections.ObjectModel;
-using EasePass.Models;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace EasePass.Controls
 {
@@ -85,13 +82,8 @@ namespace EasePass.Controls
             base.OnApplyTemplate();
             var sp = GetTemplateChild("pwSafetyChartParentSP") as StackPanel;
 
-            if(!sp.Children.Contains(pwSafetyChart))
+            if (!sp.Children.Contains(pwSafetyChart))
                 sp.Children.Add(pwSafetyChart);
-        }
-
-        public void SetPasswordItems(PasswordItemsManager pwItems)
-        {
-            pwSafetyChart.SetPasswordItems(pwItems);
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Controls;
+﻿using EasePass.Helper;
 using Microsoft.UI.Xaml;
-using System;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Media;
-using EasePass.Helper;
+using System;
 
 namespace EasePass.Extensions
 {
@@ -35,7 +35,7 @@ namespace EasePass.Extensions
         public static void Show(this InfoBar infobar, string title, string message, ButtonBase actionButton, InfoBarSeverity severity, InfobarClearCondition clearCondition = InfobarClearCondition.Timer, int showSeconds = 5)
         {
             ShowInfobar(infobar, title, message, actionButton, severity, clearCondition);
-            
+
             DispatcherTimer autoCloseTimer = new DispatcherTimer();
             autoCloseTimer.Interval = new TimeSpan(0, 0, showSeconds);
             autoCloseTimer.Start();
@@ -76,7 +76,7 @@ namespace EasePass.Extensions
                 if (infobar == null || ConvertHelper.ToEnum(infobar.Tag, InfobarClearCondition.Timer) == InfobarClearCondition.Timer)
                     continue;
 
-                    DispatcherTimer timer = new DispatcherTimer();
+                DispatcherTimer timer = new DispatcherTimer();
                 timer.Interval += new TimeSpan(0, 0, 4);
                 timer.Start();
                 timer.Tick += (e, i) =>

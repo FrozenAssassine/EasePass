@@ -40,9 +40,9 @@ namespace EasePass.Views
         {
             string digits = digitsTB.Text;
             StringBuilder newDigits = new StringBuilder();
-            for(int i = 0; i < digits.Length; i++)
+            for (int i = 0; i < digits.Length; i++)
             {
-                if (char.IsDigit(digits[i])) 
+                if (char.IsDigit(digits[i]))
                     newDigits.Append(digits[i]);
             }
             digitsTB.Text = newDigits.ToString();
@@ -55,7 +55,7 @@ namespace EasePass.Views
             StringBuilder newInterval = new StringBuilder();
             for (int i = 0; i < interval.Length; i++)
             {
-                if (char.IsDigit(interval[i])) 
+                if (char.IsDigit(interval[i]))
                     newInterval.Append(interval[i]);
             }
             intervalTB.Text = newInterval.ToString();

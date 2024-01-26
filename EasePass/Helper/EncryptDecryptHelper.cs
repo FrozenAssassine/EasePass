@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using System.Text;
-using System.Security.Cryptography;
+﻿using EasePass.Settings;
 using System.IO;
-using System.Security;
+using System.Linq;
 using System.Runtime.InteropServices;
-using EasePass.Settings;
+using System.Security;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace EasePass.Helper
 {
@@ -13,7 +13,7 @@ namespace EasePass.Helper
         public static byte[] EncryptStringAES(string plainText, string password, string salt)
         {
             SecureString pw = new SecureString();
-            for(var i = 0; i< password.Length; i++)
+            for (var i = 0; i < password.Length; i++)
             {
                 pw.AppendChar(password[i]);
             }

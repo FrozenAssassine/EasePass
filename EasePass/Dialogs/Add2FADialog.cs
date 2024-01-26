@@ -23,7 +23,7 @@ namespace EasePass.Dialogs
             };
 
             bool res = await dialog.ShowAsync() == ContentDialogResult.Primary;
-            if(res)
+            if (res)
                 page.UpdateValue();
             return res;
         }

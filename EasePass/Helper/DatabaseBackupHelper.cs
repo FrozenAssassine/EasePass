@@ -2,9 +2,7 @@
 using EasePass.Models;
 using EasePass.Settings;
 using System;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Security;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -68,7 +66,7 @@ public class DatabaseBackupHelper
 
         return true;
     }
-    
+
     public async Task<string[]> GetAllBackupFiles()
     {
         var backupFolder = await GetBackupFolder();
@@ -93,7 +91,7 @@ public class DatabaseBackupHelper
         var res = await dialog.ShowAsync(false);
         if (res.Items == null)
             return false;
-        
+
         if (res.Override)
         {
             database.Items.Clear();

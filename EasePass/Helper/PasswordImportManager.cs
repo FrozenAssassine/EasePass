@@ -23,7 +23,7 @@ namespace EasePass.Helper
                     {
                         if (items == null)
                             dlg.SetPageMessage(ImportPasswordsDialog.MsgType.Error);
-                        else if(items.Length == 0)
+                        else if (items.Length == 0)
                             dlg.SetPageMessage(ImportPasswordsDialog.MsgType.NoPasswords);
                         else
                             dlg.SetPagePasswords(items.Select(x => ToPMI(x)).ToArray());

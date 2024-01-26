@@ -1,15 +1,15 @@
 using EasePass.Dialogs;
 using EasePass.Helper;
+using EasePass.Models;
 using EasePass.Settings;
 using EasePass.Views;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
 using System.IO;
 using Windows.ApplicationModel;
-using System;
-using Microsoft.UI.Windowing;
-using Microsoft.UI.Dispatching;
-using EasePass.Models;
 
 namespace EasePass
 {
@@ -82,7 +82,7 @@ namespace EasePass
         }
         private void InactivityHelper_InactivityStarted()
         {
-            if(this.navigationFrame.CurrentSourcePageType != typeof(LoginPage) &&
+            if (this.navigationFrame.CurrentSourcePageType != typeof(LoginPage) &&
                 this.navigationFrame.CurrentSourcePageType != typeof(RegisterPage))
             {
                 AutoLogoutContentDialog.InactivityStarted();

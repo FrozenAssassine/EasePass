@@ -1,9 +1,6 @@
 ﻿using EasePass.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EasePass.Helper
 {
@@ -57,7 +54,7 @@ namespace EasePass.Helper
 
             DateTime now = DateTime.Now;
             int pmi1Count = 0;
-            for(int i = 0; i < pmi1.Clicks.Count; i++)
+            for (int i = 0; i < pmi1.Clicks.Count; i++)
             {
                 string[] splitted = pmi1.Clicks[i].Split('.');
                 DateTime date = new DateTime(Convert.ToInt32(splitted[2]), Convert.ToInt32(splitted[1]), Convert.ToInt32(splitted[0]));
@@ -87,7 +84,7 @@ namespace EasePass.Helper
             if (strength1.Length != strength2.Length) return 0;
             int pmi1_res = 0;
             int pmi2_res = 0;
-            for(int i = 0; i < strength1.Length; i++)
+            for (int i = 0; i < strength1.Length; i++)
             {
                 if (strength1[i] == true) pmi1_res++;
                 if (strength1[i] == false) pmi1_res--;

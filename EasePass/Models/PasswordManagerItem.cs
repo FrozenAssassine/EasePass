@@ -1,5 +1,4 @@
-﻿using EasePass.Helper;
-using EasePass.Settings;
+﻿using EasePass.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
@@ -92,7 +91,7 @@ namespace EasePass.Models
                 NotifyPropertyChanged("Icon");
             }
         }
-        
+
         [JsonIgnore]
         public BitmapImage Icon = null;
         [JsonIgnore]

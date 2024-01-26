@@ -1,6 +1,4 @@
-﻿using EasePass.Settings;
-
-namespace EasePass.Helper
+﻿namespace EasePass.Helper
 {
     internal class AuthenticationHelper
     {

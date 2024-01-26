@@ -8,7 +8,6 @@ public sealed partial class IconButton : Button
     public new string Content { get; set; }
     public IconButton()
     {
-        
         this.InitializeComponent();
     }
 }

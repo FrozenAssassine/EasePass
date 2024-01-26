@@ -3,7 +3,6 @@ using EasePass.Dialogs;
 using EasePass.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -23,7 +22,7 @@ public sealed partial class ImportPasswordsDialogPage : Page
         switch (msg)
         {
             case ImportPasswordsDialog.MsgType.None:
-                if(showProgressbar)
+                if (showProgressbar)
                     progress.Visibility = Visibility.Visible;
                 break;
             case ImportPasswordsDialog.MsgType.Error:

@@ -15,7 +15,7 @@ namespace EasePass.Helper
             var presenter = window.AppWindow.Presenter as OverlappedPresenter;
             if (state == OverlappedPresenterState.Maximized)
                 presenter.Maximize();
-            else if(state == OverlappedPresenterState.Minimized)
+            else if (state == OverlappedPresenterState.Minimized)
                 presenter.Minimize();
         }
     }

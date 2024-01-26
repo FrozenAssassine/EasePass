@@ -1,8 +1,6 @@
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using EasePass.Helper;
 using EasePass.Settings;
-using System.Diagnostics;
+using Microsoft.UI.Xaml.Controls;
 
 namespace EasePass.Controls
 {
@@ -21,7 +19,7 @@ namespace EasePass.Controls
             get => base.Text;
             set => base.Text = value;
         }
-        
+
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             PasswordChanged?.Invoke(Password);
@@ -45,7 +43,7 @@ namespace EasePass.Controls
                     CopyText();
                 else if (e.Key == Windows.System.VirtualKey.V)
                     this.PasteFromClipboard();
-                
+
                 e.Handled = true;
                 return;
             }

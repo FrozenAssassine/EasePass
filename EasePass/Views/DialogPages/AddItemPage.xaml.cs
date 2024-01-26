@@ -49,7 +49,7 @@ namespace EasePass.Views
             else
                 Hide2FA();
 
-            if(scroll.VerticalScrollBarVisibility == ScrollBarVisibility.Visible)
+            if (scroll.VerticalScrollBarVisibility == ScrollBarVisibility.Visible)
                 scroll.Padding = new Microsoft.UI.Xaml.Thickness(0, 0, 13, 0);
         }
 
@@ -81,7 +81,7 @@ namespace EasePass.Views
             string newDigits = "";
             for (int i = 0; i < digits.Length; i++)
             {
-                if (char.IsDigit(digits[i])) 
+                if (char.IsDigit(digits[i]))
                     newDigits += digits[i];
             }
             digitsTB.Text = newDigits;
@@ -94,7 +94,7 @@ namespace EasePass.Views
             string newInterval = "";
             for (int i = 0; i < interval.Length; i++)
             {
-                if (char.IsDigit(interval[i])) 
+                if (char.IsDigit(interval[i]))
                     newInterval += interval[i];
             }
             intervalTB.Text = newInterval;

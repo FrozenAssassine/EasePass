@@ -1,10 +1,8 @@
 ﻿using EasePass.Settings;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,24 +46,24 @@ namespace EasePass.Helper
         public static void Init()
         {
             string[] username = Environment.UserName.Split(" "); // User should not use his username in passwords
-            for(int i = 0; i < username.Length; i++)
+            for (int i = 0; i < username.Length; i++)
             {
                 bool isNumber = int.TryParse(username[i], out int value);
                 if (!isNumber) CommonSequences.Add(new CommonSequence(username[i].ToLower()));
             }
-            for(int i = 0; i < ABC.Length; i++) // repeating character, i.e. 'aaaaaaa'
+            for (int i = 0; i < ABC.Length; i++) // repeating character, i.e. 'aaaaaaa'
             {
                 StringBuilder sb = new StringBuilder();
-                for(int j = 0; j < StringMinRepeat; j++)
+                for (int j = 0; j < StringMinRepeat; j++)
                 {
                     sb.Append(ABC[i]);
                 }
                 CommonSequences.Add(new CommonSequence(sb.ToString(), StringMinRepeat));
             }
-            for(int i = 0; i < 10; i++) // repeating number, i.e. '5555555'
+            for (int i = 0; i < 10; i++) // repeating number, i.e. '5555555'
             {
                 StringBuilder sb = new StringBuilder();
-                for(int j = 0; j < StringMinRepeat; j++)
+                for (int j = 0; j < StringMinRepeat; j++)
                 {
                     sb.Append(Convert.ToString(i));
                 }
@@ -116,12 +114,12 @@ namespace EasePass.Helper
         private static async Task<bool> IsSecure2(string password)
         {
             bool?[] res = EvaluatePassword(password);
-            for(int i = 0; i < res.Length; i++)
+            for (int i = 0; i < res.Length; i++)
             {
                 if (res[i] == false) return false;
             }
 
-            if(!AppSettings.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords))
+            if (!AppSettings.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords))
             {
                 if (await IsPwned(password) == true) return false;
                 else return true;
@@ -148,7 +146,7 @@ namespace EasePass.Helper
 
         private static bool ContainsCommonSequences(string password)
         {
-            for(int i = 0; i < CommonSequences.Count; i++)
+            for (int i = 0; i < CommonSequences.Count; i++)
             {
                 if (CommonSequences[i].ContainsSequence(password)) return true;
             }

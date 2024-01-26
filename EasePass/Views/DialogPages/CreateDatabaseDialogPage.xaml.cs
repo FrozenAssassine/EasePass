@@ -1,10 +1,9 @@
+using EasePass.Extensions;
 using EasePass.Helper;
 using Microsoft.UI.Xaml.Controls;
-using System.Security;
 using System;
-using Windows.Storage;
-using EasePass.Extensions;
 using System.IO;
+using System.Security;
 
 namespace EasePass.Views
 {
@@ -29,7 +28,7 @@ namespace EasePass.Views
             char[] invalidChars = Path.GetInvalidFileNameChars();
             string text = databaseName.Text;
             int selectionStart = databaseName.SelectionStart;
-            for(int i = 0; i < invalidChars.Length; i++)
+            for (int i = 0; i < invalidChars.Length; i++)
             {
                 text = text.Replace("" + invalidChars[i], "");
             }

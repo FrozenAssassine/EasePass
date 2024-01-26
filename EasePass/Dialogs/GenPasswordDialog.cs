@@ -1,5 +1,3 @@
-using EasePass.Models;
-using EasePass.Core;
 using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Views;

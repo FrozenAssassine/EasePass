@@ -14,7 +14,7 @@ namespace EasePass.Dialogs
         public static void DatabaseLoaded() => new InfoBar().Show("Database loaded successfully!", "", InfoBarSeverity.Success, 5);
         public static void EnteredWrongPassword(int attempts) => new InfoBar().Show(
             "Wrong password".Localized("InfoMessages_EnteredWrongPW/Headline"),
-            $"You entered the wrong password.\nPlease try again\n({attempts}/3)".Localized("InfoMessages_EnteredWrongPW/Text").Replace("{attempts}",attempts.ToString()),
+            $"You entered the wrong password.\nPlease try again\n({attempts}/3)".Localized("InfoMessages_EnteredWrongPW/Text").Replace("{attempts}", attempts.ToString()),
             InfoBarSeverity.Error
         );
         public static void TooManyPasswordAttempts() => new InfoBar().Show(
@@ -113,7 +113,7 @@ namespace EasePass.Dialogs
             InfoBarSeverity.Error, 5
         );
         public static void CouldNotCreateDatabaseBackupFolder(Exception ex) => new InfoBar().Show(
-            "Could not create database backup folder".Localized("InfoMessages_CouldNotCreateDBBackupFolder/Headline"), 
+            "Could not create database backup folder".Localized("InfoMessages_CouldNotCreateDBBackupFolder/Headline"),
             ex.Message,
             InfoBarSeverity.Error, 10
             );
@@ -126,9 +126,9 @@ namespace EasePass.Dialogs
             };
 
             new InfoBar().Show(
-                "New version".GetLocalized("InfoMessages_NewVersion/Headline"), 
-                $"Welcome to Ease Pass version {version}".Localized("InfoMessages_NewVersion/Text").Replace("{version}", version), 
-                btn, 
+                "New version".GetLocalized("InfoMessages_NewVersion/Headline"),
+                $"Welcome to Ease Pass version {version}".Localized("InfoMessages_NewVersion/Text").Replace("{version}", version),
+                btn,
                 InfoBarSeverity.Success
                 );
         }

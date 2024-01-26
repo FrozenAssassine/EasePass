@@ -1,6 +1,6 @@
+using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Models;
-using EasePass.Extensions;
 using EasePass.Views;
 using System;
 using System.IO;
@@ -26,7 +26,7 @@ namespace EasePass.Dialogs
             dialog.Closing += Dialog_Closing;
 
             var res = await dialog.ShowAsync();
-            if(res == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
+            if (res == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
             {
                 var eval = page.Evaluate();
                 var path = Path.Combine(eval.path, eval.databaseName + ".epdb");

@@ -13,7 +13,7 @@ namespace EasePass.Settings
             if (events.ContainsKey(Value)) events[Value] += eventHandler;
             else events.Add(Value, eventHandler);
         }
-        
+
         public static void SaveSettings(string Value, object data)
         {
             if (data == null)

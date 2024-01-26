@@ -10,7 +10,7 @@ public static class LocalizationExtension
         if (res == null)
             return originalString;
 
-        if(res.ValueAsString.Contains("\\n"))
+        if (res.ValueAsString.Contains("\\n"))
             return res.ValueAsString.Replace("\\n", Environment.NewLine);
         return res.ValueAsString;
     }

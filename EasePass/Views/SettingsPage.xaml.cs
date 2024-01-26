@@ -55,7 +55,7 @@ namespace EasePass.Views
             passwordsPage = navParam.PasswordPage;
 
             passwordImporter = new ObservableCollection<PasswordImporterBase>();
-            foreach(IPasswordImporter importer in ExtensionHelper.GetAllClassesWithInterface<IPasswordImporter>())
+            foreach (IPasswordImporter importer in ExtensionHelper.GetAllClassesWithInterface<IPasswordImporter>())
             {
                 passwordImporter.Add(new PasswordImporterBase(importer));
             }
@@ -121,7 +121,7 @@ namespace EasePass.Views
         private void showIcons_Toggled(object sender, RoutedEventArgs e)
         {
             AppSettings.SaveSettings(AppSettingsValues.showIcons, showIcons.IsOn);
-            if (passwordsPage != null) 
+            if (passwordsPage != null)
                 passwordsPage.Reload();
         }
 
@@ -150,7 +150,7 @@ namespace EasePass.Views
 
         private void pswd_chars_TextChanged(object sender, TextChangedEventArgs e)
         {
-            AppSettings.SaveSettings(AppSettingsValues.passwordChars, 
+            AppSettings.SaveSettings(AppSettingsValues.passwordChars,
                 pswd_chars.Text.Length == 0 ? DefaultSettingsValues.PasswordChars : pswd_chars.Text
                 );
         }
@@ -205,7 +205,7 @@ namespace EasePass.Views
 
         private void ResetPopularity_Click(object sender, RoutedEventArgs e)
         {
-            for(int i = 0; i < Database.LoadedInstance.Items.Count; i++)
+            for (int i = 0; i < Database.LoadedInstance.Items.Count; i++)
             {
                 Database.LoadedInstance.Items[i].Clicks.Clear();
             }

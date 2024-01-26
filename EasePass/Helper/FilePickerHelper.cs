@@ -7,7 +7,7 @@ namespace EasePass.Helper
 {
     internal class FilePickerHelper
     {
-        public static async Task<(string path,bool success)> PickOpenFile(string[] extensions)
+        public static async Task<(string path, bool success)> PickOpenFile(string[] extensions)
         {
             var openPicker = new FileOpenPicker();
             var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(App.m_window);
@@ -15,13 +15,13 @@ namespace EasePass.Helper
             WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
 
             openPicker.ViewMode = PickerViewMode.Thumbnail;
-            for(int i = 0; i< extensions.Length; i++)
+            for (int i = 0; i < extensions.Length; i++)
             {
                 openPicker.FileTypeFilter.Add(extensions[i]);
             }
 
             var file = await openPicker.PickSingleFileAsync();
-            if(file == null)
+            if (file == null)
                 return (null, false);
             return (file.Path, true);
         }
@@ -34,7 +34,7 @@ namespace EasePass.Helper
             WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hWnd);
 
             savePicker.FileTypeChoices.Add(extensions.val, extensions.ext);
-            
+
             var file = await savePicker.PickSaveFileAsync();
             if (file == null)
                 return (null, false);
@@ -51,7 +51,7 @@ namespace EasePass.Helper
             openPicker.SuggestedStartLocation = PickerLocationId.Desktop;
             openPicker.FileTypeFilter.Add("*");
             var folder = await openPicker.PickSingleFolderAsync();
-            if(folder == null)
+            if (folder == null)
                 return (null, false);
             return (folder.Path, true);
         }

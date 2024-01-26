@@ -1,11 +1,8 @@
 ﻿using EasePass.Models;
 using EasePassExtensibility;
-using Microsoft.Windows.ApplicationModel.Resources;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -19,7 +16,7 @@ public static class ExtensionHelper
     {
         Task.Run(new Action(async () =>
         {
-            if(Directory.Exists(ApplicationData.Current.LocalFolder.Path + "\\extensions\\"))
+            if (Directory.Exists(ApplicationData.Current.LocalFolder.Path + "\\extensions\\"))
             {
                 if (File.Exists(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat"))
                     foreach (string extensionID in File.ReadLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat"))
@@ -40,9 +37,9 @@ public static class ExtensionHelper
     public static T[] GetAllClassesWithInterface<T>() where T : IExtensionInterface
     {
         List<T> result = new List<T>();
-        for(int i = 0; i < Extensions.Count; i++)
+        for (int i = 0; i < Extensions.Count; i++)
         {
-            for(int j = 0; j < Extensions[i].Interfaces.Length; j++)
+            for (int j = 0; j < Extensions[i].Interfaces.Length; j++)
             {
                 if (Extensions[i].Interfaces[j] is T) result.Add((T)Extensions[i].Interfaces[j]);
             }
@@ -58,10 +55,10 @@ public static class ExtensionHelper
         if (!result.success)
             return null;
 
-        List<FetchedExtension> items = new ();
+        List<FetchedExtension> items = new();
 
         var splitted = result.result.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-        foreach(var plunginURL in splitted)
+        foreach (var plunginURL in splitted)
         {
             var pluginData = plunginURL.Split("|");
             if (pluginData.Length < 2)

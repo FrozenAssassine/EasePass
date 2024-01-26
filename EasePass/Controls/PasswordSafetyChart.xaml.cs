@@ -1,6 +1,6 @@
-using EasePass.Core;
 using EasePass.Extensions;
 using EasePass.Helper;
+using EasePass.Models;
 using EasePass.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -72,7 +72,7 @@ namespace EasePass.Controls
             paths[6] = path7;
             paths[7] = path8;
         }
-        
+
         private void RaisePropertyChanged(string name)
         {
             if (PropertyChanged != null)
@@ -80,7 +80,7 @@ namespace EasePass.Controls
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
-        
+
         public void SetHeight(double chartHeight)
         {
             ChartScale = chartHeight / 10;
@@ -90,7 +90,7 @@ namespace EasePass.Controls
             info_left.Height = chartHeight;
             info_right.Height = chartHeight;
         }
-        
+
         public void EvaluatePassword(string password)
         {
             checks[3] = null;
@@ -107,31 +107,31 @@ namespace EasePass.Controls
             }
 
             bool?[] res = PasswordHelper.EvaluatePassword(password);
-            for(int i = 0; i < 6; i++)
+            for (int i = 0; i < 6; i++)
             {
                 checks[i >= 3 ? i + 1 : i] = res[i];
             }
 
             checks[7] = null;
-            if(Database.LoadedInstance.Items != null)
+            if (Database.LoadedInstance.Items != null)
             {
                 int amount = 0;
-                for(int i = 0; i < Database.LoadedInstance.Items.Count; i++)
+                for (int i = 0; i < Database.LoadedInstance.Items.Count; i++)
                 {
                     if (Database.LoadedInstance.Items[i].Password == password) amount++;
                 }
                 checks[7] = amount < 2;
             }
-            
 
-            for(int i = 0; i < checks.Length; i++)
+
+            for (int i = 0; i < checks.Length; i++)
             {
                 SetChartEntry(i);
             }
 
             RaisePropertyChanged("ToString");
         }
-        
+
         private void SetChartEntry(int index)
         {
             this.DispatcherQueue.TryEnqueue(() =>
@@ -141,17 +141,17 @@ namespace EasePass.Controls
                 else if (checks[index] == false) paths[index].Fill = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
             });
         }
-        
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            for(int i = 0; i < checks.Length; i++)
+            for (int i = 0; i < checks.Length; i++)
             {
                 sb.AppendLine(prefixes[i][ToIndex(checks[i])] + " " + messages[i].ToLower());
             }
             return sb.ToString();
         }
-        
+
         private int ToIndex(bool? value)
         {
             return value switch
@@ -161,7 +161,7 @@ namespace EasePass.Controls
                 false => 1
             };
         }
-        
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             SetHeight(this.Height);

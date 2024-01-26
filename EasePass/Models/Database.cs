@@ -1,15 +1,15 @@
 ﻿using EasePass.Dialogs;
 using EasePass.Helper;
-using Newtonsoft.Json.Linq;
+using EasePass.Settings;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Security;
-using EasePass.Settings;
-using System.ComponentModel;
-using System.Collections.Generic;
 
 namespace EasePass.Models;
 
@@ -35,7 +35,7 @@ public class Database : IDisposable, INotifyPropertyChanged
             loadedInstance.Path = value.Path;
             //loadedInstance.Name = value.Name;
             loadedInstance.MasterPassword = value.MasterPassword;
-            if(loadedInstance.PropertyChanged != null)
+            if (loadedInstance.PropertyChanged != null)
             {
                 loadedInstance.PropertyChanged(loadedInstance, new PropertyChangedEventArgs("Path"));
                 loadedInstance.PropertyChanged(loadedInstance, new PropertyChangedEventArgs("Name"));
@@ -97,7 +97,7 @@ public class Database : IDisposable, INotifyPropertyChanged
     {
         List<string> paths = new List<string>();
         paths.AddRange(GetAllDatabasePaths());
-        for(int i = 0; i < paths.Count; i++)
+        for (int i = 0; i < paths.Count; i++)
         {
             if (paths[i].ToLower() == path.ToLower())
             {
@@ -197,7 +197,7 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     public void Dispose()
     {
-        if(this == Database.LoadedInstance)
+        if (this == Database.LoadedInstance)
         {
             Items.Clear();
         }

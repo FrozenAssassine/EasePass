@@ -2,7 +2,7 @@
 {
     internal class EncryptedDatabaseItem
     {
-        public EncryptedDatabaseItem(string hash, string salt, byte[] data) 
+        public EncryptedDatabaseItem(string hash, string salt, byte[] data)
         {
             this.PasswordHash = hash;
             this.Salt = salt;
