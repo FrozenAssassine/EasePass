@@ -9,9 +9,8 @@
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -21,9 +20,9 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Margin="0" Grid.Column="1" VerticalAlignment="Stretch" Grid.Row="1" x:Uid="View_LoginPage_Login" TextAlignment="Center" FontSize="36" Text="Login"/>
+        <TextBlock Padding="0" Margin="0" Grid.Column="1" VerticalAlignment="Center" Grid.Row="0" x:Uid="View_LoginPage_Login" TextAlignment="Center" FontSize="36" Text="Login"/>
 
-        <StackPanel Grid.Column="1" VerticalAlignment="Top" Grid.Row="2" Margin="0,0,0,0" Background="{ThemeResource CardBackgroundFillColorDefault}" CornerRadius="10" Padding="30">
+        <StackPanel Grid.Column="1" VerticalAlignment="Center" Grid.Row="1" Margin="0,0,0,0" Background="{ThemeResource CardBackgroundFillColorDefault}" CornerRadius="10" Padding="30">
             <Grid HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -49,7 +48,7 @@
             <Button x:Uid="View_LoginPage_LoginButton" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Center" Padding="20,5" Margin="10" Click="PWLogin_Click" Content="Login"/>
         </StackPanel>
 
-        <Grid Grid.Column="1" VerticalAlignment="Top" Grid.Row="3" x:Name="dailyTipGrid" Background="{ThemeResource CardBackgroundFillColorDefault}" Height="100" CornerRadius="20" Visibility="Collapsed">
+        <Grid VerticalAlignment="Center" Grid.Column="1" Grid.Row="3" x:Name="dailyTipGrid" Background="{ThemeResource CardBackgroundFillColorDefault}" MaxHeight="100" CornerRadius="20" Visibility="Collapsed">
             <TextBlock x:Name="dailyTipTextBlock" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWholeWords" Padding="20"/>
         </Grid>
     </Grid>
