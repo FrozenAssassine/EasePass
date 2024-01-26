@@ -17,7 +17,6 @@ namespace EasePass.Views
         {
             this.InitializeComponent();
 
-            passwordBox.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -29,20 +28,17 @@ namespace EasePass.Views
             databases.AddRange(Database.GetAllUnloadedDatabases());
             foreach (Database db in databases)
                 databasebox.Items.Add(db.Name);
-            databasebox.SelectedIndex = 0;
-            if (databases.Count > 1)
-                databasebox.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
-            else
-                databasebox.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
 
+            databasebox.SelectedIndex = 0;
 
             string tip = await DailyTipHelper.GetTodaysTip();
             if (string.IsNullOrEmpty(tip))
-            {
                 return;
-            }
+
             dailyTipTextBlock.Text = tip;
             dailyTipGrid.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+
+            passwordBox.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
         }
 
         private void PWLogin_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -87,10 +83,6 @@ namespace EasePass.Views
             Database.AddDatabasePath(newDB.Path);
             databases.Add(newDB);
             databasebox.Items.Add(newDB.Name);
-            if (databases.Count > 1)
-                databasebox.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
-            else
-                databasebox.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
         }
     }
 }
