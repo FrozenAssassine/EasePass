@@ -1,9 +1,9 @@
 using EasePass.Dialogs;
+using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using System.Collections.Generic;
 using System.Security;
 
 namespace EasePass.Views
@@ -11,24 +11,16 @@ namespace EasePass.Views
     public sealed partial class LoginPage : Page
     {
         int WrongCount = 0;
-        List<Database> databases = null;
 
         public LoginPage()
         {
             this.InitializeComponent();
-
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
-            databasebox.Items.Clear();
-            databases = new List<Database>();
-            databases.AddRange(Database.GetAllUnloadedDatabases());
-            foreach (Database db in databases)
-                databasebox.Items.Add(db.Name);
-
+            databasebox.ItemsSource = Database.GetAllUnloadedDatabases();
             databasebox.SelectedIndex = 0;
 
             string tip = await DailyTipHelper.GetTodaysTip();
@@ -49,15 +41,10 @@ namespace EasePass.Views
                 return;
             }
 
-            SecureString pw = new SecureString();
-            foreach (var character in passwordBox.Password)
-            {
-                pw.AppendChar(character);
-            }
-
+            SecureString pw  = passwordBox.Password.ConvertToSecureString();
             try
             {
-                Database.LoadedInstance = new Database(databases[databasebox.SelectedIndex].Path, pw);
+                Database.LoadedInstance = new Database((databasebox.SelectedItem as Database).Path, pw);
 
                 WrongCount = 0;
 
@@ -80,8 +67,8 @@ namespace EasePass.Views
             Database newDB = await new CreateDatabaseDialog().ShowAsync();
             if (newDB == null)
                 return;
+
             Database.AddDatabasePath(newDB.Path);
-            databases.Add(newDB);
             databasebox.Items.Add(newDB.Name);
         }
     }
