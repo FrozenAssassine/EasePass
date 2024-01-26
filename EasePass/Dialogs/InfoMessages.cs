@@ -8,6 +8,10 @@ namespace EasePass.Dialogs
 {
     internal class InfoMessages
     {
+        public static void CantDeleteDatabase() => new InfoBar().Show("Can't delete database!", "Create another database to delete this database!", InfoBarSeverity.Error, 5);
+        public static void CantDeleteLoadedDatabase() => new InfoBar().Show("Can't delete database!", "You can't delete a loaded database!", InfoBarSeverity.Error, 5);
+        public static void DatabaseDeleted() => new InfoBar().Show("Database deleted successfully!", "", InfoBarSeverity.Success, 5);
+        public static void DatabaseLoaded() => new InfoBar().Show("Database loaded successfully!", "", InfoBarSeverity.Success, 5);
         public static void EnteredWrongPassword(int attempts) => new InfoBar().Show(
             "Wrong password".Localized("InfoMessages_EnteredWrongPW/Headline"),
             $"You entered the wrong password.\nPlease try again\n({attempts}/3)".Localized("InfoMessages_EnteredWrongPW/Text").Replace("{attempts}",attempts.ToString()),

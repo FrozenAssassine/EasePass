@@ -4,13 +4,13 @@ using System.Security;
 using System;
 using Windows.Storage;
 using EasePass.Extensions;
+using System.IO;
 
 namespace EasePass.Views
 {
     public sealed partial class CreateDatabaseDialogPage : Page
     {
         private string DatabaseOutputLocation = "";
-        private SecureString MasterPassword;
 
         public CreateDatabaseDialogPage()
         {
@@ -24,21 +24,27 @@ namespace EasePass.Views
 
         public bool PasswordsMatch => passwordBoxRepeat.Password == passwordBox.Password;
 
-        private async void Choose_DatabaseLocation_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private void databaseName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var pickerRes = await FilePickerHelper.PickOpenFile(new string[] { ".epdb" });
+            char[] invalidChars = Path.GetInvalidFileNameChars();
+            string text = databaseName.Text;
+            int selectionStart = databaseName.SelectionStart;
+            for(int i = 0; i < invalidChars.Length; i++)
+            {
+                text = text.Replace("" + invalidChars[i], "");
+            }
+            databaseName.Text = text;
+            databaseName.SelectionStart = Math.Min(text.Length, selectionStart);
+        }
+
+        private async void selectPath_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            var pickerRes = await FilePickerHelper.PickFolder();
             if (!pickerRes.success)
                 return;
 
+            databasePath.Text = pickerRes.path;
             DatabaseOutputLocation = pickerRes.path;
-        }
-
-
-        private async void Default_DatabaseLocation_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-        {
-            var databaseFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("Backups", CreationCollisionOption.OpenIfExists);
-
-            DatabaseOutputLocation = databaseFolder.Path;
         }
     }
 }

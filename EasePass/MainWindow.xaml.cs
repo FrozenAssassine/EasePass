@@ -9,14 +9,13 @@ using Windows.ApplicationModel;
 using System;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Dispatching;
-using EasePass.Core;
+using EasePass.Models;
 
 namespace EasePass
 {
     public sealed partial class MainWindow : Window
     {
         private InactivityHelper inactivityHelper = new InactivityHelper();
-        public PasswordItemsManager passwordItemsManager = null;
         public static StackPanel InfoMessagesPanel;
         public Frame MainFrame => navigationFrame;
         public bool ShowBackArrow { get => navigateBackButton.Visibility == Visibility.Visible; set => navigateBackButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
@@ -89,7 +88,7 @@ namespace EasePass
                 AutoLogoutContentDialog.InactivityStarted();
                 LogoutHelper.Logout();
                 InfoMessages.AutomaticallyLoggedOut();
-                passwordItemsManager.Unload();
+                Database.LoadedInstance.Dispose();
             }
         }
 

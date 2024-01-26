@@ -4,7 +4,6 @@ using EasePass.Helper;
 using EasePass.Settings;
 using System.Collections.ObjectModel;
 using EasePass.Models;
-using EasePass.Core;
 
 namespace EasePass.Controls
 {
@@ -24,7 +23,7 @@ namespace EasePass.Controls
         private PasswordSafetyChart PasswordSafetyChart;
 
         private string _Password;
-        public new string Password
+        public string Password
         {
             get => _Password;
             set
@@ -77,12 +76,6 @@ namespace EasePass.Controls
         {
             base.OnApplyTemplate();
             PasswordSafetyChart = GetTemplateChild("passwordSafetyChart") as PasswordSafetyChart;
-        }
-
-        public void SetPasswordItems(PasswordItemsManager pwItems)
-        {
-            if (PasswordSafetyChart != null)
-                PasswordSafetyChart.SetPasswordItems(pwItems);
         }
     }
 }
