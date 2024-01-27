@@ -216,7 +216,15 @@ public sealed partial class ManageDatabasePage : Page
             if (pw == null)
                 return;
 
-            db.Load(pw);
+            try
+            {
+                db.Load(pw);
+            }
+            catch
+            {
+                InfoMessages.ImportDBWrongPassword();
+                return;
+            }
         }
 
         loadedDBName.Text = db.Name;
