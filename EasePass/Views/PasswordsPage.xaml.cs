@@ -47,7 +47,6 @@ namespace EasePass.Views
             }
             else if (e.NavigationMode == NavigationMode.New)
             {
-                passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
                 InfobarExtension.ClearInfobarsAfterLogin(MainWindow.InfoMessagesPanel);
                 AppVersionHelper.CheckNewVersion();
 
@@ -57,6 +56,8 @@ namespace EasePass.Views
 
             if (Database.LoadedInstance != null)
             {
+                passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
+                
                 //enable backups:
                 MainWindow.databaseBackupHelper = new DatabaseBackupHelper(Database.LoadedInstance, BackupCycle.Daily);
                 await MainWindow.databaseBackupHelper.CheckAndDoBackup();

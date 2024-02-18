@@ -30,7 +30,7 @@ namespace EasePass.Dialogs
             {
                 var eval = page.Evaluate();
                 var path = Path.Combine(eval.path, eval.databaseName + ".epdb");
-                return Database.CreateEmptyDatabase(path, eval.masterPassword);
+                return Database.CreateNewDatabase(path, eval.masterPassword);
             }
             return null;
         }

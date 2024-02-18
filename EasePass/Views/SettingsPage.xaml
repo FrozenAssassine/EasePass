@@ -68,35 +68,6 @@
             <controls:SettingsControl Header="Inactivity Logout" x:Uid="View_SettingsPage_InactivityLogout">
                 <NumberBox x:Uid="View_SettingsPage_InactivityLogoutTime" SpinButtonPlacementMode="Inline" ValueChanged="InactivityLogoutTime_ValueChanged" Maximum="1000" Minimum="1" MinWidth="150" Margin="5" x:Name="inactivityLogoutTime" PlaceholderText="Logout time" Header="Minutes"/>
             </controls:SettingsControl>
-            <Expander Margin="0,5,0,5" HorizontalAlignment="Stretch">
-                <Expander.Header>
-                    <StackPanel Orientation="Horizontal" Height="70">
-                        <TextBlock Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xE785;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
-                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Change Password" x:Uid="View_SettingsPage_ChangePassword"/>
-                    </StackPanel>
-                </Expander.Header>
-                <Expander.Content>
-                    <StackPanel MaxWidth="600">
-                        <TextBlock x:Uid="View_SettingsPage_ChangePassword_Warning" Grid.Column="1" TextWrapping="Wrap" Text="Be sure to select a password that you'll always remember. If the password is lost, so are all your stored credentials, with no means of recovery. Additionally, ensure you back up your passwords either to an external offline drive or the cloud."/>
-                        <Grid Margin="0,20,0,0" Grid.Column="1" Grid.Row="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <PasswordBox x:Uid="View_SettingsPage_CurrentPassword" Margin="5" Grid.Row="0" Grid.Column="0" Header="Current Password" x:Name="changePW_currentPw" PlaceholderText="Current Password"/>
-                            <PasswordBox x:Uid="View_SettingsPage_NewPassword" Margin="5" Grid.Row="0" Grid.Column="2" Header="New Password" x:Name="changePW_newPw" PlaceholderText="New Password"/>
-                            <PasswordBox x:Uid="View_SettingsPage_RepeatPassword" Margin="5" Grid.Row="1" Grid.Column="2" Header="Repeat Password" x:Name="changePW_repeatPw" PlaceholderText="Repeat new Password"/>
-                        </Grid>
-                        <Button x:Uid="View_SettingsPage_ChangePasswordButton" Grid.Row="2" Margin="0,20,0,0" Style="{ThemeResource AccentButtonStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Content="Change Password" Click="ChangePassword_Click"/>
-                    </StackPanel>
-                </Expander.Content>
-            </Expander>
             <Expander Margin="0,0,0,5" HorizontalAlignment="Stretch">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">

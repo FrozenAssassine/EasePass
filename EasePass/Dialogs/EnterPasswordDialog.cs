@@ -11,9 +11,12 @@ namespace EasePass.Dialogs
     internal class EnterPasswordDialog
     {
         private ContentDialog dialog;
-        public async Task<SecureString> ShowAsync()
+        public SecureString Password { get; private set; }
+        private EnterPasswordPage page;
+
+        public async Task<EnterPasswordDialog> ShowAsync()
         {
-            var page = new EnterPasswordPage();
+            page = new EnterPasswordPage();
             dialog = new AutoLogoutContentDialog
             {
                 Title = "Enter password of the database",
@@ -23,15 +26,23 @@ namespace EasePass.Dialogs
                 Content = page
             };
             dialog.KeyDown += Dialog_KeyDown;
-            var res = await dialog.ShowAsync();
+            dialog.Closing += Dialog_Closing;
 
-            return res == ContentDialogResult.Primary ? page.GetPassword().ConvertToSecureString() : null;
+            await dialog.ShowAsync();
+            return this;
+        }
+
+        private void Dialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
+        {
+            if(Password == null)
+                Password = args.Result == ContentDialogResult.Primary ? page.GetPassword().ConvertToSecureString() : null;
         }
 
         private void Dialog_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
+                Password = page.GetPassword().ConvertToSecureString();
                 dialog.Hide();
             }
         }

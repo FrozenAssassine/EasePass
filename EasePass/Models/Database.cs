@@ -22,19 +22,13 @@ public class Database : IDisposable, INotifyPropertyChanged
     public DateTime LastModified => File.GetLastWriteTime(Path);
     public string LastModifiedStr => LastModified.ToString("D");
 
-    private static Database loadedInstance = new Database("");
-
+    private static Database loadedInstance;
     public static Database LoadedInstance
     {
         get => loadedInstance;
-        set // Do not change that! There are faster solutions, but this method retains all xaml bindings.
+        set
         {
-            loadedInstance.Items.Clear();
-            foreach (PasswordManagerItem item in value.Items)
-                loadedInstance.Items.Add(item);
-            loadedInstance.Path = value.Path;
-            //loadedInstance.Name = value.Name;
-            loadedInstance.MasterPassword = value.MasterPassword;
+            loadedInstance = value;
             if (loadedInstance.PropertyChanged != null)
             {
                 loadedInstance.PropertyChanged(loadedInstance, new PropertyChangedEventArgs("Path"));
@@ -46,14 +40,12 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     public event PropertyChangedEventHandler PropertyChanged;
 
-    public Database(string path, SecureString masterPassword = null)
+    public Database(string path)
     {
         this.Path = path;
         Items = new ObservableCollection<PasswordManagerItem>();
         Items.CollectionChanged += Items_CollectionChanged;
-        //Name = System.IO.Path.GetFileNameWithoutExtension(path);
-        if (masterPassword != null)
-            Load(masterPassword);
+
         CallPropertyChanged("Name");
         CallPropertyChanged("Path");
         CallPropertyChanged("MasterPassword");
@@ -65,7 +57,7 @@ public class Database : IDisposable, INotifyPropertyChanged
         CallPropertyChanged("Items");
     }
 
-    public static Database CreateEmptyDatabase(string path, SecureString password)
+    public static Database CreateNewDatabase(string path, SecureString password)
     {
         Database db = new Database(path);
         db.MasterPassword = password;
@@ -113,22 +105,66 @@ public class Database : IDisposable, INotifyPropertyChanged
         return GetAllDatabasePaths().Select(x => new Database(x)).ToArray();
     }
 
-    public void Load(SecureString password)
+    public static ObservableCollection<PasswordManagerItem> GetItemsFromDatabase(string path, SecureString password)
     {
-        MasterPassword = password;
-        CallPropertyChanged("MasterPassword");
+        if (System.IO.Path.GetExtension(path).ToLower() == ".eped")
+        {
+            string pw = new System.Net.NetworkCredential(string.Empty, password).Password;
+            EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(path));
+            if (!AuthenticationHelper.VerifyPassword(decryptedJson.PasswordHash, pw))
+            {
+                InfoMessages.ImportDBWrongPassword();
+                return null;
+            }
+            var res = EncryptDecryptHelper.DecryptStringAES(decryptedJson.Data, pw, decryptedJson.Salt);
+            if (!res.correctPassword)
+            {
+                InfoMessages.ImportDBWrongPassword();
+                return null;
+            }
 
+            return LoadItems(res.decryptedString);
+        }
+
+        var readFileResult = ReadFile(path, password);
+        if (!readFileResult.success)
+        {
+            InfoMessages.ImportDBWrongPassword();
+            return null;
+        }
+
+        return LoadItems(readFileResult.data);
+    }
+
+    public bool ValidatePwAndLoadDB(SecureString masterPassword, bool showWrongPasswordError = true)
+    {
+        if (masterPassword != null)
+            return Load(masterPassword, showWrongPasswordError);
+        return false;
+    }
+
+    public bool Load(SecureString password, bool showWrongPasswordError = true)
+    {
         if (System.IO.Path.GetExtension(Path).ToLower() == ".eped")
         {
             string pw = new System.Net.NetworkCredential(string.Empty, password).Password;
             EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(Path));
             if (!AuthenticationHelper.VerifyPassword(decryptedJson.PasswordHash, pw))
             {
-                InfoMessages.ImportDBWrongPassword();
-                return;
+                if (showWrongPasswordError)
+                    InfoMessages.ImportDBWrongPassword();
+                return false;
             }
-            var str = EncryptDecryptHelper.DecryptStringAES(decryptedJson.Data, pw, decryptedJson.Salt);
-            Items = LoadItems(str);
+            var res = EncryptDecryptHelper.DecryptStringAES(decryptedJson.Data, pw, decryptedJson.Salt);
+            if (!res.correctPassword)
+            {
+                if (showWrongPasswordError)
+                    InfoMessages.ImportDBWrongPassword();
+
+                return false;
+            }
+            
+            Items = LoadItems(res.decryptedString);
             ClearOldClicksCache();
             CallPropertyChanged("Items");
 
@@ -136,22 +172,30 @@ public class Database : IDisposable, INotifyPropertyChanged
             Save();
         }
 
-        string data = ReadFile(Path, password);
-        if (data.Length == 0)
+        var readFileResult = ReadFile(Path, password);
+        if (!readFileResult.success)
         {
-            Items = new ObservableCollection<PasswordManagerItem>();
-            return;
+            if (showWrongPasswordError)
+                InfoMessages.ImportDBWrongPassword();
+            return false;
         }
 
-        Items = LoadItems(data);
+        MasterPassword = password;
+        CallPropertyChanged("MasterPassword");
+        
+
+        Items = LoadItems(readFileResult.data);
         ClearOldClicksCache();
         CallPropertyChanged("Items");
+        
+        LoadedInstance = this;
+        return true;
     }
 
-    public void Save(SecureString password = null)
+    public void Save()
     {
         var data = CreateJsonstring(Items);
-        WriteFile(Path, data, password == null ? MasterPassword : password);
+        WriteFile(Path, data, MasterPassword);
     }
 
     public void ClearOldClicksCache()
@@ -176,9 +220,8 @@ public class Database : IDisposable, INotifyPropertyChanged
     private static string CreateJsonstring(ObservableCollection<PasswordManagerItem> pwItems)
     {
         if (pwItems == null)
-        {
             return "";
-        }
+
         return JsonConvert.SerializeObject(pwItems, Formatting.Indented);
     }
 
@@ -208,7 +251,6 @@ public class Database : IDisposable, INotifyPropertyChanged
         MasterPassword = null;
         CallPropertyChanged("Items");
         CallPropertyChanged("MasterPassword");
-        //GC.Collect();
     }
 
     public ObservableCollection<PasswordManagerItem> FindItemsByName(string name)
@@ -280,12 +322,12 @@ public class Database : IDisposable, INotifyPropertyChanged
         CallPropertyChanged("Items");
     }
 
-    private static string ReadFile(string path, SecureString pw)
+    private static (string data, bool success) ReadFile(string path, SecureString pw)
     {
+        byte[] fileData = null;
+
         try
         {
-            byte[] fileData;
-
             //Alternative open old .db file:
             var oldPath = System.IO.Path.ChangeExtension(path, ".db");
             if (File.Exists(oldPath) && !File.Exists(path))
@@ -296,8 +338,6 @@ public class Database : IDisposable, INotifyPropertyChanged
             }
             else
                 fileData = File.ReadAllBytes(path);
-
-            return EncryptDecryptHelper.DecryptStringAES(fileData, pw);
         }
         catch (FileNotFoundException)
         {
@@ -307,11 +347,23 @@ public class Database : IDisposable, INotifyPropertyChanged
         {
             InfoMessages.NoAccessToPathDatabaseNotLoaded(path);
         }
-        return "";
+
+        if (fileData == null)
+            return ("", false);
+
+        var res = EncryptDecryptHelper.DecryptStringAES(fileData, pw);
+        if (res.correctPassword)
+            return (res.decryptedString, true);
+
+        return ("", false);
+
     }
 
     private static void WriteFile(string path, string jsonString, SecureString pw)
     {
+        if (pw == null)
+            return;
+
         var bytes = EncryptDecryptHelper.EncryptStringAES(jsonString, pw);
         try
         {

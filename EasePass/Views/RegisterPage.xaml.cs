@@ -33,7 +33,7 @@ namespace EasePass.Views
                 pw.AppendChar(character);
             }
 
-            Database.CreateEmptyDatabase(Database.GetAllDatabasePaths()[0], pw);
+            Database.LoadedInstance = Database.CreateNewDatabase(Database.GetAllDatabasePaths()[0], pw);
             App.m_frame.Navigate(typeof(PasswordsPage), pw);
         }
 

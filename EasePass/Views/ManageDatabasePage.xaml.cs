@@ -1,11 +1,13 @@
 using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
+using EasePass.Views.DialogPages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
@@ -127,13 +129,28 @@ public sealed partial class ManageDatabasePage : Page
         PrinterHelper.Print(selectedDatabase.Items);
     }
 
-    private void ImportDatabase_Click(object sender, RoutedEventArgs e)
+    private async void ImportDatabase_Click(object sender, RoutedEventArgs e)
     {
-        if (databaseDisplay.SelectedItem == null)
+        var res = await FilePickerHelper.PickOpenFile(new string[] { ".epdb", ".eped" });
+        if (!res.success)
             return;
 
-        //import here:
+        var enteredPassword = (await new EnterPasswordDialog().ShowAsync()).Password;
 
+        Database db = new Database(res.path);
+        var validated = db.ValidatePwAndLoadDB(enteredPassword);
+        if (validated)
+        {
+            Database.AddDatabasePath(res.path);
+        }
+        //var importedItems = Database.GetItemsFromDatabase(res.path, enteredPassword);
+        //if (importedItems == null)
+        //    return;
+
+        //var dialog = new ImportPasswordsDialog();
+        //dialog.SetPagePasswords(importedItems);
+        //var importPWResult = await dialog.ShowAsync(false);
+        //importPWResult.Items
     }
 
     private void CopyDatabasePath_Click(object sender, RoutedEventArgs e)
@@ -162,27 +179,27 @@ public sealed partial class ManageDatabasePage : Page
             return;
 
         Database db;
-        var password = await new EnterPasswordDialog().ShowAsync();
+        var password = (await new EnterPasswordDialog().ShowAsync()).Password;
         if (password == null)
         {
             InfoMessages.ImportDBWrongPassword();
             return;
         }
 
-        try
-        {
-            db = new Database(pickerResult.path, password);
-        }
-        catch
-        {
-            InfoMessages.ImportDBWrongPassword();
+        db = new Database(pickerResult.path);
+        if (!db.ValidatePwAndLoadDB(password))
             return;
-        }
 
         Database.AddDatabasePath(db.Path); // Do not change "db.Path" to "pickerResult.path" for example. "Database.Load()" is called in the constructor and could modify the path maybe.
         databases.Add(db);
     }
+    private async void ChangePassword_Click(object sender, RoutedEventArgs e)
+    {
+        if (selectedDatabase == null)
+            return;
 
+        await new ChangePasswordDialog().ShowAsync(selectedDatabase);
+    }
 
     //Backup databases
     private void Export_BackupDatabase_Click(object sender, RoutedEventArgs e)
@@ -208,21 +225,22 @@ public sealed partial class ManageDatabasePage : Page
             editDatabaseView.Visibility = Visibility.Collapsed;
             return;
         }
-
+        
+        //when the database is not loaded, it is required to enter the proper password
         var db = databaseDisplay.SelectedItem as Database;
         if (db.MasterPassword == null)
         {
-            var pw = await new EnterPasswordDialog().ShowAsync();
-            if (pw == null)
+            var password = (await new EnterPasswordDialog().ShowAsync()).Password;
+            if (password == null)
+            {
+                databaseDisplay.SelectedItem = null;
                 return;
-
-            try
-            {
-                db.Load(pw);
             }
-            catch
+            
+            var res = db.Load(password, true);
+            if(res == false)
             {
-                InfoMessages.ImportDBWrongPassword();
+                databaseDisplay.SelectedItem = null;
                 return;
             }
         }

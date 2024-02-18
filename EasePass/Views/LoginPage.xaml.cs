@@ -20,7 +20,11 @@ namespace EasePass.Views
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            databasebox.ItemsSource = Database.GetAllUnloadedDatabases();
+
+            foreach (var item in Database.GetAllUnloadedDatabases())
+            {
+                databasebox.Items.Add(item);
+            }
             databasebox.SelectedIndex = 0;
 
             string tip = await DailyTipHelper.GetTodaysTip();
@@ -41,21 +45,20 @@ namespace EasePass.Views
                 return;
             }
 
-            SecureString pw  = passwordBox.Password.ConvertToSecureString();
-            try
-            {
-                Database.LoadedInstance = new Database((databasebox.SelectedItem as Database).Path, pw);
+            SecureString pw = passwordBox.Password.ConvertToSecureString();
 
-                WrongCount = 0;
-
-                App.m_frame.Navigate(typeof(PasswordsPage));
-                return;
-            }
-            catch
+            var dbToLoad = new Database((databasebox.SelectedItem as Database).Path);
+            if (!dbToLoad.ValidatePwAndLoadDB(pw, false))
             {
                 WrongCount++;
                 InfoMessages.EnteredWrongPassword(WrongCount);
+                return;
             }
+
+            WrongCount = 0;
+
+            App.m_frame.Navigate(typeof(PasswordsPage));
+            return;
         }
         private void Enter_Invoked(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
@@ -69,7 +72,7 @@ namespace EasePass.Views
                 return;
 
             Database.AddDatabasePath(newDB.Path);
-            databasebox.Items.Add(newDB.Name);
+            databasebox.Items.Add(newDB);
         }
     }
 }

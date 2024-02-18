@@ -66,48 +66,6 @@ namespace EasePass.Views
             }
         }
 
-
-        private void ChangePassword_Click(object sender, RoutedEventArgs e)
-        {
-            if (changePW_newPw.Password.Length < 4)
-            {
-                InfoMessages.PasswordTooShort();
-                return;
-            }
-
-            SecureString pw = new SecureString();
-            foreach (var character in changePW_currentPw.Password)
-            {
-                pw.AppendChar(character);
-            }
-
-            try
-            {
-                new Database(Database.LoadedInstance.Path, pw);
-            }
-            catch
-            {
-                InfoMessages.ChangePasswordWrong();
-                return;
-            }
-
-            if (!changePW_newPw.Password.Equals(changePW_repeatPw.Password))
-            {
-                InfoMessages.PasswordsDoNotMatch();
-                return;
-            }
-
-            SecureString newMasterPw = new SecureString();
-            foreach (var character in changePW_newPw.Password)
-            {
-                newMasterPw.AppendChar(character);
-            }
-
-            Database.LoadedInstance.MasterPassword = newMasterPw;
-            Database.LoadedInstance.Save();
-
-            InfoMessages.SuccessfullyChangedPassword();
-        }
         private void InactivityLogoutTime_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             AppSettings.SaveSettings(AppSettingsValues.inactivityLogoutTime, inactivityLogoutTime.Value);
