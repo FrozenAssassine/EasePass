@@ -48,10 +48,16 @@ namespace EasePass.Views
             SecureString pw = passwordBox.Password.ConvertToSecureString();
 
             var dbToLoad = new Database((databasebox.SelectedItem as Database).Path);
-            if (!dbToLoad.ValidatePwAndLoadDB(pw, false))
+            var validationResult = dbToLoad.ValidatePwAndLoadDB(pw, false);
+            if (validationResult == PasswordValidationResult.WrongPassword)
             {
                 WrongCount++;
                 InfoMessages.EnteredWrongPassword(WrongCount);
+                return;
+            }
+            else if(validationResult == PasswordValidationResult.DatabaseNotFound)
+            {
+                InfoMessages.DatabaseFileNotFoundAt(dbToLoad.Path);
                 return;
             }
 

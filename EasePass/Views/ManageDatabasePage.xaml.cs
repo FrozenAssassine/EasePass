@@ -63,12 +63,15 @@ public sealed partial class ManageDatabasePage : Page
         databaseBackupDisplay.ItemsSource = backupFiles.Select(x => new Database(x));
     }
 
-
-    private void Delete_DatabaseItem_Click(object sender, RoutedEventArgs e)
+    private async void Delete_DatabaseItem_Click(object sender, RoutedEventArgs e)
     {
         var db = GetDatabase(sender);
         if (db == null)
             return;
+
+        if(!await new ConfirmDeleteDatabaseDialog().ShowAsync(db))
+            return;
+
 
         if (Database.GetAllDatabasePaths().Length == 1)
         {
@@ -112,7 +115,6 @@ public sealed partial class ManageDatabasePage : Page
             return;
 
         Database.LoadedInstance = selectedDatabase;
-
         InfoMessages.DatabaseLoaded();
     }
 
@@ -131,26 +133,54 @@ public sealed partial class ManageDatabasePage : Page
 
     private async void ImportDatabase_Click(object sender, RoutedEventArgs e)
     {
-        var res = await FilePickerHelper.PickOpenFile(new string[] { ".epdb", ".eped" });
-        if (!res.success)
+        var pickerResult = await FilePickerHelper.PickOpenFile(new string[] { ".epdb", ".eped" });
+        if (!pickerResult.success)
             return;
 
-        var enteredPassword = (await new EnterPasswordDialog().ShowAsync()).Password;
-
-        Database db = new Database(res.path);
-        var validated = db.ValidatePwAndLoadDB(enteredPassword);
-        if (validated)
+        Database db;
+        var password = (await new EnterPasswordDialog().ShowAsync()).Password;
+        if (password == null)
         {
-            Database.AddDatabasePath(res.path);
+            InfoMessages.ImportDBWrongPassword();
+            return;
         }
-        //var importedItems = Database.GetItemsFromDatabase(res.path, enteredPassword);
-        //if (importedItems == null)
-        //    return;
 
-        //var dialog = new ImportPasswordsDialog();
-        //dialog.SetPagePasswords(importedItems);
-        //var importPWResult = await dialog.ShowAsync(false);
-        //importPWResult.Items
+        db = new Database(pickerResult.path);
+        if (db.ValidatePwAndLoadDB(password) != PasswordValidationResult.Success)
+            return;
+
+        Database.AddDatabasePath(db.Path);
+        databases.Add(db);
+    }
+
+    private async void ImportIntoDatabase_Click(object sender, RoutedEventArgs e)
+    {
+        var pickerResult = await FilePickerHelper.PickOpenFile(new string[] { ".epdb", ".eped" });
+        if (!pickerResult.success)
+            return;
+
+        var password = (await new EnterPasswordDialog().ShowAsync()).Password;
+        if (password == null)
+        {
+            InfoMessages.ImportDBWrongPassword();
+            return;
+        }
+
+        var importedItems = Database.GetItemsFromDatabase(pickerResult.path, password);
+
+        var dialog = new ImportPasswordsDialog();
+        dialog.SetPagePasswords(importedItems);
+
+        var importItemsResult = await dialog.ShowAsync(false);
+        if (importItemsResult.Items == null)
+            return;
+
+        if (importItemsResult.Override)
+        {
+            Database.LoadedInstance.Items.Clear();
+        }
+
+        Database.LoadedInstance.AddRange(importItemsResult.Items);
     }
 
     private void CopyDatabasePath_Click(object sender, RoutedEventArgs e)
@@ -172,27 +202,6 @@ public sealed partial class ManageDatabasePage : Page
         databases.Add(newDB);
     }
 
-    private async void AddExisting_Click(object sender, RoutedEventArgs e)
-    {
-        var pickerResult = await FilePickerHelper.PickOpenFile(new string[] { ".epdb", ".eped" });
-        if (!pickerResult.success)
-            return;
-
-        Database db;
-        var password = (await new EnterPasswordDialog().ShowAsync()).Password;
-        if (password == null)
-        {
-            InfoMessages.ImportDBWrongPassword();
-            return;
-        }
-
-        db = new Database(pickerResult.path);
-        if (!db.ValidatePwAndLoadDB(password))
-            return;
-
-        Database.AddDatabasePath(db.Path); // Do not change "db.Path" to "pickerResult.path" for example. "Database.Load()" is called in the constructor and could modify the path maybe.
-        databases.Add(db);
-    }
     private async void ChangePassword_Click(object sender, RoutedEventArgs e)
     {
         if (selectedDatabase == null)

@@ -84,7 +84,7 @@ public class DatabaseBackupHelper
     public async Task<bool> LoadBackupFromFile(string path)
     {
         Database backup = new Database(path);
-        if (!backup.ValidatePwAndLoadDB(database.MasterPassword))
+        if (backup.ValidatePwAndLoadDB(database.MasterPassword) != PasswordValidationResult.Success)
             return false;
 
         ImportPasswordsDialog dialog = new ImportPasswordsDialog();

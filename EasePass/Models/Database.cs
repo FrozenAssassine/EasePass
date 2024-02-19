@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Security;
+using ZXing;
 
 namespace EasePass.Models;
 
@@ -136,11 +137,14 @@ public class Database : IDisposable, INotifyPropertyChanged
         return LoadItems(readFileResult.data);
     }
 
-    public bool ValidatePwAndLoadDB(SecureString masterPassword, bool showWrongPasswordError = true)
+    public PasswordValidationResult ValidatePwAndLoadDB(SecureString masterPassword, bool showWrongPasswordError = true)
     {
+        if (!File.Exists(this.Path))
+            return PasswordValidationResult.DatabaseNotFound;
+
         if (masterPassword != null)
-            return Load(masterPassword, showWrongPasswordError);
-        return false;
+            return Load(masterPassword, showWrongPasswordError) ? PasswordValidationResult.Success : PasswordValidationResult.WrongPassword;
+        return PasswordValidationResult.WrongPassword;
     }
 
     public bool Load(SecureString password, bool showWrongPasswordError = true)
@@ -168,17 +172,15 @@ public class Database : IDisposable, INotifyPropertyChanged
             ClearOldClicksCache();
             CallPropertyChanged("Items");
 
+            MasterPassword = password;
+
             Path = System.IO.Path.ChangeExtension(Path, "epdb");
             Save();
         }
 
-        var readFileResult = ReadFile(Path, password);
+        var readFileResult = ReadFile(Path, password, showWrongPasswordError);
         if (!readFileResult.success)
-        {
-            if (showWrongPasswordError)
-                InfoMessages.ImportDBWrongPassword();
             return false;
-        }
 
         MasterPassword = password;
         CallPropertyChanged("MasterPassword");
@@ -322,9 +324,9 @@ public class Database : IDisposable, INotifyPropertyChanged
         CallPropertyChanged("Items");
     }
 
-    private static (string data, bool success) ReadFile(string path, SecureString pw)
+    private static (string data, bool success) ReadFile(string path, SecureString pw, bool showWrongPasswordError = true)
     {
-        byte[] fileData = null;
+        byte[] fileData;
 
         try
         {
@@ -342,10 +344,12 @@ public class Database : IDisposable, INotifyPropertyChanged
         catch (FileNotFoundException)
         {
             InfoMessages.DatabaseFileNotFoundAt(path);
+            return ("", false);
         }
         catch (UnauthorizedAccessException)
         {
             InfoMessages.NoAccessToPathDatabaseNotLoaded(path);
+            return ("", false);
         }
 
         if (fileData == null)
@@ -353,10 +357,12 @@ public class Database : IDisposable, INotifyPropertyChanged
 
         var res = EncryptDecryptHelper.DecryptStringAES(fileData, pw);
         if (res.correctPassword)
+        {
             return (res.decryptedString, true);
-
+        }
+        if(showWrongPasswordError)
+            InfoMessages.ImportDBWrongPassword();
         return ("", false);
-
     }
 
     private static void WriteFile(string path, string jsonString, SecureString pw)

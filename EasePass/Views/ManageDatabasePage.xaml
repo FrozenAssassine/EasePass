@@ -16,8 +16,8 @@
             <controls:SettingsItemSeparator Header="Your Databases">
                 <StackPanel Orientation="Horizontal">
                     <controls:IconButton Glyph="&#xE710;" ToolTipService.ToolTip="Create database" Margin="10,0,0,0" Content="Create database" Click="CreateDatabase_Click" />
-                    <controls:IconButton Glyph="&#xE710;" ToolTipService.ToolTip="Add existing database" Margin="10,0,0,0" Content="Add existing database" Click="AddExisting_Click" />
-                    <controls:IconButton Glyph="&#xE8B5;" ToolTipService.ToolTip="Import database" Margin="10,0,0,0" Content="Import database" Click="ImportDatabase_Click" />
+                    <controls:IconButton Glyph="&#xE710;" ToolTipService.ToolTip="Import passwords from an external database into the current loaded one" Margin="10,0,0,0" Content="Import into" Click="ImportIntoDatabase_Click" />
+                    <controls:IconButton Glyph="&#xE8B5;" ToolTipService.ToolTip="Import a database" Margin="10,0,0,0" Content="Import database" Click="ImportDatabase_Click" />
                 </StackPanel>
             </controls:SettingsItemSeparator>
             <Grid Margin="0,20,0,0" >

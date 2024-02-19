@@ -27,7 +27,7 @@ public sealed partial class ChangePasswordPage : Page
         }
 
         var newDB = new Database(Database.LoadedInstance.Path);
-        if (!newDB.ValidatePwAndLoadDB(changePW_currentPw.Password.ConvertToSecureString()))
+        if (newDB.ValidatePwAndLoadDB(changePW_currentPw.Password.ConvertToSecureString()) != PasswordValidationResult.Success)
             return ChangePasswordPageResult.IncorrectPassword;
         
         if (!changePW_newPw.Password.Equals(changePW_repeatPw.Password))

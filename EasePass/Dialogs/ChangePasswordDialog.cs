@@ -1,15 +1,9 @@
-﻿using EasePass.Extensions;
-using EasePass.Helper;
+﻿using EasePass.Helper;
 using EasePass.Models;
 using EasePass.Views.DialogPages;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.WebUI;
 
 namespace EasePass.Dialogs
 {
