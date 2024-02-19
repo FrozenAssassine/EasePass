@@ -5,12 +5,14 @@ using EasePass.Views.DialogPages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EasePass.Views;
 
@@ -62,16 +64,11 @@ public sealed partial class ManageDatabasePage : Page
         var backupFiles = await MainWindow.databaseBackupHelper.GetAllBackupFiles();
         databaseBackupDisplay.ItemsSource = backupFiles.Select(x => new Database(x));
     }
-
-    private async void Delete_DatabaseItem_Click(object sender, RoutedEventArgs e)
+    private async Task DeleteDatabase(Database db)
     {
-        var db = GetDatabase(sender);
-        if (db == null)
-            return;
 
-        if(!await new ConfirmDeleteDatabaseDialog().ShowAsync(db))
+        if (!await new ConfirmDeleteDatabaseDialog().ShowAsync(db))
             return;
-
 
         if (Database.GetAllDatabasePaths().Length == 1)
         {
@@ -88,7 +85,15 @@ public sealed partial class ManageDatabasePage : Page
         File.Delete(db.Path);
         Database.RemoveDatabasePath(db.Path);
         databases.Remove(db);
-        db = null;
+    }
+    
+    private async void Delete_DatabaseItem_Click(object sender, RoutedEventArgs e)
+    {
+        var db = GetDatabase(sender);
+        if (db == null)
+            return;
+
+        await DeleteDatabase(db);
     }
 
     private async void Export_DatabaseItem_Click(object sender, RoutedEventArgs e)
@@ -210,20 +215,45 @@ public sealed partial class ManageDatabasePage : Page
         await new ChangePasswordDialog().ShowAsync(selectedDatabase);
     }
 
-    //Backup databases
-    private void Export_BackupDatabase_Click(object sender, RoutedEventArgs e)
+    private async void Export_BackupDatabase_Click(object sender, RoutedEventArgs e)
     {
-        //var rightClicked = (sender as MenuFlyoutItem).Tag as Database);
+        var rightClicked = (sender as MenuFlyoutItem).Tag as Database;
+        if (rightClicked == null)
+            return;
+
+        var file = await FilePickerHelper.PickSaveFile(("Ease Pass Database", new List<string> { ".epdb" }));
+
+        try
+        {
+            File.Copy(rightClicked.Path, file.path);
+        }
+        catch(Exception ex)
+        {
+            InfoMessages.UnhandledException(ex);
+        }
     }
 
-    private void LoadBackupDatabase_Click(object sender, RoutedEventArgs e)
+    private async void LoadBackupDatabase_Click(object sender, RoutedEventArgs e)
     {
-        //var rightClicked = (sender as MenuFlyoutItem).Tag as Database);
+        var rightClicked = (sender as MenuFlyoutItem).Tag as Database;
+        if (rightClicked == null)
+            return;
+
+        var pwDialog = await new EnterPasswordDialog().ShowAsync();
+        if (rightClicked.Load(pwDialog.Password))
+        {
+            Database.LoadedInstance = rightClicked;
+            InfoMessages.DatabaseLoaded();
+        }
     }
 
-    private void Delete_BackupDatabase_Click(object sender, RoutedEventArgs e)
+    private async void Delete_BackupDatabase_Click(object sender, RoutedEventArgs e)
     {
-        //var rightClicked = (sender as MenuFlyoutItem).Tag as Database);
+        var rightClicked = (sender as MenuFlyoutItem).Tag as Database;
+        if (rightClicked == null)
+            return;
+
+        await DeleteDatabase(rightClicked);
     }
 
     private async void databaseDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)

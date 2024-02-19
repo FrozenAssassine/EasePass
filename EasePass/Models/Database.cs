@@ -149,6 +149,12 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     public bool Load(SecureString password, bool showWrongPasswordError = true)
     {
+        if (password == null)
+        {
+            InfoMessages.ImportDBWrongPassword();
+            return false;
+        }
+
         if (System.IO.Path.GetExtension(Path).ToLower() == ".eped")
         {
             string pw = new System.Net.NetworkCredential(string.Empty, password).Password;
