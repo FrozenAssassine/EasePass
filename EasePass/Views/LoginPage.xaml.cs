@@ -2,6 +2,7 @@ using EasePass.Dialogs;
 using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Models;
+using EasePass.Settings;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System.Security;
@@ -21,11 +22,16 @@ namespace EasePass.Views
         {
             base.OnNavigatedTo(e);
 
-            foreach (var item in Database.GetAllUnloadedDatabases())
+            var databases = Database.GetAllUnloadedDatabases();
+            var comboboxIndexDBName = AppSettings.GetSettings(AppSettingsValues.loadedDatabaseName, databases.Length > 0 ? databases[0].Name : "");
+            foreach (var item in databases)
             {
                 databasebox.Items.Add(item);
+                if(comboboxIndexDBName.Equals(item.Name, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    databasebox.SelectedItem = item;
+                }
             }
-            databasebox.SelectedIndex = 0;
 
             string tip = await DailyTipHelper.GetTodaysTip();
             if (string.IsNullOrEmpty(tip))
@@ -46,6 +52,9 @@ namespace EasePass.Views
             }
 
             SecureString pw = passwordBox.Password.ConvertToSecureString();
+            
+            if (databasebox.SelectedItem == null)
+                return;
 
             var dbToLoad = new Database((databasebox.SelectedItem as Database).Path);
             var validationResult = dbToLoad.ValidatePwAndLoadDB(pw, false);
@@ -79,6 +88,14 @@ namespace EasePass.Views
 
             Database.AddDatabasePath(newDB.Path);
             databasebox.Items.Add(newDB);
+        }
+
+        private void databasebox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (databasebox.SelectedItem == null)
+                return;
+
+            AppSettings.SaveSettings(AppSettingsValues.loadedDatabaseName, (databasebox.SelectedItem as Database).Name);
         }
     }
 }

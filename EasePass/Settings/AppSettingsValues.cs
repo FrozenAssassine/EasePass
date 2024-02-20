@@ -19,5 +19,6 @@
         public const string gridSplitterWidth = "gridSplitterWidth";
         public const string lastBackupDay = "lastBackupDay";
         public const string databasePaths = "databasePaths";
+        public const string loadedDatabaseName = "loadedDatabaseName";
     }
 }

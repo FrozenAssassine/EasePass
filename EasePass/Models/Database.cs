@@ -30,6 +30,9 @@ public class Database : IDisposable, INotifyPropertyChanged
         set
         {
             loadedInstance = value;
+            if(loadedInstance != null)
+                AppSettings.SaveSettings(AppSettingsValues.loadedDatabaseName, loadedInstance.Name);
+
             if (loadedInstance.PropertyChanged != null)
             {
                 loadedInstance.PropertyChanged(loadedInstance, new PropertyChangedEventArgs("Path"));
