@@ -70,7 +70,8 @@ namespace EasePass.Views
             input.Interval = intervalTB.Text;
             input.Algorithm = (string)algorithmTB.SelectedItem;
 
-            if (!(pe(pwTB.Password) == 0 || (isEditMode && pe(pwTB.Password) == 1))) InfoMessages.PasswordAlreadyUsed();
+
+            if (pwTB.Password.Length > 0 && !(pe(pwTB.Password) == 0 || (isEditMode && pe(pwTB.Password) == 1))) InfoMessages.PasswordAlreadyUsed();
 
             return input;
         }
