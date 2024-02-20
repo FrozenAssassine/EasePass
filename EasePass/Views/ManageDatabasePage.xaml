@@ -37,11 +37,6 @@
                                 <Grid.ContextFlyout>
                                     <MenuFlyout>
                                         <MenuFlyoutItem Tag="{x:Bind}" Icon="Delete" Text="Delete" Click="Delete_DatabaseItem_Click"/>
-                                        <MenuFlyoutItem Tag="{x:Bind}" Text="Export" Click="Export_DatabaseItem_Click">
-                                            <MenuFlyoutItem.Icon>
-                                                <FontIcon Glyph="&#xEDE1;" />
-                                            </MenuFlyoutItem.Icon>
-                                        </MenuFlyoutItem>
                                         <MenuFlyoutSeparator/>
                                         <MenuFlyoutItem Tag="{x:Bind}" Icon="Copy" Text="Copy Path" Click="CopyDatabasePath_Click"/>
                                     </MenuFlyout>
