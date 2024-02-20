@@ -15,7 +15,7 @@ namespace EasePass
 {
     public sealed partial class MainWindow : Window
     {
-        private InactivityHelper inactivityHelper = new InactivityHelper();
+        public InactivityHelper inactivityHelper = new InactivityHelper();
         public static StackPanel InfoMessagesPanel;
         public Frame MainFrame => navigationFrame;
         public bool ShowBackArrow { get => navigateBackButton.Visibility == Visibility.Visible; set => navigateBackButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }

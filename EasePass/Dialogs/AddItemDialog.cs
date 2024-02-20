@@ -22,8 +22,13 @@ namespace EasePass.Dialogs
                 Content = page
             };
 
-            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+            MainWindow.CurrentInstance.inactivityHelper.PreventAutologout = true;
+            var dialogRes = await dialog.ShowAsync();
+            MainWindow.CurrentInstance.inactivityHelper.PreventAutologout = false;
+            if (dialogRes == ContentDialogResult.Primary)
+            {
                 return page.GetValue();
+            }
             return null;
         }
     }

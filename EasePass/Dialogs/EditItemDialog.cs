@@ -21,8 +21,11 @@ namespace EasePass.Dialogs
                 XamlRoot = App.m_window.Content.XamlRoot,
                 Content = page
             };
-
-            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+            MainWindow.CurrentInstance.inactivityHelper.PreventAutologout = true;
+            var dialogResult = await dialog.ShowAsync();
+            MainWindow.CurrentInstance.inactivityHelper.PreventAutologout = false;
+            
+            if (dialogResult == ContentDialogResult.Primary)
                 return page.GetValue();
             return null;
         }

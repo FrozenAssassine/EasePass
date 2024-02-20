@@ -22,7 +22,9 @@ namespace EasePass.Dialogs
                 Content = page
             };
 
+            MainWindow.CurrentInstance.inactivityHelper.PreventAutologout = true;
             bool res = await dialog.ShowAsync() == ContentDialogResult.Primary;
+            MainWindow.CurrentInstance.inactivityHelper.PreventAutologout = false;
             if (res)
                 page.UpdateValue();
             return res;
