@@ -16,7 +16,6 @@
             <controls:SettingsItemSeparator Header="Your Databases">
                 <StackPanel Orientation="Horizontal">
                     <controls:IconButton Glyph="&#xE710;" ToolTipService.ToolTip="Create database" Margin="10,0,0,0" Content="Create database" Click="CreateDatabase_Click" />
-                    <controls:IconButton Glyph="&#xE710;" ToolTipService.ToolTip="Import passwords from an external database into the current loaded one" Margin="10,0,0,0" Content="Import into" Click="ImportIntoDatabase_Click" />
                     <controls:IconButton Glyph="&#xE8B5;" ToolTipService.ToolTip="Import a database" Margin="10,0,0,0" Content="Import database" Click="ImportDatabase_Click" />
                 </StackPanel>
             </controls:SettingsItemSeparator>
@@ -57,6 +56,7 @@
                 <controls1:GridSplitter Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" Grid.Column="1"/>
                 <StackPanel Padding="20" CornerRadius="10" Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}" HorizontalAlignment="Center" Orientation="Vertical" Grid.Column="2" x:Name="editDatabaseView" Visibility="Collapsed">
                     <TextBlock FontSize="20" x:Name="loadedDBName"/>
+                    <controls:IconButton HorizontalAlignment="Stretch" Glyph="&#xE710;" ToolTipService.ToolTip="Import passwords from an external database into this one" Margin="0,20,0,0" Content="Import into" Click="ImportIntoDatabase_Click" />
                     <controls:IconButton HorizontalAlignment="Stretch" Glyph="&#xE74D;" Content="Delete database" ToolTipService.ToolTip="Delete database" Margin="0,20,0,0" Click="Delete_DatabaseItem_Click" />
                     <controls:IconButton HorizontalAlignment="Stretch" Glyph="&#xEDE1;" Content="Export database" ToolTipService.ToolTip="Export database" Margin="0,20,0,0" Click="Export_DatabaseItem_Click" />
                     <controls:IconButton HorizontalAlignment="Stretch" Glyph="&#xE8FB;" Content="Load this database" ToolTipService.ToolTip="Load this database" Margin="0,20,0,0" Click="Load_DatabaseItem_Click" />
