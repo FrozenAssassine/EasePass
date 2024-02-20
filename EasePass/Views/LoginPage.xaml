@@ -28,7 +28,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox Grid.Column="0" x:Name="databasebox" Header="Choose database:" HorizontalAlignment="Stretch">
+                <ComboBox SelectionChanged="databasebox_SelectionChanged" Grid.Column="0" x:Name="databasebox" Header="Choose database:" HorizontalAlignment="Stretch">
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="models:Database">
                             <TextBlock Text="{x:Bind Name}"/>
