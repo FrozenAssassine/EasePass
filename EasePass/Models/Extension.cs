@@ -42,6 +42,7 @@ namespace EasePass.Models
             {
                 if (Interfaces[i] is IPasswordImporter) items.Add("• register new passwords");
                 if (Interfaces[i] is IPasswordGenerator) items.Add("• generate new passwords");
+                if (Interfaces[i] is IDatabasePaths) items.Add("• retrieve database paths");
                 // fill up with other interfaces
             }
             List<string> itemsFinal = new List<string>();
