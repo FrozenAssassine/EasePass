@@ -80,13 +80,12 @@ namespace EasePass.Views
             PWLogin_Click(null, null);
         }
 
-        private async void CreateDatabase_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private async void CreateDatabase_Click(SplitButton sender, SplitButtonClickEventArgs args)
         {
-            Database newDB = await new CreateDatabaseDialog().ShowAsync();
+            var newDB = await ManageDatabaseHelper.CreateDatabase();
             if (newDB == null)
                 return;
 
-            Database.AddDatabasePath(newDB.Path);
             databasebox.Items.Add(newDB);
         }
 
@@ -96,6 +95,15 @@ namespace EasePass.Views
                 return;
 
             AppSettings.SaveSettings(AppSettingsValues.loadedDatabaseName, (databasebox.SelectedItem as Database).Name);
+        }
+
+        private async void ImportDatabase_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            var res = await ManageDatabaseHelper.ImportDatabase();
+            if (res == null)
+                return;
+
+            databasebox.Items.Add(res);
         }
     }
 }

@@ -58,8 +58,8 @@ namespace EasePass.Views
             {
                 passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
                 
-                //enable backups:
-                MainWindow.databaseBackupHelper = new DatabaseBackupHelper(Database.LoadedInstance, BackupCycle.Daily);
+                //Backups are currently disabled, because we need to find a better way to do them:
+                MainWindow.databaseBackupHelper = new DatabaseBackupHelper(Database.LoadedInstance, BackupCycle.Never);
                 await MainWindow.databaseBackupHelper.CheckAndDoBackup();
 
                 Database.LoadedInstance.Save();
