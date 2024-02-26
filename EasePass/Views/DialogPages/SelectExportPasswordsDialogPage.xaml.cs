@@ -19,6 +19,8 @@ public sealed partial class SelectExportPasswordsDialogPage : Page
         PWItems.Clear();
         PWItems.AddRange(items);
 
+        listView.ItemsSource = PWItems;
+
         listView.SelectAll();
     }
 

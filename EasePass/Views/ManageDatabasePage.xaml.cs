@@ -107,9 +107,13 @@ public sealed partial class ManageDatabasePage : Page
         if (!res.success)
             return;
 
+        var exportDialogRes = await new SelectExportPasswordsDialog().ShowAsync(Database.LoadedInstance.Items);
+        if (exportDialogRes == null)
+            return;
+
         Database export = new Database(res.path);
         export.MasterPassword = db.MasterPassword;
-        export.SetNew(await new SelectExportPasswordsDialog().ShowAsync(Database.LoadedInstance.Items));
+        export.SetNew(exportDialogRes);
         export.Save();
 
         InfoMessages.ExportDBSuccess();
