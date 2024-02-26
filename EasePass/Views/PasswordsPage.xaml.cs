@@ -348,7 +348,7 @@ namespace EasePass.Views
         }
         private void SwitchOrder_Click(object sender, RoutedEventArgs e)
         {
-            Database.LoadedInstance.SetNew(Database.LoadedInstance.Items.ReverseSelf());
+            Database.LoadedInstance.SetNewPasswords(Database.LoadedInstance.Items.ReverseSelf());
             Reload();
             Database.LoadedInstance.Save();
             Searchbox_TextChanged(this, null);

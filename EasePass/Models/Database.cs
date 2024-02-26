@@ -306,7 +306,7 @@ public class Database : IDisposable, INotifyPropertyChanged
         CallPropertyChanged("Items");
     }
 
-    public void SetNew(ObservableCollection<PasswordManagerItem> items)
+    public void SetNewPasswords(ObservableCollection<PasswordManagerItem> items)
     {
         Items.Clear();
 
@@ -318,7 +318,7 @@ public class Database : IDisposable, INotifyPropertyChanged
         CallPropertyChanged("Items");
     }
 
-    public void SetNew(PasswordManagerItem[] items)
+    public void SetNewPasswords(PasswordManagerItem[] items)
     {
         if (items == null)
             return;

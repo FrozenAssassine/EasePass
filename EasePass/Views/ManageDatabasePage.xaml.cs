@@ -113,7 +113,7 @@ public sealed partial class ManageDatabasePage : Page
 
         Database export = new Database(res.path);
         export.MasterPassword = db.MasterPassword;
-        export.SetNew(exportDialogRes);
+        export.SetNewPasswords(exportDialogRes);
         export.Save();
 
         InfoMessages.ExportDBSuccess();
