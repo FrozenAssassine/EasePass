@@ -304,7 +304,7 @@
     <value>Alles auswählen</value>
   </data>
   <data name="InfoMessages_AutomaticallyLoggedOut.Headline" xml:space="preserve">
-    <value>Du wurdest automatisch ausgeloogt</value>
+    <value>Du wurdest automatisch ausgeloggt</value>
   </data>
   <data name="InfoMessages_ChangePasswordWrong.Headline" xml:space="preserve">
     <value>Falsches Passwort</value>
