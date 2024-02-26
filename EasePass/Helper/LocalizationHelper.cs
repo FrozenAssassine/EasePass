@@ -9,7 +9,6 @@ public class LocalizationHelper
 {
     private ResourceManager resourceManager = new();
     public ResourceContext resourceContext;
-    private LanguageItem currentLanguageItem = null;
     public ResourceMap resourceMap = null;
 
     public List<LanguageItem> languages = new();
@@ -25,7 +24,6 @@ public class LocalizationHelper
     {
         if (languages.Contains(languageItem))
         {
-            currentLanguageItem = languageItem;
             Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = languageItem.Tag;
 
             AppSettings.SaveSettings(AppSettingsValues.language, languageItem.Tag);
@@ -41,7 +39,7 @@ public class LocalizationHelper
         if (res == null)
             return;
 
-        SetLanguage(languages.Find(x => x.Tag == "de-DE"));
+        SetLanguage(languages.Find(x => x.Tag == "en-US"));
         //SetLanguage(res);
     }
 

@@ -211,6 +211,9 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     public void ClearOldClicksCache()
     {
+        if (Items == null)
+            return;
+
         for (int i = 0; i < Items.Count; i++)
         {
             for (int j = 0; j < Items[i].Clicks.Count; j++)
