@@ -597,14 +597,80 @@
   <data name="View_ExtensionPage_Uninstall.Text" xml:space="preserve">
     <value>Deinstallieren</value>
   </data>
+  <data name="View_LoginPage_ChooseDB.Header" xml:space="preserve">
+    <value>Datenbank auswählen</value>
+  </data>
+  <data name="View_LoginPage_CreateDB.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Neue Datenbank erstellen</value>
+  </data>
   <data name="View_LoginPage_EnterPW.Text" xml:space="preserve">
     <value>Passwort eingeben</value>
+  </data>
+  <data name="View_LoginPage_ImpoortDB.Content" xml:space="preserve">
+    <value>Datenbank importieren</value>
   </data>
   <data name="View_LoginPage_Login.Text" xml:space="preserve">
     <value>Anmelden</value>
   </data>
   <data name="View_LoginPage_LoginButton.Content" xml:space="preserve">
     <value>Anmelden</value>
+  </data>
+  <data name="View_ManageDB_ChangePW.Content" xml:space="preserve">
+    <value>Passwort ändern</value>
+  </data>
+  <data name="View_ManageDB_ChangePW.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Das Passwort für die aktuelle Datenbank ändern</value>
+  </data>
+  <data name="View_ManageDB_CreateDB.Content" xml:space="preserve">
+    <value>Datenbank erstellen</value>
+  </data>
+  <data name="View_ManageDB_CreateDB.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Eine neue Datenbank erstellen</value>
+  </data>
+  <data name="View_ManageDB_DeleteDB.Content" xml:space="preserve">
+    <value>Datenbank löschen</value>
+  </data>
+  <data name="View_ManageDB_DeleteDB.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Datenbank löschen</value>
+  </data>
+  <data name="View_ManageDB_ExportDB.Content" xml:space="preserve">
+    <value>Datenbank exportieren</value>
+  </data>
+  <data name="View_ManageDB_ExportDB.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Datenbank exportieren</value>
+  </data>
+  <data name="View_ManageDB_FlyoutCopy.Text" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
+  <data name="View_ManageDB_FlyoutDelete.Text" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="View_ManageDB_ImportDB.Content" xml:space="preserve">
+    <value>Datenbank importieren</value>
+  </data>
+  <data name="View_ManageDB_ImportDB.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Importiere eine neue Datenbank</value>
+  </data>
+  <data name="View_ManageDB_ImportPasswords.Content" xml:space="preserve">
+    <value>In Datenbank importieren</value>
+  </data>
+  <data name="View_ManageDB_ImportPasswords.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Passwörter aus externer Datenbank in diese importieren</value>
+  </data>
+  <data name="View_ManageDB_LoadThisDB.Content" xml:space="preserve">
+    <value>Datenbank laden</value>
+  </data>
+  <data name="View_ManageDB_LoadThisDB.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Datenbank laden</value>
+  </data>
+  <data name="View_ManageDB_PrintDB.Content" xml:space="preserve">
+    <value>Datenbank drucken</value>
+  </data>
+  <data name="View_ManageDB_PrintDB.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Datenbank drucken</value>
+  </data>
+  <data name="View_ManageDB_SelectPrinter.PlaceHolder" xml:space="preserve">
+    <value>Drucker auswählen</value>
   </data>
   <data name="View_PasswordPage_CMDBar_About.Label" xml:space="preserve">
     <value>Über</value>

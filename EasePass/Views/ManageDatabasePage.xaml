@@ -15,8 +15,8 @@
             <TextBlock TextAlignment="Center" FontSize="36" Text="Manage Database"/>
             <controls:SettingsItemSeparator Header="Your Databases">
                 <StackPanel Orientation="Horizontal">
-                    <controls:IconButton Glyph="&#xE710;" ToolTipService.ToolTip="Create database" Margin="10,0,0,0" Content="Create database" Click="CreateDatabase_Click" />
-                    <controls:IconButton Glyph="&#xE8B5;" ToolTipService.ToolTip="Import a database" Margin="10,0,0,0" Content="Import database" Click="ImportDatabase_Click" />
+                    <controls:IconButton x:Uid="View_ManageDB_CreateDB" Glyph="&#xE710;" ToolTipService.ToolTip="Create a new database" Margin="10,0,0,0" Content="Create database" Click="CreateDatabase_Click" />
+                    <controls:IconButton x:Uid="View_ManageDB_ImportDB" Glyph="&#xE8B5;" ToolTipService.ToolTip="Import a database" Margin="10,0,0,0" Content="Import database" Click="ImportDatabase_Click" />
                 </StackPanel>
             </controls:SettingsItemSeparator>
             <Grid Margin="0,20,0,0" >
@@ -36,9 +36,9 @@
                                 </Grid.RowDefinitions>
                                 <Grid.ContextFlyout>
                                     <MenuFlyout>
-                                        <MenuFlyoutItem Tag="{x:Bind}" Icon="Delete" Text="Delete" Click="Delete_DatabaseItem_Click"/>
+                                        <MenuFlyoutItem x:Uid="View_ManageDB_FlyoutDelete" Tag="{x:Bind}" Icon="Delete" Text="Delete" Click="Delete_DatabaseItem_Click"/>
                                         <MenuFlyoutSeparator/>
-                                        <MenuFlyoutItem Tag="{x:Bind}" Icon="Copy" Text="Copy Path" Click="CopyDatabasePath_Click"/>
+                                        <MenuFlyoutItem x:Uid="View_ManageDB_FlyoutCopy" Tag="{x:Bind}" Icon="Copy" Text="Copy Path" Click="CopyDatabasePath_Click"/>
                                     </MenuFlyout>
                                 </Grid.ContextFlyout>
 
@@ -51,13 +51,13 @@
                 <controls1:GridSplitter Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" Grid.Column="1"/>
                 <StackPanel Padding="20" CornerRadius="10" Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}" HorizontalAlignment="Center" Orientation="Vertical" Grid.Column="2" x:Name="editDatabaseView" Visibility="Collapsed">
                     <TextBlock FontSize="20" x:Name="loadedDBName"/>
-                    <controls:IconButton HorizontalAlignment="Stretch" Glyph="&#xE710;" ToolTipService.ToolTip="Import passwords from an external database into this one" Margin="0,20,0,0" Content="Import into" Click="ImportIntoDatabase_Click" />
-                    <controls:IconButton HorizontalAlignment="Stretch" Glyph="&#xE74D;" Content="Delete database" ToolTipService.ToolTip="Delete database" Margin="0,20,0,0" Click="Delete_DatabaseItem_Click" />
-                    <controls:IconButton HorizontalAlignment="Stretch" Glyph="&#xEDE1;" Content="Export database" ToolTipService.ToolTip="Export database" Margin="0,20,0,0" Click="Export_DatabaseItem_Click" />
-                    <controls:IconButton HorizontalAlignment="Stretch" Glyph="&#xE8FB;" Content="Load this database" ToolTipService.ToolTip="Load this database" Margin="0,20,0,0" Click="Load_DatabaseItem_Click" />
-                    <controls:IconButton HorizontalAlignment="Stretch" Glyph="&#xF78D;" Content="Change Password" ToolTipService.ToolTip="Change the password for the database" Margin="0,20,0,0" Click="ChangePassword_Click" />
-                    <ComboBox HorizontalAlignment="Stretch" x:Name="printerSelector" PlaceholderText="Pick a printer" MinWidth="150" Margin="0,20,0,0" SelectionChanged="printerSelector_SelectionChanged" />
-                    <controls:IconButton HorizontalAlignment="Stretch" Glyph="&#xE749;" Content="Print database" ToolTipService.ToolTip="Print database" Margin="0,10,0,0" Click="Print_DatabaseItem_Click" />
+                    <controls:IconButton x:Uid="View_ManageDB_ImportPasswords" HorizontalAlignment="Stretch" Glyph="&#xE710;" ToolTipService.ToolTip="Import passwords from an external database into this one" Margin="0,20,0,0" Content="Import into" Click="ImportIntoDatabase_Click" />
+                    <controls:IconButton x:Uid="View_ManageDB_DeleteDB" HorizontalAlignment="Stretch" Glyph="&#xE74D;" Content="Delete database" ToolTipService.ToolTip="Delete database" Margin="0,20,0,0" Click="Delete_DatabaseItem_Click" />
+                    <controls:IconButton x:Uid="View_ManageDB_ExportDB" HorizontalAlignment="Stretch" Glyph="&#xEDE1;" Content="Export database" ToolTipService.ToolTip="Export database" Margin="0,20,0,0" Click="Export_DatabaseItem_Click" />
+                    <controls:IconButton x:Uid="View_ManageDB_LoadThisDB" HorizontalAlignment="Stretch" Glyph="&#xE8FB;" Content="Load this database" ToolTipService.ToolTip="Load this database" Margin="0,20,0,0" Click="Load_DatabaseItem_Click" />
+                    <controls:IconButton x:Uid="View_ManageDB_ChangePW" HorizontalAlignment="Stretch" Glyph="&#xF78D;" Content="Change Password" ToolTipService.ToolTip="Change the password for the database" Margin="0,20,0,0" Click="ChangePassword_Click" />
+                    <ComboBox x:Uid="View_ManageDB_SelectPrinter" HorizontalAlignment="Stretch" x:Name="printerSelector" PlaceholderText="Pick a printer" MinWidth="150" Margin="0,20,0,0" SelectionChanged="printerSelector_SelectionChanged" />
+                    <controls:IconButton x:Uid="View_ManageDB_PrintDB" HorizontalAlignment="Stretch" Glyph="&#xE749;" Content="Print database" ToolTipService.ToolTip="Print database" Margin="0,10,0,0" Click="Print_DatabaseItem_Click" />
                 </StackPanel>
             </Grid>
 

@@ -28,18 +28,18 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox SelectionChanged="databasebox_SelectionChanged" Grid.Column="0" x:Name="databasebox" Header="Choose database:" HorizontalAlignment="Stretch">
+                <ComboBox x:Uid="View_LoginPage_ChooseDB" SelectionChanged="databasebox_SelectionChanged" Grid.Column="0" x:Name="databasebox" Header="Choose database:" HorizontalAlignment="Stretch">
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="models:Database">
                             <TextBlock Text="{x:Bind Name}"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <SplitButton VerticalAlignment="Bottom" Margin="10,0,0,0" Click="CreateDatabase_Click" Grid.Column="1" ToolTipService.ToolTip="Create a new database">
+                <SplitButton x:Uid="View_LoginPage_CreateDB" VerticalAlignment="Bottom" Margin="10,0,0,0" Click="CreateDatabase_Click" Grid.Column="1" ToolTipService.ToolTip="Create a new database">
                     <FontIcon Glyph="&#xE710;"/>
                     <SplitButton.Flyout>
                         <Flyout Placement="Bottom">
-                            <Button Content="Import Database" Click="ImportDatabase_Click" VerticalAlignment="Bottom"/>
+                            <Button x:Uid="View_LoginPage_ImpoortDB" Content="Import Database" Click="ImportDatabase_Click" VerticalAlignment="Bottom"/>
                         </Flyout>
                     </SplitButton.Flyout>
                 </SplitButton>
