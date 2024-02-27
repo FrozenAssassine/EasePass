@@ -21,7 +21,7 @@ public class Database : IDisposable, INotifyPropertyChanged
     public SecureString MasterPassword = null;
     public ObservableCollection<PasswordManagerItem> Items = null;
     public DateTime LastModified => File.GetLastWriteTime(Path);
-    public string LastModifiedStr => LastModified.ToString("D");
+    public string LastModifiedStr => Name; //LastModified.ToString("D");
 
     private static Database loadedInstance;
     public static Database LoadedInstance
@@ -203,10 +203,10 @@ public class Database : IDisposable, INotifyPropertyChanged
         return true;
     }
 
-    public void Save()
+    public void Save(string path = null)
     {
         var data = CreateJsonstring(Items);
-        WriteFile(Path, data, MasterPassword);
+        WriteFile(path ?? this.Path, data, MasterPassword);
     }
 
     public void ClearOldClicksCache()

@@ -48,7 +48,6 @@ public sealed partial class ManageDatabasePage : Page
         if (sender is MenuFlyoutItem mf && mf.Tag is Database database)
             db = database;
         return db;
-
     }
     private void LoadPrinter()
     {

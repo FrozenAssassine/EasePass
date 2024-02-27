@@ -57,11 +57,8 @@ public class DatabaseBackupHelper
         if (folder == null)
             return false;
 
-        var backupPath = folder.Path + "\\" + DateTime.Now.ToString("dd_MM_yyyy") + "_Backup.epdb";
-        string oldPath = database.Path;
-        database.Path = backupPath;
-        database.Save();
-        database.Path = oldPath;
+        var backupPath = folder.Path + "\\" + DateTime.Now.ToString("dd_MM_yyyy_") + database.Name + "_Backup.epdb";
+        database.Save(backupPath);
         AppSettings.SaveSettings(AppSettingsValues.lastBackupDay, CurrentDay);
 
         return true;
