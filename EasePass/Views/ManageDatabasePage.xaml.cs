@@ -37,7 +37,7 @@ public sealed partial class ManageDatabasePage : Page
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         App.m_window.ShowBackArrow = true;
-        LoadBackupsFromFile();
+        //LoadBackupsFromFile();
         LoadPrinter();
     }
 
@@ -58,11 +58,12 @@ public sealed partial class ManageDatabasePage : Page
         }
     }
 
-    private async void LoadBackupsFromFile()
-    {
-        var backupFiles = await MainWindow.databaseBackupHelper.GetAllBackupFiles();
-        databaseBackupDisplay.ItemsSource = backupFiles.Select(x => new Database(x));
-    }
+    //DO NOT DELETE, Needs to be worked on in next update
+    //private async void LoadBackupsFromFile()
+    //{
+    //    var backupFiles = await MainWindow.databaseBackupHelper.GetAllBackupFiles();
+    //    databaseBackupDisplay.ItemsSource = backupFiles.Select(x => new Database(x));
+    //}
     private async Task DeleteDatabase(Database db)
     {
 
@@ -105,9 +106,13 @@ public sealed partial class ManageDatabasePage : Page
         if (!res.success)
             return;
 
+        var exportDialogRes = await new SelectExportPasswordsDialog().ShowAsync(Database.LoadedInstance.Items);
+        if (exportDialogRes == null)
+            return;
+
         Database export = new Database(res.path);
         export.MasterPassword = db.MasterPassword;
-        export.SetNew(await new SelectExportPasswordsDialog().ShowAsync(Database.LoadedInstance.Items));
+        export.SetNewPasswords(exportDialogRes);
         export.Save();
 
         InfoMessages.ExportDBSuccess();
@@ -137,54 +142,16 @@ public sealed partial class ManageDatabasePage : Page
 
     private async void ImportDatabase_Click(object sender, RoutedEventArgs e)
     {
-        var pickerResult = await FilePickerHelper.PickOpenFile(new string[] { ".epdb", ".eped" });
-        if (!pickerResult.success)
+        var res = await ManageDatabaseHelper.ImportDatabase();
+        if (res == null)
             return;
 
-        Database db;
-        var password = (await new EnterPasswordDialog().ShowAsync()).Password;
-        if (password == null)
-        {
-            InfoMessages.ImportDBWrongPassword();
-            return;
-        }
-
-        db = new Database(pickerResult.path);
-        if (db.ValidatePwAndLoadDB(password) != PasswordValidationResult.Success)
-            return;
-
-        Database.AddDatabasePath(db.Path);
-        databases.Add(db);
+        databases.Add(res);
     }
 
     private async void ImportIntoDatabase_Click(object sender, RoutedEventArgs e)
     {
-        var pickerResult = await FilePickerHelper.PickOpenFile(new string[] { ".epdb", ".eped" });
-        if (!pickerResult.success)
-            return;
-
-        var password = (await new EnterPasswordDialog().ShowAsync()).Password;
-        if (password == null)
-        {
-            InfoMessages.ImportDBWrongPassword();
-            return;
-        }
-
-        var importedItems = Database.GetItemsFromDatabase(pickerResult.path, password);
-
-        var dialog = new ImportPasswordsDialog();
-        dialog.SetPagePasswords(importedItems);
-
-        var importItemsResult = await dialog.ShowAsync(false);
-        if (importItemsResult.Items == null)
-            return;
-
-        if (importItemsResult.Override)
-        {
-            Database.LoadedInstance.Items.Clear();
-        }
-
-        Database.LoadedInstance.AddRange(importItemsResult.Items);
+        await ManageDatabaseHelper.ImportIntoDatabase();
     }
 
     private void CopyDatabasePath_Click(object sender, RoutedEventArgs e)
@@ -199,10 +166,10 @@ public sealed partial class ManageDatabasePage : Page
 
     private async void CreateDatabase_Click(object sender, RoutedEventArgs e)
     {
-        Database newDB = await new CreateDatabaseDialog().ShowAsync();
+        var newDB = await ManageDatabaseHelper.CreateDatabase();
         if (newDB == null)
             return;
-        Database.AddDatabasePath(newDB.Path);
+
         databases.Add(newDB);
     }
 

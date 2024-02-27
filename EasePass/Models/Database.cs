@@ -211,6 +211,9 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     public void ClearOldClicksCache()
     {
+        if (Items == null)
+            return;
+
         for (int i = 0; i < Items.Count; i++)
         {
             for (int j = 0; j < Items[i].Clicks.Count; j++)
@@ -306,7 +309,7 @@ public class Database : IDisposable, INotifyPropertyChanged
         CallPropertyChanged("Items");
     }
 
-    public void SetNew(ObservableCollection<PasswordManagerItem> items)
+    public void SetNewPasswords(ObservableCollection<PasswordManagerItem> items)
     {
         Items.Clear();
 
@@ -318,7 +321,7 @@ public class Database : IDisposable, INotifyPropertyChanged
         CallPropertyChanged("Items");
     }
 
-    public void SetNew(PasswordManagerItem[] items)
+    public void SetNewPasswords(PasswordManagerItem[] items)
     {
         if (items == null)
             return;

@@ -34,7 +34,7 @@ namespace EasePass.Views
 
             selectLanguageBox.ItemsSource = MainWindow.localizationHelper.languages;
 
-            var languageTag = AppSettings.GetSettings(AppSettingsValues.language);
+            var languageTag = AppSettings.GetSettings(AppSettingsValues.language, DefaultSettingsValues.defaultLanguage);
             selectLanguageBox.SelectedIndex = MainWindow.localizationHelper.languages.FindIndex(x => x.Tag == languageTag);
         }
 

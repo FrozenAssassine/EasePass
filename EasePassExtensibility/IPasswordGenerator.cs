@@ -9,6 +9,7 @@ namespace EasePassExtensibility
     /// <summary>
     /// Implement this interface to create a password generator for Ease Pass.
     /// </summary>
+    [Obsolete("This functionality isn't fully implemented yet!")]
     public interface IPasswordGenerator
     {
         /// <summary>

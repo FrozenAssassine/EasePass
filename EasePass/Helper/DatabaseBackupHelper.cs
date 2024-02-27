@@ -2,6 +2,7 @@
 using EasePass.Models;
 using EasePass.Settings;
 using System;
+using System.Diagnostics.Metrics;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -12,7 +13,7 @@ namespace EasePass.Helper;
 
 public enum BackupCycle
 {
-    Weekly, Daily
+    Weekly, Daily, Never
 }
 
 public class DatabaseBackupHelper
@@ -43,6 +44,9 @@ public class DatabaseBackupHelper
 
     public async Task<bool> CheckAndDoBackup()
     {
+        if (backupCycle == BackupCycle.Never)
+            return true;
+
         int lastBackupDay = AppSettings.GetSettingsAsInt(AppSettingsValues.lastBackupDay, 0);
 
         //still same day or same week no backup needed:

@@ -61,6 +61,8 @@
                 </StackPanel>
             </Grid>
 
+            <!--
+            DO NOT DELETE, Needs to be worked on in next update
             <controls:SettingsItemSeparator Header="Your Backups"/>
             <GridView Margin="0,20,0,0" x:Name="databaseBackupDisplay">
                 <GridView.ItemTemplate>
@@ -86,7 +88,7 @@
                         </StackPanel>
                     </DataTemplate>
                 </GridView.ItemTemplate>
-            </GridView>
+            </GridView>-->
         </StackPanel>
     </ScrollViewer>
 </Page>
