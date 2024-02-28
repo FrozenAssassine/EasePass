@@ -669,7 +669,7 @@
   <data name="View_ManageDB_PrintDB.ToolTipService.ToolTip" xml:space="preserve">
     <value>Print database</value>
   </data>
-  <data name="View_ManageDB_SelectPrinter.PlaceHolder" xml:space="preserve">
+  <data name="View_ManageDB_SelectPrinter.PlaceholderText" xml:space="preserve">
     <value>Pick a printer</value>
   </data>
   <data name="View_PasswordPage_CMDBar_About.Label" xml:space="preserve">
