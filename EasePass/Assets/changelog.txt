@@ -16,13 +16,13 @@
 	• Added auto logout message to automatically disappear after login
 	• Added password popularity counter
 	• Added splitter to freely size the password list from the password display
-	• Added automatic daily backups which you can simply load.
+	• Added German language support
 	• Unified .eped and .epdb to .epdb files
 	• Moved the infobutton to the statusbar
 	• Removed automatic backups every 4 minutes
 	• Fix urls not working without http
 	• Fix you can now select multiple entries to delete those
-	• Fix can not enter letters by pressing Ctrl + Gr in password box
+	• Fix can not enter letters by pressing Ctrl + Alt (Alt Gr) in password box
 
 #Version 1.1.0 [09/28/2023]
 	• 2FA token generator
