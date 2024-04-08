@@ -134,6 +134,9 @@ namespace EasePass.Controls
 
         private void SetChartEntry(int index)
         {
+            if (DispatcherQueue == null)
+                return;
+
             this.DispatcherQueue.TryEnqueue(() =>
             {
                 if (checks[index] == null) paths[index].Fill = new SolidColorBrush(Color.FromArgb(255, 100, 100, 100));
