@@ -454,7 +454,7 @@
     <value>E-Mail:</value>
   </data>
   <data name="PrintDB_Notes.Text" xml:space="preserve">
-    <value>Notes</value>
+    <value>Notes:</value>
   </data>
   <data name="PrintDB_Password.Text" xml:space="preserve">
     <value>Password:</value>
