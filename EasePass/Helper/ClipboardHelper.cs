@@ -3,13 +3,14 @@ using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Windows.ApplicationModel.DataTransfer;
 
 namespace EasePass.Helper
 {
     internal class ClipboardHelper
     {
-        private static ClipboardHistoryItem ClipboardHistoryItem = null;
+        static Queue<ClipboardHistoryItem> history = new Queue<ClipboardHistoryItem>();
 
         public static void Copy(string text, bool removeFromClipboard = false)
         {
@@ -22,22 +23,31 @@ namespace EasePass.Helper
                 RemoveLastClipboardItem();
         }
 
-        public static async void RemoveLastClipboardItem()
+        public static void RemoveLastClipboardItem()
         {
-            var items = (await Clipboard.GetHistoryItemsAsync()).Items;
-
-            if (items.Count > 0)
-                ClipboardHistoryItem = items[0];
+            // Needs to be a short delay here
             var dp = new DispatcherTimer();
-            dp.Interval += new TimeSpan(0, 0, AppSettings.GetSettingsAsInt(AppSettingsValues.clipboardClearTimeoutSec, DefaultSettingsValues.ClipboardClearTimeoutSec));
+            dp.Interval = new TimeSpan(0, 0, 0, 0, 1000);
             dp.Start();
-            dp.Tick += (s, e) =>
+            dp.Tick += async (s, e) =>
             {
-                if (ClipboardHistoryItem != null)
-                    Clipboard.DeleteItemFromHistory(ClipboardHistoryItem);
-                Clipboard.SetContent(null);
-                ClipboardHistoryItem = null;
+                var items = (await Clipboard.GetHistoryItemsAsync()).Items;
+                if (items.Count > 0)
+                    history.Enqueue(items[0]);
                 dp.Stop();
+            };
+
+            var dp1 = new DispatcherTimer();
+            dp1.Interval = new TimeSpan(0, 0, AppSettings.GetSettingsAsInt(AppSettingsValues.clipboardClearTimeoutSec, DefaultSettingsValues.ClipboardClearTimeoutSec));
+            dp1.Start();
+            dp1.Tick += (s, e) =>
+            {
+
+                var item = history.Dequeue();
+                if (item != null)
+                    Clipboard.DeleteItemFromHistory(item);
+                Clipboard.SetContent(null);
+                dp1.Stop();
             };
         }
     }
