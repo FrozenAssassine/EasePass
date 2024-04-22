@@ -33,7 +33,8 @@ namespace EasePass.Views
                 }
             }
 
-            string tip = await DailyTipHelper.GetTodaysTip();
+            var lang = AppSettings.GetSettings(AppSettingsValues.language, "en-US");
+            string tip = await DailyTipHelper.GetTodaysTip(lang);
             if (string.IsNullOrEmpty(tip))
                 return;
 
