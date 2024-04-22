@@ -807,6 +807,9 @@
   <data name="View_SettingsPage_ChangePassword_Warning.Text" xml:space="preserve">
     <value>Be sure to select a password that you'll always remember. If the password is lost, so are all your stored credentials, with no means of recovery. Additionally, ensure you back up your passwords either to an external offline drive or the cloud.</value>
   </data>
+  <data name="View_SettingsPage_ClipboardClearTimeout" xml:space="preserve">
+    <value>Clipboard clear timeout</value>
+  </data>
   <data name="View_SettingsPage_CurrentPassword.Header" xml:space="preserve">
     <value>Current Password</value>
   </data>

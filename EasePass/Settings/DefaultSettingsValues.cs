@@ -13,5 +13,6 @@ namespace EasePass.Settings
         public const bool disableLeakedPasswords = false;
         public static readonly string databasePaths = System.IO.Path.Combine(ApplicationData.Current.LocalFolder.Path, "easepass.epdb") + "|";
         public static string defaultLanguage = "en-US";
+        public const int ClipboardClearTimeoutSec = 10;
     }
 }

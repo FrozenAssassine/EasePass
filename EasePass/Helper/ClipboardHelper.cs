@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using EasePass.Settings;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +9,7 @@ namespace EasePass.Helper
 {
     internal class ClipboardHelper
     {
-        private static Stack<ClipboardHistoryItem> ClipboardHistoryItems = new Stack<ClipboardHistoryItem>();
+        private static ClipboardHistoryItem ClipboardHistoryItem = null;
 
         public static void Copy(string text, bool removeFromClipboard = false)
         {
@@ -17,24 +18,25 @@ namespace EasePass.Helper
             Clipboard.SetContent(package);
 
             //remove from the clipboard:
-            if(removeFromClipboard)
+            if (removeFromClipboard)
                 RemoveLastClipboardItem();
         }
 
         public static async void RemoveLastClipboardItem()
         {
             var items = (await Clipboard.GetHistoryItemsAsync()).Items;
-            if (items.Count == 0)
-                return;
 
-            ClipboardHistoryItems.Push(items[0]);
+            if (items.Count > 0)
+                ClipboardHistoryItem = items[0];
             var dp = new DispatcherTimer();
-            dp.Interval += new TimeSpan(0, 0, 10);
+            dp.Interval += new TimeSpan(0, 0, AppSettings.GetSettingsAsInt(AppSettingsValues.clipboardClearTimeoutSec, DefaultSettingsValues.ClipboardClearTimeoutSec));
             dp.Start();
-            dp.Tick += async (s, e) =>
+            dp.Tick += (s, e) =>
             {
-                var removeItem = ClipboardHistoryItems.Pop();
-                Clipboard.DeleteItemFromHistory(removeItem);
+                if (ClipboardHistoryItem != null)
+                    Clipboard.DeleteItemFromHistory(ClipboardHistoryItem);
+                Clipboard.SetContent(null);
+                ClipboardHistoryItem = null;
                 dp.Stop();
             };
         }

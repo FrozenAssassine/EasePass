@@ -31,6 +31,7 @@ namespace EasePass.Views
             pswd_chars.Text = AppSettings.GetSettings(AppSettingsValues.passwordChars, DefaultSettingsValues.PasswordChars);
             pswd_length.Text = Convert.ToString(AppSettings.GetSettingsAsInt(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength));
             disableLeakedPasswords.IsOn = !AppSettings.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords);
+            clipboardClearTimeout.Value = AppSettings.GetSettingsAsInt(AppSettingsValues.clipboardClearTimeoutSec, DefaultSettingsValues.ClipboardClearTimeoutSec);
 
             selectLanguageBox.ItemsSource = MainWindow.localizationHelper.languages;
 
@@ -183,6 +184,11 @@ namespace EasePass.Views
             AppSettings.SaveSettings(AppSettingsValues.language, (selectLanguageBox.SelectedItem as LanguageItem).Tag);
 
             MainWindow.localizationHelper.SetLanguage(selectLanguageBox.SelectedItem as LanguageItem);
+        }
+
+        private void clipboardClearTimeout_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        {
+            AppSettings.SaveSettings(AppSettingsValues.clipboardClearTimeoutSec, clipboardClearTimeout.Value);
         }
     }
 }

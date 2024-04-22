@@ -68,6 +68,9 @@
             <controls:SettingsControl Header="Inactivity Logout" x:Uid="View_SettingsPage_InactivityLogout">
                 <NumberBox x:Uid="View_SettingsPage_InactivityLogoutTime" SpinButtonPlacementMode="Inline" ValueChanged="InactivityLogoutTime_ValueChanged" Maximum="1000" Minimum="1" MinWidth="150" Margin="5" x:Name="inactivityLogoutTime" PlaceholderText="Logout time" Header="Minutes"/>
             </controls:SettingsControl>
+            <controls:SettingsControl Header="Clipboard clear timeout" x:Uid="View_SettingsPage_ClipboardClearTimeout">
+                <NumberBox x:Uid="View_SettingsPage_ClipboardClearTimeoutTime" SpinButtonPlacementMode="Inline" ValueChanged="clipboardClearTimeout_ValueChanged" Maximum="100000" Minimum="1" MinWidth="150" Margin="5" x:Name="clipboardClearTimeout" PlaceholderText="Clear time" Header="Seconds"/>
+            </controls:SettingsControl>
             <Expander Margin="0,0,0,5" HorizontalAlignment="Stretch">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">

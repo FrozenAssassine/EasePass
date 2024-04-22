@@ -807,6 +807,9 @@
   <data name="View_SettingsPage_ChangePassword_Warning.Text" xml:space="preserve">
     <value>Achte darauf, ein Passwort zu wählen, welches du dir immer merken wirst. Ohne das Passwort ist keine Wiederherstellung deiner Passwörter möglich. Stelle außerdem sicher, dass deine Passwörter entweder auf einem externen Offline-Laufwerk oder in der Cloud gesichert sind.</value>
   </data>
+  <data name="View_SettingsPage_ClipboardClearTimeout" xml:space="preserve">
+    <value>Zwischenablage automatisch leeren (Sek.)</value>
+  </data>
   <data name="View_SettingsPage_CurrentPassword.Header" xml:space="preserve">
     <value>Aktuelles Passwort</value>
   </data>
