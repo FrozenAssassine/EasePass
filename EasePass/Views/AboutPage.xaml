@@ -70,8 +70,8 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <HyperlinkButton NavigateUri="https://github.com/FrozenAssassine/EasePass/issues/new" Margin="5" Content="Report Bug" x:Uid="View_About_ReportBug"></HyperlinkButton>
-                    <HyperlinkButton NavigateUri="https://github.com/FrozenAssassine/EasePass/issues/new" Margin="5" Content="Request Feature"  x:Uid="View_About_RequestFeature"></HyperlinkButton>
+                    <HyperlinkButton NavigateUri="https://github.com/FrozenAssassine/EasePass/issues/new" Margin="5" Content="Report Bug" x:Uid="View_About_ReportBug" ToolTipService.ToolTip="Open Github issues"></HyperlinkButton>
+                    <HyperlinkButton NavigateUri="https://github.com/FrozenAssassine/EasePass/issues/new" Margin="5" Content="Request Feature"  x:Uid="View_About_RequestFeature" ToolTipService.ToolTip="Open Github issues"></HyperlinkButton>
                 </StackPanel>
             </Grid>
 

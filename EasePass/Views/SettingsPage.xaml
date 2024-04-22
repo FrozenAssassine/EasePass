@@ -98,7 +98,7 @@
                 <ToggleSwitch x:Name="showIcons" Toggled="showIcons_Toggled"/>
             </controls:SettingsControl>
             <controls:SettingsControl Header="Password popularity counter" x:Uid="View_SettingsPage_PWPopularityCounter">
-                <Button x:Uid="View_SettingsPage_ResetPopularityCounter" Style="{ThemeResource AccentButtonStyle}" Content="Reset" Width="100" Click="ResetPopularity_Click" />
+                <Button x:Uid="View_SettingsPage_ResetPopularityCounter" Style="{ThemeResource AccentButtonStyle}" Content="Reset" Width="100" Click="ResetPopularity_Click" ToolTipService.ToolTip="Resets the counter that counts the clicks to sort by popularity." />
             </controls:SettingsControl>
         </StackPanel>
     </ScrollViewer>
