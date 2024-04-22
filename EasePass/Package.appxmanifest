@@ -10,7 +10,7 @@
   <Identity
     Name="52804JuliusKirsch.EasePass"
     Publisher="CN=131520D9-7303-41D1-808C-53CCB4ADFB34"
-    Version="1.1.0.0" />
+    Version="1.2.0.0" />
 
   <Properties>
     <DisplayName>Ease Pass</DisplayName>

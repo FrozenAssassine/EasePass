@@ -1,0 +1,94 @@
+<Page
+    x:Class="EasePass.Views.ManageDatabasePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:model="using:EasePass.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:models="using:EasePass.Models" 
+    xmlns:controls="using:EasePass.Controls" 
+    xmlns:controls1="using:CommunityToolkit.WinUI.Controls"
+    mc:Ignorable="d">
+
+    <ScrollViewer Margin="20">
+        <StackPanel>
+            <TextBlock TextAlignment="Center" FontSize="36" Text="Manage Database"/>
+            <controls:SettingsItemSeparator Header="Your Databases">
+                <StackPanel Orientation="Horizontal">
+                    <controls:IconButton x:Uid="View_ManageDB_CreateDB" Glyph="&#xE710;" ToolTipService.ToolTip="Create a new database" Margin="10,0,0,0" Content="Create database" Click="CreateDatabase_Click" />
+                    <controls:IconButton x:Uid="View_ManageDB_ImportDB" Glyph="&#xE8B5;" ToolTipService.ToolTip="Import a database" Margin="10,0,0,0" Content="Import database" Click="ImportDatabase_Click" />
+                </StackPanel>
+            </controls:SettingsItemSeparator>
+            <Grid Margin="0,20,0,0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <GridView x:Name="databaseDisplay" Grid.Column="0" SelectionChanged="databaseDisplay_SelectionChanged">
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Database">
+                            <Grid Width="250" Height="150" Padding="10" Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ContextFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem x:Uid="View_ManageDB_FlyoutDelete" Tag="{x:Bind}" Icon="Delete" Text="Delete" Click="Delete_DatabaseItem_Click"/>
+                                        <MenuFlyoutSeparator/>
+                                        <MenuFlyoutItem x:Uid="View_ManageDB_FlyoutCopy" Tag="{x:Bind}" Icon="Copy" Text="Copy Path" Click="CopyDatabasePath_Click"/>
+                                    </MenuFlyout>
+                                </Grid.ContextFlyout>
+
+                                <TextBlock Grid.Row="1" Text="{x:Bind Name}" FontSize="24"/>
+                                <TextBlock Grid.Row="2" Text="{x:Bind Path}" TextWrapping="Wrap" FontSize="11"/>
+                            </Grid>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+                <controls1:GridSplitter Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" Grid.Column="1"/>
+                <StackPanel Padding="20" CornerRadius="10" Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}" HorizontalAlignment="Center" Orientation="Vertical" Grid.Column="2" x:Name="editDatabaseView" Visibility="Collapsed">
+                    <TextBlock FontSize="20" x:Name="loadedDBName"/>
+                    <controls:IconButton x:Uid="View_ManageDB_ImportPasswords" HorizontalAlignment="Stretch" Glyph="&#xE710;" ToolTipService.ToolTip="Import passwords from an external database into this one" Margin="0,20,0,0" Content="Import into" Click="ImportIntoDatabase_Click" />
+                    <controls:IconButton x:Uid="View_ManageDB_DeleteDB" HorizontalAlignment="Stretch" Glyph="&#xE74D;" Content="Delete database" ToolTipService.ToolTip="Delete database" Margin="0,20,0,0" Click="Delete_DatabaseItem_Click" />
+                    <controls:IconButton x:Uid="View_ManageDB_ExportDB" HorizontalAlignment="Stretch" Glyph="&#xEDE1;" Content="Export database" ToolTipService.ToolTip="Export database" Margin="0,20,0,0" Click="Export_DatabaseItem_Click" />
+                    <controls:IconButton x:Uid="View_ManageDB_LoadThisDB" HorizontalAlignment="Stretch" Glyph="&#xE8FB;" Content="Load this database" ToolTipService.ToolTip="Load this database" Margin="0,20,0,0" Click="Load_DatabaseItem_Click" />
+                    <controls:IconButton x:Uid="View_ManageDB_ChangePW" HorizontalAlignment="Stretch" Glyph="&#xF78D;" Content="Change Password" ToolTipService.ToolTip="Change the password for the database" Margin="0,20,0,0" Click="ChangePassword_Click" />
+                    <ComboBox x:Uid="View_ManageDB_SelectPrinter" HorizontalAlignment="Stretch" x:Name="printerSelector" PlaceholderText="Pick a printer" MinWidth="150" Margin="0,20,0,0" SelectionChanged="printerSelector_SelectionChanged" />
+                    <controls:IconButton x:Uid="View_ManageDB_PrintDB" HorizontalAlignment="Stretch" Glyph="&#xE749;" Content="Print database" ToolTipService.ToolTip="Print database" Margin="0,10,0,0" Click="Print_DatabaseItem_Click" />
+                </StackPanel>
+            </Grid>
+
+            <!--
+            DO NOT DELETE, Needs to be worked on in next update
+            <controls:SettingsItemSeparator Header="Your Backups"/>
+            <GridView Margin="0,20,0,0" x:Name="databaseBackupDisplay">
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Database">
+                        <StackPanel Padding="15" MinWidth="230" Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}">
+                            <TextBlock FontSize="16" Text="Backup"/>
+                            <TextBlock Margin="0,5,0,0" FontSize="12" Text="{x:Bind LastModifiedStr}"/>
+                            <StackPanel.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Tag="{x:Bind}" Icon="Delete" Text="Delete" Click="Delete_BackupDatabase_Click"/>
+                                    <MenuFlyoutItem Tag="{x:Bind}" Text="Load" Click="LoadBackupDatabase_Click">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE8E5;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem Tag="{x:Bind}" Text="Export" Click="Export_BackupDatabase_Click">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xEDE1;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </StackPanel.ContextFlyout>
+                        </StackPanel>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>-->
+        </StackPanel>
+    </ScrollViewer>
+</Page>

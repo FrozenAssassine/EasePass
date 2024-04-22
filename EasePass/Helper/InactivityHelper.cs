@@ -4,9 +4,10 @@ using System;
 
 namespace EasePass.Helper
 {
-    internal class InactivityHelper
+    public class InactivityHelper
     {
         DispatcherTimer inactivityTimer = new DispatcherTimer();
+        public bool PreventAutologout { get; set; } = false;
 
         public InactivityHelper()
         {
@@ -15,8 +16,14 @@ namespace EasePass.Helper
 
         private void InactivityTimer_Tick(object sender, object e)
         {
-            inactivityTimer.Stop();
+            if (PreventAutologout)
+            {
+                inactivityTimer.Start();
+                return;
+            }
+
             InactivityStarted?.Invoke();
+            inactivityTimer.Stop();
         }
 
         public void WindowDeactivated()

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Net.Sockets;
 using System.Net;
+using System.Net.Sockets;
 
 namespace EasePass.Helper
 {
@@ -12,7 +12,7 @@ namespace EasePass.Helper
         {
             //return DateTime.Now; // I disabled online time to prevent flickering through fast switching between online time and local time.
 
-            if (NTP_Server.Length == 0) 
+            if (NTP_Server.Length == 0)
                 NTP_Server = DEFAULT_SERVER;
 
             var ntpData = new byte[48];
@@ -30,7 +30,7 @@ namespace EasePass.Helper
                 socket.Receive(ntpData);
                 socket.Close();
             }
-            catch 
+            catch
             {
                 //return the current time when no network available or the server is not available
                 return DateTime.Now;

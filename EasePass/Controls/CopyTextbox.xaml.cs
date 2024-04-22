@@ -1,9 +1,7 @@
-using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Settings;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Diagnostics;
 
 namespace EasePass.Controls
 {
@@ -32,7 +30,7 @@ namespace EasePass.Controls
                 }
             }
             catch (UriFormatException) { /*Invalid URL*/ return; }
-         
+
             ClipboardHelper.Copy(RemoveWhitespaceOnCopy ? this.Text.Replace(" ", "") : this.Text);
         }
 

@@ -32,12 +32,6 @@
     <Version>1.1.0</Version>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Core\**" />
-    <EmbeddedResource Remove="Core\**" />
-    <None Remove="Core\**" />
-    <Page Remove="Core\**" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="AppWindows\ScreenScannerWindow.xaml" />
     <None Remove="Assets\AppIcon\Generated\LargeTile.scale-100.png" />
     <None Remove="Assets\AppIcon\Generated\LargeTile.scale-125.png" />
@@ -83,26 +77,37 @@
     <None Remove="Assets\AppIcon\Generated\Wide310x150Logo.scale-150.png" />
     <None Remove="Assets\AppIcon\Generated\Wide310x150Logo.scale-200.png" />
     <None Remove="Assets\AppIcon\Generated\Wide310x150Logo.scale-400.png" />
+    <None Remove="Assets\changelog.txt" />
     <None Remove="Controls\CopyPasswordbox.xaml" />
     <None Remove="Controls\CopyTextbox.xaml" />
     <None Remove="Controls\EditPasswordBox.xaml" />
+    <None Remove="Controls\IconButton.xaml" />
     <None Remove="Controls\PasswordSafetyChart.xaml" />
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\AddItemPage.xaml" />
+    <None Remove="Views\DialogPages\ChangePasswordPage.xaml" />
+    <None Remove="Views\DialogPages\EnterPasswordPage.xaml" />
+    <None Remove="Views\DialogPages\SelectExportPasswordsDialogPage.xaml" />
     <None Remove="Views\Export2FAPage.xaml" />
+    <None Remove="Views\ExtensionPage.xaml" />
     <None Remove="Views\GenPasswordPage.xaml" />
+    <None Remove="Views\ImportPasswordsDialogPage.xaml" />
+    <None Remove="Views\LoadBackupDatabasePage.xaml" />
     <None Remove="Views\LoginPage.xaml" />
+    <None Remove="Views\ManageDatabasePage.xaml" />
     <None Remove="Views\PasswordsPage.xaml" />
     <None Remove="Views\RegisterPage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
+    <None Remove="Views\TextInfoPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net" Version="0.1.0" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230724000" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.0.240109" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231219000" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.2428" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.1" />
     <PackageReference Include="WindowsDisplayAPI" Version="1.3.0.13" />
     <PackageReference Include="ZXing.Net" Version="0.16.9" />
     <PackageReference Include="ZXing.Net.Bindings.Windows.Compatibility" Version="0.16.12" />
@@ -140,9 +145,6 @@
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
   <ItemGroup>
-    <PRIResource Remove="Core\**" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Remove="Assets\AppIcon\Generated\SplashScreen.scale-100.png" />
     <Content Remove="Assets\AppIcon\Generated\SplashScreen.scale-125.png" />
     <Content Remove="Assets\AppIcon\Generated\SplashScreen.scale-150.png" />
@@ -160,9 +162,57 @@
     <Content Remove="Assets\AppIcon\Generated\Square44x44Logo.altform-unplated_targetsize-48.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EasePassExtensibility\EasePassExtensibility.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Update="Assets\AppIcon\appicon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\DialogPages\ChangePasswordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\IconButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\DialogPages\EnterPasswordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ManageDatabasePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\DialogPages\SelectExportPasswordsDialogPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\LoadBackupDatabasePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ImportPasswordsDialogPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\TextInfoPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ExtensionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\PasswordSafetyChart.xaml">

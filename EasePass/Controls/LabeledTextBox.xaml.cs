@@ -1,8 +1,4 @@
-using EasePass.Helper;
-using EasePass.Settings;
 using Microsoft.UI.Xaml.Controls;
-using System;
-using System.Diagnostics;
 
 namespace EasePass.Controls
 {

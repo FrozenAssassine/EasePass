@@ -10,12 +10,12 @@ namespace EasePass.Helper
             double currentTime = (int)(time.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
             double timeInterval = currentTime / interval;
             byte[] timeBytes = BitConverter.GetBytes((ulong)timeInterval);
-            
+
             if (BitConverter.IsLittleEndian)
                 Array.Reverse(timeBytes);
 
             byte[] secretKeyBytes = B32ToBytes(secretKey);
-            
+
             HMAC hmac = algorithm switch
             {
                 HashMode.SHA1 => new HMACSHA1(),
@@ -23,19 +23,19 @@ namespace EasePass.Helper
                 HashMode.SHA512 => new HMACSHA512(secretKeyBytes),
                 _ => throw new InvalidOperationException()
             };
-            
+
             hmac.Key = secretKeyBytes;
             byte[] hmacHash = hmac.ComputeHash(timeBytes);
             int offset = hmacHash[hmacHash.Length - 1] & 0x0f;
             byte[] fourBytes = new byte[4];
             Array.Copy(hmacHash, offset, fourBytes, 0, 4);
-            
+
             if (BitConverter.IsLittleEndian)
                 Array.Reverse(fourBytes);
 
             uint value = BitConverter.ToUInt32(fourBytes, 0) & 0x7fffffff;
             string str = value.ToString();
-            if (str.Length > digits) 
+            if (str.Length > digits)
                 str = str.Substring(str.Length - digits, digits);
 
             return str.PadLeft(digits, '0');
@@ -100,13 +100,13 @@ namespace EasePass.Helper
 
         public static string EncodeUrl(string Issuer, string Username, string Secret, HashMode Algorithm = HashMode.SHA1, int Digits = 6, int Period = 30)
         {
-            return "otpauth://totp/" + 
-                Uri.EscapeDataString(Issuer) + ':' + 
-                Uri.EscapeDataString(Username) + "?secret=" + 
-                Uri.EscapeDataString(Secret) + "&issuer=" + 
+            return "otpauth://totp/" +
+                Uri.EscapeDataString(Issuer) + ':' +
+                Uri.EscapeDataString(Username) + "?secret=" +
+                Uri.EscapeDataString(Secret) + "&issuer=" +
                 Uri.EscapeDataString(Issuer) + "&algorithm=" +
-                HashModeToString(Algorithm) + "&digits=" + 
-                Convert.ToString(Digits) + "&period=" + 
+                HashModeToString(Algorithm) + "&digits=" +
+                Convert.ToString(Digits) + "&period=" +
                 Convert.ToString(Period);
         }
 

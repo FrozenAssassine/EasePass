@@ -1,0 +1,31 @@
+<Page
+    x:Class="EasePass.Views.CreateDatabaseDialogPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EasePass.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:EasePass.Models"
+    mc:Ignorable="d">
+
+    <StackPanel>
+        <TextBox Margin="0,10,0,0" x:Name="databaseName" Header="Database Name" PlaceholderText="Database Name" TextChanged="databaseName_TextChanged" />
+        <PasswordBox Header="Enter Password" PlaceholderText="Enter Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBox"/>
+        <PasswordBox Header="Repeat Password" PlaceholderText="Repeat Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBoxRepeat"/>
+        <TextBox Margin="0,10,0,0" x:Name="databasePath" Header="Database Path" PlaceholderText="Database Path" IsReadOnly="True" />
+        <Button Margin="0,10,0,0" Content="Select path" Click="selectPath_Click" HorizontalAlignment="Stretch" />
+
+        <!--I need this for the localization names
+        <TextBox x:Uid="Dialog_CreateDB_DBName" Margin="0,10,0,0" x:Name="databaseName" Header="Database Name" PlaceholderText="Database Name"/>
+        <PasswordBox x:Uid="Dialog_CreateDB_EnterPW" Header="Enter Password" PlaceholderText="Enter Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBox"/>
+        <PasswordBox x:Uid="Dialog_CreateDB_RepeatPW" Header="Repeat Password" PlaceholderText="Repeat Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBoxRepeat"/>
+
+        <DropDownButton Margin="0,10,0,0" Content="Database Location" x:Uid="Dialog_CreateDB_DBLocation">
+            <DropDownButton.Flyout>
+                <MenuFlyout Placement="Bottom">
+                    <MenuFlyoutItem x:Uid="Dialog_CreateDB_DefaultLocation" Text="Default" Click="Default_DatabaseLocation_Click"/>
+                    <MenuFlyoutItem x:Uid="Dialog_CreateDB_ChooseLocation" Text="Choose" Click="Choose_DatabaseLocation_Click"/>
+                </MenuFlyout>
+            </DropDownButton.Flyout>
+        </DropDownButton>        -->
+    </StackPanel>
+</Page>

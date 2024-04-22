@@ -1,0 +1,19 @@
+Sie können die Geschwindigkeit der Passworterstellung erhöhen, indem Sie in den Einstellungen die Option "Stellen Sie sicher, dass das Kennwort nicht geleakt wurde" deaktivieren.
+Doppelklicken Sie auf ein Textfeld, um den Inhalt zu kopieren.
+Verwenden Sie immer eine Kombination aus Buchstaben, Zahlen und Sonderzeichen, um ein sicheres Passwort zu erstellen. Je länger und komplexer Ihr Passwort ist, desto schwieriger ist es zu knacken.
+Vermeiden Sie es, dasselbe Passwort für mehrere Websites zu verwenden. Wenn eine Website kompromittiert wird, sind alle Ihre Konten gefährdet.
+Aktivieren Sie die Zwei-Faktor-Authentifizierung, wenn diese verfügbar ist. Dies bietet eine zusätzliche Sicherheitsebene für Ihre Konten.
+Verwenden Sie keine leicht zu erratenden Passwörter wie Geburtstage, Namen oder Adressen.
+Wenn Sie zu ihrem Passwort eine Website eintragen, können wir versuchen, ein Logo zu laden.
+Wenn Sie auf das Pfeilsymbol klicken, können Sie direkt beim Anlegen eines neuen Eintrags ein Passwort generieren.
+Fun Fact: Die Länge des Passwortes ist wichtig! Ein 4-Zeichen-Passwort kann in < 1 Sekunde geknackt werden, während ein 14-Zeichen-Passwort > 200.000 Jahrtausende dauern kann. Halten Sie es stark und sicher! 🔐
+Erstellen Sie regelmäßig Sicherungskopien Ihrer Passwortdatenbank, um sicherzustellen, dass Sie im Falle eines Geräteausfalls oder anderer Probleme nicht den Zugang zu Ihren Konten verlieren.
+Achten Sie darauf, Ihre Passwörter regelmäßig zu aktualisieren, insbesondere für wichtige Konten. Regelmäßige Passwortänderungen erhöhen die Sicherheit.
+In Ihrem Browser gespeicherte Passwörter können Sie importieren. Gehen Sie dazu in die Einstellungen und suchen Sie den Bereich "Plugins".
+Sie können Ihre WIFI-Kennwörter importieren. Gehen Sie dazu in die Einstellungen und sehen Sie sich den Bereich Plugins an.
+Bewegen Sie den Mauszeiger über bestimmte Elemente, um eine genauere Beschreibung ihrer Funktionen zu erhalten.
+Sie können die Sonderzeichen in den generierten Passwörtern in den Einstellungen anpassen.
+Sie können weitere Datenbanken für mehrere Konten in den Einstellungen unter "Datenbanken" verwalten hinzufügen.
+Sortieren Sie die Liste der Passwörter, indem Sie die Elemente verschieben.
+Doppelklicken Sie auf das Textfeld der Website, um sofort zur eingegebenen Website zu navigieren.
+Drucken Sie Ihre Kennwörter mit der Druckfunktion des Datenbank Managers aus.

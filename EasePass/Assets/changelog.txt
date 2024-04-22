@@ -1,0 +1,35 @@
+﻿#Version 1.2.0 [01/20/2024]
+	• Added option to create and choose from multiple databases
+	• Added daily tips to the login page
+	• Added dialog to select which passwords to export
+	• Added dialog to select which passwords to import
+	• Added logout shortcut by pressing Ctrl + L
+	• Added plugin support and the following plugins:
+	  - Browser password importer
+	  - Wifi password importer
+	• Added sorting method to sort passwords by popularity
+	• Added sorting method to sort passwords by strength
+	• Added message to show after update of the app
+	• Added print function to print your passwords as pdf or paper
+	• Added generate password button in add dialog
+	• Added password pie chart to show the security of the password
+	• Added auto logout message to automatically disappear after login
+	• Added password popularity counter
+	• Added splitter to freely size the password list from the password display
+	• Added German language support
+	• Unified .eped and .epdb to .epdb files
+	• Moved the infobutton to the statusbar
+	• Removed automatic backups every 4 minutes
+	• Fix urls not working without http
+	• Fix you can now select multiple entries to delete those
+	• Fix can not enter letters by pressing Ctrl + Alt (Alt Gr) in password box
+
+#Version 1.1.0 [09/28/2023]
+	• 2FA token generator
+	• Password generator 
+	• Icons in menubar
+	• QR code scanner using screenshot or webcam for 2FA
+	• Display for number of passwords in search bar
+	• Red border on password box if the password has been used before
+	• Sort and drag drop for the Password items
+	• Overall many bug fixes

@@ -1,3 +1,5 @@
+using Windows.Storage;
+
 namespace EasePass.Settings
 {
     internal static class DefaultSettingsValues
@@ -7,9 +9,9 @@ namespace EasePass.Settings
         public const int PasswordLength = 15;
         public const int inactivityLogoutTime = 3; //Minutes
         public const bool doubleTapToCopy = true;
-        public const bool autoBackupDatabase = false;
-        public const int autoBackupDBTime = 4; //Minutes
         public const bool showIcons = true;
         public const bool disableLeakedPasswords = false;
+        public static readonly string databasePaths = System.IO.Path.Combine(ApplicationData.Current.LocalFolder.Path, "easepass.epdb") + "|";
+        public static string defaultLanguage = "en-US";
     }
 }

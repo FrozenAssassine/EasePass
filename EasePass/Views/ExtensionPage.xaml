@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="EasePass.Views.ExtensionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EasePass.Views"
+    xmlns:models="using:EasePass.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:Key="ExtensionTemplate" x:DataType="models:Extension">
+            <Border CornerRadius="8" Margin="20" Padding="10" BorderBrush="Gray" BorderThickness="2" Width="250" Height="300">
+                <Grid>
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem x:Uid="View_ExtensionPage_Uninstall" Text="Uninstall" Tag="{x:Bind}" Click="Uninstall_Click" />
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutItem x:Uid="View_ExtensionPage_ShowAuthorizations" Text="Show requested authorizations" Tag="{x:Bind}" Click="ShowRequestedAuthorizations_Click" />
+                            </MenuFlyout>
+                        </Button.Flyout>
+                        <FontIcon Glyph="&#xE713;" />
+                    </Button>
+                    <Grid ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0" x:Name="extensionIcon" Source="{x:Bind IconSource, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,25,0,0" ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}" Stretch="UniformToFill" Width="150" Height="150" />
+                        <StackPanel Grid.Row="1">
+                            <TextBlock x:Name="pluginName" TextWrapping="WrapWholeWords" TextAlignment="Center" Text="{x:Bind AboutPlugin.PluginName, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,20,0,0" FontWeight="Bold" ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginDescription, Mode=OneWay}" FontSize="20" />
+                            <TextBlock x:Name="authorName" Text="{x:Bind AboutPlugin.PluginAuthor, Mode=OneWay}" HorizontalAlignment="Center" Tag="{x:Bind}" Tapped="authorName_Tapped"  ToolTipService.ToolTip="{x:Bind AboutPlugin.PluginAuthorURL, Mode=OneWay}" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="ExtensionDownloadTemplate" x:DataType="models:FetchedExtension">
+            <Grid Padding="15" HorizontalAlignment="Stretch" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{x:Bind Name}"/>
+                <FontIcon Grid.Column="1" HorizontalAlignment="Right" Margin="10,0,0,0" Glyph="&#xE896;"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/> <!-- Just for spacing -->
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Uid="View_ExtensionPage_AddPluginFromFile" Grid.Row="1" Grid.Column="0" Content="Add plugins from file" Click="AddExtension_Click" Padding="15" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <ScrollViewer Margin="0,10,0,0" Grid.Row="2" Grid.Column="0" Padding="50,0,50,50" VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled">
+            <GridView x:Name="extensionView" Margin="50" SelectionMode="None" ItemTemplate="{StaticResource ExtensionTemplate}" IsItemClickEnabled="False" />
+        </ScrollViewer>
+        <TextBlock x:Uid="View_ExtensionPage_Store" Grid.Row="1" Grid.Column="1" Margin="0,0,40,0" FontSize="30" Text="Store:" HorizontalAlignment="Center" />
+        <ScrollViewer Grid.Row="2" Grid.Column="1" VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <GridView x:Name="downloadView" ItemTemplate="{StaticResource ExtensionDownloadTemplate}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="fetchedExtensionsGridView_SelectionChanged"/>
+        </ScrollViewer>
+    </Grid>
+</Page>

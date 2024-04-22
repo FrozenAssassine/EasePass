@@ -2,120 +2,92 @@ using EasePass.Dialogs;
 using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Models;
+using EasePass.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.ObjectModel;
-using System.Security;
+using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EasePass.Views
 {
-    public sealed partial class PasswordsPage : Page
+    public sealed partial class PasswordsPage : Page, INotifyPropertyChanged
     {
         public delegate int PasswordExists(string password);
-
-        private ObservableCollection<PasswordManagerItem> PasswordItems = new ObservableCollection<PasswordManagerItem>();
-        private PasswordManagerItem SelectedItem = null;
-        public SecureString masterPassword = null;
         public const int TOTP_SPACING = 3;
-        private readonly AutoBackupHelper autoBackupHelper = new AutoBackupHelper();
+        private PasswordManagerItem _SelectedItem = null;
+        private PasswordManagerItem SelectedItem { get => _SelectedItem; set { _SelectedItem = value; RaisePropertyChanged("SelectedItem"); } }
         private TOTPTokenUpdater totpTokenUpdater;
 
         public PasswordsPage()
         {
             this.InitializeComponent();
+            App.m_window.Closed += M_window_Closed;
         }
 
-        public int PasswordAlreadyExists(string password)
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void RaisePropertyChanged(string name)
         {
-            int i = 0;
-            foreach(var item in PasswordItems)
+            if (PropertyChanged != null)
             {
-                if (item.Password == password) i++;
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
-            return i;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             App.m_window.ShowBackArrow = false;
 
             if (e.NavigationMode == NavigationMode.Back)
             {
-                passwordItemListView.ItemsSource = PasswordItems;
-                SaveData();
-                autoBackupHelper.UpdateSettings();
+                Database.LoadedInstance.Save();
             }
-            else if(e.NavigationMode == NavigationMode.New && e.Parameter is SecureString pw)
+            else if (e.NavigationMode == NavigationMode.New)
             {
-                masterPassword = pw;
-                LoadData(masterPassword);
                 InfobarExtension.ClearInfobarsAfterLogin(MainWindow.InfoMessagesPanel);
                 AppVersionHelper.CheckNewVersion();
+
+                //load the gridsplittervalue back
+                gridSplitterLoadSize.Width = new GridLength(AppSettings.GetSettingsAsInt(AppSettingsValues.gridSplitterWidth, 240), GridUnitType.Pixel);
             }
-   
+
+            if (Database.LoadedInstance != null)
+            {
+                passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
+                
+                //Backups are currently disabled, because we need to find a better way to do them:
+                MainWindow.databaseBackupHelper = new DatabaseBackupHelper(Database.LoadedInstance, BackupCycle.Never);
+                await MainWindow.databaseBackupHelper.CheckAndDoBackup();
+
+                Database.LoadedInstance.Save();
+            }
+
             base.OnNavigatedTo(e);
+        }
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            StoreGridSplitterValue();
         }
 
         public void Reload()
         {
             passwordItemListView.ItemsSource = null;
-            passwordItemListView.ItemsSource = PasswordItems;
+            passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
         }
-        private void LoadData(SecureString pw)
+
+        private async Task DeletePasswordItem(PasswordManagerItem deleteItem)
         {
-            var data = DatabaseHelper.LoadDatabase(pw);
-            if (data == null)
+            if (deleteItem == null)
                 return;
 
-            PasswordItems = data;
-
-            autoBackupHelper.Start(this, PasswordItems);
-        }
-        public void SaveData()
-        {
-            DatabaseHelper.SaveDatabase(PasswordItems, masterPassword);
-        }
-        private void ShowPasswordItem(PasswordManagerItem item)
-        {
-            if (item == null)
-                return;
-
-            notesTB.Text = item.Notes;
-            pwTB.Password = item.Password;
-            emailTB.Text = item.Email;
-            usernameTB.Text = item.Username;
-            itemnameTB.Text = item.DisplayName;
-            websiteTB.Text = item.Website;
-
-            passwordShowArea.Visibility = Visibility.Visible;
-
-            if (!string.IsNullOrEmpty(item.Secret))
-            {
-                totpTB.Visibility = totpLB.Visibility = Visibility.Visible;
-                if (totpTokenUpdater != null)
-                    totpTokenUpdater.StopTimer();
-                totpTokenUpdater = new TOTPTokenUpdater(item, totpTB);
-                totpTokenUpdater.StartTimer();
-                totpTokenUpdater.SimulateTickEvent();
-                return;
-            }
-
-            totpTB.Visibility = totpLB.Visibility = Visibility.Collapsed;
-            if(totpTokenUpdater != null)
-                totpTokenUpdater.StopTimer();
-        }
-        private async Task DeletePasswordItem(PasswordManagerItem item)
-        {
-            if (item == null)
-                return;
-
-            if (await new DeleteConfirmationDialog().ShowAsync(item))
+            if (await new DeleteConfirmationDialog().ShowAsync(deleteItem))
             {
                 int index = passwordItemListView.SelectedIndex;
-                PasswordItemsManager.DeleteItem(PasswordItems, item);
+                Database.LoadedInstance.DeleteItem(deleteItem);
 
                 if (passwordItemListView.Items.Count >= 1)
                     passwordItemListView.SelectedIndex = index - 1 > 0 ? index - 1 : index + 1 < passwordItemListView.Items.Count ? index + 1 : 0;
@@ -125,11 +97,38 @@ namespace EasePass.Views
                 //update searchbox:
                 if (searchbox.Text.Length > 0)
                 {
-                    ObservableCollection<PasswordManagerItem> items = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
+                    ObservableCollection<PasswordManagerItem> items = Database.LoadedInstance.FindItemsByName(searchbox.Text);
                     passwordItemListView.ItemsSource = items;
                 }
 
-                SaveData();
+                Database.LoadedInstance.Save();
+            }
+        }
+        private async Task DeletePasswordItems(PasswordManagerItem[] deleteItems)
+        {
+            if (deleteItems == null || deleteItems.Length == 0)
+                return;
+
+            if (await new DeleteConfirmationDialog().ShowAsync(deleteItems))
+            {
+                foreach (var item in deleteItems)
+                {
+                    Database.LoadedInstance.DeleteItem(item);
+                }
+
+                if (passwordItemListView.Items.Count >= 1)
+                    passwordItemListView.SelectedIndex = 0;
+                else
+                    passwordShowArea.Visibility = Visibility.Collapsed;
+
+                //update searchbox:
+                if (searchbox.Text.Length > 0)
+                {
+                    ObservableCollection<PasswordManagerItem> items = Database.LoadedInstance.FindItemsByName(searchbox.Text);
+                    passwordItemListView.ItemsSource = items;
+                }
+
+                Database.LoadedInstance.Save();
             }
         }
         private async Task EditPasswordItem(PasswordManagerItem item)
@@ -137,22 +136,37 @@ namespace EasePass.Views
             if (item == null)
                 return;
 
-            var editItem = await new EditItemDialog().ShowAsync(PasswordAlreadyExists, item);
+            var editItem = await new EditItemDialog().ShowAsync(Database.LoadedInstance.PasswordAlreadyExists, item);
             if (editItem == null)
                 return;
 
-            ShowPasswordItem(SelectedItem);
-            SaveData();
+
+            Database.LoadedInstance.Save();
         }
         private async Task AddPasswordItem()
         {
-            var newItem = await new AddItemDialog().ShowAsync(PasswordAlreadyExists);
+            var newItem = await new AddItemDialog().ShowAsync(Database.LoadedInstance.PasswordAlreadyExists);
             if (newItem == null)
                 return;
 
-            PasswordItemsManager.AddItem(PasswordItems, newItem);
+            Database.LoadedInstance.AddItem(newItem);
             Searchbox_TextChanged(searchbox, null);
-            SaveData();
+            Database.LoadedInstance.Save();
+        }
+        private void Update2FATimer()
+        {
+            if (SelectedItem == null)
+                return;
+
+            if (totpTokenUpdater != null)
+                totpTokenUpdater.StopTimer();
+
+            if (!string.IsNullOrEmpty(SelectedItem.Secret))
+            {
+                totpTokenUpdater = new TOTPTokenUpdater(SelectedItem, totpTB);
+                totpTokenUpdater.StartTimer();
+                totpTokenUpdater.SimulateTickEvent();
+            }
         }
         private async Task Add2FAPasswordItem(PasswordManagerItem item)
         {
@@ -162,8 +176,18 @@ namespace EasePass.Views
             if (!await new Add2FADialog().ShowAsync(item))
                 return;
 
-            ShowPasswordItem(item);
-            SaveData();
+            try
+            {
+                TOTP.GenerateTOTPToken(DateTime.Now, item.Secret, Convert.ToInt32(item.Digits), Convert.ToInt32(item.Interval), TOTP.StringToHashMode(item.Algorithm));
+            }
+            catch
+            {
+                item.Secret = "";
+                InfoMessages.Invalid2FA();
+            }
+
+            Update2FATimer();
+            Database.LoadedInstance.Save();
         }
         private async Task GeneratePassword()
         {
@@ -175,8 +199,7 @@ namespace EasePass.Views
         {
             App.m_frame.Navigate(typeof(SettingsPage), new SettingsNavigationParameters
             {
-                PasswordPage = this,
-                PwItems = PasswordItems
+                PasswordPage = this
             });
         }
         private void SetVis(FontIcon icon)
@@ -186,8 +209,25 @@ namespace EasePass.Views
             sortnotes.Visibility = ConvertHelper.BoolToVisibility(icon == sortnotes);
             sortwebsite.Visibility = ConvertHelper.BoolToVisibility(icon == sortwebsite);
         }
+        private void StoreGridSplitterValue()
+        {
+            AppSettings.SaveSettings(AppSettingsValues.gridSplitterWidth, gridSplitterLoadSize.Width);
+        }
 
-        private async void DeletePasswordItem_Click(object sender, RoutedEventArgs e) => await DeletePasswordItem(SelectedItem);
+        private void M_window_Closed(object sender, WindowEventArgs args)
+        {
+            StoreGridSplitterValue();
+        }
+        private async void DeletePasswordItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (passwordItemListView.SelectedItems.Count == 1)
+            {
+                await DeletePasswordItem(SelectedItem);
+                return;
+            }
+
+            await DeletePasswordItems(passwordItemListView.SelectedItems.Select(x => x as PasswordManagerItem).ToArray());
+        }
         private async void AddPasswordItem_Click(object sender, RoutedEventArgs e) => await AddPasswordItem();
         private async void EditPasswordItem_Click(object sender, RoutedEventArgs e) => await EditPasswordItem(SelectedItem);
         private async void Add2FAPasswordItem_Click(object sender, RoutedEventArgs e) => await Add2FAPasswordItem(SelectedItem);
@@ -214,24 +254,25 @@ namespace EasePass.Views
             if (passwordItemListView.SelectedItem is PasswordManagerItem pwItem)
             {
                 SelectedItem = pwItem;
-                ShowPasswordItem(pwItem);
+                SelectedItem.Clicks.Add(DateTime.Now.ToString("d").Replace("/", "."));
+                Update2FATimer();
             }
         }
         private void PasswordItemListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
         {
             if (args.Items.Count > 0)
-                SaveData();
+                Database.LoadedInstance.Save();
         }
 
         private void Searchbox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(searchbox.Text.Length == 0)
+            if (searchbox.Text.Length == 0)
             {
-                passwordItemListView.ItemsSource = PasswordItems;
+                passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
                 searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
                 return;
             }
-            var search_res = PasswordItemsManager.FindItemsByName(PasswordItems, searchbox.Text);
+            var search_res = Database.LoadedInstance.FindItemsByName(searchbox.Text);
             passwordItemListView.ItemsSource = search_res;
             searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
         }
@@ -243,14 +284,14 @@ namespace EasePass.Views
                 passwordItemListView.SelectedIndex = -1;
             }
         }
-      
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
         }
         private void Page_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-            if (KeyHelper.IsKeyPressed(Windows.System.VirtualKey.Control))
+            if (KeyHelper.IsKeyPressed(Windows.System.VirtualKey.Control) && !KeyHelper.IsKeyPressed(Windows.System.VirtualKey.Menu))
             {
                 switch (e.Key)
                 {
@@ -271,7 +312,11 @@ namespace EasePass.Views
                         if (passwordItemListView.SelectedIndex > 0 && passwordItemListView.SelectedIndex < passwordItemListView.Items.Count)
                             passwordItemListView.SelectedIndex--;
                         break;
-                    default: return;
+                    case Windows.System.VirtualKey.L:
+                        LogoutHelper.Logout();
+                        break;
+                    default:
+                        return;
                 }
             }
 
@@ -290,19 +335,22 @@ namespace EasePass.Views
         private void SortUsername_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByUsername, sortusername);
         private void SortNotes_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByNotes, sortnotes);
         private void SortWebsite_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByWebsite, sortwebsite);
+        private void SortPopularAll_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByPopularAllTime, sortpopularall); // "popular all time" is equal to "popular last year" to save storage space
+        private void SortPopular30_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByPopularLast30Days, sortpopular30);
+        private void SortPasswordStrength(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByPasswordStrength, sortpasswordstrength);
         private void SortClickAction(Comparison<PasswordManagerItem> comparison, FontIcon icon)
         {
-            PasswordItems.Sort(comparison);
+            Database.LoadedInstance.Items.Sort(comparison);
             Reload();
-            SaveData();
+            Database.LoadedInstance.Save();
             SetVis(icon);
             Searchbox_TextChanged(this, null);
         }
         private void SwitchOrder_Click(object sender, RoutedEventArgs e)
         {
-            PasswordItems = PasswordItems.ReverseSelf();
+            Database.LoadedInstance.SetNewPasswords(Database.LoadedInstance.Items.ReverseSelf());
             Reload();
-            SaveData();
+            Database.LoadedInstance.Save();
             Searchbox_TextChanged(this, null);
         }
 

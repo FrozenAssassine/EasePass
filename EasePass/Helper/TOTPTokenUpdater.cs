@@ -29,7 +29,7 @@ namespace EasePass.Helper
 
             if (string.IsNullOrEmpty(selectedItem.Secret))
                 return;
-            
+
             totpTB.Text = generateCurrent(selectedItem);
         }
 

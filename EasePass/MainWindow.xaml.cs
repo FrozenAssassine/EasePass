@@ -1,36 +1,48 @@
 using EasePass.Dialogs;
 using EasePass.Helper;
+using EasePass.Models;
 using EasePass.Settings;
 using EasePass.Views;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
 using System.IO;
 using Windows.ApplicationModel;
-using System;
-using Microsoft.UI.Windowing;
 
 namespace EasePass
 {
     public sealed partial class MainWindow : Window
     {
-        private InactivityHelper inactivityHelper = new InactivityHelper();
-
+        public InactivityHelper inactivityHelper = new InactivityHelper();
         public static StackPanel InfoMessagesPanel;
-        public Frame MainFrame => naivgationFrame;
+        public Frame MainFrame => navigationFrame;
         public bool ShowBackArrow { get => navigateBackButton.Visibility == Visibility.Visible; set => navigateBackButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
 
         public static MainWindow CurrentInstance = null;
+
+        public static DispatcherQueue UIDispatcherQueue = null;
+        public static XamlRoot XamlRoot = null;
+        public static DatabaseBackupHelper databaseBackupHelper = null;
+        public static LocalizationHelper localizationHelper = new LocalizationHelper();
 
         public MainWindow()
         {
             this.InitializeComponent();
 
-            MainWindow.CurrentInstance = this;
+            CurrentInstance = this;
+            UIDispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
+            localizationHelper.Initialize();
 
             Title = Package.Current.DisplayName;
             this.AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets\\AppIcon\\appicon.ico"));
 
-            inactivityHelper.InactivityStarted += InactivityHelper_InactivityStarted; 
+            ExtensionHelper.Init();
+            inactivityHelper.InactivityStarted += InactivityHelper_InactivityStarted;
+
+            PasswordHelper.Init();
 
             InfoMessagesPanel = infoMessagesPanel;
             ExtendsContentIntoTitleBar = true;
@@ -70,12 +82,13 @@ namespace EasePass
         }
         private void InactivityHelper_InactivityStarted()
         {
-            if(this.naivgationFrame.CurrentSourcePageType != typeof(LoginPage) &&
-                this.naivgationFrame.CurrentSourcePageType != typeof(RegisterPage))
+            if (this.navigationFrame.CurrentSourcePageType != typeof(LoginPage) &&
+                this.navigationFrame.CurrentSourcePageType != typeof(RegisterPage))
             {
                 AutoLogoutContentDialog.InactivityStarted();
-                this.naivgationFrame.Navigate(typeof(LoginPage));
+                LogoutHelper.Logout();
                 InfoMessages.AutomaticallyLoggedOut();
+                Database.LoadedInstance.Dispose();
             }
         }
 
@@ -91,7 +104,7 @@ namespace EasePass
 
         private void NavigateBack_Click(object sender, RoutedEventArgs e)
         {
-            naivgationFrame.GoBack();
+            navigationFrame.GoBack();
         }
 
         private void Window_Activated(object sender, WindowActivatedEventArgs args)

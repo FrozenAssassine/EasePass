@@ -1,5 +1,5 @@
 using EasePass.Dialogs;
-using EasePass.Helper;
+using EasePass.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Security;
@@ -15,7 +15,7 @@ namespace EasePass.Views
 
         private void Register_Click(object sender, RoutedEventArgs e)
         {
-            if(passwordBox.Password.Length < 4)
+            if (passwordBox.Password.Length < 4)
             {
                 InfoMessages.PasswordTooShort();
                 return;
@@ -27,15 +27,13 @@ namespace EasePass.Views
                 return;
             }
 
-            AuthenticationHelper.StorePassword(passwordBox.Password);
-
             SecureString pw = new SecureString();
             foreach (var character in passwordBox.Password)
             {
                 pw.AppendChar(character);
             }
 
-            DatabaseHelper.CreateInitialDatabaseFile(pw);
+            Database.LoadedInstance = Database.CreateNewDatabase(Database.GetAllDatabasePaths()[0], pw);
             App.m_frame.Navigate(typeof(PasswordsPage), pw);
         }
 

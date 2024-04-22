@@ -8,9 +8,11 @@ namespace EasePass.Helper
         public static void MakeToolWindow(Window window)
         {
             var presenter = window.AppWindow.Presenter as OverlappedPresenter;
-            presenter.SetBorderAndTitleBar(false, false);
+            //presenter.(false, true);
             presenter.IsResizable = false;
             presenter.IsAlwaysOnTop = true;
+            presenter.IsMaximizable = false;
+            presenter.IsMinimizable = false;
         }
     }
 }

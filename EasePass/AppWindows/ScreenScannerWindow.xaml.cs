@@ -7,7 +7,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading;
 using Windows.Graphics.Imaging;
 using WindowsDisplayAPI;
 
@@ -38,14 +37,14 @@ namespace EasePass.AppWindows
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             scanner = new QRCodeScanner();
-            timer.Interval = new TimeSpan(0,0,5);
-            timer.Tick += Timer_Tick; 
+            timer.Interval = new TimeSpan(0, 0, 5);
+            timer.Tick += Timer_Tick;
             timer.Start();
         }
 
         private async void Timer_Tick(object sender, object e)
         {
-            foreach(Display display in Display.GetDisplays())
+            foreach (Display display in Display.GetDisplays())
             {
                 Bitmap bmp = new Bitmap(display.CurrentSetting.Resolution.Width, display.CurrentSetting.Resolution.Height);
                 Graphics g = Graphics.FromImage(bmp);
@@ -58,7 +57,7 @@ namespace EasePass.AppWindows
                     BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
                     SoftwareBitmap softwareBitmap = await decoder.GetSoftwareBitmapAsync();
                     Result = scanner.Scan(softwareBitmap);
-                    if (Result != "")
+                    if (Result != null)
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {

@@ -2,15 +2,12 @@ using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
 using EasePass.Settings;
+using EasePassExtensibility;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing.Printing;
-using System.IO;
 using System.Security;
 using System.Text;
 
@@ -18,9 +15,8 @@ namespace EasePass.Views
 {
     public sealed partial class SettingsPage : Page
     {
-        ObservableCollection<PasswordManagerItem> passwordItems = null;
         PasswordsPage passwordsPage = null;
-        string SelectedPrinter = "";
+        ObservableCollection<PasswordImporterBase> passwordImporter = null;
 
         public SettingsPage()
         {
@@ -31,13 +27,15 @@ namespace EasePass.Views
         {
             inactivityLogoutTime.Value = AppSettings.GetSettingsAsInt(AppSettingsValues.inactivityLogoutTime, DefaultSettingsValues.inactivityLogoutTime);
             doubleTapToCopySW.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.doubleTapToCopy, DefaultSettingsValues.doubleTapToCopy);
-            autoBackupDB.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.autoBackupDB, DefaultSettingsValues.autoBackupDatabase);
-            autoBackupDBPath.Text = AppSettings.GetSettings(AppSettingsValues.autoBackupDBPath, "");
-            autoBackupDBTime.Value = AppSettings.GetSettingsAsInt(AppSettingsValues.autoBackupDBTime, DefaultSettingsValues.autoBackupDBTime);
             showIcons.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons);
             pswd_chars.Text = AppSettings.GetSettings(AppSettingsValues.passwordChars, DefaultSettingsValues.PasswordChars);
             pswd_length.Text = Convert.ToString(AppSettings.GetSettingsAsInt(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength));
             disableLeakedPasswords.IsOn = !AppSettings.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords);
+
+            selectLanguageBox.ItemsSource = MainWindow.localizationHelper.languages;
+
+            var languageTag = AppSettings.GetSettings(AppSettingsValues.language, DefaultSettingsValues.defaultLanguage);
+            selectLanguageBox.SelectedIndex = MainWindow.localizationHelper.languages.FindIndex(x => x.Tag == languageTag);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -54,108 +52,20 @@ namespace EasePass.Views
 
             App.m_window.ShowBackArrow = true;
             var navParam = e.Parameter as SettingsNavigationParameters;
-            passwordItems = navParam.PwItems;
             passwordsPage = navParam.PasswordPage;
 
-            printerSelector.Items.Clear();
-            foreach(string printer in PrinterSettings.InstalledPrinters)
+            passwordImporter = new ObservableCollection<PasswordImporterBase>();
+            foreach (IPasswordImporter importer in ExtensionHelper.GetAllClassesWithInterface<IPasswordImporter>())
             {
-                printerSelector.Items.Add(printer);
+                passwordImporter.Add(new PasswordImporterBase(importer));
+            }
+
+            if (passwordImporter.Count == 0)
+            {
+                noPluginsInfo.Visibility = Visibility.Visible;
             }
         }
 
-        private async void ExportEncryptedDatabase_Click(object sender, RoutedEventArgs e)
-        {
-            if (encryptDBPassword.Password.Length < 4)
-            {
-                InfoMessages.PasswordTooShort();
-                return;
-            }
-
-            var (hash, salt) = AuthenticationHelper.HashPassword(encryptDBPassword.Password);
-
-            var encodedDB = EncryptDecryptHelper.EncryptStringAES(DatabaseHelper.CreateJsonstring(passwordItems), encryptDBPassword.Password, salt);
-
-            var encryptedItem = new EncryptedDatabaseItem(hash, salt, encodedDB);
-            string fileData = JsonConvert.SerializeObject(encryptedItem, Formatting.Indented);
-
-            var pickerResult = await FilePickerHelper.PickSaveFile(("Ease Pass Exported Database", new List<string> { ".eped" }));
-            if (pickerResult.success)
-            {
-                File.WriteAllText(pickerResult.path, fileData);
-                InfoMessages.ExportDBSuccess();
-            }
-        }
-        private async void ImportEncryptedDatabase_Click(object sender, RoutedEventArgs e)
-        {
-            if (decryptDBPassword.Password.Length < 4)
-            {
-                InfoMessages.PasswordTooShort();
-                return;
-            }
-
-            var pickerResult = await FilePickerHelper.PickOpenFile(new string[] { ".eped" });
-            if (!pickerResult.success)
-                return;
-
-            EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(pickerResult.path));
-            if (!AuthenticationHelper.VerifyPassword(decryptedJson.PasswordHash, decryptDBPassword.Password))
-            {
-                InfoMessages.ImportDBWrongPassword();
-                return;
-            }
-            var str = EncryptDecryptHelper.DecryptStringAES(decryptedJson.Data, decryptDBPassword.Password, decryptedJson.Salt);
-            var importedItems = DatabaseHelper.LoadItems(str);
-
-            var dialogResult = await new InsertOrOverwriteDatabaseDialog().ShowAsync();
-            if (dialogResult == InsertOrOverwriteDatabaseDialog.Result.Cancel)
-                return;
-
-            if (dialogResult == InsertOrOverwriteDatabaseDialog.Result.Overwrite)
-            {
-                passwordItems.Clear();
-            }
-
-            foreach (var item in importedItems)
-            {
-                passwordItems.Add(item);
-            }
-            passwordsPage.SaveData();
-            InfoMessages.ImportDBSuccess();
-            return;
-        }
-        private void ChangePassword_Click(object sender, RoutedEventArgs e)
-        {
-            if (changePW_newPw.Password.Length < 4)
-            {
-                InfoMessages.PasswordTooShort();
-                return;
-            }
-
-            if (!AuthenticationHelper.VerifyPassword(changePW_currentPw.Password))
-            {
-                InfoMessages.ChangePasswordWrong();
-                return;
-            }
-
-            if (!changePW_newPw.Password.Equals(changePW_repeatPw.Password))
-            {
-                InfoMessages.PasswordsDoNotMatch();
-                return;
-            }
-
-            SecureString newMasterPw = new SecureString();
-            foreach (var character in changePW_newPw.Password)
-            {
-                newMasterPw.AppendChar(character);
-            }
-
-            passwordsPage.masterPassword = newMasterPw;
-            AuthenticationHelper.StorePassword(changePW_newPw.Password);
-            passwordsPage.SaveData();
-
-            InfoMessages.SuccessfullyChangedPassword();
-        }
         private void InactivityLogoutTime_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             AppSettings.SaveSettings(AppSettingsValues.inactivityLogoutTime, inactivityLogoutTime.Value);
@@ -166,32 +76,10 @@ namespace EasePass.Views
             AppSettings.SaveSettings(AppSettingsValues.doubleTapToCopy, doubleTapToCopySW.IsOn);
         }
 
-        private async void PickAutoBackupDBPath_Click(object sender, RoutedEventArgs e)
-        {
-            var res = await FilePickerHelper.PickSaveFile(("Ease Pass Database", new List<string> { ".epdb" }));
-            if (!res.success)
-                return;
-
-            autoBackupDBPath.Text = res.path;
-        }
-
-        private void AutoBackupDB_Toggled(object sender, RoutedEventArgs e)
-        {
-            AppSettings.SaveSettings(AppSettingsValues.autoBackupDB, autoBackupDB.IsOn);
-        }
-        private void AutoBackupDBTime_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
-        {
-            AppSettings.SaveSettings(AppSettingsValues.autoBackupDBTime, autoBackupDBTime.Value);
-        }
-        private void AutoBackupDBPathTB_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            AppSettings.SaveSettings(AppSettingsValues.autoBackupDBPath, autoBackupDBPath.Text);
-        }
-
         private void showIcons_Toggled(object sender, RoutedEventArgs e)
         {
             AppSettings.SaveSettings(AppSettingsValues.showIcons, showIcons.IsOn);
-            if (passwordsPage != null) 
+            if (passwordsPage != null)
                 passwordsPage.Reload();
         }
 
@@ -220,7 +108,7 @@ namespace EasePass.Views
 
         private void pswd_chars_TextChanged(object sender, TextChangedEventArgs e)
         {
-            AppSettings.SaveSettings(AppSettingsValues.passwordChars, 
+            AppSettings.SaveSettings(AppSettingsValues.passwordChars,
                 pswd_chars.Text.Length == 0 ? DefaultSettingsValues.PasswordChars : pswd_chars.Text
                 );
         }
@@ -230,19 +118,71 @@ namespace EasePass.Views
             AppSettings.SaveSettings(AppSettingsValues.disableLeakedPasswords, !disableLeakedPasswords.IsOn);
         }
 
-        private void printerSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void ImportPassword_Click(object sender, RoutedEventArgs e)
         {
-            SelectedPrinter = (string)e.AddedItems[0];
+            MainWindow.XamlRoot = App.m_window.Content.XamlRoot;
+
+            PasswordImporterBase piBase = (PasswordImporterBase)(sender as Button).Tag;
+            var res = await PasswordImportManager.ManageImport(piBase.PasswordImporter);
+
+            if (res.Items == null)
+                return;
+
+            if (res.Override)
+            {
+                for (int i = 0; i < res.Items.Length; i++) // I prefer my way with two loops because it will retain the item order.
+                {
+                    bool found = false;
+                    for (int j = 0; j < Database.LoadedInstance.Items.Count; j++)
+                    {
+                        if (Database.LoadedInstance.Items[j].DisplayName.Equals(res.Items[i].DisplayName))
+                        {
+                            Database.LoadedInstance.Items[j] = res.Items[i];
+                            found = true;
+                        }
+                    }
+                    if (!found)
+                        Database.LoadedInstance.Items.Add(res.Items[i]);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < res.Items.Length; i++)
+                {
+                    Database.LoadedInstance.Items.Add(res.Items[i]);
+                }
+            }
+
+            Database.LoadedInstance.Save();
         }
 
-        private void PrintButton_Click(object sender, RoutedEventArgs e)
+        private void ExtensionManage_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(SelectedPrinter))
+            App.m_frame.Navigate(typeof(ExtensionPage), new SettingsNavigationParameters());
+        }
+
+        private void ResetPopularity_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < Database.LoadedInstance.Items.Count; i++)
             {
-                InfoMessages.PrinterNotSelected();
-                return;
+                Database.LoadedInstance.Items[i].Clicks.Clear();
             }
-            PrinterHelper.Print(passwordItems, SelectedPrinter);
+            Database.LoadedInstance.Save();
+        }
+
+        private void ManageDatabases_Click(object sender, RoutedEventArgs e)
+        {
+            App.m_frame.Navigate(typeof(ManageDatabasePage));
+        }
+
+        private void selectLanguageBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (selectLanguageBox.SelectedItem == null)
+                return;
+
+            AppSettings.SaveSettings(AppSettingsValues.language, (selectLanguageBox.SelectedItem as LanguageItem).Tag);
+
+            MainWindow.localizationHelper.SetLanguage(selectLanguageBox.SelectedItem as LanguageItem);
         }
     }
 }

@@ -1,10 +1,12 @@
-﻿using System.Linq;
-using System.Text;
-using System.Security.Cryptography;
-using System.IO;
-using System.Security;
-using System.Runtime.InteropServices;
+﻿using EasePass.Dialogs;
+using EasePass.Extensions;
 using EasePass.Settings;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace EasePass.Helper
 {
@@ -13,7 +15,7 @@ namespace EasePass.Helper
         public static byte[] EncryptStringAES(string plainText, string password, string salt)
         {
             SecureString pw = new SecureString();
-            for(var i = 0; i< password.Length; i++)
+            for (var i = 0; i < password.Length; i++)
             {
                 pw.AppendChar(password[i]);
             }
@@ -21,15 +23,9 @@ namespace EasePass.Helper
             return EncryptStringAES(plainText, pw, salt);
         }
 
-        public static string DecryptStringAES(byte[] cipherText, string password, string salt)
+        public static (string decryptedString, bool correctPassword) DecryptStringAES(byte[] cipherText, string password, string salt)
         {
-            SecureString pw = new SecureString();
-            for (var i = 0; i < password.Length; i++)
-            {
-                pw.AppendChar(password[i]);
-            }
-
-            return DecryptStringAES(cipherText, pw, salt);
+            return DecryptStringAES(cipherText, password.ConvertToSecureString(), salt);
         }
 
 
@@ -57,7 +53,7 @@ namespace EasePass.Helper
             }
         }
 
-        public static string DecryptStringAES(byte[] cipherText, SecureString password, string salt = "")
+        public static (string decryptedString, bool correctPassword) DecryptStringAES(byte[] cipherText, SecureString password, string salt = "")
         {
             using (Aes aesAlg = Aes.Create())
             {
@@ -70,7 +66,15 @@ namespace EasePass.Helper
                 using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                 using (var srDecrypt = new StreamReader(csDecrypt, Encoding.UTF8))
                 {
-                    return srDecrypt.ReadToEnd();
+                    try
+                    {
+                        var reader = srDecrypt.ReadToEnd();
+                        return (reader, true);
+                    }
+                    catch (CryptographicException)
+                    {
+                        return (null, false);
+                    }
                 }
             }
         }

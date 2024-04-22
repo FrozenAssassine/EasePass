@@ -1,10 +1,11 @@
 ﻿using EasePass.Helper;
-using EasePass.Settings;
+using EasePass.Models;
 using EasePass.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.IO;
 
 namespace EasePass
 {
@@ -27,9 +28,9 @@ namespace EasePass
             m_window = new MainWindow();
             m_frame = m_window.MainFrame;
             m_frame.NavigationFailed += OnNavigationFailed;
-            
-            var pwHash = AppSettings.GetSettings(AppSettingsValues.pHash, "");
-            if (pwHash.Length <= 0)
+
+            string[] dbPaths = Database.GetAllDatabasePaths();
+            if (dbPaths.Length == 1 && !File.Exists(dbPaths[0]))
                 m_frame.Navigate(typeof(RegisterPage));
             else
                 m_frame.Navigate(typeof(LoginPage));
