@@ -8,11 +8,11 @@
     mc:Ignorable="d">
 
     <StackPanel>
-        <TextBox Margin="0,10,0,0" x:Name="databaseName" Header="Database Name" PlaceholderText="Database Name" TextChanged="databaseName_TextChanged" />
-        <PasswordBox Header="Enter Password" PlaceholderText="Enter Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBox"/>
-        <PasswordBox Header="Repeat Password" PlaceholderText="Repeat Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBoxRepeat"/>
-        <TextBox Margin="0,10,0,0" x:Name="databasePath" Header="Database Path" PlaceholderText="Database Path" IsReadOnly="True" />
-        <Button Margin="0,10,0,0" Content="Select path" Click="selectPath_Click" HorizontalAlignment="Stretch" />
+        <TextBox x:Uid="View_CreateDBPage_DBName" Margin="0,10,0,0" x:Name="databaseName" Header="Database Name" PlaceholderText="Database Name" TextChanged="databaseName_TextChanged" />
+        <PasswordBox x:Uid="View_CreateDBPage_EnterPW" Header="Enter Password" PlaceholderText="Enter Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBox"/>
+        <PasswordBox x:Uid="View_CreateDBPage_RepeatPW" Header="Repeat Password" PlaceholderText="Repeat Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBoxRepeat"/>
+        <TextBox x:Uid="View_CreateDBPage_DBPath" Margin="0,10,0,0" x:Name="databasePath" Header="Database Path" PlaceholderText="Database Path" IsReadOnly="True" />
+        <Button x:Uid="View_CreateDBPage_SelectPath " Margin="0,10,0,0" Content="Select path" Click="selectPath_Click" HorizontalAlignment="Stretch" />
 
         <!--I need this for the localization names
         <TextBox x:Uid="Dialog_CreateDB_DBName" Margin="0,10,0,0" x:Name="databaseName" Header="Database Name" PlaceholderText="Database Name"/>

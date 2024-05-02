@@ -19,9 +19,9 @@ namespace EasePass.Dialogs
             page = new EnterPasswordPage();
             dialog = new AutoLogoutContentDialog
             {
-                Title = "Enter password of the database",
-                CloseButtonText = "Cancel",
-                PrimaryButtonText = "Done",
+                Title = "Enter password of the database".Localized("Dialogs_EnterPW_Title/Text"),
+                PrimaryButtonText = "Done".Localized("Dialog_Button_Done/Text"),
+                CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
                 XamlRoot = App.m_window.Content.XamlRoot,
                 Content = page
             };
