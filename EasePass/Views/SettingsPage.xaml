@@ -71,7 +71,7 @@
             <controls:SettingsControl Header="Clipboard clear timeout" x:Uid="View_SettingsPage_ClipboardClearTimeout">
                 <NumberBox x:Uid="View_SettingsPage_ClipboardClearTimeoutTime" SpinButtonPlacementMode="Inline" ValueChanged="clipboardClearTimeout_ValueChanged" Maximum="100000" Minimum="1" MinWidth="150" Margin="5" x:Name="clipboardClearTimeout" PlaceholderText="Clear time" Header="Seconds"/>
             </controls:SettingsControl>
-            <Expander Margin="0,0,0,5" HorizontalAlignment="Stretch">
+            <Expander Margin="0,5,0,5" HorizontalAlignment="Stretch">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">
                         <TextBlock Margin="0,4,10,0" FontSize="20" VerticalAlignment="Center" Text="&#xE7B3;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
