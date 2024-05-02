@@ -37,10 +37,12 @@ public class LocalizationHelper
         var languageTag = AppSettings.GetSettings(AppSettingsValues.language, "en-US");
         var res = languages.Find(x => x.Tag == languageTag);
         if (res == null)
+        {
+            SetLanguage(languages.Find(x => x.Tag == "en-US"));
             return;
+        }
 
-        SetLanguage(languages.Find(x => x.Tag == "en-US"));
-        //SetLanguage(res);
+        SetLanguage(res);
     }
 
     private void RegisterLanguageFromResource()

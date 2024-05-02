@@ -17,6 +17,7 @@ namespace EasePass.Views
     {
         PasswordsPage passwordsPage = null;
         ObservableCollection<PasswordImporterBase> passwordImporter = null;
+        bool blockEventsOnloadSettings = false;
 
         public SettingsPage()
         {
@@ -25,6 +26,8 @@ namespace EasePass.Views
 
         private void LoadSettings()
         {
+            blockEventsOnloadSettings = true;
+
             inactivityLogoutTime.Value = AppSettings.GetSettingsAsInt(AppSettingsValues.inactivityLogoutTime, DefaultSettingsValues.inactivityLogoutTime);
             doubleTapToCopySW.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.doubleTapToCopy, DefaultSettingsValues.doubleTapToCopy);
             showIcons.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons);
@@ -36,6 +39,7 @@ namespace EasePass.Views
 
             var languageTag = AppSettings.GetSettings(AppSettingsValues.language, DefaultSettingsValues.defaultLanguage);
             selectLanguageBox.SelectedIndex = MainWindow.localizationHelper.languages.FindIndex(x => x.Tag == languageTag);
+            blockEventsOnloadSettings = false;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -68,16 +72,25 @@ namespace EasePass.Views
 
         private void InactivityLogoutTime_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
+            if (blockEventsOnloadSettings)
+                return;
+
             AppSettings.SaveSettings(AppSettingsValues.inactivityLogoutTime, inactivityLogoutTime.Value);
         }
 
         private void DoubleTapToCopySW_Toggled(object sender, RoutedEventArgs e)
         {
+            if (blockEventsOnloadSettings)
+                return;
+
             AppSettings.SaveSettings(AppSettingsValues.doubleTapToCopy, doubleTapToCopySW.IsOn);
         }
 
         private void showIcons_Toggled(object sender, RoutedEventArgs e)
         {
+            if (blockEventsOnloadSettings)
+                return;
+
             AppSettings.SaveSettings(AppSettingsValues.showIcons, showIcons.IsOn);
             if (passwordsPage != null)
                 passwordsPage.Reload();
@@ -85,6 +98,9 @@ namespace EasePass.Views
 
         private void pswd_length_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
         {
+            if (blockEventsOnloadSettings)
+                return;
+
             string length = pswd_length.Text;
             StringBuilder newLength = new StringBuilder();
             for (int i = 0; i < length.Length; i++)
@@ -98,6 +114,9 @@ namespace EasePass.Views
 
         private void pswd_length_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (blockEventsOnloadSettings)
+                return;
+
             if (pswd_length.Text.Length == 0 || pswd_length.Text == "0")
             {
                 AppSettings.SaveSettings(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength);
@@ -108,6 +127,9 @@ namespace EasePass.Views
 
         private void pswd_chars_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (blockEventsOnloadSettings)
+                return;
+
             AppSettings.SaveSettings(AppSettingsValues.passwordChars,
                 pswd_chars.Text.Length == 0 ? DefaultSettingsValues.PasswordChars : pswd_chars.Text
                 );
@@ -115,6 +137,8 @@ namespace EasePass.Views
 
         private void disableLeakedPasswords_Toggled(object sender, RoutedEventArgs e)
         {
+            if (blockEventsOnloadSettings)
+                return;
             AppSettings.SaveSettings(AppSettingsValues.disableLeakedPasswords, !disableLeakedPasswords.IsOn);
         }
 
@@ -177,7 +201,7 @@ namespace EasePass.Views
 
         private void selectLanguageBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (selectLanguageBox.SelectedItem == null)
+            if (blockEventsOnloadSettings || selectLanguageBox.SelectedItem == null)
                 return;
 
             AppSettings.SaveSettings(AppSettingsValues.language, (selectLanguageBox.SelectedItem as LanguageItem).Tag);
