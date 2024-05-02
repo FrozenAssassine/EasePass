@@ -25,7 +25,7 @@ namespace EasePass.Controls
             PasswordChanged?.Invoke(Password);
         }
 
-        private void CopyText() => ClipboardHelper.Copy(this.Password);
+        private void CopyText() => ClipboardHelper.Copy(this.Password, true);
 
         private void TextBox_DoubleTapped(object sender, Microsoft.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
         {
