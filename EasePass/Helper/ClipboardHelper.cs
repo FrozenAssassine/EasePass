@@ -42,13 +42,13 @@ namespace EasePass.Helper
             dp1.Start();
             dp1.Tick += (s, e) =>
             {
+                dp1.Stop();
+                Clipboard.SetContent(null);
                 try
                 {
-                    Clipboard.SetContent(null);
                     var item = history.Dequeue();
                     if (item != null)
                         Clipboard.DeleteItemFromHistory(item);
-                    dp1.Stop();
                 }
                 catch { }
             };
