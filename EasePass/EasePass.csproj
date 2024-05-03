@@ -10,7 +10,7 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
     <Authors>Julius Kirsch, Finn Freitag</Authors>
-    <Copyright>Copyright © 2023 </Copyright>
+    <Copyright>Copyright © 2023-2024 </Copyright>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <PackageCertificateThumbprint>31005D76C01117397C1391884CCCB2CD42D16455</PackageCertificateThumbprint>
@@ -21,15 +21,14 @@
     <AppxBundle>Always</AppxBundle>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
-    <AppxBundlePlatforms>arm64</AppxBundlePlatforms>
-    <AppxPackageDir>F:\C#\EasePass\EasePass\bin\publish</AppxPackageDir>
+    <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
     <RepositoryUrl>https://github.com/FrozenAssassine/EasePass.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>http://easepass.frozenassassine.de/</PackageProjectUrl>
     <ApplicationIcon>Assets\AppIcon\appicon.ico</ApplicationIcon>
     <UseWindowsForms>False</UseWindowsForms>
-    <AssemblyVersion>1.1.0</AssemblyVersion>
-    <Version>1.1.0</Version>
+    <AssemblyVersion>1.2.0</AssemblyVersion>
+    <Version>1.2.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="AppWindows\ScreenScannerWindow.xaml" />

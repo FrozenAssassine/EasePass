@@ -12,8 +12,6 @@ namespace EasePass.Views
     public sealed partial class AboutPage : Page
     {
         public string AppVersion => AppVersionHelper.GetAppVersion();
-        public string DeveloperName => Package.Current.PublisherDisplayName;
-
 
         public AboutPage()
         {

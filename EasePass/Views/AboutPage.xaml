@@ -32,7 +32,7 @@
                     <FontIcon Margin="0,0,5,0" Grid.Column="3" Glyph="&#xE77B;" VerticalAlignment="Center" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
                     <StackPanel Grid.Column="4">
                         <TextBlock TextAlignment="Left" FontSize="16" Text="Developers"  x:Uid="View_About_Developer"/>
-                        <TextBlock TextAlignment="Left" Text="{x:Bind DeveloperName}"/>
+                        <TextBlock TextAlignment="Left" Text="Julius Kirsch, Finn Freitag"/>
                     </StackPanel>
                 </Grid>
             </Grid>
