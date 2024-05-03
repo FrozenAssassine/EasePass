@@ -17,6 +17,7 @@
 	• Added password popularity counter
 	• Added splitter to freely size the password list from the password display
 	• Added German language support
+	• Added clipboard auto clear support
 	• Unified .eped and .epdb to .epdb files
 	• Moved the infobutton to the statusbar
 	• Removed automatic backups every 4 minutes
