@@ -14,7 +14,7 @@
     <img src="https://img.shields.io/github/repo-size/FrozenAssassine/EasePass?style=flat"/>
 </div>
 
-## ❗Due to a weird bug, we currently can not ship updates
+## ❗Update is in certification
 
 ## 🤔 What is Ease Pass?
 Ease Pass is a simple password manager designed to streamline password management. With this application, you can conveniently store, edit, and organize your passwords securely. The project is a work in progress, focusing on providing a user-friendly interface to save and manage passwords, and future enhancements are underway to further enhance its capabilities.
