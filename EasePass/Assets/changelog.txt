@@ -1,4 +1,4 @@
-﻿#Version 1.2.0 [01/20/2024]
+﻿#Version 1.2.0 [05/03/2024]
 	• Added option to create and choose from multiple databases
 	• Added daily tips to the login page
 	• Added dialog to select which passwords to export
@@ -17,6 +17,7 @@
 	• Added password popularity counter
 	• Added splitter to freely size the password list from the password display
 	• Added German language support
+	• Added clipboard auto clear support
 	• Unified .eped and .epdb to .epdb files
 	• Moved the infobutton to the statusbar
 	• Removed automatic backups every 4 minutes
