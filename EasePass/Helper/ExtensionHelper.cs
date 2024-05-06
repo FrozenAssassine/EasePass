@@ -3,6 +3,7 @@ using EasePassExtensibility;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -57,25 +58,22 @@ public static class ExtensionHelper
         return result.ToArray();
     }
 
-    public static async Task<List<FetchedExtension>> GetExtensionsFromServer()
+    public static async Task<List<FetchedExtension>> GetExtensionsFromSources()
     {
-        string url = "https://github.com/FrozenAssassine/EasePass/raw/master/Plugins/PluginList.txt";
-
-        var result = await RequestsHelper.MakeRequest(url);
-        if (!result.success)
-            return null;
-
-        List<FetchedExtension> items = new();
-
-        var splitted = result.result.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-        foreach (var plunginURL in splitted)
+        List<FetchedExtension> res = new List<FetchedExtension>();
+        for(int i = 0; i < Extensions.Count; i++)
         {
-            var pluginData = plunginURL.Split("|");
-            if (pluginData.Length < 2)
-                continue;
-
-            items.Add(new FetchedExtension(pluginData[1], pluginData[0]));
+            for(int j = 0; j < Extensions[i].Interfaces.Length; j++)
+            {
+                if (Extensions[i].Interfaces[j] is IExtensionSource source)
+                {
+                    if (source.UseAsync)
+                        res.AddRange((await source.GetExtensionSourcesAsync()).Select((item) => { return new FetchedExtension(item.Source, item.Name, source.SourceName); }));
+                    else
+                        res.AddRange(source.GetExtensionSources().Select((item) => { return new FetchedExtension(item.Source, item.Name, source.SourceName); }));
+                }
+            }
         }
-        return items;
+        return res;
     }
 }

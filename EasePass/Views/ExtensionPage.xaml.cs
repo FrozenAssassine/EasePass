@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -40,11 +41,14 @@ public sealed partial class ExtensionPage : Page
     }
     public async Task FetchAndLoadExtensions()
     {
-        var result = await ExtensionHelper.GetExtensionsFromServer();
+        var result = await ExtensionHelper.GetExtensionsFromSources();
         if (result == null)
             return;
 
         downloadView.ItemsSource = result;
+
+        if (result.Count == 0)
+            hintBox.Visibility = Visibility.Visible;
     }
 
 
@@ -190,5 +194,21 @@ public sealed partial class ExtensionPage : Page
         }
         ExtensionHelper.Extensions.Add(extension);
         extensionView.Items.Add(ExtensionHelper.Extensions[ExtensionHelper.Extensions.Count - 1]);
+    }
+
+    private async void OpenWebsite_Click(object sender, RoutedEventArgs e)
+    {
+        await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/FrozenAssassine/EasePass/tree/master/Plugins"));
+    }
+
+    private void OpenPluginFolder_Click(object sender, RoutedEventArgs e)
+    {
+        string path = ApplicationData.Current.LocalFolder.Path + "\\extensions\\";
+        OpenExplorer(path);
+    }
+
+    public static void OpenExplorer(string fullPath)
+    {
+        Process.Start("explorer.exe", $"/select,\"{fullPath.Trim()}\"");
     }
 }

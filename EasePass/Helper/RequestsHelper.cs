@@ -32,6 +32,11 @@ namespace EasePass.Helper
 
         public static async Task<bool> DownloadFileAsync(string url, string path)
         {
+            return await DownloadFileAsync(new Uri(url), path);
+        }
+
+        public static async Task<bool> DownloadFileAsync(Uri url, string path)
+        {
             try
             {
 
