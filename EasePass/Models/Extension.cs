@@ -37,6 +37,11 @@ namespace EasePass.Models
 
         public override string ToString()
         {
+            return ToString(true);
+        }
+
+        public string ToString(bool headline)
+        {
             List<string> items = new List<string>();
             for (int i = 0; i < Interfaces.Length; i++)
             {
@@ -51,7 +56,8 @@ namespace EasePass.Models
                 if (!itemsFinal.Contains(items[i]))
                     itemsFinal.Add(items[i]);
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Authorizations requested by plugin:");
+            if (headline)
+                sb.AppendLine("Authorizations requested by plugin:");
             for (int i = 0; i < itemsFinal.Count; i++)
                 sb.AppendLine(itemsFinal[i]);
             return sb.ToString();

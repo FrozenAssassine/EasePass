@@ -1,6 +1,7 @@
 using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
+using EasePassExtensibility;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -183,13 +185,16 @@ public sealed partial class ExtensionPage : Page
             });
         }
     }
-    private void InstallExtensionFromFile(string p)
+    private async void InstallExtensionFromFile(string p)
     {
         Extension extension = new Extension(ReflectionHelper.GetAllExternalInstances(p), System.IO.Path.GetFileNameWithoutExtension(p));
-        if (extension.Interfaces.Length == 0)
+        if (extension.Interfaces.Length == 0
+            || (extension.Interfaces.Where((ext) => { return ext is IWarning; }).Count() > 0
+            && !(await new SensitiveDataDialog().Dialog(extension))))
         {
             File.AppendAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", new string[] { extension.ID });
-            InfoMessages.FileIsNotAnExtensions();
+            if (extension.Interfaces.Length == 0)
+                InfoMessages.FileIsNotAnExtensions();
             return;
         }
         ExtensionHelper.Extensions.Add(extension);
@@ -199,10 +204,5 @@ public sealed partial class ExtensionPage : Page
     private async void OpenWebsite_Click(object sender, RoutedEventArgs e)
     {
         await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/FrozenAssassine/EasePass/tree/master/Plugins"));
-    }
-
-    public static void OpenExplorer(string fullPath)
-    {
-        Process.Start("explorer.exe", $"/select,\"{fullPath.Trim()}\"");
     }
 }
