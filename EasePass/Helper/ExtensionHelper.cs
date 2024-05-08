@@ -58,7 +58,7 @@ public static class ExtensionHelper
         return result.ToArray();
     }
 
-    public static async Task<List<FetchedExtension>> GetExtensionsFromSources()
+    public static List<FetchedExtension> GetExtensionsFromSources()
     {
         List<FetchedExtension> res = new List<FetchedExtension>();
         for(int i = 0; i < Extensions.Count; i++)
@@ -67,10 +67,7 @@ public static class ExtensionHelper
             {
                 if (Extensions[i].Interfaces[j] is IExtensionSource source)
                 {
-                    if (source.UseAsync)
-                        res.AddRange((await source.GetExtensionSourcesAsync()).Select((item) => { return new FetchedExtension(item.Source, item.Name, source.SourceName); }));
-                    else
-                        res.AddRange(source.GetExtensionSources().Select((item) => { return new FetchedExtension(item.Source, item.Name, source.SourceName); }));
+                    res.AddRange(source.GetExtensionSources().Select((item) => { return new FetchedExtension(item.Source, item.Name, source.SourceName); }));
                 }
             }
         }

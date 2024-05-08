@@ -33,15 +33,15 @@ public sealed partial class ExtensionPage : Page
         base.OnNavigatedTo(e);
         App.m_window.ShowBackArrow = true;
 
-        await FetchAndLoadExtensions();
+        FetchAndLoadExtensions();
 
         extensionView.Items.Clear();
         for (int i = 0; i < ExtensionHelper.Extensions.Count; i++)
             extensionView.Items.Add(ExtensionHelper.Extensions[i]);
     }
-    public async Task FetchAndLoadExtensions()
+    public void FetchAndLoadExtensions()
     {
-        var result = await ExtensionHelper.GetExtensionsFromSources();
+        var result = ExtensionHelper.GetExtensionsFromSources();
         if (result == null)
             return;
 
