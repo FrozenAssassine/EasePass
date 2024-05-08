@@ -201,12 +201,6 @@ public sealed partial class ExtensionPage : Page
         await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/FrozenAssassine/EasePass/tree/master/Plugins"));
     }
 
-    private void OpenPluginFolder_Click(object sender, RoutedEventArgs e)
-    {
-        string path = ApplicationData.Current.LocalFolder.Path + "\\extensions\\";
-        OpenExplorer(path);
-    }
-
     public static void OpenExplorer(string fullPath)
     {
         Process.Start("explorer.exe", $"/select,\"{fullPath.Trim()}\"");
