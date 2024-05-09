@@ -117,6 +117,10 @@ namespace EasePass.Dialogs
             ex.Message,
             InfoBarSeverity.Error, 10
             );
+        public static void PluginMovedWhileInstallingLocal() => new InfoBar().Show(
+            "InfoMessages_PluginMovedWhileCopy",
+            InfoBarSeverity.Error, 10
+            );
 
         public static void UnhandledException(Exception ex) => new InfoBar().Show("Unhandled Exception:", ex.Message, InfoBarSeverity.Error);
         public static void NewVersionInfo(string version)

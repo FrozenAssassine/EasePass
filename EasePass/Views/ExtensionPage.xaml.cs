@@ -108,7 +108,16 @@ public sealed partial class ExtensionPage : Page
                 return;
             }
         }
-        File.Move(p, hashfilename);
+        try
+        {
+            File.Move(p, hashfilename);
+        }
+        catch
+        {
+            //I always get in the File.Move: Exception thrown: 'System.IO.DirectoryNotFoundException' in System.Private.CoreLib.dll
+            InfoMessages.PluginMovedWhileInstallingLocal();
+            return;
+        }
 
         InstallExtensionFromFile(hashfilename);
     }

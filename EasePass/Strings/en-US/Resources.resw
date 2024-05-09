@@ -429,6 +429,12 @@
   <data name="InfoMessages_PasswordTooShort.Text" xml:space="preserve">
     <value>The password is too short</value>
   </data>
+  <data name="InfoMessages_PluginMovedWhileCopy.Headline" xml:space="preserve">
+    <value>Could not copy plugin</value>
+  </data>
+  <data name="InfoMessages_PluginMovedWhileCopy.Text" xml:space="preserve">
+    <value>The selected file does not exist anymore. Maybe the file was removed due to antivirus or anything else.</value>
+  </data>
   <data name="InfoMessages_PrinterItemSkipped.Headline" xml:space="preserve">
     <value>Password skipped</value>
   </data>
