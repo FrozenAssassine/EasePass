@@ -44,13 +44,14 @@ public sealed partial class ExtensionPage : Page
     public void FetchAndLoadExtensions()
     {
         var result = ExtensionHelper.GetExtensionsFromSources();
-        if (result == null)
-            return;
 
-        downloadView.ItemsSource = result;
-
-        if (result.Count == 0)
+        if (result == null || result.Count == 0)
+        {
+            downloadView.ItemsSource = null;
             hintBox.Visibility = Visibility.Visible;
+        } 
+        else
+            downloadView.ItemsSource = result;
     }
 
 
@@ -114,7 +115,6 @@ public sealed partial class ExtensionPage : Page
         }
         catch
         {
-            //I always get in the File.Move: Exception thrown: 'System.IO.DirectoryNotFoundException' in System.Private.CoreLib.dll
             InfoMessages.PluginMovedWhileInstallingLocal();
             return;
         }
