@@ -65,7 +65,7 @@
             <GridView x:Name="extensionView" Margin="50" SelectionMode="None" ItemTemplate="{StaticResource ExtensionTemplate}" IsItemClickEnabled="False" />
         </ScrollViewer>
         <TextBlock x:Uid="View_ExtensionPage_Store" Grid.Row="1" Grid.Column="1" Margin="0,0,40,0" FontSize="30" Text="Store:" HorizontalAlignment="Center" />
-        <StackPanel HorizontalAlignment="Center" x:Name="hintBox" Grid.Row="2" Grid.Column="1" Visibility="Collapsed">
+        <StackPanel HorizontalAlignment="Center" x:Name="hintBox" Grid.Row="3" Grid.Column="1" Visibility="Collapsed">
             <TextBlock Text="Due to the Microsoft Store requirements, we cannot offer direct download of plugins. To use plugins anyway, please follow the steps on our website." TextWrapping="WrapWholeWords" />
             <Button Style="{ThemeResource AccentButtonStyle}" Margin="5,10,5,5" HorizontalAlignment="Stretch" Content="Open Website" Click="OpenWebsite_Click" />
         </StackPanel>
