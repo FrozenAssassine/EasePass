@@ -72,7 +72,11 @@ public class Database : IDisposable, INotifyPropertyChanged
     public static string[] GetAllDatabasePaths()
     {
         string paths = AppSettings.GetSettings(AppSettingsValues.databasePaths, DefaultSettingsValues.databasePaths);
-        return paths.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+        List<string> res = new List<string>();
+        res.AddRange(paths.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries));
+        string[] ps = res.Where((p) => { return File.Exists(p); }).ToArray();
+        SetAllDatabasePaths(ps);
+        return ps;
     }
 
     public static void SetAllDatabasePaths(string[] paths)
