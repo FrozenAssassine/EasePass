@@ -362,6 +362,11 @@ public class Database : IDisposable, INotifyPropertyChanged
             InfoMessages.DatabaseFileNotFoundAt(path);
             return ("", false);
         }
+        catch (DirectoryNotFoundException)
+        {
+            InfoMessages.DatabaseFileNotFoundAt(path);
+            return ("", false);
+        }
         catch (UnauthorizedAccessException)
         {
             InfoMessages.NoAccessToPathDatabaseNotLoaded(path);
