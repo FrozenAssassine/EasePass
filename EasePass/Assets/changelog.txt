@@ -1,4 +1,4 @@
-﻿#Version 1.2.0 [05/03/2024]
+﻿#Version 1.2.0 [05/15/2024]
 	• Added option to create and choose from multiple databases
 	• Added daily tips to the login page
 	• Added dialog to select which passwords to export
