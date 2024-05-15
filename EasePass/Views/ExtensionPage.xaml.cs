@@ -49,9 +49,12 @@ public sealed partial class ExtensionPage : Page
         {
             downloadView.ItemsSource = null;
             hintBox.Visibility = Visibility.Visible;
-        } 
+        }
         else
+        {
             downloadView.ItemsSource = result;
+            hintBox.Visibility = Visibility.Collapsed;
+        }
     }
 
 
@@ -64,6 +67,8 @@ public sealed partial class ExtensionPage : Page
             ExtensionHelper.Extensions.Remove(extension);
             extensionView.Items.Remove(extension);
             File.AppendAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", new string[] { extension.ID });
+
+            FetchAndLoadExtensions();
         }
     }
 
@@ -208,6 +213,8 @@ public sealed partial class ExtensionPage : Page
         }
         ExtensionHelper.Extensions.Add(extension);
         extensionView.Items.Add(ExtensionHelper.Extensions[ExtensionHelper.Extensions.Count - 1]);
+
+        FetchAndLoadExtensions();
     }
 
     private async void OpenWebsite_Click(object sender, RoutedEventArgs e)
