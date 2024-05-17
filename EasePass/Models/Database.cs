@@ -76,7 +76,7 @@ public class Database : IDisposable, INotifyPropertyChanged
         res.AddRange(paths.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries));
         string[] ps = res.Where((p) => { return File.Exists(p); }).ToArray();
         SetAllDatabasePaths(ps);
-        return ps;
+        return ps.Length == 0 ? new string[] { DefaultSettingsValues.databasePaths } : ps;
     }
 
     public static void SetAllDatabasePaths(string[] paths)
