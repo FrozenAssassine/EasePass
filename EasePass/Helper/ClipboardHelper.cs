@@ -20,10 +20,10 @@ namespace EasePass.Helper
 
             //remove from the clipboard:
             if (removeFromClipboard)
-                RemoveLastClipboardItem();
+                RemoveLastClipboardItem(text);
         }
 
-        public static void RemoveLastClipboardItem()
+        public static void RemoveLastClipboardItem(string text)
         {
             // Needs to be a short delay here
             var dp = new DispatcherTimer();
@@ -33,24 +33,49 @@ namespace EasePass.Helper
             {
                 var items = (await Clipboard.GetHistoryItemsAsync()).Items;
                 if (items.Count > 0)
-                    history.Enqueue(items[0]);
+                {
+                    for(int i = 0; i < items.Count; i++)
+                    {
+                        try
+                        {
+                            if (await items[i].Content.GetTextAsync() == text)
+                            {
+                                history.Enqueue(items[i]);
+                                break;
+                            }
+                        }
+                        catch { }
+                    }
+                }
                 dp.Stop();
             };
 
             var dp1 = new DispatcherTimer();
             dp1.Interval = new TimeSpan(0, 0, AppSettings.GetSettingsAsInt(AppSettingsValues.clipboardClearTimeoutSec, DefaultSettingsValues.ClipboardClearTimeoutSec));
             dp1.Start();
-            dp1.Tick += (s, e) =>
+            dp1.Tick += async (s, e) =>
             {
                 dp1.Stop();
-                Clipboard.SetContent(null);
-                try
+                if(await Clipboard.GetContent().GetTextAsync() == text)
                 {
-                    var item = history.Dequeue();
-                    if (item != null)
-                        Clipboard.DeleteItemFromHistory(item);
+                    Clipboard.SetContent(null);
                 }
-                catch { }
+                var items = (await Clipboard.GetHistoryItemsAsync()).Items;
+                if (items.Count > 0)
+                {
+                    for (int i = 0; i < items.Count; i++)
+                    {
+                        try
+                        {
+                            if (await items[i].Content.GetTextAsync() == text)
+                            {
+                                history.Enqueue(items[i]);
+                                break;
+                            }
+                        }
+                        catch { }
+                    }
+                }
             };
         }
     }
