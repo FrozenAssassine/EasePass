@@ -11,7 +11,7 @@ namespace EasePass.Views.DialogPages
 
         public string GetPassword()
         {
-            return passwordbox.Text;
+            return passwordbox.Password;
         }
     }
 }
