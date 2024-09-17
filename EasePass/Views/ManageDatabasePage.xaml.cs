@@ -102,20 +102,7 @@ public sealed partial class ManageDatabasePage : Page
         if (db == null)
             return;
 
-        var res = await FilePickerHelper.PickSaveFile(("Ease Pass database", new List<string>() { ".epdb" }));
-        if (!res.success)
-            return;
-
-        var exportDialogRes = await new SelectExportPasswordsDialog().ShowAsync(Database.LoadedInstance.Items);
-        if (exportDialogRes == null)
-            return;
-
-        Database export = new Database(res.path);
-        export.MasterPassword = db.MasterPassword;
-        export.SetNewPasswords(exportDialogRes);
-        export.Save();
-
-        InfoMessages.ExportDBSuccess();
+        await ExportPasswordsHelper.Export(db, Database.LoadedInstance.Items);
     }
 
     private void Load_DatabaseItem_Click(object sender, RoutedEventArgs e)

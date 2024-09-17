@@ -780,6 +780,9 @@
   <data name="View_PasswordPage_Flyout_Edit.Text" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="View_PasswordPage_Flyout_Export.Text" xml:space="preserve">
+    <value>Export</value>
+  </data>
   <data name="View_PasswordPage_Searchbox.PlaceholderText" xml:space="preserve">
     <value>Search</value>
   </data>
