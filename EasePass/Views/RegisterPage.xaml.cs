@@ -1,5 +1,7 @@
 using EasePass.Dialogs;
+using EasePass.Helper;
 using EasePass.Models;
+using EasePass.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Security;
@@ -45,6 +47,17 @@ namespace EasePass.Views
         private void passwordBox_EnterInvoked(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
             passwordBoxRepeat.Focus(FocusState.Programmatic);
+        }
+
+        private async void LoadExistingDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            var res = await ManageDatabaseHelper.ImportDatabase();
+            if (res == null)
+                return;
+
+            AppSettings.SaveSettings(AppSettingsValues.loadedDatabaseName, res.Name);
+
+            App.m_frame.Navigate(typeof(LoginPage));
         }
     }
 }

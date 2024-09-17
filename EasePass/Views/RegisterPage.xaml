@@ -10,6 +10,7 @@
         <Image Width="100" Height="100" Source="ms-appx:///Assets/AppIcon/Icon.png"/>
         <TextBlock x:Uid="View_RegisterPage_Welcome" Margin="0,50,0,0" FontSize="24" TextAlignment="Center" TextWrapping="Wrap" Width="400" Text="Welcome to Ease Pass - Your open source password manager"/>
         <TextBlock x:Uid="View_RegisterPage_ChoosePasswordInfo" TextWrapping="Wrap" Width="400" Margin="0,30,0,0" FontSize="14" Text="Please choose a master password to begin using the password manager. Without this password, you will never be able to retrieve your saved passwords."/>
+
         <PasswordBox x:Uid="View_RegisterPage_EnterPW" PlaceholderText="Enter Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBox">
             <PasswordBox.KeyboardAccelerators>
                 <KeyboardAccelerator Key="Enter" Invoked="passwordBox_EnterInvoked"/>
@@ -20,6 +21,8 @@
                 <KeyboardAccelerator Key="Enter" Invoked="passwordBoxRepeat_EnterInvoked"/>
             </PasswordBox.KeyboardAccelerators>
         </PasswordBox>
+        <HyperlinkButton Click="LoadExistingDatabase_Click" Content="I already have an existing Database: Import here" Margin="0, 10, 0,0"/>
+
         <Button x:Uid="View_RegisterPage_Register" Margin="0,20,0,0" HorizontalAlignment="Center" Style="{ThemeResource AccentButtonStyle}" Padding="20,5,20,5" Content="Register" Click="Register_Click"/>
     </StackPanel>
 </Page>
