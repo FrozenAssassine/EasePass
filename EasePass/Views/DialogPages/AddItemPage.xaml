@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Controls="using:EasePass.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Controls="using:EasePass.Controls" xmlns:models="using:EasePass.Models"
     mc:Ignorable="d">
 
     <ScrollViewer x:Name="scroll">
@@ -63,6 +63,33 @@
 
             <TextBlock Margin="0,10,0,0" Text="Notes" x:Uid="Dialog_AddItem_Notes"/>
             <TextBox AcceptsReturn="True" Height="150" x:Name="notesTB"/>
+
+            <Button Margin="0,10,0,0" Click="AttachFileButton_Click">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon Glyph="&#xE723;" />
+                        <TextBlock Margin="5,0,0,0" Text="Attach file (max. 1MB)"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <ListView Margin="0,10,0,0" HorizontalContentAlignment="Left">
+                <models:AttachedPasswordItemFile FilePath="ASDF" FileName="My file 1"/>
+                <models:AttachedPasswordItemFile FilePath="ASDF" FileName="My file 2"/>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:AttachedPasswordItemFile">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{x:Bind FileName}"/>
+                            <Button Grid.Column="1" Click="RemoveFile_Click" Tag="{x:Bind }">
+                                <FontIcon Glyph="&#xE74D;" />
+                            </Button>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
     </ScrollViewer>
 </Page>

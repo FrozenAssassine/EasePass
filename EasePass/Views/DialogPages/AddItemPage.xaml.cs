@@ -137,5 +137,21 @@ namespace EasePass.Views
         {
             pwTB.Password = await PasswordHelper.GeneratePassword();
         }
+
+        private void AttachFileButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            //create an item of the class AttachedPasswordItemFile and pass the filepath and filename.
+            //this item can be displayed in the listview.
+            //pick and attach the file here, use another class for this maybe
+        }
+
+        private void RemoveFile_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            if(sender is Button btn && btn.Tag is AttachedPasswordItemFile file)
+            {
+                //the user pressed the delete button for a file in the listview.
+                //remove the file from the item.
+            }
+        }
     }
 }
