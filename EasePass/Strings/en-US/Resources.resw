@@ -154,10 +154,13 @@
     <value>Use your webcam to scan the QR code</value>
   </data>
   <data name="Dialog_AddItem_2FATitle.Text" xml:space="preserve">
-    <value>Two Factor Authentification</value>
+    <value>Two Factor Authentication</value>
   </data>
   <data name="Dialog_AddItem_Algorithm.Text" xml:space="preserve">
     <value>Algorithm</value>
+  </data>
+  <data name="Dialog_AddItem_ConfirmRemove2FA.Text" xml:space="preserve">
+    <value>Are you sure you want to remove two-factor authentication?</value>
   </data>
   <data name="Dialog_AddItem_Digits.Text" xml:space="preserve">
     <value>Digits</value>
@@ -221,6 +224,9 @@
   </data>
   <data name="Dialog_Button_Override.Text" xml:space="preserve">
     <value>Override</value>
+  </data>
+  <data name="Dialog_Button_Remove.Text" xml:space="preserve">
+    <value>Remove</value>
   </data>
   <data name="Dialog_Button_Rename.Text" xml:space="preserve">
     <value>Rename</value>

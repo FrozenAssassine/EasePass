@@ -159,6 +159,9 @@
   <data name="Dialog_AddItem_Algorithm.Text" xml:space="preserve">
     <value>Algorithmus</value>
   </data>
+  <data name="Dialog_AddItem_ConfirmRemove2FA.Text" xml:space="preserve">
+    <value>Are you sure you want to remove two-factor authentication?</value>
+  </data>
   <data name="Dialog_AddItem_Digits.Text" xml:space="preserve">
     <value>Ziffern</value>
   </data>
@@ -221,6 +224,9 @@
   </data>
   <data name="Dialog_Button_Override.Text" xml:space="preserve">
     <value>Überschreiben</value>
+  </data>
+  <data name="Dialog_Button_Remove.Text" xml:space="preserve">
+    <value>Entfernen</value>
   </data>
   <data name="Dialog_Button_Rename.Text" xml:space="preserve">
     <value>Umbenennen</value>

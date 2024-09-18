@@ -107,19 +107,19 @@ namespace EasePass.Views
             twoFactorAuthExpander.Visibility = twoFactorAuthTitle.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
         }
 
-        private void rem2FA_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private void Remove2FA_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             secretTB.Password = "";
             Hide2FA();
         }
 
-        private void exp2FA_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private void Export2FA_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             qrcode.Source = QRCodeScanner.GenerateQRCode(TOTP.EncodeUrl(nameTB.Text, usernameTB.Text, secretTB.Password, TOTP.StringToHashMode((string)algorithmTB.SelectedItem), ConvertHelper.ToInt(digitsTB.Text, 6), ConvertHelper.ToInt(intervalTB.Text, 30)));
             qrcode.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
         }
 
-        private void pwTB_PasswordChanged(string password)
+        private void PwTB_PasswordChanged(string password)
         {
             if (!(pe(pwTB.Password) == 0 || (isEditMode && pe(pwTB.Password) == 1)))
             {
@@ -133,7 +133,7 @@ namespace EasePass.Views
             }
         }
 
-        private async void Button_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private async void GeneratePassword_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             pwTB.Password = await PasswordHelper.GeneratePassword();
         }

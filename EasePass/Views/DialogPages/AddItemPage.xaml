@@ -16,7 +16,7 @@
 
             <TextBlock Margin="0,10,0,0" Text="Email" x:Uid="Dialog_AddItem_Email"/>
             <TextBox x:Name="emailTB" />
-
+    
             <TextBlock Margin="0,10,0,0" Text="Password" x:Uid="Dialog_AddItem_Password"/>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -24,9 +24,9 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <Border x:Name="RedBorder" Grid.Column="0" BorderThickness="0" BorderBrush="Transparent" CornerRadius="4">
-                    <Controls:EditPasswordBox x:Name="pwTB" PasswordChanged="pwTB_PasswordChanged" />
+                    <Controls:EditPasswordBox x:Name="pwTB" PasswordChanged="PwTB_PasswordChanged" />
                 </Border>
-                <Button ToolTipService.ToolTip="Generate a Password" x:Name="genBtn" Grid.Column="1" Margin="10,0,0,0" BorderThickness="1" Click="Button_Click">
+                <Button ToolTipService.ToolTip="Generate a Password" x:Name="genBtn" Grid.Column="1" Margin="10,0,0,0" BorderThickness="1" Click="GeneratePassword_Click">
                     <FontIcon Glyph="&#xEB97;" />
                 </Button>
             </Grid>
@@ -34,7 +34,7 @@
             <TextBlock Margin="0,10,0,0" Text="Website" x:Uid="Dialog_AddItem_Website"/>
             <TextBox x:Name="websiteTB" />
 
-            <TextBlock Margin="0,10,0,0" x:Name="twoFactorAuthTitle" Text="Two Factor Authentification"  x:Uid="Dialog_AddItem_2FATitle"/>
+            <TextBlock Margin="0,10,0,0" x:Name="twoFactorAuthTitle" Text="Two Factor Authentication"  x:Uid="Dialog_AddItem_2FATitle"/>
             <Expander x:Name="twoFactorAuthExpander" Header="Click to Expand" HorizontalAlignment="Stretch">
                 <Expander.Content>
                     <StackPanel HorizontalAlignment="Stretch">
@@ -54,8 +54,20 @@
                             <x:String>SHA512</x:String>
                         </ComboBox>
 
-                        <Button x:Name="rem2FA" Margin="0,10,0,0" Content="Remove 2FA" Click="rem2FA_Click" HorizontalAlignment="Stretch" x:Uid="Dialog_AddItem_Remove2FA"/>
-                        <Button x:Name="exp2FA" Margin="0,10,0,0" Content="Export 2FA" Click="exp2FA_Click" HorizontalAlignment="Stretch" x:Uid="Dialog_AddItem_Export2FA"/>
+                        <Button x:Name="rem2FA" Margin="0,10,0,0" Content="Remove 2FA" HorizontalAlignment="Stretch" x:Uid="Dialog_AddItem_Remove2FA">
+                            <Button.Flyout>
+                                <Flyout>
+                                    <StackPanel>
+                                        <TextBlock x:Uid="Dialog_AddItem_ConfirmRemove2FA" Width="300" Style="{ThemeResource BaseTextBlockStyle}" Text="Are you sure you want to remove two-factor authentication?" Margin="0,0,0,12" />
+                                        <Button Style="{ThemeResource AccentButtonStyle}" Click="Remove2FA_Click">
+                                            <TextBlock Text="Remove" x:Uid="Dialog_Button_Remove"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Flyout>
+                            </Button.Flyout>
+
+                        </Button>
+                        <Button x:Name="exp2FA" Margin="0,10,0,0" Content="Export 2FA" Click="Export2FA_Click" HorizontalAlignment="Stretch" x:Uid="Dialog_AddItem_Export2FA"/>
                         <Image x:Name="qrcode" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" />
                     </StackPanel>
                 </Expander.Content>
