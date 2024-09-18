@@ -367,5 +367,15 @@ namespace EasePass.Views
             var items = new ObservableCollection<PasswordManagerItem>(passwordItemListView.SelectedItems.Select(x => (PasswordManagerItem)x).ToList());
             await ExportPasswordsHelper.Export(Database.LoadedInstance, items);
         }
+
+        private void DownloadAttachedFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OpenAttachedFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
