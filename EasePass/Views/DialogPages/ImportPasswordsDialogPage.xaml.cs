@@ -40,6 +40,9 @@ public sealed partial class ImportPasswordsDialogPage : Page
 
     public void SetPasswords(ObservableCollection<PasswordManagerItem> items)
     {
+        if (items == null)
+            return;
+
         PWItems.Clear();
         for (int i = 0; i < items.Count; i++)
             PWItems.Add(items[i]);
