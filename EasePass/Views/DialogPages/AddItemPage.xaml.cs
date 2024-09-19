@@ -135,7 +135,14 @@ namespace EasePass.Views
 
         private async void GeneratePassword_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
+            generatePasswordIcon.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+            generatePasswordProgress.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+            generatePasswordProgress.IsIndeterminate = generatePasswordProgress.IsActive = true;
+
             pwTB.Password = await PasswordHelper.GeneratePassword();
+
+            generatePasswordProgress.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+            generatePasswordIcon.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
         }
     }
 }

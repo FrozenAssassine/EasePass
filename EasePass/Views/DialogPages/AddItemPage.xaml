@@ -27,7 +27,10 @@
                     <Controls:EditPasswordBox x:Name="pwTB" PasswordChanged="PwTB_PasswordChanged" />
                 </Border>
                 <Button ToolTipService.ToolTip="Generate a Password" x:Name="genBtn" Grid.Column="1" Margin="10,0,0,0" BorderThickness="1" Click="GeneratePassword_Click">
-                    <FontIcon Glyph="&#xEB97;" />
+                    <Grid>
+                        <ProgressRing IsIndeterminate="True" IsActive="True" x:Name="generatePasswordProgress" Width="20" Height="20"/>
+                        <FontIcon Glyph="&#xE72C;" x:Name="generatePasswordIcon" />
+                    </Grid>
                 </Button>
             </Grid>
 
