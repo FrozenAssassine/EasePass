@@ -18,7 +18,7 @@
         <TextBox x:Uid="Dialog_CreateDB_DBName" Margin="0,10,0,0" x:Name="databaseName" Header="Database Name" PlaceholderText="Database Name"/>
         <PasswordBox x:Uid="Dialog_CreateDB_EnterPW" Header="Enter Password" PlaceholderText="Enter Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBox"/>
         <PasswordBox x:Uid="Dialog_CreateDB_RepeatPW" Header="Repeat Password" PlaceholderText="Repeat Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBoxRepeat"/>
-
+        
         <DropDownButton Margin="0,10,0,0" Content="Database Location" x:Uid="Dialog_CreateDB_DBLocation">
             <DropDownButton.Flyout>
                 <MenuFlyout Placement="Bottom">
