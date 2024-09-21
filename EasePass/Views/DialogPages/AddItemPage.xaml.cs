@@ -121,28 +121,27 @@ namespace EasePass.Views
 
         private void PwTB_PasswordChanged(string password)
         {
+            if (RedBorder.Tag != null) //prevent this when setting the tag not null
+                return;
+
             if (!(pe(pwTB.Password) == 0 || (isEditMode && pe(pwTB.Password) == 1)))
-            {
                 RedBorder.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
-                RedBorder.BorderThickness = new Microsoft.UI.Xaml.Thickness(2);
-            }
             else
-            {
                 RedBorder.BorderBrush = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-                RedBorder.BorderThickness = new Microsoft.UI.Xaml.Thickness(0, 2, 0, 2);
-            }
         }
 
         private async void GeneratePassword_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            generatePasswordIcon.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+            generatePasswordButton.IsEnabled = false;
             generatePasswordProgress.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
-            generatePasswordProgress.IsIndeterminate = generatePasswordProgress.IsActive = true;
-
+            RedBorder.Tag = "";
+            
+            pwTB.Password = "";
             pwTB.Password = await PasswordHelper.GeneratePassword();
 
+            generatePasswordButton.IsEnabled = true;
             generatePasswordProgress.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-            generatePasswordIcon.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+            RedBorder.Tag = null;
         }
     }
 }
