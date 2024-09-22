@@ -56,7 +56,12 @@ namespace EasePass.Helper
             dp1.Tick += async (s, e) =>
             {
                 dp1.Stop();
-                if(await Clipboard.GetContent().GetTextAsync() == text)
+                var formats = Clipboard.GetContent().AvailableFormats;
+                if (formats == null)
+                {
+                    return;
+                }
+                if (await Clipboard.GetContent().GetTextAsync() == text)
                 {
                     Clipboard.SetContent(null);
                 }
