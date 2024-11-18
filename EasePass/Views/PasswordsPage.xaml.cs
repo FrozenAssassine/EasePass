@@ -360,11 +360,13 @@ namespace EasePass.Views
         private void RightclickedItem_CopyPassword_Click(object sender, RoutedEventArgs e) => ClipboardHelper.Copy(((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem)?.Password, true);
         private async void RightclickedItem_Delete_Click(object sender, RoutedEventArgs e)
         {
-            if(passwordItemListView.SelectedItems.Count > 1) 
+            if (passwordItemListView.SelectedItems.Count > 1) 
             {
                 await DeletePasswordItems(passwordItemListView.SelectedItems.Select(x => x as PasswordManagerItem).ToArray());
                 return;
             }
+
+            //single item was right clicked, does not have to be the selected item:
             await DeletePasswordItem((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem);
         }
         private async void RightclickedItem_Edit_Click(object sender, RoutedEventArgs e) => await EditPasswordItem((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem);
@@ -372,8 +374,17 @@ namespace EasePass.Views
 
         private async void RightclickedItem_ExportSelected_Click(object sender, RoutedEventArgs e)
         {
-            var items = new ObservableCollection<PasswordManagerItem>(passwordItemListView.SelectedItems.Select(x => (PasswordManagerItem)x).ToList());
-            await ExportPasswordsHelper.Export(Database.LoadedInstance, items);
+            //single item was right clicked, does not have to be the selected item:
+
+            if (passwordItemListView.SelectedItems.Count > 1)
+            {
+                //multiple items are selected => export them
+                var items = new ObservableCollection<PasswordManagerItem>(passwordItemListView.SelectedItems.Select(x => (PasswordManagerItem)x).ToList());
+                await ExportPasswordsHelper.Export(Database.LoadedInstance, items);
+                return;
+            }
+
+            await ExportPasswordsHelper.Export(Database.LoadedInstance, new ObservableCollection<PasswordManagerItem>() { (sender as MenuFlyoutItem)?.Tag as PasswordManagerItem });
         }
     }
 }
