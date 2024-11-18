@@ -141,7 +141,6 @@ namespace EasePass.Views
             if (editItem == null)
                 return;
 
-
             Database.LoadedInstance.Save();
         }
         private async Task AddPasswordItem()
@@ -371,7 +370,6 @@ namespace EasePass.Views
         }
         private async void RightclickedItem_Edit_Click(object sender, RoutedEventArgs e) => await EditPasswordItem((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem);
         private void RightclickedItem_CopyTOTPToken_Click(object sender, RoutedEventArgs e) => ClipboardHelper.Copy(TOTPTokenUpdater.generateCurrent((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem).Replace(" ", ""));
-
         private async void RightclickedItem_ExportSelected_Click(object sender, RoutedEventArgs e)
         {
             //single item was right clicked, does not have to be the selected item:

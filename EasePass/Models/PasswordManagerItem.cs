@@ -89,6 +89,7 @@ namespace EasePass.Models
                 }
 
                 NotifyPropertyChanged("Icon");
+                NotifyPropertyChanged("Website");
             }
         }
 

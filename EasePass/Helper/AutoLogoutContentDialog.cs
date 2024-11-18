@@ -6,17 +6,23 @@ namespace EasePass.Helper
     internal class AutoLogoutContentDialog : ContentDialog
     {
         private static List<AutoLogoutContentDialog> Dialogs = new List<AutoLogoutContentDialog>();
+        private static bool doPreventAutoLogoutDialog = false;
 
-        public static void InactivityStarted()
+        public static bool InactivityStarted()
         {
+            if (doPreventAutoLogoutDialog)
+                return false;
+
             for (int i = 0; i < Dialogs.Count; i++)
             {
                 Dialogs[i].Hide();
             }
+            return true;
         }
 
-        public AutoLogoutContentDialog() : base()
+        public AutoLogoutContentDialog(bool preventAutoLogout = false) : base()
         {
+            doPreventAutoLogoutDialog = preventAutoLogout;
             Dialogs.Add(this);
             this.Closing += AutoLogoutContentDialog_Closing;
         }

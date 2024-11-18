@@ -85,7 +85,10 @@ namespace EasePass
             if (this.navigationFrame.CurrentSourcePageType != typeof(LoginPage) &&
                 this.navigationFrame.CurrentSourcePageType != typeof(RegisterPage))
             {
-                AutoLogoutContentDialog.InactivityStarted();
+                //do not trigger auto logout, when there is an important dialog open e.g. edit or add item dialog
+                if (!AutoLogoutContentDialog.InactivityStarted())
+                    return;
+                
                 LogoutHelper.Logout();
                 InfoMessages.AutomaticallyLoggedOut();
                 Database.LoadedInstance.Dispose();
