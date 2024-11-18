@@ -134,6 +134,7 @@ namespace EasePass.Views
         {
             generatePasswordButton.IsEnabled = false;
             generatePasswordProgress.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+            generatePasswordProgress.Value = 0;
             RedBorder.Tag = "";
             
             pwTB.Password = "";
