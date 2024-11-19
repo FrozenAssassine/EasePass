@@ -1,4 +1,14 @@
-﻿#Version 1.2.1 [05/24/2024]
+﻿#Version 1.3.0 [11/21/2024]
+	• Added the option to export selected passwords from the right-click menu in the password list.
+	• Added a button on the register page to directly import a database.
+	• Changed the font to something more readable, especially for characters like "I, l, |".
+	• Added the option to delete selected passwords from the right-click menu in the password list.
+	• Added a progress bar in the generate password box.
+	• Disabled spell checking in text boxes to prevent automatic capitalization and other unwanted changes.
+	• Fixed an issue where you were logged out and lost your entered data in the edit or add item dialog.
+	• Fixed an issue where items from the clipboard were not removed properly.
+
+#Version 1.2.1 [05/24/2024]
 	• Fixed a bug where the registration was not working properly
 
 #Version 1.2.0 [05/15/2024]

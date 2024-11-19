@@ -27,8 +27,8 @@
     <PackageProjectUrl>http://easepass.frozenassassine.de/</PackageProjectUrl>
     <ApplicationIcon>Assets\AppIcon\appicon.ico</ApplicationIcon>
     <UseWindowsForms>False</UseWindowsForms>
-    <AssemblyVersion>1.2.1</AssemblyVersion>
-    <Version>1.2.1</Version>
+    <AssemblyVersion>1.3.0</AssemblyVersion>
+    <Version>1.3.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="AppWindows\ScreenScannerWindow.xaml" />
