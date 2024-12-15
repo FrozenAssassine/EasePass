@@ -136,7 +136,7 @@ namespace EasePass.Controls
                 {
                     if (Database.LoadedInstance.Items[i].Password == password) amount++;
                 }
-                checks[7] = amount < 2;
+                checks[7] = amount < 1;
             }
 
 
