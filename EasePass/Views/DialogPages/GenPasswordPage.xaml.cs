@@ -38,5 +38,10 @@ namespace EasePass.Views
         {
             passwordTB.Password = await PasswordHelper.GeneratePassword();
         }
+
+        private void passwordTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            safetyChart.EvaluatePassword(passwordTB.Password);
+        }
     }
 }
