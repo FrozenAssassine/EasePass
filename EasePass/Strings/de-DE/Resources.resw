@@ -811,13 +811,13 @@
     <value>Passwörter sortieren</value>
   </data>
   <data name="View_PasswordPage_SortPopular30Days.Text" xml:space="preserve">
-    <value>Beliebt letzten 30 Tage</value>
+    <value>Beliebtheit letzte 30 Tage</value>
   </data>
   <data name="View_PasswordPage_SortPopularLastYear.Text" xml:space="preserve">
     <value>Beliebt letztes Jahr</value>
   </data>
   <data name="View_PasswordPage_SortStrength.Text" xml:space="preserve">
-    <value>Passwort stärke</value>
+    <value>Passwortstärke</value>
   </data>
   <data name="View_PasswordPage_SortStrength.ToolTipService.ToolTip" xml:space="preserve">
     <value>Die Sortierfunktion enthält keine Prüfung auf doppelte Passwörter und geleakte Passwörter aufgrund von Performance-Einbrüchen</value>
