@@ -41,7 +41,7 @@ namespace EasePass.Settings
 
             ApplicationData.Current.LocalSettings.Values[Value] = data.ToString();
 
-            if (events.ContainsKey(Value) && events[Value] != null) events[Value](null, Value);
+            if (events.TryGetValue(Value, out EventHandler<string> value) && value != null) value(null, Value);
         }
         public static string GetSettings(string value, string defaultValue = "")
         {
