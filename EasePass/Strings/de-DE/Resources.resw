@@ -496,43 +496,43 @@
     <value>Beinhaltet</value>
   </data>
   <data name="PW_SafetyChart_Digits.Text" xml:space="preserve">
-    <value>Ziffern</value>
+    <value>Zahlen</value>
   </data>
   <data name="PW_SafetyChart_DoesNotMeetMinimum.Text" xml:space="preserve">
-    <value>Erfüllt nicht die Voraussetzungen</value>
+    <value>Erfüllt nicht die Voraussetzungen:</value>
   </data>
   <data name="PW_SafetyChart_High.Text" xml:space="preserve">
-    <value>Stark</value>
+    <value>Stark:</value>
   </data>
   <data name="PW_SafetyChart_IsAlready.Text" xml:space="preserve">
     <value>Is already</value>
   </data>
   <data name="PW_SafetyChart_LeakedExploited.Text" xml:space="preserve">
-    <value>Leaked or exploited</value>
+    <value>Veröffentlicht</value>
   </data>
   <data name="PW_SafetyChart_Low.Text" xml:space="preserve">
-    <value>Schwach</value>
+    <value>Schwach:</value>
   </data>
   <data name="PW_SafetyChart_LowerCaseLetters.Text" xml:space="preserve">
     <value>Kleinbuchstaben</value>
   </data>
   <data name="PW_SafetyChart_MeetsMinimum.Text" xml:space="preserve">
-    <value>Erfüllt die Voraussetzungen</value>
+    <value>Erfüllt die Voraussetzungen:</value>
   </data>
   <data name="PW_SafetyChart_Missing.Text" xml:space="preserve">
-    <value>Fehlend</value>
+    <value>Fehlend:</value>
   </data>
   <data name="PW_SafetyChart_Not.Text" xml:space="preserve">
     <value>Nicht</value>
   </data>
   <data name="PW_SafetyChart_NotYet.Text" xml:space="preserve">
-    <value>Not yet</value>
+    <value>Noch nicht</value>
   </data>
   <data name="PW_SafetyChart_Predictability.Text" xml:space="preserve">
     <value>Vorhersagbarkeit</value>
   </data>
   <data name="PW_SafetyChart_Punctation.Text" xml:space="preserve">
-    <value>Punctuation</value>
+    <value>Sonderzeichen</value>
   </data>
   <data name="PW_SafetyChart_PWLength.Text" xml:space="preserve">
     <value>Passwortlänge</value>
