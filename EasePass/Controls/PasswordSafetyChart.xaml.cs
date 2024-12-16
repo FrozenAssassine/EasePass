@@ -91,7 +91,7 @@ namespace EasePass.Controls
             info_right.Height = chartHeight;
         }
 
-        public void EvaluatePassword(string password)
+        public void EvaluatePassword(string password, bool existingSingleTime = false)
         {
             checks[3] = null;
             if (!AppSettings.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords))
@@ -120,7 +120,7 @@ namespace EasePass.Controls
                 {
                     if (Database.LoadedInstance.Items[i].Password == password) amount++;
                 }
-                checks[7] = amount < 2;
+                checks[7] = amount < (existingSingleTime ? 2 : 1);
             }
 
 
