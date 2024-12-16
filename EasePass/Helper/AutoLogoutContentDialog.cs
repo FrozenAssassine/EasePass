@@ -45,11 +45,11 @@ namespace EasePass.Helper
 
         private void AutoLogoutContentDialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
         {
-            try
+            if (sender is AutoLogoutContentDialog dialog && dialog != null)
             {
-                Dialogs.Remove(sender as AutoLogoutContentDialog);
+                Dialogs.Remove(dialog);
+                doPreventAutoLogoutDialog = false;
             }
-            catch { }
         }
     }
 }

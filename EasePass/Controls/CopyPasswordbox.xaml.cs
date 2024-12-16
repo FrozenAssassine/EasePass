@@ -52,7 +52,7 @@ namespace EasePass.Controls
                 _Password = value;
                 ToggleShowPassword(ShowPassword);
 
-                pwSafetyChart.EvaluatePassword(_Password);
+                pwSafetyChart.EvaluatePassword(_Password, true);
             }
         }
 

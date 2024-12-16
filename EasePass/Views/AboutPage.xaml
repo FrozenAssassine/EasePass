@@ -32,12 +32,20 @@
                     <FontIcon Margin="0,0,5,0" Grid.Column="3" Glyph="&#xE77B;" VerticalAlignment="Center" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
                     <StackPanel Grid.Column="4">
                         <TextBlock TextAlignment="Left" FontSize="16" Text="Developers"  x:Uid="View_About_Developer"/>
-                        <TextBlock TextAlignment="Left" Text="Julius Kirsch, Finn Freitag"/>
+                        <TextBlock TextAlignment="Left">
+                            <Hyperlink NavigateUri="https://github.com/finn-freitag">Finn Freitag</Hyperlink>, 
+                            <Hyperlink NavigateUri="https://github.com/frozenassassine">Julius Kirsch</Hyperlink>
+                        </TextBlock>
                     </StackPanel>
                 </Grid>
             </Grid>
 
             <controls:SettingsItemSeparator Header="More" x:Uid="View_About_HeadlineMore"/>
+            <controls:SettingsControl Glyph="&#xE716;" Header="Contributor" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                <controls:SettingsControl.Content>
+                    <TextBlock FontSize="18"><Hyperlink NavigateUri="https://github.com/Flamifly">@Flamilfy</Hyperlink></TextBlock>
+                </controls:SettingsControl.Content>
+            </controls:SettingsControl>
             <controls:SettingsControl  x:Uid="View_About_Website" Tag="http://easepass.frozenassassine.de" Clickable="True" Clicked="NavigateToLink_Click" Glyph="&#xEA8A;" Header="Website" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <controls:SettingsControl.Content>
                     <TextBlock Text="&#xe8a7;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
@@ -65,7 +73,7 @@
             
             <Grid VerticalAlignment="Stretch" MinWidth="{ThemeResource FlyoutThemeMinWidth}" Margin="0,5,0,0" CornerRadius="5" Padding="{StaticResource ExpanderHeaderPadding}" HorizontalAlignment="Stretch" Background="{ThemeResource ExpanderHeaderBackground}" BorderThickness="{ThemeResource ExpanderHeaderBorderThickness}" BorderBrush="{ThemeResource ExpanderHeaderBorderBrush}">
                 <StackPanel Height="70" Padding="0" Orientation="Horizontal">
-                    <SymbolIcon Margin="0,4,10,0" Symbol="People"/>
+                    <FontIcon Margin="0,0,10,0" Glyph="&#xE943;" />
                     <TextBlock Text="Contribute" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left" x:Uid="View_About_Contribute"/>
                 </StackPanel>
 
