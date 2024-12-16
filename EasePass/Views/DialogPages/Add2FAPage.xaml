@@ -12,7 +12,7 @@
 
         <StackPanel Margin="0,20,0,0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Line X1="0" X2="50" Stroke="Gray" StrokeThickness="2" VerticalAlignment="Center"/>
-            <TextBlock Text="or" Margin="10,0" VerticalAlignment="Center"/>
+            <TextBlock x:Uid="Dialog_Add2FA_Or" Text="or" Margin="10,0" VerticalAlignment="Center"/>
             <Line X1="0" X2="50" Stroke="Gray" StrokeThickness="2" VerticalAlignment="Center"/>
         </StackPanel>
 

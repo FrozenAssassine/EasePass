@@ -20,7 +20,7 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <TextBlock Text="To apply please restart the app" TextWrapping="Wrap"/>
+                    <TextBlock x:Uid="View_SettingsPage_RestartToApply" Text="To apply please restart the app" TextWrapping="Wrap"/>
                 </StackPanel>
             </controls:SettingsControl>
 
