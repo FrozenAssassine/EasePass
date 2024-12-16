@@ -53,7 +53,7 @@
             <Button x:Uid="View_LoginPage_LoginButton" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Center" Padding="20,5" Margin="10" Click="PWLogin_Click" Content="Login"/>
         </StackPanel>
 
-        <Grid VerticalAlignment="Center" Grid.Column="1" Grid.Row="3" x:Name="dailyTipGrid" Background="{ThemeResource CardBackgroundFillColorDefault}" MaxHeight="100" CornerRadius="10" Visibility="Collapsed">
+        <Grid VerticalAlignment="Center" Grid.Column="1" Grid.Row="3" x:Name="dailyTipGrid" Background="{ThemeResource CardBackgroundFillColorDefault}" MaxHeight="140" CornerRadius="10" Visibility="Collapsed">
             <TextBlock x:Name="dailyTipTextBlock" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWholeWords" Padding="20"/>
         </Grid>
     </Grid>
