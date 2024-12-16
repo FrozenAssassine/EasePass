@@ -41,7 +41,7 @@
             </Grid>
 
             <controls:SettingsItemSeparator Header="More" x:Uid="View_About_HeadlineMore"/>
-            <controls:SettingsControl Glyph="&#xE716;" Header="Contributor" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <controls:SettingsControl x:Uid="View_About_Contributor" Glyph="&#xE716;" Header="Contributor" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <controls:SettingsControl.Content>
                     <TextBlock FontSize="18"><Hyperlink NavigateUri="https://github.com/Flamifly">@Flamilfy</Hyperlink></TextBlock>
                 </controls:SettingsControl.Content>
@@ -107,7 +107,7 @@
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal" Height="70">
                         <TextBlock FontSize="20" VerticalAlignment="Center" Margin="0,4,10,0" Text="&#xE72E;" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
-                        <TextBlock VerticalAlignment="Center" FontSize="20" Text="Privacy Policy"/>
+                        <TextBlock x:Uid="View_About_PrivacyPolicy" VerticalAlignment="Center" FontSize="20" Text="Privacy Policy"/>
                     </StackPanel>
                 </Expander.Header>
                 <RichTextBlock HorizontalAlignment="Center">
