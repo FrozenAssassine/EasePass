@@ -846,6 +846,9 @@
   <data name="View_RegisterPage_EnterPW.PlaceholderText" xml:space="preserve">
     <value>Enter Password</value>
   </data>
+  <data name="View_RegisterPage_LoadExistingDatabase.Content" xml:space="preserve">
+    <value>I already have an existing Database: Import here</value>
+  </data>
   <data name="View_RegisterPage_Register.Content" xml:space="preserve">
     <value>Register</value>
   </data>

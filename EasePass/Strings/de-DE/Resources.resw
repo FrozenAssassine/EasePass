@@ -544,7 +544,7 @@
     <value>Kleinbuchstaben</value>
   </data>
   <data name="PW_SafetyChart_Short_UpperCaseLetters.Text" xml:space="preserve">
-    <value>Großbuchstabe</value>
+    <value>Großbuchstaben</value>
   </data>
   <data name="PW_SafetyChart_Unknown.Text" xml:space="preserve">
     <value>Unbekannt</value>
@@ -849,6 +849,9 @@
   <data name="View_RegisterPage_EnterPW.PlaceholderText" xml:space="preserve">
     <value>Passwort eingeben</value>
   </data>
+  <data name="View_RegisterPage_LoadExistingDatabase.Content" xml:space="preserve">
+    <value>Ich habe bereits eine Datenbank: Hier importieren</value>
+  </data>
   <data name="View_RegisterPage_Register.Content" xml:space="preserve">
     <value>Registrieren</value>
   </data>
@@ -928,7 +931,7 @@
     <value>Passwort Generator</value>
   </data>
   <data name="View_SettingsPage_PasswordLength.Header" xml:space="preserve">
-    <value>Passwort länge (min: 8)</value>
+    <value>Passwort länge</value>
   </data>
   <data name="View_SettingsPage_PasswordLength.PlaceholderText" xml:space="preserve">
     <value>Länge des Passworts</value>

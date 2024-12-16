@@ -44,17 +44,6 @@ namespace EasePass.Controls
             "Predictability".Localized("PW_SafetyChart_Predictability/Text"),
             "Seen before".Localized("PW_SafetyChart_Seenbefore/Text")
         };
-        private string[] messagesShort = new string[]
-        {
-            "Lower case".Localized("PW_SafetyChart_Short_LowerCase/Text"),
-            "Upper case".Localized("PW_SafetyChart_Short_UpperCase/Text"),
-            "Password length".Localized("PW_SafetyChart_PWLength/Text"),
-            "Leaked or exploited".Localized("PW_SafetyChart_LeakedExploited/Text"),
-            "Punctuation".Localized("PW_SafetyChart_Punctation/Text"),
-            "Digits".Localized("PW_SafetyChart_Digits/Text"),
-            "Predictability".Localized("PW_SafetyChart_Predictability/Text"),
-            "Seen before".Localized("PW_SafetyChart_Seenbefore/Text")
-        };
         private string[][] prefixes = new string[][]
         {
             //true, false, null
