@@ -32,6 +32,7 @@ namespace EasePass.Helper
             try
             {
                 Dialogs.Remove(sender as AutoLogoutContentDialog);
+                doPreventAutoLogoutDialog = false;
             }
             catch { }
         }
