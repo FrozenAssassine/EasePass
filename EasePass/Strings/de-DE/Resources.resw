@@ -544,7 +544,7 @@
     <value>Kleinbuchstaben</value>
   </data>
   <data name="PW_SafetyChart_Short_UpperCaseLetters.Text" xml:space="preserve">
-    <value>Großbuchstabe</value>
+    <value>Großbuchstaben</value>
   </data>
   <data name="PW_SafetyChart_Unknown.Text" xml:space="preserve">
     <value>Unbekannt</value>
@@ -931,7 +931,7 @@
     <value>Passwort Generator</value>
   </data>
   <data name="View_SettingsPage_PasswordLength.Header" xml:space="preserve">
-    <value>Passwort länge (min: 8)</value>
+    <value>Passwort länge</value>
   </data>
   <data name="View_SettingsPage_PasswordLength.PlaceholderText" xml:space="preserve">
     <value>Länge des Passworts</value>
