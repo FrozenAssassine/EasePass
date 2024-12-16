@@ -29,6 +29,7 @@
     <UseWindowsForms>False</UseWindowsForms>
     <AssemblyVersion>1.3.0</AssemblyVersion>
     <Version>1.3.0</Version>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 	<PropertyGroup>
 		<WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
