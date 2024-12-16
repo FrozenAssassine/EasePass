@@ -577,7 +577,7 @@
     <value>Mitwirkende</value>
   </data>
   <data name="View_About_DependenciesUsed.Text" xml:space="preserve">
-    <value>Zusätzliche benutzte Abhängigkeiten </value>
+    <value>Zusätzlich verwendete Abhängigkeiten </value>
   </data>
   <data name="View_About_Developer.Text" xml:space="preserve">
     <value>Entwickler</value>
@@ -586,10 +586,13 @@
     <value>Über</value>
   </data>
   <data name="View_About_HeadlineLegal.Header" xml:space="preserve">
-    <value>Legal</value>
+    <value>Rechtliches</value>
   </data>
   <data name="View_About_HeadlineMore.Header" xml:space="preserve">
     <value>Weiteres</value>
+  </data>
+  <data name="View_About_PrivacyPolicy.Text" xml:space="preserve">
+    <value>Datenschutzrichtlinien</value>
   </data>
   <data name="View_About_ReportBug.Content" xml:space="preserve">
     <value>Bug melden</value>

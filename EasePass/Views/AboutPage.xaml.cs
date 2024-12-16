@@ -35,6 +35,7 @@ namespace EasePass.Views
             App.m_window.ShowBackArrow = true;
 
             SetChangelog();
+            
         }
 
         private async void NavigateToLink_Click(Controls.SettingsControl sender)

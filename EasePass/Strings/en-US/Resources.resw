@@ -591,6 +591,9 @@
   <data name="View_About_HeadlineMore.Header" xml:space="preserve">
     <value>More</value>
   </data>
+  <data name="View_About_PrivacyPolicy.Text" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
   <data name="View_About_ReportBug.Content" xml:space="preserve">
     <value>Report Bug</value>
   </data>
