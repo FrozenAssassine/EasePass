@@ -41,11 +41,6 @@ internal class RenameDatabaseDialog
             Content = dbName
         };
 
-        if (await dialog.ShowAsync() == ContentDialogResult.Primary && dbName.Text.Length > 0)
-        {
-            //databaseItem.Name = dbName.Text;
-            return true;
-        }
-        return false;
+        return (await dialog.ShowAsync() == ContentDialogResult.Primary && dbName.Text.Length > 0);
     }
 }
