@@ -120,6 +120,12 @@
   <data name="CopyPasswordBox_Copy.ToolTipService.ToolTip" xml:space="preserve">
     <value>Kopieren</value>
   </data>
+  <data name="CopyPasswordBox_TT_Copy.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
+  <data name="CopyPasswordBox_TT_Show.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Anzeigen</value>
+  </data>
   <data name="CopyTextbox_Copy.ToolTipService.ToolTip" xml:space="preserve">
     <value>Kopieren</value>
   </data>
