@@ -30,6 +30,9 @@
     <AssemblyVersion>1.3.0</AssemblyVersion>
     <Version>1.3.0</Version>
   </PropertyGroup>
+	<PropertyGroup>
+		<WindowsSdkPackageVersion>10.0.19041.38</WindowsSdkPackageVersion>
+	</PropertyGroup>
   <ItemGroup>
     <None Remove="AppWindows\ScreenScannerWindow.xaml" />
     <None Remove="Assets\AppIcon\Generated\LargeTile.scale-100.png" />
