@@ -41,7 +41,7 @@
             </Grid>
 
             <controls:SettingsItemSeparator Header="More" x:Uid="View_About_HeadlineMore"/>
-            <controls:SettingsControl Glyph="&#xE716;" Header="Contributor" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <controls:SettingsControl x:Uid="View_About_Contributor" Glyph="&#xE716;" Header="Contributor" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <controls:SettingsControl.Content>
                     <TextBlock FontSize="18"><Hyperlink NavigateUri="https://github.com/Flamifly">@Flamilfy</Hyperlink></TextBlock>
                 </controls:SettingsControl.Content>

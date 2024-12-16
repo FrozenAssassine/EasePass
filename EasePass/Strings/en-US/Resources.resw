@@ -573,6 +573,9 @@
   <data name="View_About_Contribute.Text" xml:space="preserve">
     <value>Contribute</value>
   </data>
+  <data name="View_About_Contributor.Header" xml:space="preserve">
+    <value>Contributor</value>
+  </data>
   <data name="View_About_DependenciesUsed.Text" xml:space="preserve">
     <value>Additional dependencies used</value>
   </data>
