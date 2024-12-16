@@ -160,13 +160,13 @@
     <value>Algorithmus</value>
   </data>
   <data name="Dialog_AddItem_ConfirmRemove2FA.Text" xml:space="preserve">
-    <value>Are you sure you want to remove two-factor authentication?</value>
+    <value>Sind Sie sicher, dass Sie die Zwei-Faktor Authentifizierung deaktivieren wollen?</value>
   </data>
   <data name="Dialog_AddItem_Digits.Text" xml:space="preserve">
     <value>Ziffern</value>
   </data>
   <data name="Dialog_AddItem_DisplayName.Text" xml:space="preserve">
-    <value>Anzeige Name</value>
+    <value>Anzeigename</value>
   </data>
   <data name="Dialog_AddItem_Email.Text" xml:space="preserve">
     <value>E-Mail</value>
@@ -193,7 +193,7 @@
     <value>Geheimcode</value>
   </data>
   <data name="Dialog_AddItem_Username.Text" xml:space="preserve">
-    <value>Nutzername</value>
+    <value>Benutzername</value>
   </data>
   <data name="Dialog_AddItem_Website.Text" xml:space="preserve">
     <value>Webseite</value>
@@ -490,19 +490,19 @@
     <value>Website:</value>
   </data>
   <data name="PW_SafetyChart_Already.Text" xml:space="preserve">
-    <value>Already</value>
+    <value>Bereits</value>
   </data>
   <data name="PW_SafetyChart_Contains.Text" xml:space="preserve">
-    <value>Contains</value>
+    <value>Beinhaltet</value>
   </data>
   <data name="PW_SafetyChart_Digits.Text" xml:space="preserve">
-    <value>Digits</value>
+    <value>Ziffern</value>
   </data>
   <data name="PW_SafetyChart_DoesNotMeetMinimum.Text" xml:space="preserve">
-    <value>Does not meet the minimum</value>
+    <value>Erfüllt nicht die Voraussetzungen</value>
   </data>
   <data name="PW_SafetyChart_High.Text" xml:space="preserve">
-    <value>High</value>
+    <value>Stark</value>
   </data>
   <data name="PW_SafetyChart_IsAlready.Text" xml:space="preserve">
     <value>Is already</value>
@@ -511,46 +511,46 @@
     <value>Leaked or exploited</value>
   </data>
   <data name="PW_SafetyChart_Low.Text" xml:space="preserve">
-    <value>Low</value>
+    <value>Schwach</value>
   </data>
   <data name="PW_SafetyChart_LowerCaseLetters.Text" xml:space="preserve">
-    <value>Lower case letters</value>
+    <value>Kleinbuchstaben</value>
   </data>
   <data name="PW_SafetyChart_MeetsMinimum.Text" xml:space="preserve">
-    <value>Meets the minimum</value>
+    <value>Erfüllt die Voraussetzungen</value>
   </data>
   <data name="PW_SafetyChart_Missing.Text" xml:space="preserve">
-    <value>Missing</value>
+    <value>Fehlend</value>
   </data>
   <data name="PW_SafetyChart_Not.Text" xml:space="preserve">
-    <value>Not</value>
+    <value>Nicht</value>
   </data>
   <data name="PW_SafetyChart_NotYet.Text" xml:space="preserve">
     <value>Not yet</value>
   </data>
   <data name="PW_SafetyChart_Predictability.Text" xml:space="preserve">
-    <value>Predictability</value>
+    <value>Vorhersagbarkeit</value>
   </data>
   <data name="PW_SafetyChart_Punctation.Text" xml:space="preserve">
     <value>Punctuation</value>
   </data>
   <data name="PW_SafetyChart_PWLength.Text" xml:space="preserve">
-    <value>Password length</value>
+    <value>Passwortlänge</value>
   </data>
   <data name="PW_SafetyChart_Seenbefore.Text" xml:space="preserve">
-    <value>Seen before</value>
+    <value>Bereits verwendet</value>
   </data>
   <data name="PW_SafetyChart_Short_LowerCaseLetters.Text" xml:space="preserve">
-    <value>Lower case</value>
+    <value>Kleinbuchstaben</value>
   </data>
   <data name="PW_SafetyChart_Short_UpperCaseLetters.Text" xml:space="preserve">
-    <value>Upper case</value>
+    <value>Großbuchstaben</value>
   </data>
   <data name="PW_SafetyChart_Unknown.Text" xml:space="preserve">
-    <value>Unknown</value>
+    <value>Unbekannt</value>
   </data>
   <data name="PW_SafetyChart_UnknownAlready.Text" xml:space="preserve">
-    <value>Unknown whether it has already been</value>
+    <value>Unbekannt, ob es bereits</value>
   </data>
   <data name="PW_SafetyChart_UnknownContains.Text" xml:space="preserve">
     <value>Unknown whether it contains</value>
@@ -559,10 +559,10 @@
     <value>Unknown whether it meets the minimum</value>
   </data>
   <data name="PW_SafetyChart_UnknownWhether.Text" xml:space="preserve">
-    <value>Unknown whether</value>
+    <value>Unbekannt ob</value>
   </data>
   <data name="PW_SafetyChart_UpperCaseLetters.Text" xml:space="preserve">
-    <value>Upper case letters</value>
+    <value>Großbuchstaben</value>
   </data>
   <data name="ScreenScannerWindow_InfoText.Text" xml:space="preserve">
     <value>Zeige deinen QR Code irgendwo auf dem, Bildschirm</value>
@@ -838,7 +838,7 @@
     <value>TOTP</value>
   </data>
   <data name="View_PasswordPage_ViewUsername.Text" xml:space="preserve">
-    <value>Nutzername</value>
+    <value>Benutzername</value>
   </data>
   <data name="View_PasswordPage_ViewWebsite.Text" xml:space="preserve">
     <value>Webseite</value>
@@ -848,6 +848,9 @@
   </data>
   <data name="View_RegisterPage_EnterPW.PlaceholderText" xml:space="preserve">
     <value>Passwort eingeben</value>
+  </data>
+  <data name="View_RegisterPage_LoadExistingDatabase.Content" xml:space="preserve">
+    <value>Ich habe bereits eine Datenbank: Hier importieren</value>
   </data>
   <data name="View_RegisterPage_Register.Content" xml:space="preserve">
     <value>Registrieren</value>
@@ -928,7 +931,7 @@
     <value>Passwort Generator</value>
   </data>
   <data name="View_SettingsPage_PasswordLength.Header" xml:space="preserve">
-    <value>Passwort länge (min: 8)</value>
+    <value>Passwort länge</value>
   </data>
   <data name="View_SettingsPage_PasswordLength.PlaceholderText" xml:space="preserve">
     <value>Länge des Passworts</value>

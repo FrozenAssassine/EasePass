@@ -17,3 +17,6 @@ You can add more databases for multiple accounts in the settings under manage da
 Sort the password list by dragging the items around.
 Double-click on the website textbox to instantly navigate to the entered website.
 Print your passwords on paper using Database Manager's Print function.
+Avoid saving passwords in unprotected form on your device or in note apps.
+Always keep Ease Pass up to date to benefit from security updates.
+Do not use a browser to store sensitive passwords directly, as these are often less secure than specialized password managers.
