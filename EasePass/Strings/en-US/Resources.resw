@@ -138,6 +138,9 @@
   <data name="Dialog_Add2FA_Interval.Text" xml:space="preserve">
     <value>Interval (sec)</value>
   </data>
+  <data name="Dialog_Add2FA_Or.Text" xml:space="preserve">
+    <value>or</value>
+  </data>
   <data name="Dialog_Add2FA_ScreenButton.Content" xml:space="preserve">
     <value>QR Code from screen</value>
   </data>

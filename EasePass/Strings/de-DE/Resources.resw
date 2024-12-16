@@ -124,7 +124,7 @@
     <value>Kopieren</value>
   </data>
   <data name="Dialogs_EnterPW_Title.Text" xml:space="preserve">
-    <value>Gib das Passwort für die Datenbank ein</value>
+    <value>Geben Sie das Passwort für die Datenbank ein</value>
   </data>
   <data name="Dialog_Add2FA_Algorithm.Text" xml:space="preserve">
     <value>Algorithmus</value>
@@ -138,6 +138,9 @@
   <data name="Dialog_Add2FA_Interval.Text" xml:space="preserve">
     <value>Interval (sek)</value>
   </data>
+  <data name="Dialog_Add2FA_Or.Text" xml:space="preserve">
+    <value>oder</value>
+  </data>
   <data name="Dialog_Add2FA_ScreenButton.Content" xml:space="preserve">
     <value>QR Code vom Bildschirm scannen</value>
   </data>
@@ -148,10 +151,10 @@
     <value>Geheimcode</value>
   </data>
   <data name="Dialog_Add2FA_WebcamButton.Content" xml:space="preserve">
-    <value>QR Code von Webcam scannen</value>
+    <value>QR Code mit Webcam scannen</value>
   </data>
   <data name="Dialog_Add2FA_WebcamButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Nutze deine Webcam zum Scannen des QR Codes</value>
+    <value>Nutzen Sie Ihre Webcam zum Scannen des QR Codes</value>
   </data>
   <data name="Dialog_AddItem_2FATitle.Text" xml:space="preserve">
     <value>Zwei-Faktor-Authentifizierung</value>
@@ -232,16 +235,16 @@
     <value>Umbenennen</value>
   </data>
   <data name="Dialog_ConfirmDelete_Extension.Text" xml:space="preserve">
-    <value>Bist du sicher, dass du die Erweiterung löschen möchten: </value>
+    <value>Sind Sie sicher, dass Sie die Erweiterung löschen möchten: </value>
   </data>
   <data name="Dialog_ConfirmDelete_Headline.Text" xml:space="preserve">
     <value>Löschen bestätigen</value>
   </data>
   <data name="Dialog_ConfirmDelete_Item.Text" xml:space="preserve">
-    <value>Bist du sicher, dass du das Element löschen möchtest: </value>
+    <value>Sind Sie sicher, dass Sie das Element löschen möchtest: </value>
   </data>
   <data name="Dialog_ConfirmDelete_Items.Text" xml:space="preserve">
-    <value>Bist du sicher, dass du die Elemente löschen möchtest: </value>
+    <value>Sind Sie sicher, dass Sie die Elemente löschen möchtest: </value>
   </data>
   <data name="Dialog_CreateDB_ChooseLocation.Text" xml:space="preserve">
     <value>Wählen</value>
@@ -280,7 +283,7 @@
     <value>2FA Exportieren</value>
   </data>
   <data name="Dialog_Export_Headline.Text" xml:space="preserve">
-    <value>Wähle die zu exportierenden Elemente</value>
+    <value>Wählen Sie die zu exportierenden Elemente</value>
   </data>
   <data name="Dialog_ImportPW_ConfirmOverride1.Text" xml:space="preserve">
     <value>Alle Passwörter mit dem gleichen Anzeigenamen werden überschrieben!</value>
@@ -313,7 +316,7 @@
     <value>Alles auswählen</value>
   </data>
   <data name="InfoMessages_AutomaticallyLoggedOut.Headline" xml:space="preserve">
-    <value>Du wurdest automatisch ausgeloggt</value>
+    <value>Sie wurden automatisch ausgeloggt</value>
   </data>
   <data name="InfoMessages_ChangePasswordWrong.Headline" xml:space="preserve">
     <value>Falsches Passwort</value>
@@ -334,7 +337,7 @@
     <value>Datenbank wurde nicht gefunden</value>
   </data>
   <data name="InfoMessages_DatabaseFileNotFoundAt.Text" xml:space="preserve">
-    <value>Deine Datenbank mit den gespeicherten Passwörtern konnte nicht im Pfad gefunden werden: \n{path}</value>
+    <value>Ihre Datenbank mit den gespeicherten Passwörtern konnte nicht im Pfad gefunden werden: \n{path}</value>
   </data>
   <data name="InfoMessages_DatabaseInvalidData.Headline" xml:space="preserve">
     <value>Ungültige Datenbank</value>
@@ -355,7 +358,7 @@
     <value>Falsches Passwort</value>
   </data>
   <data name="InfoMessages_EnteredWrongPW.Text" xml:space="preserve">
-    <value>Du hast das falsche Passwort eingegeben.\nBitte versuche es erneut\n({attempts}/3)</value>
+    <value>Sie haben das falsche Passwort eingegeben.\nBitte versuchen Sie es erneut\n({attempts}/3)</value>
   </data>
   <data name="InfoMessages_Error.Headline" xml:space="preserve">
     <value>Fehler</value>
@@ -421,7 +424,7 @@
     <value>Datenbank konnte nicht gespeichert werden. Kein Zugriff auf den Pfad {path}</value>
   </data>
   <data name="InfoMessages_PasswordAlreadyUsed.Headline" xml:space="preserve">
-    <value>Das Passwort existiert schon</value>
+    <value>Das Passwort existiert bereits</value>
   </data>
   <data name="InfoMessages_PasswordAlreadyUsed.Text" xml:space="preserve">
     <value>Wir empfehlen dringend, für jeden Dienst ein anderes Passwort zu verwenden!</value>
@@ -451,7 +454,7 @@
     <value>Kein Drucker ausgewählt</value>
   </data>
   <data name="InfoMessages_PrinterNotSelected.Text" xml:space="preserve">
-    <value>Bitte wähle einen Drucker bevor du druckst</value>
+    <value>Bitte wählen Sie einen Drucker bevor Sie drucken</value>
   </data>
   <data name="InfoMessages_SuccessfullyChangedPassword.Headline" xml:space="preserve">
     <value>Das Passwort wurde geändert</value>
@@ -814,7 +817,7 @@
     <value>Beliebtheit letzte 30 Tage</value>
   </data>
   <data name="View_PasswordPage_SortPopularLastYear.Text" xml:space="preserve">
-    <value>Beliebt letztes Jahr</value>
+    <value>Beliebtheit letztes Jahr</value>
   </data>
   <data name="View_PasswordPage_SortStrength.Text" xml:space="preserve">
     <value>Passwortstärke</value>
@@ -865,7 +868,7 @@
     <value>Passwort wiederholen</value>
   </data>
   <data name="View_RegisterPage_Welcome.Text" xml:space="preserve">
-    <value>Willkommen bei Ease Pass - Dein Quell offenener Passwort Manager</value>
+    <value>Willkommen bei Ease Pass - Ihr Quell offenener Passwort Manager</value>
   </data>
   <data name="View_SettingsPage_ChangePassword.Text" xml:space="preserve">
     <value>Passwort ändern</value>
@@ -931,7 +934,7 @@
     <value>Neues Passwort</value>
   </data>
   <data name="View_SettingsPage_NoPluginsInfo.Text" xml:space="preserve">
-    <value>Keine Plugins installiert, klicke unten zum Herunterladen</value>
+    <value>Keine Plugins installiert, klicken Sie unten zum Herunterladen</value>
   </data>
   <data name="View_SettingsPage_PasswordGenerator.Text" xml:space="preserve">
     <value>Passwort Generator</value>
