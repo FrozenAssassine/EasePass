@@ -885,6 +885,9 @@
   <data name="View_SettingsPage_ClipboardClearTimeout.Header" xml:space="preserve">
     <value>Clipboard clear timeout</value>
   </data>
+  <data name="View_SettingsPage_ClipboardClearTimeoutTime.Header" xml:space="preserve">
+    <value>Seconds</value>
+  </data>
   <data name="View_SettingsPage_CurrentPassword.Header" xml:space="preserve">
     <value>Current Password</value>
   </data>
@@ -971,6 +974,9 @@
   </data>
   <data name="View_SettingsPage_ResetPopularityCounter.Content" xml:space="preserve">
     <value>Reset</value>
+  </data>
+  <data name="View_SettingsPage_RestartToApply.Text" xml:space="preserve">
+    <value>To apply please restart the app</value>
   </data>
   <data name="View_SettingsPage_ShowIcons.Header" xml:space="preserve">
     <value>Show icons</value>

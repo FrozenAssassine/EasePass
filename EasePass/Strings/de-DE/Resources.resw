@@ -120,12 +120,6 @@
   <data name="CopyPasswordBox_Copy.ToolTipService.ToolTip" xml:space="preserve">
     <value>Kopieren</value>
   </data>
-  <data name="CopyPasswordBox_TT_Copy.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Kopieren</value>
-  </data>
-  <data name="CopyPasswordBox_TT_Show.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Anzeigen</value>
-  </data>
   <data name="CopyTextbox_Copy.ToolTipService.ToolTip" xml:space="preserve">
     <value>Kopieren</value>
   </data>
@@ -143,9 +137,6 @@
   </data>
   <data name="Dialog_Add2FA_Interval.Text" xml:space="preserve">
     <value>Interval (sek)</value>
-  </data>
-  <data name="Dialog_Add2FA_Or.Text" xml:space="preserve">
-    <value>oder</value>
   </data>
   <data name="Dialog_Add2FA_ScreenButton.Content" xml:space="preserve">
     <value>QR Code vom Bildschirm scannen</value>
@@ -582,9 +573,6 @@
   <data name="View_About_Contribute.Text" xml:space="preserve">
     <value>Beitragen</value>
   </data>
-  <data name="View_About_Contributor.Header" xml:space="preserve">
-    <value>Mitwirkende</value>
-  </data>
   <data name="View_About_DependenciesUsed.Text" xml:space="preserve">
     <value>Zusätzlich verwendete Abhängigkeiten </value>
   </data>
@@ -599,9 +587,6 @@
   </data>
   <data name="View_About_HeadlineMore.Header" xml:space="preserve">
     <value>Weiteres</value>
-  </data>
-  <data name="View_About_PrivacyPolicy.Text" xml:space="preserve">
-    <value>Datenschutzrichtlinien</value>
   </data>
   <data name="View_About_ReportBug.Content" xml:space="preserve">
     <value>Bug melden</value>
@@ -983,5 +968,26 @@
   </data>
   <data name="View_SettingsPage_VerifyPWLeaked.Header" xml:space="preserve">
     <value>Stellen Sie sicher, dass das Kennwort nicht geleakt wurde</value>
+  </data>
+  <data name="CopyPasswordBox_TT_Copy.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
+  <data name="CopyPasswordBox_TT_Show.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Anzeigen</value>
+  </data>
+  <data name="Dialog_Add2FA_Or.Text" xml:space="preserve">
+    <value>oder</value>
+  </data>
+  <data name="View_About_Contributor.Header" xml:space="preserve">
+    <value>Mitwirkende</value>
+  </data>
+  <data name="View_About_PrivacyPolicy.Text" xml:space="preserve">
+    <value>Datenschutzrichtlinien</value>
+  </data>
+  <data name="View_SettingsPage_RestartToApply.Text" xml:space="preserve">
+    <value>Um die Sprache anzuwenden, starten Sie bitte die App neu</value>
+  </data>
+  <data name="View_SettingsPage_ClipboardClearTimeoutTime.Header" xml:space="preserve">
+    <value>Sekunden</value>
   </data>
 </root>
