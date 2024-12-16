@@ -17,3 +17,6 @@ Sie können weitere Datenbanken für mehrere Konten in den Einstellungen unter "
 Sortieren Sie die Liste der Passwörter, indem Sie die Elemente verschieben.
 Doppelklicken Sie auf das Textfeld der Website, um sofort zur eingegebenen Website zu navigieren.
 Drucken Sie Ihre Kennwörter mit der Druckfunktion des Datenbank Managers aus.
+Vermeiden Sie das Speichern von Passwörtern in ungeschützter Form auf Ihrem Gerät oder in Notiz-Apps.
+Halten Sie Ease Pass stets auf dem neuesten Stand, um von Sicherheitsupdates zu profitieren.
+Verwenden Sie keinen Browser, um sensible Passwörter direkt zu speichern, da diese häufig weniger sicher als spezialisierte Passwortmanager sind.
