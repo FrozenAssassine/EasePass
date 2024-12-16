@@ -46,8 +46,8 @@ namespace EasePass.Controls
         };
         private string[] messagesShort = new string[]
         {
-            "Lower case".Localized("PW_SafetyChart_Short_LowerCase/Text"),
-            "Upper case".Localized("PW_SafetyChart_Short_UpperCase/Text"),
+            "Lower case".Localized("PW_SafetyChart_Short_LowerCaseLetters/Text"),
+            "Upper case".Localized("PW_SafetyChart_Short_UpperCaseLetters/Text"),
             "Password length".Localized("PW_SafetyChart_PWLength/Text"),
             "Leaked or exploited".Localized("PW_SafetyChart_LeakedExploited/Text"),
             "Punctuation".Localized("PW_SafetyChart_Punctation/Text"),
