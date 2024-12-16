@@ -10,8 +10,13 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
 
 namespace EasePass.Views
 {
@@ -383,6 +388,32 @@ namespace EasePass.Views
             }
 
             await ExportPasswordsHelper.Export(Database.LoadedInstance, new ObservableCollection<PasswordManagerItem>() { (sender as MenuFlyoutItem)?.Tag as PasswordManagerItem });
+        }
+
+
+        private async void Grid_DragEnter(object sender, DragEventArgs e)
+        {
+            //only accept files with .epdb format:
+            if (!e.DataView.Contains(StandardDataFormats.StorageItems))
+                return;
+            
+            var storageItems = await e.DataView.GetStorageItemsAsync();
+            if (storageItems == null || storageItems.Count == 0)
+                return;
+
+            Debug.WriteLine(storageItems[0].Path + "::" + Path.GetExtension(storageItems[0].Path));
+            if (Path.GetExtension(storageItems[0].Path).Equals(".epdb", StringComparison.OrdinalIgnoreCase))
+            {
+                Debug.WriteLine("Accept");
+                e.AcceptedOperation = DataPackageOperation.Copy;
+            }
+        }
+
+        private async void Grid_Drop(object sender, DragEventArgs e)
+        {
+            Debug.WriteLine("DROP");
+            var files = await e.DataView.GetStorageItemsAsync();
+            await ManageDatabaseHelper.ImportIntoDatabase(files[0].Path);
         }
     }
 }
