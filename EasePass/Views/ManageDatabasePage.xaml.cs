@@ -17,17 +17,14 @@ copies or substantial portions of the Software.
 using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
-using EasePass.Views.DialogPages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Drawing.Printing;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EasePass.Views;
@@ -165,7 +162,6 @@ public sealed partial class ManageDatabasePage : Page
 
         ClipboardHelper.Copy(db.Path);
     }
-
 
     private async void CreateDatabase_Click(object sender, RoutedEventArgs e)
     {
