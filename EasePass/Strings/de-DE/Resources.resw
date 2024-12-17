@@ -493,7 +493,7 @@
     <value>Bereits</value>
   </data>
   <data name="PW_SafetyChart_Contains.Text" xml:space="preserve">
-    <value>Beinhaltet</value>
+    <value>Beinhaltet:</value>
   </data>
   <data name="PW_SafetyChart_Digits.Text" xml:space="preserve">
     <value>Zahlen</value>
@@ -511,7 +511,7 @@
     <value>Veröffentlicht</value>
   </data>
   <data name="PW_SafetyChart_Low.Text" xml:space="preserve">
-    <value>Schwach:</value>
+    <value>Gering:</value>
   </data>
   <data name="PW_SafetyChart_LowerCaseLetters.Text" xml:space="preserve">
     <value>Kleinbuchstaben</value>
@@ -523,7 +523,7 @@
     <value>Fehlend:</value>
   </data>
   <data name="PW_SafetyChart_Not.Text" xml:space="preserve">
-    <value>Nicht</value>
+    <value>Nicht:</value>
   </data>
   <data name="PW_SafetyChart_NotYet.Text" xml:space="preserve">
     <value>Noch nicht</value>
@@ -989,5 +989,14 @@
   </data>
   <data name="View_SettingsPage_ClipboardClearTimeoutTime.Header" xml:space="preserve">
     <value>Sekunden</value>
+  </data>
+  <data name="Dialog_AddItem_GeneratePW.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Passwort generieren</value>
+  </data>
+  <data name="Dialog_ConfirmDeleteDatabase_Title.Text" xml:space="preserve">
+    <value>Bestätigen der Löschung der Datenbank</value>
+  </data>
+  <data name="Dialog_ConfirmDeleteDatabase_Title.Content" xml:space="preserve">
+    <value>Bestätigen Sie die Löschung der Datenbank:</value>
   </data>
 </root>
