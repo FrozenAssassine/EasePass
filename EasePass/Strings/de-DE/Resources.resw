@@ -994,9 +994,15 @@
     <value>Passwort generieren</value>
   </data>
   <data name="Dialog_ConfirmDeleteDatabase_Title.Text" xml:space="preserve">
-    <value>Bestätigen der Löschung der Datenbank</value>
+    <value>Datenbank löschen bestätigen</value>
   </data>
-  <data name="Dialog_ConfirmDeleteDatabase_Title.Content" xml:space="preserve">
+  <data name="Dialog_ConfirmDeleteDatabase_Content.Text" xml:space="preserve">
     <value>Bestätigen Sie die Löschung der Datenbank:</value>
+  </data>
+  <data name="Dialog_ChangePassword_Title.Text" xml:space="preserve">
+    <value>Passwort ändern für</value>
+  </data>
+  <data name="Dialog_Button_Change.Text" xml:space="preserve">
+    <value>Ändern</value>
   </data>
 </root>

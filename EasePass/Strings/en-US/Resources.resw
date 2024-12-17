@@ -216,6 +216,9 @@
   <data name="Dialog_Button_Cancel.Text" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Dialog_Button_Change.Text" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="Dialog_Button_Close.Text" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -243,7 +246,10 @@
   <data name="Dialog_Button_Rename.Text" xml:space="preserve">
     <value>Rename</value>
   </data>
-  <data name="Dialog_ConfirmDeleteDatabase_Title.Content" xml:space="preserve">
+  <data name="Dialog_ChangePassword_Title.Text" xml:space="preserve">
+    <value>Change Password for</value>
+  </data>
+  <data name="Dialog_ConfirmDeleteDatabase_Content.Text" xml:space="preserve">
     <value>Confirm to delete Database:</value>
   </data>
   <data name="Dialog_ConfirmDeleteDatabase_Title.Text" xml:space="preserve">

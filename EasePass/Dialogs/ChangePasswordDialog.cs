@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Models;
 using EasePass.Views.DialogPages;
@@ -33,9 +34,9 @@ namespace EasePass.Dialogs
             page = new ChangePasswordPage();
             dialog = new AutoLogoutContentDialog
             {
-                Title = "Change Password for " + db.Name,
-                CloseButtonText = "Cancel",
-                PrimaryButtonText = "Change",
+                Title = "Change Password for".Localized("Dialog_ChangePassword_Title/Text") + " " + db.Name,
+                CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
+                PrimaryButtonText = "Change".Localized("Dialog_Button_Change/Text"),
                 XamlRoot = App.m_window.Content.XamlRoot,
                 Content = page
             };
