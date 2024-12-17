@@ -183,6 +183,9 @@
   <data name="Dialog_AddItem_Export2FA.Content" xml:space="preserve">
     <value>Export 2FA</value>
   </data>
+  <data name="Dialog_AddItem_GeneratePW.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Generate a Password</value>
+  </data>
   <data name="Dialog_AddItem_Headline.Text" xml:space="preserve">
     <value>Add Password</value>
   </data>
@@ -213,6 +216,9 @@
   <data name="Dialog_Button_Cancel.Text" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Dialog_Button_Change.Text" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="Dialog_Button_Close.Text" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -239,6 +245,15 @@
   </data>
   <data name="Dialog_Button_Rename.Text" xml:space="preserve">
     <value>Rename</value>
+  </data>
+  <data name="Dialog_ChangePassword_Title.Text" xml:space="preserve">
+    <value>Change Password for</value>
+  </data>
+  <data name="Dialog_ConfirmDeleteDatabase_Content.Text" xml:space="preserve">
+    <value>Confirm to delete Database:</value>
+  </data>
+  <data name="Dialog_ConfirmDeleteDatabase_Title.Text" xml:space="preserve">
+    <value>Confirm delete Database</value>
   </data>
   <data name="Dialog_ConfirmDelete_Extension.Text" xml:space="preserve">
     <value>Are you sure you want to delete the extension: </value>
@@ -502,7 +517,7 @@
     <value>Already</value>
   </data>
   <data name="PW_SafetyChart_Contains.Text" xml:space="preserve">
-    <value>Contains</value>
+    <value>Contains:</value>
   </data>
   <data name="PW_SafetyChart_Digits.Text" xml:space="preserve">
     <value>Digits</value>
@@ -520,7 +535,7 @@
     <value>Leaked or exploited</value>
   </data>
   <data name="PW_SafetyChart_Low.Text" xml:space="preserve">
-    <value>Low</value>
+    <value>Low:</value>
   </data>
   <data name="PW_SafetyChart_LowerCaseLetters.Text" xml:space="preserve">
     <value>Lower case letters</value>
@@ -529,10 +544,10 @@
     <value>Meets the minimum</value>
   </data>
   <data name="PW_SafetyChart_Missing.Text" xml:space="preserve">
-    <value>Missing</value>
+    <value>Missing:</value>
   </data>
   <data name="PW_SafetyChart_Not.Text" xml:space="preserve">
-    <value>Not</value>
+    <value>Not:</value>
   </data>
   <data name="PW_SafetyChart_NotYet.Text" xml:space="preserve">
     <value>Not yet</value>

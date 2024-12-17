@@ -29,13 +29,12 @@ namespace EasePass.Dialogs
         {
             var dialog = new AutoLogoutContentDialog
             {
-                Title = "Confirm delete Database",
-                PrimaryButtonText = "Delete",
+                Title = "Confirm delete Database".Localized("Dialog_ConfirmDeleteDatabase_Title/Text"),
+                PrimaryButtonText = "Delete".Localized("Dialog_Button_Delete/Text"),
                 CloseButtonText = "Close".Localized("Dialog_Button_Close/Text"),
                 XamlRoot = App.m_window.Content.XamlRoot,
-                Content = "Confirm to delete Database:\n" + database.Name + "\n" + database.Path,
+                Content = "Confirm to delete Database:".Localized("Dialog_ConfirmDeleteDatabase_Content/Text") + "\n" + database.Name + "\n" + database.Path,
             };
-
             return await dialog.ShowAsync() == ContentDialogResult.Primary;
         }
     }
