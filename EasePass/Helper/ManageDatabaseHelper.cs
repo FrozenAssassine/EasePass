@@ -16,6 +16,7 @@ copies or substantial portions of the Software.
 
 using EasePass.Dialogs;
 using EasePass.Models;
+using Microsoft.UI.Xaml.Shapes;
 using System.Threading.Tasks;
 
 namespace EasePass.Helper;
@@ -44,20 +45,22 @@ internal class ManageDatabaseHelper
         return db;
     }
 
-    public static async Task<bool> ImportIntoDatabase()
+    public static async Task<bool> ImportIntoDatabase(string filePath = "")
     {
-        var pickerResult = await FilePickerHelper.PickOpenFile(new string[] { ".epdb", ".eped" });
-        if (!pickerResult.success)
-            return false;
+        if (filePath.Length == 0)
+        {
+            var pickerResult = await FilePickerHelper.PickOpenFile(new string[] { ".epdb", ".eped" });
+            if (!pickerResult.success)
+                return false;
+
+            filePath = pickerResult.path;
+        }
 
         var password = (await new EnterPasswordDialog().ShowAsync()).Password;
         if (password == null)
-        {
-            InfoMessages.ImportDBWrongPassword();
-            return false;
-        }
+            return false;   //cancelled by user
 
-        var importedItems = Database.GetItemsFromDatabase(pickerResult.path, password);
+        var importedItems = Database.GetItemsFromDatabase(filePath, password);
 
         var dialog = new ImportPasswordsDialog();
         dialog.SetPagePasswords(importedItems);
@@ -82,6 +85,7 @@ internal class ManageDatabaseHelper
             return null;
 
         Database.AddDatabasePath(newDB.Path);
+        InteropHelper.SetForegroundWindow(InteropHelper.GetWindowHandle(App.m_window));
         return newDB;
     }
 }

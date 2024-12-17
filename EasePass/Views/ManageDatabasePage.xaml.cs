@@ -82,7 +82,6 @@ public sealed partial class ManageDatabasePage : Page
     //}
     private async Task DeleteDatabase(Database db)
     {
-
         if (!await new ConfirmDeleteDatabaseDialog().ShowAsync(db))
             return;
 
