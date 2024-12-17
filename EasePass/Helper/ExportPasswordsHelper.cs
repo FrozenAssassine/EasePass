@@ -18,29 +18,34 @@ using EasePass.Dialogs;
 using EasePass.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Security;
 using System.Threading.Tasks;
 
-namespace EasePass.Helper
+namespace EasePass.Helper;
+internal class ExportPasswordsHelper
 {
-    internal class ExportPasswordsHelper
+    public async static Task Export(Database db, ObservableCollection<PasswordManagerItem> items, SecureString newPassword = null, bool showSelectPasswordDialog = true)
     {
-        public async static Task Export(Database db, ObservableCollection<PasswordManagerItem> items)
+        var res = await FilePickerHelper.PickSaveFile(("Ease Pass database", new List<string>() { ".epdb" }));
+        if (!res.success)
+            return;
+
+        Database export = new Database(res.path);
+        export.MasterPassword = newPassword ?? db.MasterPassword;
+
+        if (showSelectPasswordDialog)
         {
-            var res = await FilePickerHelper.PickSaveFile(("Ease Pass database", new List<string>() { ".epdb" }));
-            if (!res.success)
+            var exportItems = await new SelectExportPasswordsDialog().ShowAsync(items);
+            if (exportItems == null)
                 return;
 
-            var exportDialogRes = await new SelectExportPasswordsDialog().ShowAsync(items);
-            if (exportDialogRes == null)
-                return;
-
-            Database export = new Database(res.path);
-            export.MasterPassword = db.MasterPassword;
-            export.SetNewPasswords(exportDialogRes);
-            export.Save();
-
-            InfoMessages.ExportDBSuccess();
+            export.SetNewPasswords(exportItems);
         }
+        else
+            export.SetNewPasswords(items);
 
+        export.Save();
+
+        InfoMessages.ExportDBSuccess();
     }
 }

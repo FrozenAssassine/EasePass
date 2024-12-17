@@ -261,4 +261,17 @@ public sealed partial class ManageDatabasePage : Page
     {
         PrinterHelper.SelectedPrinter = (string)e.AddedItems[0];
     }
+
+    private async void Export_DatabaseItem_DiffPW_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = await new EnterPasswordDialog().ShowAsync();
+        if (dialog.Password == null)
+            return;
+
+        var db = GetDatabase(sender);
+        if (db == null)
+            return;
+
+        await ExportPasswordsHelper.Export(db, Database.LoadedInstance.Items, dialog.Password);
+    }
 }

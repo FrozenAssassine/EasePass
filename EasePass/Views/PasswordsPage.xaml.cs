@@ -403,6 +403,23 @@ namespace EasePass.Views
 
             await ExportPasswordsHelper.Export(Database.LoadedInstance, new ObservableCollection<PasswordManagerItem>() { (sender as MenuFlyoutItem)?.Tag as PasswordManagerItem });
         }
+        private async void RightclickedItem_ExportDiffPassword_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = await new EnterPasswordDialog().ShowAsync();
+            if (dialog.Password == null)
+                return;
+
+            //single item was right clicked, does not have to be the selected item:
+            if (passwordItemListView.SelectedItems.Count > 1)
+            {
+                //multiple items are selected => export them
+                var items = new ObservableCollection<PasswordManagerItem>(passwordItemListView.SelectedItems.Select(x => (PasswordManagerItem)x).ToList());
+                await ExportPasswordsHelper.Export(Database.LoadedInstance, items, dialog.Password, false);
+                return;
+            }
+
+            await ExportPasswordsHelper.Export(Database.LoadedInstance, new ObservableCollection<PasswordManagerItem>() { (sender as MenuFlyoutItem)?.Tag as PasswordManagerItem }, dialog.Password, false);
+        }
 
         private async void Grid_Drop(object sender, DragEventArgs e)
         {
@@ -412,5 +429,6 @@ namespace EasePass.Views
         {
             DatabaseDragDropHelper.DragOver(e);
         }
+
     }
 }

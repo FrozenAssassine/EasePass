@@ -42,6 +42,7 @@ internal class ManageDatabaseHelper
             return null;
 
         Database.AddDatabasePath(db.Path);
+        Database.LoadedInstance.Save();
         return db;
     }
 
@@ -75,6 +76,7 @@ internal class ManageDatabaseHelper
         }
 
         Database.LoadedInstance.AddRange(importItemsResult.Items);
+        Database.LoadedInstance.Save();
         return true;
     }
 
