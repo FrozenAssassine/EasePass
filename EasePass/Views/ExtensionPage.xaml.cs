@@ -163,7 +163,7 @@ public sealed partial class ExtensionPage : Page
 
             await Task.Run(async () =>
             {
-                var res = await RequestsHelper.DownloadFileAsync(fetchedExtension.URL, p);
+                var res = await RequestsHelper.DownloadFileAsync(fetchedExtension.URL, p, 5000, (msg)=> InfoMessages.CouldNotGetExtensions(msg));
                 if (!res) //error while downloading plugin to file.
                 {
                     DispatcherQueue.TryEnqueue(() =>
