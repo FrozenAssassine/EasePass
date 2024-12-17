@@ -129,7 +129,7 @@ namespace EasePass.Models
                                     }
                                 }
                             };
-                            downloadImg.Invoke();
+                            _ = downloadImg.Invoke();
                         }
                     }
                     catch { /*Invalid URI format*/ }
