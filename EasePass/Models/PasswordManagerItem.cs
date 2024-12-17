@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Helper;
 using EasePass.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
@@ -22,6 +23,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using Windows.UI;
@@ -79,6 +81,7 @@ namespace EasePass.Models
             get => _Website;
             set
             {
+                const string iconCache = "icons";
                 _Website = value;
                 if (ShowIcon)
                 {
@@ -94,8 +97,40 @@ namespace EasePass.Models
 
                     try
                     {
-                        Icon = new BitmapImage(new Uri(_Website + "/favicon.ico"));
-                        Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; NotifyPropertyChanged("Icon"); };
+                        CacheItem item = CacheItem.FindInCache(iconCache, _Website);
+                        if(item != null)
+                        {
+                            Icon = new BitmapImage(new Uri(item.GetPath()));
+                            Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; NotifyPropertyChanged("Icon"); };
+                        }
+                        else
+                        {
+                            var downloadImg = async () =>
+                            {
+                                item = CacheItem.Create(iconCache, _Website);
+                                if (item == null)
+                                {
+                                    Icon = null;
+                                }
+                                else
+                                {
+                                    if(await RequestsHelper.DownloadFileAsync(_Website + "/favicon.ico", item.GetPath(),30000))
+                                    {
+                                        Icon = new BitmapImage(new Uri(item.GetPath()));
+                                        Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; NotifyPropertyChanged("Icon"); };
+                                    }
+                                    else
+                                    {
+                                        Icon = null;
+                                    }
+                                    if(item.GetCacheSize() < 10)
+                                    {
+                                        item.Remove();
+                                    }
+                                }
+                            };
+                            downloadImg.Invoke();
+                        }
                     }
                     catch { /*Invalid URI format*/ }
                 }

@@ -46,18 +46,20 @@ namespace EasePass.Helper
         }
 
 
-        public static async Task<bool> DownloadFileAsync(string url, string path)
+        public static async Task<bool> DownloadFileAsync(string url, string path, int timeoutMillis = 5000, Action<string> error = null)
         {
-            return await DownloadFileAsync(new Uri(url), path);
+            return await DownloadFileAsync(new Uri(url), path, timeoutMillis, error);
         }
 
-        public static async Task<bool> DownloadFileAsync(Uri url, string path)
+        public static async Task<bool> DownloadFileAsync(Uri url, string path, int timeoutMillis = 5000, Action<string> error = null)
         {
             try
             {
 
-                using (HttpClient client = new HttpClient())
+                using (HttpClient client = new HttpClient(new HttpClientHandler { AllowAutoRedirect = true }))
                 {
+                    client.Timeout = TimeSpan.FromMilliseconds(timeoutMillis);
+                    client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
                     using (HttpResponseMessage response = await client.GetAsync(url))
                     {
                         response.EnsureSuccessStatusCode();
@@ -75,7 +77,8 @@ namespace EasePass.Helper
             }
             catch (Exception ex)
             {
-                InfoMessages.CouldNotGetExtensions(ex.Message);
+                if (error != null)
+                    error(ex.Message);
             }
             return false;
         }
