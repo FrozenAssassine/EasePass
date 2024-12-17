@@ -26,6 +26,8 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Security;
+using static System.Net.Mime.MediaTypeNames;
+using System.Text;
 
 namespace EasePass.Models;
 
@@ -87,17 +89,32 @@ public class Database : IDisposable, INotifyPropertyChanged
     public static string[] GetAllDatabasePaths()
     {
         string paths = AppSettings.GetSettings(AppSettingsValues.databasePaths, DefaultSettingsValues.databasePaths);
+        ReadOnlySpan<char> chars = paths.AsSpan();
+
+        int length = chars.Count('|');
+        Span<Range> ranges = length < 1025 ? stackalloc Range[length] : new Range[length];
+
+        int splittedPaths = chars.Split(ranges, '|');
+        
         List<string> res = new List<string>();
-        res.AddRange(paths.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries));
-        string[] ps = res.Where((p) => { return File.Exists(p); }).ToArray();
-        SetAllDatabasePaths(ps);
-        return ps.Length == 0 ? new string[] { DefaultSettingsValues.databasePaths.Trim('|') } : ps;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++)
+        {
+            string path = paths.AsSpan(ranges[i]).ToString();
+            if (File.Exists(path))
+            {
+                sb.Append(path);
+                sb.Append('|');
+                res.Add(path);
+            }
+        }
+        SetAllDatabasePaths(sb.ToString());
+        return res.Count == 0 ? new string[] { DefaultSettingsValues.databasePaths.Trim('|') } : res.ToArray();
     }
 
-    public static void SetAllDatabasePaths(string[] paths)
+    public static void SetAllDatabasePaths(string paths)
     {
-        var res = string.Join("|", paths);
-        AppSettings.SaveSettings(AppSettingsValues.databasePaths, res);
+        AppSettings.SaveSettings(AppSettingsValues.databasePaths, paths);
     }
 
     public static void AddDatabasePath(string path)
@@ -105,7 +122,7 @@ public class Database : IDisposable, INotifyPropertyChanged
         List<string> paths = new List<string>();
         paths.AddRange(GetAllDatabasePaths());
         paths.Add(path);
-        SetAllDatabasePaths(paths.ToArray());
+        SetAllDatabasePaths(string.Join('|', paths));
     }
 
     public static void RemoveDatabasePath(string path)
@@ -120,7 +137,7 @@ public class Database : IDisposable, INotifyPropertyChanged
                 i--;
             }
         }
-        SetAllDatabasePaths(paths.ToArray());
+        SetAllDatabasePaths(string.Join('|', paths));
     }
 
     public static Database[] GetAllUnloadedDatabases()
