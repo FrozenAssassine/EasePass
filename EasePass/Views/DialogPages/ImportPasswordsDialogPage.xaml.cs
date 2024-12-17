@@ -63,10 +63,12 @@ public sealed partial class ImportPasswordsDialogPage : Page
         for (int i = 0; i < items.Count; i++)
             PWItems.Add(items[i]);
 
+        listView.UpdateLayout();
+
         selectAll_Checkbox.Visibility = Visibility.Visible;
         progress.Visibility = Visibility.Collapsed;
 
-        listView.SelectAll();
+        listView.SelectRange(new Microsoft.UI.Xaml.Data.ItemIndexRange(0, (uint)listView.Items.Count));
     }
     public void SetPasswords(PasswordManagerItem[] items)
     {
@@ -74,10 +76,12 @@ public sealed partial class ImportPasswordsDialogPage : Page
         for (int i = 0; i < items.Length; i++)
             PWItems.Add(items[i]);
 
+        listView.UpdateLayout();
+
         selectAll_Checkbox.Visibility = Visibility.Visible;
         progress.Visibility = Visibility.Collapsed;
 
-        listView.SelectAll();
+        listView.SelectRange(new Microsoft.UI.Xaml.Data.ItemIndexRange(0, (uint)listView.Items.Count));
     }
 
     public PasswordManagerItem[] GetSelectedPasswords()
