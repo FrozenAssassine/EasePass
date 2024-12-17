@@ -58,10 +58,7 @@ internal class ManageDatabaseHelper
 
         var password = (await new EnterPasswordDialog().ShowAsync()).Password;
         if (password == null)
-        {
-            InfoMessages.ImportDBWrongPassword();
-            return false;
-        }
+            return false;   //cancelled by user
 
         var importedItems = Database.GetItemsFromDatabase(filePath, password);
 
@@ -88,6 +85,7 @@ internal class ManageDatabaseHelper
             return null;
 
         Database.AddDatabasePath(newDB.Path);
+        InteropHelper.SetForegroundWindow(InteropHelper.GetWindowHandle(App.m_window));
         return newDB;
     }
 }
