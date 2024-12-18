@@ -12,15 +12,15 @@
             <TextBlock TextAlignment="Center" Margin="0,0,0,50" FontSize="36" x:Uid="View_SettingsPage_Headline" Text="Settings"/>
 
             <controls:SettingsControl Header="Language" x:Uid="View_SettingsPage_Language">
-                <StackPanel Orientation="Vertical">
-                    <ComboBox Width="200" x:Name="selectLanguageBox" SelectionChanged="selectLanguageBox_SelectionChanged">
+                <StackPanel HorizontalAlignment="Right" Orientation="Vertical">
+                    <ComboBox HorizontalAlignment="Right" Width="200" x:Name="selectLanguageBox" SelectionChanged="selectLanguageBox_SelectionChanged">
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="models:LanguageItem">
                                 <TextBlock Text="{x:Bind DisplayName}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <TextBlock x:Uid="View_SettingsPage_RestartToApply" Text="To apply please restart the app" TextWrapping="Wrap"/>
+                    <TextBlock TextAlignment="Right" x:Uid="View_SettingsPage_RestartToApply" Text="To apply please restart the app" TextWrapping="Wrap"/>
                 </StackPanel>
             </controls:SettingsControl>
 

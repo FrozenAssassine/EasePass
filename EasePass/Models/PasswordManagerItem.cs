@@ -83,61 +83,40 @@ namespace EasePass.Models
             {
                 const string iconCache = "icons";
                 _Website = value;
-                if (ShowIcon)
+                if (!ShowIcon)
                 {
-                    if (string.IsNullOrEmpty(_Website))
+                    Icon = null;
+                    NotifyPropertyChanged("Icon");
+                    NotifyPropertyChanged("Website");
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(_Website))
+                {
+                    Icon = null;
+                    NotifyPropertyChanged("Icon");
+                    return;
+                }
+
+                if (!_Website.ToLower().StartsWith("http"))
+                    _Website = "http://" + _Website;
+
+                try
+                {
+                    CacheItem item = CacheItem.FindInCache(iconCache, _Website);
+                    if (item != null)
                     {
-                        Icon = null;
+                        Icon = new BitmapImage(new Uri(item.GetPath()));
+                        Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; NotifyPropertyChanged("Icon"); };
+
                         NotifyPropertyChanged("Icon");
+                        NotifyPropertyChanged("Website");
                         return;
                     }
 
-                    if (!_Website.ToLower().StartsWith("http"))
-                        _Website = "http://" + _Website;
-
-                    try
-                    {
-                        CacheItem item = CacheItem.FindInCache(iconCache, _Website);
-                        if(item != null)
-                        {
-                            Icon = new BitmapImage(new Uri(item.GetPath()));
-                            Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; NotifyPropertyChanged("Icon"); };
-                        }
-                        else
-                        {
-                            var downloadImg = async () =>
-                            {
-                                item = CacheItem.Create(iconCache, _Website);
-                                if (item == null)
-                                {
-                                    Icon = null;
-                                }
-                                else
-                                {
-                                    if(await RequestsHelper.DownloadFileAsync(_Website + "/favicon.ico", item.GetPath(),30000))
-                                    {
-                                        Icon = new BitmapImage(new Uri(item.GetPath()));
-                                        Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; NotifyPropertyChanged("Icon"); };
-                                    }
-                                    else
-                                    {
-                                        Icon = null;
-                                    }
-                                    if(item.GetCacheSize() < 10)
-                                    {
-                                        item.Remove();
-                                    }
-                                }
-                            };
-                            _ = downloadImg.Invoke();
-                        }
-                    }
-                    catch { /*Invalid URI format*/ }
+                    IconDownloadImage(item, iconCache);
                 }
-                else
-                {
-                    Icon = null;
-                }
+                catch { /*Invalid URI format*/ }
 
                 NotifyPropertyChanged("Icon");
                 NotifyPropertyChanged("Website");
@@ -170,6 +149,32 @@ namespace EasePass.Models
         public string FirstChar = "";
         [JsonIgnore]
         public bool ShowIcon => AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons);
+
+        private async void IconDownloadImage(CacheItem item, string iconCache)
+        {
+            item = CacheItem.Create(iconCache, _Website);
+            if (item == null)
+            {
+                Icon = null;
+
+                NotifyPropertyChanged("Icon");
+                NotifyPropertyChanged("Website");
+                return;
+            }
+
+            if (await RequestsHelper.DownloadFileAsync(_Website + "/favicon.ico", item.GetPath(), 30000))
+            {
+                Icon = new BitmapImage(new Uri(item.GetPath()));
+                Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; NotifyPropertyChanged("Icon"); };
+            }
+            else
+                Icon = null;
+
+            if (item.GetCacheSize() < 10)
+            {
+                item.Remove();
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(string propertyName)
