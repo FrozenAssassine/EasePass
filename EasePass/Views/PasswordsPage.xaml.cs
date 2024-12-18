@@ -430,5 +430,9 @@ namespace EasePass.Views
             DatabaseDragDropHelper.DragOver(e);
         }
 
+        private void EscapeKeyAccel_Invoked(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            passwordItemListView.SelectedItem = SelectedItem = null;
+        }
     }
 }
