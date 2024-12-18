@@ -91,16 +91,16 @@ public class Database : IDisposable, INotifyPropertyChanged
         string paths = AppSettings.GetSettings(AppSettingsValues.databasePaths, DefaultSettingsValues.databasePaths);
         ReadOnlySpan<char> chars = paths.AsSpan();
 
-        int length = chars.Count('|');
-        Span<Range> ranges = length < 1025 ? stackalloc Range[length] : new Range[length];
+        int length = chars.Count('|') + 1;
+        Span<Range> ranges = length < 1024 ? stackalloc Range[length] : new Range[length];
 
         int splittedPaths = chars.Split(ranges, '|');
         
         List<string> res = new List<string>();
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < length; i++)
+        for (int i = 0; i < splittedPaths; i++)
         {
-            string path = paths.AsSpan(ranges[i]).ToString();
+            string path = chars[ranges[i]].ToString();
             if (File.Exists(path))
             {
                 sb.Append(path);
@@ -119,9 +119,7 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     public static void AddDatabasePath(string path)
     {
-        List<string> paths = new List<string>();
-        paths.AddRange(GetAllDatabasePaths());
-        paths.Add(path);
+        List<string> paths = [.. GetAllDatabasePaths(), path];
         SetAllDatabasePaths(string.Join('|', paths));
     }
 
