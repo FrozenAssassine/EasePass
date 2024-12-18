@@ -19,6 +19,7 @@ using EasePass.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Threading.Tasks;
 
 namespace EasePass.Helper
 {
@@ -35,10 +36,10 @@ namespace EasePass.Helper
 
             timer.Stop();
             timer.Interval = TimeSpan.FromSeconds(3);
-            timer.Tick += Timer_Tick;
+            timer.Tick += Timer_TickAsync;
         }
 
-        private void Timer_Tick(object sender, object e)
+        private async void Timer_TickAsync(object sender, object e)
         {
             if (selectedItem == null)
                 return;
@@ -46,13 +47,13 @@ namespace EasePass.Helper
             if (string.IsNullOrEmpty(selectedItem.Secret))
                 return;
 
-            totpTB.Text = generateCurrent(selectedItem);
+            totpTB.Text = await generateCurrent(selectedItem);
         }
 
-        public static string generateCurrent(PasswordManagerItem item)
+        public static async Task<string> generateCurrent(PasswordManagerItem item)
         {
             string token = TOTP.GenerateTOTPToken(
-                NTPClient.GetTime(),
+                await NTPClient.GetTime(),
                 item.Secret,
                 ConvertHelper.ToInt(item.Digits, 6),
                 ConvertHelper.ToInt(item.Interval, 30),
@@ -82,7 +83,7 @@ namespace EasePass.Helper
 
         public void SimulateTickEvent()
         {
-            Timer_Tick(this, null);
+            Timer_TickAsync(this, null);
         }
     }
 }

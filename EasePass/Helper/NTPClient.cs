@@ -17,6 +17,7 @@ copies or substantial portions of the Software.
 using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace EasePass.Helper
 {
@@ -24,7 +25,7 @@ namespace EasePass.Helper
     {
         public static readonly string DEFAULT_SERVER = "pool.ntp.org";
 
-        public static DateTime GetTime(string NTP_Server = "", int timeout = 3000)
+        public static async Task<DateTime> GetTime(string NTP_Server = "", int timeout = 3000)
         {
             //return DateTime.Now; // I disabled online time to prevent flickering through fast switching between online time and local time.
 
@@ -36,15 +37,17 @@ namespace EasePass.Helper
 
             try
             {
-                var addresses = Dns.GetHostEntry(NTP_Server).AddressList;
+                var addresses = (await Dns.GetHostEntryAsync(NTP_Server)).AddressList;
                 var ipEndPoint = new IPEndPoint(addresses[0], 123);
-                var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-                socket.ReceiveTimeout = timeout;
-                socket.Connect(ipEndPoint);
-                socket.Send(ntpData);
-                socket.Receive(ntpData);
-                socket.Close();
+                using (var udpClient = new UdpClient())
+                {
+                    udpClient.Client.ReceiveTimeout = timeout;
+                    await udpClient.SendAsync(ntpData, ntpData.Length, ipEndPoint);
+
+                    var result = await udpClient.ReceiveAsync();
+                    ntpData = result.Buffer;
+                }
             }
             catch
             {
