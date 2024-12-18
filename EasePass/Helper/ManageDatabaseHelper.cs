@@ -17,6 +17,7 @@ copies or substantial portions of the Software.
 using EasePass.Dialogs;
 using EasePass.Models;
 using Microsoft.UI.Xaml.Shapes;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace EasePass.Helper;
@@ -32,10 +33,7 @@ internal class ManageDatabaseHelper
         Database db;
         var password = (await new EnterPasswordDialog().ShowAsync()).Password;
         if (password == null)
-        {
-            InfoMessages.ImportDBWrongPassword();
-            return null;
-        }
+            return null; //cancelled by user
 
         db = new Database(pickerResult.path);
         if (db.ValidatePwAndLoadDB(password) != PasswordValidationResult.Success)
@@ -59,7 +57,7 @@ internal class ManageDatabaseHelper
 
         var password = (await new EnterPasswordDialog().ShowAsync()).Password;
         if (password == null)
-            return false;   //cancelled by user
+            return false; //cancelled by user
 
         var importedItems = Database.GetItemsFromDatabase(filePath, password);
 
