@@ -144,7 +144,9 @@ namespace EasePass.Helper
                 sb.AppendLine("Notes:".Localized("PrintDB_Notes/Text"));
                 string[] lines = item.Notes.Replace("\n","\n\n").Replace('\r','\n').Replace("\n\n","\n").Split('\n');
                 foreach (string line in lines)
+                {
                     sb.AppendLine(line);
+                }
             }
             return (item.DisplayName, sb.ToString());
         }

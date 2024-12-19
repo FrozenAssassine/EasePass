@@ -16,8 +16,6 @@ copies or substantial portions of the Software.
 
 using EasePass.Dialogs;
 using EasePass.Models;
-using Microsoft.UI.Xaml.Shapes;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace EasePass.Helper;

@@ -61,7 +61,8 @@ namespace EasePass.Helper
                 );
 
             string final = "";
-            for (int i = 0; i < token.Length; i++)
+            int length = token.Length;
+            for (int i = 0; i < length; i++)
             {
                 final += token[i];
                 if ((i + 1) % PasswordsPage.TOTP_SPACING == 0)
