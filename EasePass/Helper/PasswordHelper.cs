@@ -129,7 +129,7 @@ namespace EasePass.Helper
 
         private static async Task<bool> IsSecure2(string password)
         {
-            bool?[] res = EvaluatePassword(password);
+            bool[] res = EvaluatePassword(password);
             for (int i = 0; i < res.Length; i++)
             {
                 if (res[i] == false) return false;
@@ -146,9 +146,9 @@ namespace EasePass.Helper
             }
         }
 
-        public static bool?[] EvaluatePassword(string password)
+        public static bool[] EvaluatePassword(string password)
         {
-            bool?[] checks = new bool?[6];
+            bool[] checks = new bool[6];
 
             checks[0] = password.Any(char.IsLower);
             checks[1] = password.Any(char.IsUpper);
