@@ -17,6 +17,7 @@ copies or substantial portions of the Software.
 using EasePassExtensibility;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -42,12 +43,18 @@ namespace EasePass.Models
         public Extension(IExtensionInterface[] interfaces, string id)
         {
             Interfaces = interfaces;
-            for (int i = 0; i < interfaces.Length; i++)
+            int length = interfaces.Length;
+            for (int i = 0; i < length; i++)
             {
                 if (interfaces[i] is IAboutPlugin)
+                {
                     AboutPlugin = (IAboutPlugin)interfaces[i];
+                }
             }
-            if (AboutPlugin == null) AboutPlugin = new DummyAboutExtensionPage();
+            if (AboutPlugin == null)
+            {
+                AboutPlugin = new DummyAboutExtensionPage();
+            }
             ID = id;
         }
 
@@ -59,7 +66,8 @@ namespace EasePass.Models
         public string ToString(bool headline)
         {
             List<string> items = new List<string>();
-            for (int i = 0; i < Interfaces.Length; i++)
+            int length = Interfaces.Length;
+            for (int i = 0; i < length; i++)
             {
                 if (Interfaces[i] is IPasswordImporter) items.Add("• register new passwords");
                 if (Interfaces[i] is IPasswordGenerator) items.Add("• generate new passwords");
@@ -69,13 +77,19 @@ namespace EasePass.Models
             }
             List<string> itemsFinal = new List<string>();
             for (int i = 0; i < items.Count; i++)
+            {
                 if (!itemsFinal.Contains(items[i]))
                     itemsFinal.Add(items[i]);
+            }
+
             StringBuilder sb = new StringBuilder();
             if (headline)
                 sb.AppendLine("Authorizations requested by plugin:");
             for (int i = 0; i < itemsFinal.Count; i++)
+            {
                 sb.AppendLine(itemsFinal[i]);
+            }
+
             return sb.ToString();
         }
     }
