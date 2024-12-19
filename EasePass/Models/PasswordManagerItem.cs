@@ -32,17 +32,6 @@ namespace EasePass.Models
 {
     public class PasswordManagerItem : INotifyPropertyChanged
     {
-        public PasswordManagerItem()
-        {
-            AppSettings.RegisterSettingsChangedEvent(AppSettingsValues.showIcons, (object o, string setting) =>
-            {
-                Website = _Website;
-                NotifyPropertyChanged("Website");
-                NotifyPropertyChanged("ShowIcon");
-                NotifyPropertyChanged("Icon");
-            });
-        }
-
         private string _Password;
         public string Password { get => _Password; set { _Password = value; NotifyPropertyChanged("Password"); } }
         private string _Username;
@@ -150,6 +139,24 @@ namespace EasePass.Models
         [JsonIgnore]
         public bool ShowIcon => AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons);
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public PasswordManagerItem()
+        {
+            AppSettings.RegisterSettingsChangedEvent(AppSettingsValues.showIcons, (object o, string setting) =>
+            {
+                Website = _Website;
+                NotifyPropertyChanged("Website");
+                NotifyPropertyChanged("ShowIcon");
+                NotifyPropertyChanged("Icon");
+            });
+        }
+
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         private async void IconDownloadImage(CacheItem item, string iconCache)
         {
             item = CacheItem.Create(iconCache, _Website);
@@ -174,12 +181,6 @@ namespace EasePass.Models
             {
                 item.Remove();
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

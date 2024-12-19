@@ -62,12 +62,14 @@ namespace EasePass.Helper
         public static void Init()
         {
             string[] username = Environment.UserName.Split(" "); // User should not use his username in passwords
-            for (int i = 0; i < username.Length; i++)
+            int length = username.Length;
+            for (int i = 0; i < length; i++)
             {
                 bool isNumber = int.TryParse(username[i], out int value);
                 if (!isNumber) CommonSequences.Add(new CommonSequence(username[i].ToLower()));
             }
-            for (int i = 0; i < ABC.Length; i++) // repeating character, i.e. 'aaaaaaa'
+            length = ABC.Length;
+            for (int i = 0; i < length; i++) // repeating character, i.e. 'aaaaaaa'
             {
                 StringBuilder sb = new StringBuilder();
                 for (int j = 0; j < StringMinRepeat; j++)
@@ -130,7 +132,8 @@ namespace EasePass.Helper
         private static async Task<bool> IsSecure2(string password)
         {
             bool[] res = EvaluatePassword(password);
-            for (int i = 0; i < res.Length; i++)
+            int length = res.Length;
+            for (int i = 0; i < length; i++)
             {
                 if (res[i] == false) return false;
             }
@@ -162,13 +165,19 @@ namespace EasePass.Helper
 
         private static bool ContainsCommonSequences(string password)
         {
-            for (int i = 0; i < CommonSequences.Count; i++)
+            int length = CommonSequences.Count;
+            for (int i = 0; i < length; i++)
             {
                 if (CommonSequences[i].ContainsSequence(password)) return true;
             }
             return false;
         }
 
+        /// <summary>
+        /// Checks if the Password has been leaked already
+        /// </summary>
+        /// <param name="password">The Password which will be checked</param>
+        /// <returns>Returns <see langword="true"/> if the Password has been leaked</returns>
         public static async Task<bool?> IsPwned(string password)
         {
             try
@@ -178,6 +187,7 @@ namespace EasePass.Helper
                 string hashSuffix = hash.Substring(5);
 
                 using (var client = new HttpClient())
+                // Checks if the Password has been leaked
                 using (var data = await client.GetAsync("https://api.pwnedpasswords.com/range/" + hashPrefix))
                 {
                     if (data == null)
@@ -252,8 +262,9 @@ namespace EasePass.Helper
             public bool ContainsSequence(string str)
             {
                 string lower = str.ToLower();
-                if (entireSequence || sequence.Length <= minLength) return lower.Contains(sequence);
-                for (int i = 0; i < sequence.Length - minLength; i++)
+                int length = sequence.Length;
+                if (entireSequence || length <= minLength) return lower.Contains(sequence);
+                for (int i = 0; i < length - minLength; i++)
                 {
                     string subsequence = sequence.Substring(i, minLength);
                     if (lower.Contains(subsequence)) return true;

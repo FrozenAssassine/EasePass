@@ -31,7 +31,8 @@ namespace EasePass.Helper
             WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
 
             openPicker.ViewMode = PickerViewMode.Thumbnail;
-            for (int i = 0; i < extensions.Length; i++)
+            int length = extensions.Length;
+            for (int i = 0; i < length; i++)
             {
                 openPicker.FileTypeFilter.Add(extensions[i]);
             }

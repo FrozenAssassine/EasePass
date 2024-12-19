@@ -36,20 +36,28 @@ public static class ExtensionHelper
             if (Directory.Exists(ApplicationData.Current.LocalFolder.Path + "\\extensions\\"))
             {
                 if (File.Exists(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat"))
+                {
                     foreach (string extensionID in File.ReadLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat"))
+                    {
                         if (File.Exists(ApplicationData.Current.LocalFolder.Path + "\\extensions\\" + extensionID + ".dll"))
                             await (await (await ApplicationData.Current.LocalFolder.GetFolderAsync("extensions")).GetFileAsync(extensionID + ".dll")).DeleteAsync();
+                    }
+                }
+
                 File.WriteAllText(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", "");
                 string[] extensionPaths = Directory.GetFiles(ApplicationData.Current.LocalFolder.Path + "\\extensions\\");
                 Extensions.Clear();
-                for (int i = 0; i < extensionPaths.Length; i++)
+                int length = extensionPaths.Length;
+                for (int i = 0; i < length; i++)
                 {
                     if (Path.GetExtension(extensionPaths[i]) == ".dll")
                         Extensions.Add(new Extension(ReflectionHelper.GetAllExternalInstances(extensionPaths[i]), Path.GetFileNameWithoutExtension(extensionPaths[i])));
                 }
-                for (int i = 0; i < Extensions.Count; i++)
+                length = Extensions.Count;
+                for (int i = 0; i < length; i++)
                 {
-                    for (int j = 0; j < Extensions[i].Interfaces.Length; j++)
+                    int length2 = Extensions[i].Interfaces.Length;
+                    for (int j = 0; j < length2; j++)
                     {
                         if(Extensions[i].Interfaces[j] is IDatabasePaths)
                         {
@@ -64,11 +72,13 @@ public static class ExtensionHelper
     public static T[] GetAllClassesWithInterface<T>() where T : IExtensionInterface
     {
         List<T> result = new List<T>();
-        for (int i = 0; i < Extensions.Count; i++)
+        int length = Extensions.Count;
+        for (int i = 0; i < length; i++)
         {
-            for (int j = 0; j < Extensions[i].Interfaces.Length; j++)
+            int length2 = Extensions[i].Interfaces.Length;
+            for (int j = 0; j < length2; j++)
             {
-                if (Extensions[i].Interfaces[j] is T) result.Add((T)Extensions[i].Interfaces[j]);
+                if (Extensions[i].Interfaces[j] is T t) result.Add(t);
             }
         }
         return result.ToArray();
@@ -77,9 +87,11 @@ public static class ExtensionHelper
     public static List<FetchedExtension> GetExtensionsFromSources()
     {
         List<FetchedExtension> res = new List<FetchedExtension>();
-        for(int i = 0; i < Extensions.Count; i++)
+        int length = Extensions.Count;
+        for(int i = 0; i < length; i++)
         {
-            for(int j = 0; j < Extensions[i].Interfaces.Length; j++)
+            int length2 = Extensions[i].Interfaces.Length;
+            for (int j = 0; j < length2; j++)
             {
                 if (Extensions[i].Interfaces[j] is IExtensionSource source)
                 {

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace EasePass.Models
@@ -53,25 +49,38 @@ namespace EasePass.Models
             return Convert.ToString(hashedValue);
         }
 
+        /// <summary>
+        /// Gets the Path of the Cache
+        /// </summary>
+        /// <returns></returns>
         public string GetPath()
         {
-            return GetCacheFolder() + Category + "\\" + Id + ".cache";
+            return GetCacheFolder() + Category + Path.DirectorySeparatorChar + Id + ".cache";
         }
+
 
         private static string GetCacheFolder()
         {
-            return ApplicationData.Current.LocalFolder.Path + "\\cache\\";
+            return ApplicationData.Current.LocalFolder.Path + Path.DirectorySeparatorChar + "cache" + Path.DirectorySeparatorChar;
         }
 
+        /// <summary>
+        /// Gets the Size of the Cache
+        /// </summary>
+        /// <returns></returns>
         public long GetCacheSize()
         {
             return new FileInfo(GetPath()).Length;
         }
 
+        /// <summary>
+        /// Clears the Cache
+        /// </summary>
         public void Remove()
         {
-            if(File.Exists(GetPath()))
-                File.Delete(GetPath());
+            string path = GetPath();
+            if(File.Exists(path))
+                File.Delete(path);
         }
     }
 }
