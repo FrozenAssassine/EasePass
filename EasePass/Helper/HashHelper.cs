@@ -29,9 +29,13 @@ namespace EasePass.Helper
             byte[] hash = MD5.Create().ComputeHash(file);
             string base64 = Convert.ToBase64String(hash);
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < base64.Length; i++)
+            int length = base64.Length;
+            for (int i = 0; i < length; i++)
+            {
                 if (char.IsLetter(base64[i]))
                     sb.Append(base64[i]);
+            }
+
             return sb.ToString();
         }
     }

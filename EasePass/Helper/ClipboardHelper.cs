@@ -46,9 +46,10 @@ namespace EasePass.Helper
             dp.Tick += async (s, e) =>
             {
                 var items = (await Clipboard.GetHistoryItemsAsync()).Items;
-                if (items.Count > 0)
+                int length = items.Count;
+                if (length > 0)
                 {
-                    for(int i = 0; i < items.Count; i++)
+                    for(int i = 0; i < length; i++)
                     {
                         try
                         {
@@ -82,7 +83,8 @@ namespace EasePass.Helper
                 var items = (await Clipboard.GetHistoryItemsAsync()).Items;
                 if (items.Count > 0)
                 {
-                    for (int i = 0; i < items.Count; i++)
+                    int length = items.Count;
+                    for (int i = 0; i < length; i++)
                     {
                         try
                         {

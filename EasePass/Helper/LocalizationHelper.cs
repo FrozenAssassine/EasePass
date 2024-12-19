@@ -64,7 +64,8 @@ public class LocalizationHelper
     private void RegisterLanguageFromResource()
     {
         ResourceMap resourceMap = new ResourceManager().MainResourceMap.GetSubtree("LanguageList");
-        for (uint i = 0; i < resourceMap.ResourceCount; i++)
+        uint length = resourceMap.ResourceCount;
+        for (uint i = 0; i < length; i++)
         {
             var resource = resourceMap.GetValueByIndex(i);
             languages.Add(new LanguageItem(resource.Key, resource.Value.ValueAsString));
