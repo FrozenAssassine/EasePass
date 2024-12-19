@@ -145,7 +145,7 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     public static ObservableCollection<PasswordManagerItem> GetItemsFromDatabase(string path, SecureString password)
     {
-        if (System.IO.Path.GetExtension(path).ToLower() == ".eped")
+        if (GetExtension(path).Equals(".eped", StringComparison.OrdinalIgnoreCase))
         {
             string pw = new System.Net.NetworkCredential(string.Empty, password).Password;
             EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(path));
@@ -172,6 +172,14 @@ public class Database : IDisposable, INotifyPropertyChanged
         }
 
         return LoadItems(readFileResult.data);
+    }
+
+    public static ReadOnlySpan<char> GetExtension(ReadOnlySpan<char> fileName)
+    {
+        int index = fileName.LastIndexOf('.');
+        if (index == -1) return ReadOnlySpan<char>.Empty;
+
+        return fileName.Slice(index);
     }
 
     public PasswordValidationResult ValidatePwAndLoadDB(SecureString masterPassword, bool showWrongPasswordError = true)
