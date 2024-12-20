@@ -16,10 +16,9 @@ copies or substantial portions of the Software.
 
 using EasePass.Views;
 
-namespace EasePass.Models
+namespace EasePass.Models;
+
+internal class SettingsNavigationParameters
 {
-    internal class SettingsNavigationParameters
-    {
-        public PasswordsPage PasswordPage { get; set; }
-    }
+    public PasswordsPage PasswordPage { get; set; }
 }

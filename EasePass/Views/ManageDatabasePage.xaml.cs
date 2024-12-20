@@ -71,12 +71,6 @@ public sealed partial class ManageDatabasePage : Page
         }
     }
 
-    //DO NOT DELETE, Needs to be worked on in next update
-    //private async void LoadBackupsFromFile()
-    //{
-    //    var backupFiles = await MainWindow.databaseBackupHelper.GetAllBackupFiles();
-    //    databaseBackupDisplay.ItemsSource = backupFiles.Select(x => new Database(x));
-    //}
     private async Task DeleteDatabase(Database db)
     {
         if (!await new ConfirmDeleteDatabaseDialog().ShowAsync(db))

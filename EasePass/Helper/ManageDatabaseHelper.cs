@@ -42,8 +42,6 @@ internal class ManageDatabaseHelper
         return db;
     }
 
-    
-
     public static async Task<bool> ImportIntoDatabase(string filePath = "")
     {
         if (filePath.Length == 0)

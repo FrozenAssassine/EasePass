@@ -25,7 +25,6 @@ namespace EasePass.Helper
             if (storageItems == null || storageItems.Count == 0)
                 return;
 
-            Debug.WriteLine(storageItems[0].Path + "::" + Path.GetExtension(storageItems[0].Path));
             if (Path.GetExtension(storageItems[0].Path).Equals(".epdb", StringComparison.OrdinalIgnoreCase))
             {
                 var files = await e.DataView.GetStorageItemsAsync();

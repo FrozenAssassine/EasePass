@@ -18,6 +18,7 @@ using EasePass.Settings;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 
 namespace EasePass.Helper
@@ -32,35 +33,39 @@ namespace EasePass.Helper
             package.SetText(text);
             Clipboard.SetContent(package);
 
-            //remove from the clipboard:
             if (removeFromClipboard)
                 RemoveLastClipboardItem(text);
         }
 
+        private static async Task RemoveHistoryItem(string text)
+        {
+            var items = (await Clipboard.GetHistoryItemsAsync()).Items;
+            if (items.Count == 0)
+                return;
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                try
+                {
+                    if (await items[i].Content.GetTextAsync() == text)
+                    {
+                        history.Enqueue(items[i]);
+                        break;
+                    }
+                }
+                catch { }
+            }
+        }
+
         public static void RemoveLastClipboardItem(string text)
         {
-            // Needs to be a short delay here
+            // Needs to be a short delay here, otherwise the item will not be available
             var dp = new DispatcherTimer();
             dp.Interval = new TimeSpan(0, 0, 0, 0, 1000);
             dp.Start();
             dp.Tick += async (s, e) =>
             {
-                var items = (await Clipboard.GetHistoryItemsAsync()).Items;
-                if (items.Count > 0)
-                {
-                    for(int i = 0; i < items.Count; i++)
-                    {
-                        try
-                        {
-                            if (await items[i].Content.GetTextAsync() == text)
-                            {
-                                history.Enqueue(items[i]);
-                                break;
-                            }
-                        }
-                        catch { }
-                    }
-                }
+                await RemoveHistoryItem(text);
                 dp.Stop();
             };
 
@@ -79,22 +84,8 @@ namespace EasePass.Helper
                 {
                     Clipboard.SetContent(null);
                 }
-                var items = (await Clipboard.GetHistoryItemsAsync()).Items;
-                if (items.Count > 0)
-                {
-                    for (int i = 0; i < items.Count; i++)
-                    {
-                        try
-                        {
-                            if (await items[i].Content.GetTextAsync() == text)
-                            {
-                                history.Enqueue(items[i]);
-                                break;
-                            }
-                        }
-                        catch { }
-                    }
-                }
+
+                await RemoveHistoryItem(text);
             };
         }
     }
