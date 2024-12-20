@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Helper;
 using System;
 using System.IO;
 using System.Security.Cryptography;
@@ -25,7 +26,7 @@ namespace EasePass.Helper
     {
         public static string HashFile(string path)
         {
-            byte[] file = FileHelper.ReadAllBytes(path);
+            byte[] file = File.ReadAllBytes(path);
             byte[] hash = MD5.Create().ComputeHash(file);
             string base64 = Convert.ToBase64String(hash);
             StringBuilder sb = new StringBuilder();
