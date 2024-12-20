@@ -33,7 +33,7 @@ namespace EasePass.Controls
 {
     public sealed partial class PasswordSafetyChart : UserControl, INotifyPropertyChanged
     {
-        private static string[] messages = new string[]
+        private string[] messages = new string[]
         {
             "Lower case letters".Localized("PW_SafetyChart_LowerCaseLetters/Text"),
             "Upper case letters".Localized("PW_SafetyChart_UpperCaseLetters/Text"),
