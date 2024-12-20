@@ -45,6 +45,17 @@ Ease Pass is a straightforward yet powerful password manager that makes managing
 - Feature Requests: Share your ideas for new features.
 - Translations: Contribute to making EasePass more inclusive.
 
+## ⌨ Code Style Guidelines
+- **camelCase** for variables and function parameters.
+- **PascalCase** for classes, functions, and properties.
+- Use **comments** for complex or hard-to-understand code.
+- Avoid duplicating code; create functions to handle repeated logic.
+- Always use **brackets** around loops, conditionals, and other control structures for clarity.
+- Place **return statements** on a new line for better readability.
+- Use the **new single-line namespace** feature (remove brackets and add a semicolon).
+- Limit **nesting** to a maximum of **3 levels** for better readability.
+
+
 
 ## 🚀 Run on your machine
 1. Clone the repository.
