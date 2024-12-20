@@ -111,7 +111,7 @@ namespace EasePass.Controls
                 }));
             }
 
-            bool?[] res = PasswordHelper.EvaluatePassword(password);
+            bool[] res = PasswordHelper.EvaluatePassword(password);
             for (int i = 0; i < 6; i++)
             {
                 checks[i >= 3 ? i + 1 : i] = res[i];

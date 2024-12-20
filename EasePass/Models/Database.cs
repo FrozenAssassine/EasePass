@@ -28,6 +28,7 @@ using System.Linq;
 using System.Security;
 using static System.Net.Mime.MediaTypeNames;
 using System.Text;
+using Microsoft.VisualBasic;
 
 namespace EasePass.Models;
 
@@ -145,7 +146,7 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     public static ObservableCollection<PasswordManagerItem> GetItemsFromDatabase(string path, SecureString password)
     {
-        if (System.IO.Path.GetExtension(path).ToLower() == ".eped")
+        if (GetExtension(path).Equals(".eped", StringComparison.OrdinalIgnoreCase))
         {
             string pw = new System.Net.NetworkCredential(string.Empty, password).Password;
             EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(path));
@@ -174,9 +175,17 @@ public class Database : IDisposable, INotifyPropertyChanged
         return LoadItems(readFileResult.data);
     }
 
+    public static ReadOnlySpan<char> GetExtension(ReadOnlySpan<char> fileName)
+    {
+        int index = fileName.LastIndexOf('.');
+        if (index == -1) return ReadOnlySpan<char>.Empty;
+
+        return fileName.Slice(index);
+    }
+
     public PasswordValidationResult ValidatePwAndLoadDB(SecureString masterPassword, bool showWrongPasswordError = true)
     {
-        if (!File.Exists(this.Path))
+        if (!File.Exists(Path))
             return PasswordValidationResult.DatabaseNotFound;
 
         if (masterPassword != null)
@@ -192,7 +201,7 @@ public class Database : IDisposable, INotifyPropertyChanged
             return false;
         }
 
-        if (System.IO.Path.GetExtension(Path).ToLower() == ".eped")
+        if (GetExtension(Path).Equals(".eped", StringComparison.OrdinalIgnoreCase))
         {
             string pw = new System.Net.NetworkCredential(string.Empty, password).Password;
             EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(Path));
@@ -221,15 +230,15 @@ public class Database : IDisposable, INotifyPropertyChanged
             Save();
         }
 
-        var readFileResult = ReadFile(Path, password, showWrongPasswordError);
-        if (!readFileResult.success)
+        var (data, success) = ReadFile(Path, password, showWrongPasswordError);
+        if (!success)
             return false;
 
         MasterPassword = password;
         CallPropertyChanged("MasterPassword");
         
 
-        Items = LoadItems(readFileResult.data);
+        Items = LoadItems(data);
         ClearOldClicksCache();
         CallPropertyChanged("Items");
         
@@ -320,7 +329,16 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     public int PasswordAlreadyExists(string password)
     {
-        return Items.Count(x => x.Password == password);
+        int count = 0;
+        int length = Items.Count;
+        for (int i = 0; i < length; i++)
+        {
+            if (Items[i].Password == password)
+            {
+                count++;
+            }
+        }
+        return count;
     }
 
     public void AddRange(PasswordManagerItem[] items)
