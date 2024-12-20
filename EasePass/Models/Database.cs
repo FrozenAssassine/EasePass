@@ -26,9 +26,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Security;
-using static System.Net.Mime.MediaTypeNames;
 using System.Text;
-using Microsoft.VisualBasic;
 
 namespace EasePass.Models;
 
@@ -430,7 +428,9 @@ public class Database : IDisposable, INotifyPropertyChanged
             return (res.decryptedString, true);
         }
         if(showWrongPasswordError)
+        {
             InfoMessages.ImportDBWrongPassword();
+        }
         return ("", false);
     }
 
@@ -456,6 +456,9 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     private void CallPropertyChanged(string name)
     {
-        if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(name));
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
     }
 }

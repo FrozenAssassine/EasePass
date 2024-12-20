@@ -29,8 +29,7 @@ namespace EasePass.Helper
             if (doPreventAutoLogoutDialog)
                 return false;
 
-            int length = Dialogs.Count;
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < Dialogs.Count; i++)
             {
                 Dialogs[i].Hide();
             }

@@ -25,7 +25,7 @@ namespace EasePass.Helper
     {
         public static string HashFile(string path)
         {
-            byte[] file = File.ReadAllBytes(path);
+            byte[] file = FileHelper.ReadAllBytes(path);
             byte[] hash = MD5.Create().ComputeHash(file);
             string base64 = Convert.ToBase64String(hash);
             StringBuilder sb = new StringBuilder();

@@ -30,8 +30,7 @@ namespace EasePass.Extensions
             var sortableList = new List<T>(collection);
             sortableList.Sort(comparison);
 
-            int length = sortableList.Count;
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < sortableList.Count; i++)
             {
                 collection.Move(collection.IndexOf(sortableList[i]), i);
             }
