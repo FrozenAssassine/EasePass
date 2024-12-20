@@ -77,11 +77,6 @@ namespace EasePass.Views
             if (Database.LoadedInstance != null)
             {
                 passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
-
-                //Backups are currently disabled, because we need to find a better way to do them:
-                MainWindow.databaseBackupHelper = new DatabaseBackupHelper(Database.LoadedInstance, BackupCycle.Never);
-                await MainWindow.databaseBackupHelper.CheckAndDoBackup();
-
                 Database.LoadedInstance.Save();
             }
 
