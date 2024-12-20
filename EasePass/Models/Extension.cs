@@ -46,9 +46,9 @@ namespace EasePass.Models
             int length = interfaces.Length;
             for (int i = 0; i < length; i++)
             {
-                if (interfaces[i] is IAboutPlugin)
+                if (interfaces[i] is IAboutPlugin plugin)
                 {
-                    AboutPlugin = (IAboutPlugin)interfaces[i];
+                    AboutPlugin = plugin;
                 }
             }
             if (AboutPlugin == null)
@@ -84,7 +84,10 @@ namespace EasePass.Models
 
             StringBuilder sb = new StringBuilder();
             if (headline)
+            {
                 sb.AppendLine("Authorizations requested by plugin:");
+            }
+
             for (int i = 0; i < itemsFinal.Count; i++)
             {
                 sb.AppendLine(itemsFinal[i]);

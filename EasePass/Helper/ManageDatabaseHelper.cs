@@ -22,18 +22,18 @@ namespace EasePass.Helper;
 
 internal class ManageDatabaseHelper
 {
+    private static readonly string[] extensions = new string[] { ".epdb", ".eped" };
     public static async Task<Database> ImportDatabase()
     {
-        var pickerResult = await FilePickerHelper.PickOpenFile(new string[] { ".epdb", ".eped" });
+        var pickerResult = await FilePickerHelper.PickOpenFile(extensions);
         if (!pickerResult.success)
             return null;
 
-        Database db;
         var password = (await new EnterPasswordDialog().ShowAsync()).Password;
         if (password == null)
             return null; //cancelled by user
 
-        db = new Database(pickerResult.path);
+        Database db = new Database(pickerResult.path);
         if (db.ValidatePwAndLoadDB(password) != PasswordValidationResult.Success)
             return null;
 
@@ -42,11 +42,13 @@ internal class ManageDatabaseHelper
         return db;
     }
 
+    
+
     public static async Task<bool> ImportIntoDatabase(string filePath = "")
     {
         if (filePath.Length == 0)
         {
-            var pickerResult = await FilePickerHelper.PickOpenFile(new string[] { ".epdb", ".eped" });
+            var pickerResult = await FilePickerHelper.PickOpenFile(extensions);
             if (!pickerResult.success)
                 return false;
 
