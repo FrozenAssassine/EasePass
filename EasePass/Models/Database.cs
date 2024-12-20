@@ -284,7 +284,7 @@ public class Database : IDisposable, INotifyPropertyChanged
     {
         try
         {
-            return ((JArray)JsonConvert.DeserializeObject(json)).ToObject<ObservableCollection<PasswordManagerItem>>();
+            return JsonConvert.DeserializeObject<ObservableCollection<PasswordManagerItem>>(json);
         }
         catch
         {
@@ -388,7 +388,7 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     private static (string data, bool success) ReadFile(string path, SecureString pw, bool showWrongPasswordError = true)
     {
-        byte[] fileData;
+        byte[] fileData = null;
 
         try
         {
@@ -403,30 +403,25 @@ public class Database : IDisposable, INotifyPropertyChanged
             else
                 fileData = File.ReadAllBytes(path);
         }
-        catch (FileNotFoundException)
+        catch (Exception ex ) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
         {
             InfoMessages.DatabaseFileNotFoundAt(path);
-            return ("", false);
-        }
-        catch (DirectoryNotFoundException)
-        {
-            InfoMessages.DatabaseFileNotFoundAt(path);
-            return ("", false);
         }
         catch (UnauthorizedAccessException)
         {
             InfoMessages.NoAccessToPathDatabaseNotLoaded(path);
-            return ("", false);
         }
 
-        if (fileData == null)
-            return ("", false);
-
-        var res = EncryptDecryptHelper.DecryptStringAES(fileData, pw);
-        if (res.correctPassword)
+        if (fileData != null)
         {
-            return (res.decryptedString, true);
+            var res = EncryptDecryptHelper.DecryptStringAES(fileData, pw);
+            if (res.correctPassword)
+                return (res.decryptedString, true);
+         
+            if (showWrongPasswordError)
+                InfoMessages.ImportDBWrongPassword();
         }
+
         if(showWrongPasswordError)
         {
             InfoMessages.ImportDBWrongPassword();

@@ -48,7 +48,7 @@ namespace EasePass.Models
         public string Digits { get; set; } = "6";
         public string Interval { get; set; } = "30";
         public string Algorithm { get; set; } = "SHA1";
-        public List<string> Clicks = new List<string>();
+        public List<string> Clicks { get; } = new List<string>();
         [JsonIgnore]
         private string _DisplayName;
         public string DisplayName
