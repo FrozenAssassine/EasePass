@@ -24,6 +24,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Security;
 using System.Text;
 
@@ -44,17 +45,17 @@ namespace EasePass.Views
         {
             blockEventsOnloadSettings = true;
 
-            inactivityLogoutTime.Value = AppSettings.GetSettingsAsInt(AppSettingsValues.inactivityLogoutTime, DefaultSettingsValues.inactivityLogoutTime);
-            doubleTapToCopySW.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.doubleTapToCopy, DefaultSettingsValues.doubleTapToCopy);
-            showIcons.IsOn = AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons);
-            pswd_chars.Text = AppSettings.GetSettings(AppSettingsValues.passwordChars, DefaultSettingsValues.PasswordChars);
-            pswd_length.Text = Convert.ToString(AppSettings.GetSettingsAsInt(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength));
-            disableLeakedPasswords.IsOn = !AppSettings.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords);
-            clipboardClearTimeout.Value = AppSettings.GetSettingsAsInt(AppSettingsValues.clipboardClearTimeoutSec, DefaultSettingsValues.ClipboardClearTimeoutSec);
+            inactivityLogoutTime.Value = AppSettings.InactivityLogoutTime;
+            doubleTapToCopySW.IsOn = AppSettings.DoubleTapToCopy;
+            showIcons.IsOn = AppSettings.ShowIcons;
+            pswd_chars.Text = AppSettings.PasswordChars;
+            pswd_length.Text = AppSettings.PasswordLength.ToString();
+            disableLeakedPasswords.IsOn = !AppSettings.DisableLeakedPasswords;
+            clipboardClearTimeout.Value = AppSettings.clipboardClearTimeoutSec;
 
             selectLanguageBox.ItemsSource = MainWindow.localizationHelper.languages;
 
-            var languageTag = AppSettings.GetSettings(AppSettingsValues.language, DefaultSettingsValues.defaultLanguage);
+            var languageTag = AppSettings.Language;
             selectLanguageBox.SelectedIndex = MainWindow.localizationHelper.languages.FindIndex(x => x.Tag == languageTag);
             blockEventsOnloadSettings = false;
         }
@@ -92,7 +93,7 @@ namespace EasePass.Views
             if (blockEventsOnloadSettings)
                 return;
 
-            AppSettings.SaveSettings(AppSettingsValues.inactivityLogoutTime, inactivityLogoutTime.Value);
+            AppSettings.InactivityLogoutTime = (int)inactivityLogoutTime.Value;
         }
 
         private void DoubleTapToCopySW_Toggled(object sender, RoutedEventArgs e)
@@ -100,15 +101,15 @@ namespace EasePass.Views
             if (blockEventsOnloadSettings)
                 return;
 
-            AppSettings.SaveSettings(AppSettingsValues.doubleTapToCopy, doubleTapToCopySW.IsOn);
+            AppSettings.DoubleTapToCopy = doubleTapToCopySW.IsOn;
         }
 
         private void showIcons_Toggled(object sender, RoutedEventArgs e)
         {
             if (blockEventsOnloadSettings)
                 return;
-
-            AppSettings.SaveSettings(AppSettingsValues.showIcons, showIcons.IsOn);
+            
+            AppSettings.ShowIcons = showIcons.IsOn;
             if (passwordsPage != null)
                 passwordsPage.Reload();
         }
@@ -136,10 +137,10 @@ namespace EasePass.Views
 
             if (pswd_length.Text.Length == 0 || pswd_length.Text == "0")
             {
-                AppSettings.SaveSettings(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength);
+                AppSettings.PasswordLength = DefaultSettingsValues.passwordLength;
                 return;
             }
-            AppSettings.SaveSettings(AppSettingsValues.passwordLength, Math.Max(ConvertHelper.ToInt(pswd_length.Text, DefaultSettingsValues.PasswordLength), 8));
+            AppSettings.PasswordLength = Math.Max(ConvertHelper.ToInt(pswd_length.Text, DefaultSettingsValues.passwordLength), 8);
         }
 
         private void pswd_chars_TextChanged(object sender, TextChangedEventArgs e)
@@ -147,16 +148,16 @@ namespace EasePass.Views
             if (blockEventsOnloadSettings)
                 return;
 
-            AppSettings.SaveSettings(AppSettingsValues.passwordChars,
-                pswd_chars.Text.Length == 0 ? DefaultSettingsValues.PasswordChars : pswd_chars.Text
-                );
+            AppSettings.PasswordChars =
+                pswd_chars.Text.Length == 0 ? DefaultSettingsValues.passwordChars : pswd_chars.Text;
         }
 
         private void disableLeakedPasswords_Toggled(object sender, RoutedEventArgs e)
         {
             if (blockEventsOnloadSettings)
                 return;
-            AppSettings.SaveSettings(AppSettingsValues.disableLeakedPasswords, !disableLeakedPasswords.IsOn);
+
+            AppSettings.DisableLeakedPasswords = !disableLeakedPasswords.IsOn;
         }
 
         private async void ImportPassword_Click(object sender, RoutedEventArgs e)
@@ -221,14 +222,14 @@ namespace EasePass.Views
             if (blockEventsOnloadSettings || selectLanguageBox.SelectedItem == null)
                 return;
 
-            AppSettings.SaveSettings(AppSettingsValues.language, (selectLanguageBox.SelectedItem as LanguageItem).Tag);
+            AppSettings.Language = (selectLanguageBox.SelectedItem as LanguageItem).Tag;
 
             MainWindow.localizationHelper.SetLanguage(selectLanguageBox.SelectedItem as LanguageItem);
         }
 
         private void clipboardClearTimeout_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            AppSettings.SaveSettings(AppSettingsValues.clipboardClearTimeoutSec, clipboardClearTimeout.Value);
+            AppSettings.clipboardClearTimeoutSec = (int)clipboardClearTimeout.Value;
         }
     }
 }

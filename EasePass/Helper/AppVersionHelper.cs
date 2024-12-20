@@ -25,8 +25,8 @@ namespace EasePass.Helper
     {
         private static bool IsOnNewVersion(string version)
         {
-            string lastSavedVersion = AppSettings.GetSettings(AppSettingsValues.appVersion);
-            AppSettings.SaveSettings(AppSettingsValues.appVersion, version);
+            string lastSavedVersion = AppSettings.AppVersion;
+            AppSettings.AppVersion = version;
 
             //no version saved -> first start
             if (lastSavedVersion.Length == 0)

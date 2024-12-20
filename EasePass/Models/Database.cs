@@ -46,8 +46,8 @@ public class Database : IDisposable, INotifyPropertyChanged
         set
         {
             loadedInstance = value;
-            if(loadedInstance != null)
-                AppSettings.SaveSettings(AppSettingsValues.loadedDatabaseName, loadedInstance.Name);
+            if (loadedInstance != null)
+                AppSettings.LoadedDatabaseName = loadedInstance.Name;
 
             if (loadedInstance.PropertyChanged != null)
             {
@@ -87,7 +87,7 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     public static string[] GetAllDatabasePaths()
     {
-        string paths = AppSettings.GetSettings(AppSettingsValues.databasePaths, DefaultSettingsValues.databasePaths);
+        string paths = AppSettings.DatabasePaths;
         ReadOnlySpan<char> chars = paths.AsSpan();
 
         int length = chars.Count('|') + 1;
@@ -113,7 +113,7 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     public static void SetAllDatabasePaths(string paths)
     {
-        AppSettings.SaveSettings(AppSettingsValues.databasePaths, paths);
+        AppSettings.DatabasePaths = paths;
     }
 
     public static void AddDatabasePath(string path)

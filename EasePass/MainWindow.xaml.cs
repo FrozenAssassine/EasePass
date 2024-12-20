@@ -70,13 +70,12 @@ namespace EasePass
 
         private void RestoreSettings()
         {
-            var windowState = (OverlappedPresenterState)Enum.Parse(typeof(OverlappedPresenterState), AppSettings.GetSettings(AppSettingsValues.windowState, "2"));
-            WindowStateHelper.SetWindowState(this, windowState);
+            WindowStateHelper.SetWindowState(this, AppSettings.WindowState);
 
-            var width = AppSettings.GetSettingsAsInt(AppSettingsValues.windowWidth, 1100);
-            var height = AppSettings.GetSettingsAsInt(AppSettingsValues.windowHeight, 700);
-            var left = AppSettings.GetSettingsAsInt(AppSettingsValues.windowLeft, -5000);
-            var top = AppSettings.GetSettingsAsInt(AppSettingsValues.windowTop, -5000);
+            var width = AppSettings.WindowWidth; ;
+            var height = AppSettings.WindowHeight; 
+            var left = AppSettings.WindowLeft;
+            var top = AppSettings.WindowTop;
 
             //when closing the window from a minimized state the size will be wrong:
             if (width < 200)
@@ -113,11 +112,11 @@ namespace EasePass
         private void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
         {
             //save settings:
-            AppSettings.SaveSettings(AppSettingsValues.windowWidth, this.AppWindow.Size.Width);
-            AppSettings.SaveSettings(AppSettingsValues.windowHeight, this.AppWindow.Size.Height);
-            AppSettings.SaveSettings(AppSettingsValues.windowLeft, this.AppWindow.Position.X);
-            AppSettings.SaveSettings(AppSettingsValues.windowTop, this.AppWindow.Position.Y);
-            AppSettings.SaveSettings(AppSettingsValues.windowState, WindowStateHelper.GetWindowState(this));
+            AppSettings.WindowWidth = this.AppWindow.Size.Width;
+            AppSettings.WindowHeight = this.AppWindow.Size.Height;
+            AppSettings.WindowLeft = this.AppWindow.Position.X;
+            AppSettings.WindowTop = this.AppWindow.Position.Y;
+            AppSettings.WindowState = WindowStateHelper.GetWindowState(this);
         }
 
         private void NavigateBack_Click(object sender, RoutedEventArgs e)
