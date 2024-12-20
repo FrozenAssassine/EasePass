@@ -40,7 +40,9 @@ public static class ExtensionHelper
                     foreach (string extensionID in File.ReadLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat"))
                     {
                         if (File.Exists(ApplicationData.Current.LocalFolder.Path + "\\extensions\\" + extensionID + ".dll"))
+                        {
                             await (await (await ApplicationData.Current.LocalFolder.GetFolderAsync("extensions")).GetFileAsync(extensionID + ".dll")).DeleteAsync();
+                        }
                     }
                 }
 
@@ -49,7 +51,7 @@ public static class ExtensionHelper
                 Extensions.Clear();
                 for (int i = 0; i < extensionPaths.Length; i++)
                 {
-                    if (Path.GetExtension(extensionPaths[i]) == ".dll")
+                    if (FileHelper.HasExtension(extensionPaths[i], ".dll"))
                     {
                         Extensions.Add(new Extension(ReflectionHelper.GetAllExternalInstances(extensionPaths[i]), Path.GetFileNameWithoutExtension(extensionPaths[i])));
                     }
