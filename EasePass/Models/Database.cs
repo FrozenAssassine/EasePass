@@ -26,9 +26,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Security;
-using static System.Net.Mime.MediaTypeNames;
 using System.Text;
-using Microsoft.VisualBasic;
 
 namespace EasePass.Models;
 
@@ -146,7 +144,7 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     public static ObservableCollection<PasswordManagerItem> GetItemsFromDatabase(string path, SecureString password)
     {
-        if (GetExtension(path).Equals(".eped", StringComparison.OrdinalIgnoreCase))
+        if (FileHelper.HasExtension(path,".eped"))
         {
             string pw = new System.Net.NetworkCredential(string.Empty, password).Password;
             EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(path));
@@ -175,14 +173,6 @@ public class Database : IDisposable, INotifyPropertyChanged
         return LoadItems(readFileResult.data);
     }
 
-    public static ReadOnlySpan<char> GetExtension(ReadOnlySpan<char> fileName)
-    {
-        int index = fileName.LastIndexOf('.');
-        if (index == -1) return ReadOnlySpan<char>.Empty;
-
-        return fileName.Slice(index);
-    }
-
     public PasswordValidationResult ValidatePwAndLoadDB(SecureString masterPassword, bool showWrongPasswordError = true)
     {
         if (!File.Exists(Path))
@@ -201,7 +191,7 @@ public class Database : IDisposable, INotifyPropertyChanged
             return false;
         }
 
-        if (GetExtension(Path).Equals(".eped", StringComparison.OrdinalIgnoreCase))
+        if (FileHelper.HasExtension(Path, ".eped"))
         {
             string pw = new System.Net.NetworkCredential(string.Empty, password).Password;
             EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(Path));
@@ -423,6 +413,11 @@ public class Database : IDisposable, INotifyPropertyChanged
             if (showWrongPasswordError)
                 InfoMessages.ImportDBWrongPassword();
         }
+
+        if(showWrongPasswordError)
+        {
+            InfoMessages.ImportDBWrongPassword();
+        }
         return ("", false);
     }
 
@@ -448,6 +443,9 @@ public class Database : IDisposable, INotifyPropertyChanged
 
     private void CallPropertyChanged(string name)
     {
-        if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(name));
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
     }
 }

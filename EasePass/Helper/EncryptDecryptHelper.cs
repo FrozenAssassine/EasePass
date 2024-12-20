@@ -30,8 +30,7 @@ namespace EasePass.Helper
         public static byte[] EncryptStringAES(string plainText, string password, string salt)
         {
             SecureString pw = new SecureString();
-            int length = password.Length;
-            for (var i = 0; i < length; i++)
+            for (int i = 0; i < password.Length; i++)
             {
                 pw.AppendChar(password[i]);
             }

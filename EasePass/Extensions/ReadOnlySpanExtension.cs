@@ -13,8 +13,7 @@ namespace EasePass.Extensions
         public static int Count(this ReadOnlySpan<byte> span, char c)
         {
             int count = 0;
-            int length = span.Length;
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < span.Length; i++)
             {
                 if (span[i] == c)
                 {
