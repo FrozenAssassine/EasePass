@@ -489,44 +489,14 @@
   <data name="PrintDB_Website.Text" xml:space="preserve">
     <value>Website:</value>
   </data>
-  <data name="PW_SafetyChart_Already.Text" xml:space="preserve">
-    <value>Bereits</value>
-  </data>
-  <data name="PW_SafetyChart_Contains.Text" xml:space="preserve">
-    <value>Beinhaltet:</value>
-  </data>
   <data name="PW_SafetyChart_Digits.Text" xml:space="preserve">
     <value>Zahlen</value>
-  </data>
-  <data name="PW_SafetyChart_DoesNotMeetMinimum.Text" xml:space="preserve">
-    <value>Erfüllt nicht die Voraussetzungen:</value>
-  </data>
-  <data name="PW_SafetyChart_High.Text" xml:space="preserve">
-    <value>Stark:</value>
-  </data>
-  <data name="PW_SafetyChart_IsAlready.Text" xml:space="preserve">
-    <value>Is already</value>
   </data>
   <data name="PW_SafetyChart_LeakedExploited.Text" xml:space="preserve">
     <value>Veröffentlicht</value>
   </data>
-  <data name="PW_SafetyChart_Low.Text" xml:space="preserve">
-    <value>Gering:</value>
-  </data>
   <data name="PW_SafetyChart_LowerCaseLetters.Text" xml:space="preserve">
     <value>Kleinbuchstaben</value>
-  </data>
-  <data name="PW_SafetyChart_MeetsMinimum.Text" xml:space="preserve">
-    <value>Erfüllt die Voraussetzungen:</value>
-  </data>
-  <data name="PW_SafetyChart_Missing.Text" xml:space="preserve">
-    <value>Fehlend:</value>
-  </data>
-  <data name="PW_SafetyChart_Not.Text" xml:space="preserve">
-    <value>Nicht:</value>
-  </data>
-  <data name="PW_SafetyChart_NotYet.Text" xml:space="preserve">
-    <value>Noch nicht</value>
   </data>
   <data name="PW_SafetyChart_Predictability.Text" xml:space="preserve">
     <value>Vorhersagbarkeit</value>
@@ -545,21 +515,6 @@
   </data>
   <data name="PW_SafetyChart_Short_UpperCaseLetters.Text" xml:space="preserve">
     <value>Großbuchstabe</value>
-  </data>
-  <data name="PW_SafetyChart_Unknown.Text" xml:space="preserve">
-    <value>Unbekannt</value>
-  </data>
-  <data name="PW_SafetyChart_UnknownAlready.Text" xml:space="preserve">
-    <value>Unbekannt, ob es bereits</value>
-  </data>
-  <data name="PW_SafetyChart_UnknownContains.Text" xml:space="preserve">
-    <value>Unknown whether it contains</value>
-  </data>
-  <data name="PW_SafetyChart_UnknownMeetsMinimum.Text" xml:space="preserve">
-    <value>Unknown whether it meets the minimum</value>
-  </data>
-  <data name="PW_SafetyChart_UnknownWhether.Text" xml:space="preserve">
-    <value>Unbekannt ob</value>
   </data>
   <data name="PW_SafetyChart_UpperCaseLetters.Text" xml:space="preserve">
     <value>Großbuchstaben</value>
@@ -1004,5 +959,17 @@
   </data>
   <data name="Dialog_Button_Change.Text" xml:space="preserve">
     <value>Ändern</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Passwordlength.Text" xml:space="preserve">
+    <value>Passwordlength:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_SeenBefore.Text" xml:space="preserve">
+    <value>Seen before:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LeakedExploited_Positive.Text" xml:space="preserve">
+    <value>False</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Punctuation_Positive.Text" xml:space="preserve">
+    <value>True</value>
   </data>
 </root>
