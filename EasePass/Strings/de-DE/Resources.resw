@@ -961,7 +961,7 @@
     <value>Ändern</value>
   </data>
   <data name="PW_SafetyChart_Info_Passwordlength.Text" xml:space="preserve">
-    <value>Passwort länge:</value>
+    <value>Passwortlänge:</value>
   </data>
   <data name="PW_SafetyChart_Info_SeenBefore.Text" xml:space="preserve">
     <value>Bereits Verwendet:</value>
@@ -986,6 +986,9 @@
   </data>
   <data name="PW_SafetyChart_Info_LeakedExploited_Negative.Text" xml:space="preserve">
     <value>Ja</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LeakedExploited_Positive.Text" xml:space="preserve">
+    <value>Nein</value>
   </data>
   <data name="PW_SafetyChart_Info_LowerCase.Text" xml:space="preserve">
     <value>Beinhalted Kleinbuchstaben:</value>
