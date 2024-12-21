@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Models;
 using EasePass.Settings;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EasePass.Helper
 {
@@ -33,76 +35,71 @@ namespace EasePass.Helper
         private const int StringMinRepeat = 5;
         private const int IntegerMinRepeat = 4;
 
-        private static List<CommonSequence> CommonSequences = new List<CommonSequence>()
+        private static List<CommonPasswordSequence> CommonSequences = new List<CommonPasswordSequence>()
         {
-            new CommonSequence("012345678909876543210", IntegerMinRepeat), // forward and backward
-            new CommonSequence(ABC + ABC, StringMinRepeat), // double abc
-            new CommonSequence("qwertyuiopasdfghjklzxcvbnm", StringMinRepeat), // English keyboard layout
-            new CommonSequence("qwertzuiopasdfghjklyxcvbnm", StringMinRepeat), // German keyboard layout
-            new CommonSequence("hello"), // the following words are based on some stats from Wikipedia
-            new CommonSequence("test"),
-            new CommonSequence("password"),
-            new CommonSequence("service"),
-            new CommonSequence("monkey"),
-            new CommonSequence("letmein"),
-            new CommonSequence("football"),
-            new CommonSequence("baseball"),
-            new CommonSequence("princess"),
-            new CommonSequence("sunshine"),
-            new CommonSequence("iloveyou"),
-            new CommonSequence("admin"),
-            new CommonSequence("starwars"),
-            new CommonSequence("master"),
-            new CommonSequence("lovely"),
-            new CommonSequence("welcome"),
-            new CommonSequence("dragon"),
-            new CommonSequence("superman"),
+            new CommonPasswordSequence("012345678909876543210", IntegerMinRepeat), // forward and backward
+            new CommonPasswordSequence(ABC + ABC, StringMinRepeat), // double abc
+            new CommonPasswordSequence("qwertyuiopasdfghjklzxcvbnm", StringMinRepeat), // English keyboard layout
+            new CommonPasswordSequence("qwertzuiopasdfghjklyxcvbnm", StringMinRepeat), // German keyboard layout
+            new CommonPasswordSequence("hello"), // the following words are based on some stats from Wikipedia
+            new CommonPasswordSequence("test"),
+            new CommonPasswordSequence("password"),
+            new CommonPasswordSequence("service"),
+            new CommonPasswordSequence("monkey"),
+            new CommonPasswordSequence("letmein"),
+            new CommonPasswordSequence("football"),
+            new CommonPasswordSequence("baseball"),
+            new CommonPasswordSequence("princess"),
+            new CommonPasswordSequence("sunshine"),
+            new CommonPasswordSequence("iloveyou"),
+            new CommonPasswordSequence("admin"),
+            new CommonPasswordSequence("starwars"),
+            new CommonPasswordSequence("master"),
+            new CommonPasswordSequence("lovely"),
+            new CommonPasswordSequence("welcome"),
+            new CommonPasswordSequence("dragon"),
+            new CommonPasswordSequence("superman"),
         };
 
         public static void Init()
         {
             string[] username = Environment.UserName.Split(" "); // User should not use his username in passwords
-            int length = username.Length;
-            for (int i = 0; i < length; i++)
+
+            for (int i = 0; i < username.Length; i++)
             {
-                bool isNumber = int.TryParse(username[i], out int value);
-                if (!isNumber) CommonSequences.Add(new CommonSequence(username[i].ToLower()));
+                if (!int.TryParse(username[i], out int value)) 
+                    CommonSequences.Add(new CommonPasswordSequence(username[i].ToLower()));
             }
-            length = ABC.Length;
-            for (int i = 0; i < length; i++) // repeating character, i.e. 'aaaaaaa'
+
+            for (int i = 0; i < ABC.Length; i++) // repeating character, i.e. 'aaaaaaa'
             {
-                StringBuilder sb = new StringBuilder();
-                for (int j = 0; j < StringMinRepeat; j++)
-                {
-                    sb.Append(ABC[i]);
-                }
-                CommonSequences.Add(new CommonSequence(sb.ToString(), StringMinRepeat));
+                string repeated = new string(ABC[i], StringMinRepeat);
+                CommonSequences.Add(new CommonPasswordSequence(repeated, StringMinRepeat));
             }
+
             for (int i = 0; i < 10; i++) // repeating number, i.e. '5555555'
             {
-                StringBuilder sb = new StringBuilder();
-                for (int j = 0; j < StringMinRepeat; j++)
-                {
-                    sb.Append(Convert.ToString(i));
-                }
-                CommonSequences.Add(new CommonSequence(sb.ToString(), IntegerMinRepeat));
+                string repeated = new string(i.ToString()[0], StringMinRepeat);
+                CommonSequences.Add(new CommonPasswordSequence(repeated, IntegerMinRepeat));
             }
         }
 
         public static async Task<string> GeneratePassword()
         {
             disableLeakedPasswords = AppSettings.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords);
-            string password = "";
             int length = AppSettings.GetSettingsAsInt(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength);
-            string chars = AppSettings.GetSettings(AppSettingsValues.passwordChars, DefaultSettingsValues.PasswordChars);
+            string chars = AppSettings.GetSettings(AppSettingsValues.passwordChars, DefaultSettingsValues.PasswordChars);         
             Random r = new Random();
-            while (!await IsSecure(chars, length, password))
+
+            StringBuilder password = new StringBuilder();
+            while (!await IsSecure(chars, length, password.ToString()))
             {
                 if (password.Length > length)
-                    password = "";
-                password += chars[r.Next(chars.Length)];
+                    password.Clear();
+
+                password.Append(chars[r.Next(chars.Length)]);
             }
-            return password;
+            return password.ToString();
         }
 
         private static async Task<bool> IsSecure(string chars, int length, string password)
@@ -127,26 +124,6 @@ namespace EasePass.Helper
                 if (r != true) securepoints++;
             }
             return securepoints == Math.Min(maxpoints, length);
-        }
-
-        private static async Task<bool> IsSecure2(string password)
-        {
-            bool[] res = EvaluatePassword(password);
-            int length = res.Length;
-            for (int i = 0; i < length; i++)
-            {
-                if (res[i] == false) return false;
-            }
-
-            if (!AppSettings.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords))
-            {
-                if (await IsPwned(password) == true) return false;
-                else return true;
-            }
-            else
-            {
-                return true;
-            }
         }
 
         public static bool[] EvaluatePassword(string password)
@@ -194,37 +171,40 @@ namespace EasePass.Helper
                     {
                         return null;
                     }
-
-                    using (var reader = new System.IO.StreamReader(data.Content.ReadAsStream()))
-                        while (!reader.EndOfStream)
-                        {
-                            var line = reader.ReadLine();
-
-                            if (line == null)
-                                continue;
-
-                            // Each line of the returned hash list has the following form "hash:numberOfTimesFound"
-                            // The first element is the hash
-                            // The second element is the numberOfTimesFound
-                            var splitLIne = line.Split(':');
-
-                            var lineHashedSuffix = splitLIne[0];
-                            var numberOfTimesPasswordPwned = int.Parse(splitLIne[1]);
-
-                            if (lineHashedSuffix == hashSuffix)
-                            {
-                                return true;
-                            }
-                        }
-
+                    return ReadIsPwnedData(data, hashSuffix);
                 }
-
-                return false;
             }
             catch
             {
                 return null;
             }
+        }
+        private static bool ReadIsPwnedData(HttpResponseMessage data, string hashSuffix)
+        {
+            using (var reader = new System.IO.StreamReader(data.Content.ReadAsStream()))
+            {
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+
+                    if (line == null)
+                        continue;
+
+                    // Each line of the returned hash list has the following form "hash:numberOfTimesFound"
+                    // The first element is the hash
+                    // The second element is the numberOfTimesFound
+                    var splitLIne = line.Split(':');
+
+                    var lineHashedSuffix = splitLIne[0];
+                    var numberOfTimesPasswordPwned = int.Parse(splitLIne[1]);
+
+                    if (lineHashedSuffix == hashSuffix)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         private static string GetSha1Hash(string input)
@@ -237,39 +217,6 @@ namespace EasePass.Helper
                 string hashHex = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
 
                 return hashHex;
-            }
-        }
-
-        private class CommonSequence
-        {
-            private string sequence = "";
-            private int minLength = 5;
-            private bool entireSequence = false;
-
-            public CommonSequence(string sequence, int minLength)
-            {
-                this.sequence = sequence;
-                this.minLength = minLength;
-                entireSequence = false;
-            }
-
-            public CommonSequence(string sequence)
-            {
-                this.sequence = sequence;
-                entireSequence = true;
-            }
-
-            public bool ContainsSequence(string str)
-            {
-                string lower = str.ToLower();
-                int length = sequence.Length;
-                if (entireSequence || length <= minLength) return lower.Contains(sequence);
-                for (int i = 0; i < length - minLength; i++)
-                {
-                    string subsequence = sequence.Substring(i, minLength);
-                    if (lower.Contains(subsequence)) return true;
-                }
-                return false;
             }
         }
     }

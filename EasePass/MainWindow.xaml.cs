@@ -40,7 +40,6 @@ namespace EasePass
 
         public static DispatcherQueue UIDispatcherQueue = null;
         public static XamlRoot XamlRoot = null;
-        public static DatabaseBackupHelper databaseBackupHelper = null;
         public static LocalizationHelper localizationHelper = new LocalizationHelper();
 
         public MainWindow()

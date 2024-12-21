@@ -110,6 +110,7 @@ public sealed partial class ExtensionPage : Page
         File.Copy(path, p);
         string hashCode = HashHelper.HashFile(p);
         string hashfilename = System.IO.Path.GetDirectoryName(p) + "\\" + hashCode + ".dll";
+
         if (File.Exists(hashfilename))
         {
             List<string> deleteExtensions = new List<string>();
