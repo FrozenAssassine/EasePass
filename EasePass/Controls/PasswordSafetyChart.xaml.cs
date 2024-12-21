@@ -44,18 +44,33 @@ namespace EasePass.Controls
             "Predictability".Localized("PW_SafetyChart_Predictability/Text"),
             "Seen before".Localized("PW_SafetyChart_Seenbefore/Text")
         };
-        private string[][] prefixes = new string[][]
+
+        private static string[] infos = new string[]
+        {
+            "Contains Lower case:".Localized("PW_SafetyChart_Info_LowerCase/Text"),
+            "Contains Upper case:".Localized("PW_SafetyChart_Info_UpperCase/Text"),
+            "Passwordlength:".Localized("PW_SafetyChart_Info_Passwordlength/Text"),
+            "Leaked or exploited:".Localized("PW_SafetyChart_Info_LeakedExploited/Text"),
+            "Contains Punctuation:".Localized("PW_SafetyChart_Info_Punctuation/Text"),
+            "Contains Digits:".Localized("PW_SafetyChart_Info_Digits/Text"),
+            "Predictability:".Localized("PW_SafetyChart_Info_Predictability/Text"),
+            "Seen before:".Localized("PW_SafetyChart_Info_SeenBefore/Text")
+        };
+        private static string[][] suffixes = new string[][]
         {
             //true, false, null
-            new string[]{ "Contains".Localized("PW_SafetyChart_Contains/Text"), "Missing".Localized("PW_SafetyChart_Missing/Text"), "Unknown whether it contains".Localized("PW_SafetyChart_UnknownContains/Text") },
-            new string[]{ "Contains".Localized("PW_SafetyChart_Contains/Text"), "Missing".Localized("PW_SafetyChart_Missing/Text"), "Unknown whether it contains".Localized("PW_SafetyChart_UnknownContains/Text") },
-            new string[]{ "Meets the minimum".Localized("PW_SafetyChart_MeetsMinimum/Text"), "Does not meet the minimum".Localized("PW_SafetyChart_DoesNotMeetMinimum/Text"), "Unknown whether it meets the minimum".Localized("PW_SafetyChart_UnknownMeetsMinimum/Text") },
-            new string[]{ "Not".Localized("PW_SafetyChart_Not/Text"), "Is already".Localized("PW_SafetyChart_IsAlready/Text"), "Unknown whether it has already been".Localized("PW_SafetyChart_UnknownAlready/Text") },
-            new string[]{ "Contains".Localized("PW_SafetyChart_Contains/Text"), "Missing".Localized("PW_SafetyChart_Missing/Text"), "Unknown whether it contains".Localized("PW_SafetyChart_UnknownContains/Text") },
-            new string[]{ "Contains".Localized("PW_SafetyChart_Contains/Text"), "Missing".Localized("PW_SafetyChart_Missing/Text"), "Unknown whether it contains".Localized("PW_SafetyChart_UnknownContains/Text") },
-            new string[]{ "Low".Localized("PW_SafetyChart_Low/Text"), "High".Localized("PW_SafetyChart_High/Text"), "Unknown ".Localized("PW_SafetyChart_Unknown/Text") },
-            new string[]{ "Not yet".Localized("PW_SafetyChart_NotYet/Text"), "Already".Localized("PW_SafetyChart_Already/Text"), "Unknown whether".Localized("PW_SafetyChart_UnknownWhether/Text") },
+            new string[]{ "True".Localized("PW_SafetyChart_Info_LowerCase_Positive/Text"), "False".Localized("PW_SafetyChart_Info_LowerCase_Negative/Text") },
+            new string[]{ "True".Localized("PW_SafetyChart_Info_UpperCase_Positive/Text"), "False".Localized("PW_SafetyChart_Info_UpperCase_Negative/Text") },
+            new string[]{ "Meets Minimum".Localized("PW_SafetyChart_Info_Passwordlength_Positive/Text"), "Doesn't meet Minimum".Localized("PW_SafetyChart_Info_Passwordlength_Negative/Text") },
+            new string[]{ "False".Localized("PW_SafetyChart_Info_LeakedExploited_Positive/Text"), "True".Localized("PW_SafetyChart_Info_LeakedExploited_Negative/Text") },
+            new string[]{ "True".Localized("PW_SafetyChart_Info_Punctuation_Positive/Text"), "False".Localized("PW_SafetyChart_Info_Punctuation_Negative/Text") },
+            new string[]{ "True".Localized("PW_SafetyChart_Info_Digits_Positive/Text"), "False".Localized("PW_SafetyChart_Info_Digits_Negative/Text") },
+            new string[]{ "Low".Localized("PW_SafetyChart_Info_Predictability_Positive/Text"), "High".Localized("PW_SafetyChart_Info_Predictability_Negative/Text") },
+            new string[]{ "False".Localized("PW_SafetyChart_Info_SeenBefore_Positive/Text"), "True".Localized("PW_SafetyChart_Info_SeenBefore_Negative/Text") },
         };
+        private static string unknown = "False".Localized("PW_SafetyChart_Info_Unknown/Text");
+
+
         private double ChartScale = 10;
         private Path[] paths = new Path[8];
         private bool?[] checks = new bool?[8];
@@ -63,7 +78,6 @@ namespace EasePass.Controls
         public bool ShowInfo { get; set; } = true;
         public bool SingleHitbox { get; set; } = false;
         public event PropertyChangedEventHandler PropertyChanged;
-
 
         public PasswordSafetyChart()
         {
@@ -155,7 +169,9 @@ namespace EasePass.Controls
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < checks.Length; i++)
             {
-                sb.AppendLine(prefixes[i][ToIndex(checks[i])] + " " + messages[i].ToLower());
+                int index = ToIndex(checks[i]);
+                string suffix = index == 2 ? unknown : suffixes[i][index];
+                sb.AppendLine(infos[i] + " " + suffix);
             }
             return sb.ToString();
         }

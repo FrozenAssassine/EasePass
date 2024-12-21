@@ -25,7 +25,8 @@ namespace EasePass.Views
 {
     public sealed partial class CreateDatabaseDialogPage : Page
     {
-        private string DatabaseOutputLocation = "";
+        private string databaseOutputLocation = "";
+        public InfoBar PasswordInfo => passwordInfo;
 
         public CreateDatabaseDialogPage()
         {
@@ -34,7 +35,7 @@ namespace EasePass.Views
 
         public (string path, SecureString masterPassword, string databaseName) Evaluate()
         {
-            return (DatabaseOutputLocation, passwordBox.Password.ConvertToSecureString(), databaseName.Text.Length == 0 ? "Database" : databaseName.Text);
+            return (databaseOutputLocation, passwordBox.Password.ConvertToSecureString(), databaseName.Text.Length == 0 ? "Database" : databaseName.Text);
         }
 
         public bool PasswordsMatch => passwordBoxRepeat.Password == passwordBox.Password;
@@ -59,7 +60,7 @@ namespace EasePass.Views
                 return;
 
             databasePath.Text = pickerRes.path;
-            DatabaseOutputLocation = pickerRes.path;
+            databaseOutputLocation = pickerRes.path;
         }
     }
 }

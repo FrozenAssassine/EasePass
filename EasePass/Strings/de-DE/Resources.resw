@@ -489,44 +489,14 @@
   <data name="PrintDB_Website.Text" xml:space="preserve">
     <value>Website:</value>
   </data>
-  <data name="PW_SafetyChart_Already.Text" xml:space="preserve">
-    <value>Bereits</value>
-  </data>
-  <data name="PW_SafetyChart_Contains.Text" xml:space="preserve">
-    <value>Beinhaltet:</value>
-  </data>
   <data name="PW_SafetyChart_Digits.Text" xml:space="preserve">
     <value>Zahlen</value>
-  </data>
-  <data name="PW_SafetyChart_DoesNotMeetMinimum.Text" xml:space="preserve">
-    <value>Erfüllt nicht die Voraussetzungen:</value>
-  </data>
-  <data name="PW_SafetyChart_High.Text" xml:space="preserve">
-    <value>Stark:</value>
-  </data>
-  <data name="PW_SafetyChart_IsAlready.Text" xml:space="preserve">
-    <value>Is already</value>
   </data>
   <data name="PW_SafetyChart_LeakedExploited.Text" xml:space="preserve">
     <value>Veröffentlicht</value>
   </data>
-  <data name="PW_SafetyChart_Low.Text" xml:space="preserve">
-    <value>Gering:</value>
-  </data>
   <data name="PW_SafetyChart_LowerCaseLetters.Text" xml:space="preserve">
     <value>Kleinbuchstaben</value>
-  </data>
-  <data name="PW_SafetyChart_MeetsMinimum.Text" xml:space="preserve">
-    <value>Erfüllt die Voraussetzungen:</value>
-  </data>
-  <data name="PW_SafetyChart_Missing.Text" xml:space="preserve">
-    <value>Fehlend:</value>
-  </data>
-  <data name="PW_SafetyChart_Not.Text" xml:space="preserve">
-    <value>Nicht:</value>
-  </data>
-  <data name="PW_SafetyChart_NotYet.Text" xml:space="preserve">
-    <value>Noch nicht</value>
   </data>
   <data name="PW_SafetyChart_Predictability.Text" xml:space="preserve">
     <value>Vorhersagbarkeit</value>
@@ -545,21 +515,6 @@
   </data>
   <data name="PW_SafetyChart_Short_UpperCaseLetters.Text" xml:space="preserve">
     <value>Großbuchstabe</value>
-  </data>
-  <data name="PW_SafetyChart_Unknown.Text" xml:space="preserve">
-    <value>Unbekannt</value>
-  </data>
-  <data name="PW_SafetyChart_UnknownAlready.Text" xml:space="preserve">
-    <value>Unbekannt, ob es bereits</value>
-  </data>
-  <data name="PW_SafetyChart_UnknownContains.Text" xml:space="preserve">
-    <value>Unknown whether it contains</value>
-  </data>
-  <data name="PW_SafetyChart_UnknownMeetsMinimum.Text" xml:space="preserve">
-    <value>Unknown whether it meets the minimum</value>
-  </data>
-  <data name="PW_SafetyChart_UnknownWhether.Text" xml:space="preserve">
-    <value>Unbekannt ob</value>
   </data>
   <data name="PW_SafetyChart_UpperCaseLetters.Text" xml:space="preserve">
     <value>Großbuchstaben</value>
@@ -1004,5 +959,98 @@
   </data>
   <data name="Dialog_Button_Change.Text" xml:space="preserve">
     <value>Ändern</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Passwordlength.Text" xml:space="preserve">
+    <value>Passwortlänge:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_SeenBefore.Text" xml:space="preserve">
+    <value>Bereits Verwendet:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LeakedExploited_Positive.Text" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Punctuation_Positive.Text" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Digits.Text" xml:space="preserve">
+    <value>Enthält Zahlen:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Digits_Negative.Text" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Digits_Positive.Text" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LeakedExploited.Text" xml:space="preserve">
+    <value>Veröffentlicht:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LeakedExploited_Negative.Text" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LowerCase.Text" xml:space="preserve">
+    <value>Beinhalted Kleinbuchstaben:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LowerCase_Negative.Text" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LowerCase_Positive.Text" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Passwordlength_Positive.Text" xml:space="preserve">
+    <value>Erfüllt Minimum</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Passwordlength_Negative.Text" xml:space="preserve">
+    <value>Erfüllt Minimum nicht</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Predictability.Text" xml:space="preserve">
+    <value>Vorhersagbarkeit:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Predictability_Negative.Text" xml:space="preserve">
+    <value>Wahrscheinlich</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Predictability_Positive.Text" xml:space="preserve">
+    <value>Unwahrscheinlich</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Punctuation.Text" xml:space="preserve">
+    <value>Beinhaltet Sonderzeichen:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Punctuation_Negative.Text" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="PW_SafetyChart_Info_SeenBefore_Negative.Text" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="PW_SafetyChart_Info_SeenBefore_Positive.Text" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Unknown.Text" xml:space="preserve">
+    <value>Unbekannt</value>
+  </data>
+  <data name="PW_SafetyChart_Info_UpperCase.Text" xml:space="preserve">
+    <value>Beinhaltet Großbuchstaben:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_UpperCase_Negative.Text" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="PW_SafetyChart_Info_UpperCase_Positive.Text" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="InfoMessages_DatabaseLoaded.Headline" xml:space="preserve">
+    <value>Datenbank erfolgreich geladen!</value>
+  </data>
+  <data name="InfoMessages_DatabaseDeleted.Headline" xml:space="preserve">
+    <value>Datenbank erfolgreich gelöscht!</value>
+  </data>
+  <data name="InfoMessages_DatabaseDeletionFailed.Headline" xml:space="preserve">
+    <value>Konnte Datenbank nicht löschen!</value>
+  </data>
+  <data name="InfoMessages_DatabaseDeletionFailed.Text" xml:space="preserve">
+    <value>Erstellen Sie eine andere Datenbank um diese Datenbank zu löschen!</value>
+  </data>
+  <data name="InfoMessages_DatabaseDeleteLoaded.Text" xml:space="preserve">
+    <value>Sie können keine geladene Datenbank löschen!</value>
+  </data>
+  <data name="InfoMessages_UnhandledException.Headline" xml:space="preserve">
+    <value>Unbehandelte Ausnahme:</value>
   </data>
 </root>

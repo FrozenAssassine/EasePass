@@ -19,15 +19,16 @@ using EasePass.Extensions;
 using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Runtime.CompilerServices;
 
 namespace EasePass.Dialogs
 {
     internal class InfoMessages
     {
-        public static void CantDeleteDatabase() => new InfoBar().Show("Can't delete database!", "Create another database to delete this database!", InfoBarSeverity.Error, 5);
-        public static void CantDeleteLoadedDatabase() => new InfoBar().Show("Can't delete database!", "You can't delete a loaded database!", InfoBarSeverity.Error, 5);
-        public static void DatabaseDeleted() => new InfoBar().Show("Database deleted successfully!", "", InfoBarSeverity.Success, 5);
-        public static void DatabaseLoaded() => new InfoBar().Show("Database loaded successfully!", "", InfoBarSeverity.Success, 5);
+        public static void CantDeleteDatabase() => new InfoBar().Show("InfoMessages_DatabaseDeletionFailed", InfoBarSeverity.Error, 5);
+        public static void CantDeleteLoadedDatabase() => new InfoBar().Show("Can't delete Database!".Localized("InfoMessages_DatabaseDeletionFailed/Headline"), "You can't delete a loaded database!".Localized("InfoMessages_DatabaseDeleteLoaded/Text"), InfoBarSeverity.Error, 5);
+        public static void DatabaseDeleted() => new InfoBar().Show("InfoMessages_DatabaseDeleted", InfoBarSeverity.Success, 5);
+        public static void DatabaseLoaded() => new InfoBar().Show("InfoMessages_DatabaseLoaded", InfoBarSeverity.Success, 5);
         public static void EnteredWrongPassword(int attempts) => new InfoBar().Show(
             "Wrong password".Localized("InfoMessages_EnteredWrongPW/Headline"),
             $"You entered the wrong password.\nPlease try again\n({attempts}/3)".Localized("InfoMessages_EnteredWrongPW/Text").Replace("{attempts}", attempts.ToString()),
@@ -53,6 +54,12 @@ namespace EasePass.Dialogs
             "InfoMessages_PasswordTooShort",
             InfoBarSeverity.Error
         );
+        public static void PasswordTooShort(InfoBar infoBar) => infoBar.Show(
+            "InfoMessages_PasswordTooShort",
+            InfoBarSeverity.Error,
+            8,
+            false
+        );
         public static void PasswordAlreadyUsed() => new InfoBar().Show(
             "InfoMessages_PasswordAlreadyUsed",
             InfoBarSeverity.Warning, 10
@@ -61,10 +68,21 @@ namespace EasePass.Dialogs
             "InfoMessages_ChangePasswordWrong",
             InfoBarSeverity.Error
         );
+        public static void ChangePasswordWrong(InfoBar infoBar) => infoBar.Show(
+            "InfoMessages_ChangePasswordWrong",
+            InfoBarSeverity.Error,
+            8,
+            false
+        );
         public static void PasswordsDoNotMatch() => new InfoBar().Show(
-            "Passwords do not match".Localized("InfoMessages_PasswordsDoNotMatch/Headline"),
-            "",
+            "InfoMessages_PasswordsDoNotMatch",
             InfoBarSeverity.Error
+        );
+        public static void PasswordsDoNotMatch(InfoBar infoBar) => infoBar.Show(
+            "InfoMessages_PasswordsDoNotMatch",
+            InfoBarSeverity.Error,
+            8,
+            false
         );
         public static void SuccessfullyChangedPassword() => new InfoBar().Show(
             "InfoMessages_SuccessfullyChangedPassword",
@@ -138,7 +156,7 @@ namespace EasePass.Dialogs
             InfoBarSeverity.Error, 10
             );
 
-        public static void UnhandledException(Exception ex) => new InfoBar().Show("Unhandled Exception:", ex.Message, InfoBarSeverity.Error);
+        public static void UnhandledException(Exception ex) => new InfoBar().Show("Unhandled Exception:".Localized("InfoMessages_UnhandledException/Headline"), ex.Message, InfoBarSeverity.Error);
         public static void NewVersionInfo(string version)
         {
             var btn = new Button { Content = "Changelog".Localized("InfoMessages_NewVersion/Content") };
