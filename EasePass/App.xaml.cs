@@ -47,9 +47,9 @@ namespace EasePass
 
             string[] dbPaths = Database.GetAllDatabasePaths();
             if (dbPaths.Length == 1 && !File.Exists(dbPaths[0]))
-                m_frame.Navigate(typeof(RegisterPage));
+                NavigationHelper.ToRegisterPage();
             else
-                m_frame.Navigate(typeof(LoginPage));
+                NavigationHelper.ToLoginPage();
 
             m_window.Activate();
         }
