@@ -44,7 +44,7 @@ namespace EasePass.Helper
 
         public void WindowDeactivated()
         {
-            inactivityTimer.Interval = new TimeSpan(0, AppSettings.GetSettingsAsInt(AppSettingsValues.inactivityLogoutTime, DefaultSettingsValues.inactivityLogoutTime), 0);
+            inactivityTimer.Interval = new TimeSpan(0, SettingsManager.GetSettingsAsInt(AppSettingsValues.inactivityLogoutTime, DefaultSettingsValues.inactivityLogoutTime), 0);
 
             inactivityTimer.Stop();
             inactivityTimer.Start();

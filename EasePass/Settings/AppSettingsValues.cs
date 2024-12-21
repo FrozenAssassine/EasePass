@@ -33,7 +33,6 @@ namespace EasePass.Settings
         public const string windowState = "windowState";
         public const string appVersion = "appVersion";
         public const string gridSplitterWidth = "gridSplitterWidth";
-        public const string lastBackupDay = "lastBackupDay";
         public const string databasePaths = "databasePaths";
         public const string loadedDatabaseName = "loadedDatabaseName";
         public const string clipboardClearTimeoutSec = "clipboardClearTimeoutSec";

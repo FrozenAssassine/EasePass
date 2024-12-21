@@ -137,13 +137,13 @@ namespace EasePass.Models
         [JsonIgnore]
         public string FirstChar = "";
         [JsonIgnore]
-        public bool ShowIcon => AppSettings.GetSettingsAsBool(AppSettingsValues.showIcons, DefaultSettingsValues.showIcons);
+        public bool ShowIcon =>  AppSettings.ShowIcons;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public PasswordManagerItem()
         {
-            AppSettings.RegisterSettingsChangedEvent(AppSettingsValues.showIcons, (object o, string setting) =>
+            SettingsManager.RegisterSettingsChangedEvent(AppSettingsValues.showIcons, (object o, string setting) =>
             {
                 Website = _Website;
                 NotifyPropertyChanged("Website");

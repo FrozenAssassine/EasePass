@@ -86,9 +86,9 @@ namespace EasePass.Helper
 
         public static async Task<string> GeneratePassword()
         {
-            disableLeakedPasswords = AppSettings.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords);
-            int length = AppSettings.GetSettingsAsInt(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength);
-            string chars = AppSettings.GetSettings(AppSettingsValues.passwordChars, DefaultSettingsValues.PasswordChars);         
+            disableLeakedPasswords = AppSettings.DisableLeakedPasswords;
+            int length = AppSettings.PasswordLength;
+            string chars = AppSettings.PasswordChars;         
             Random r = new Random();
 
             StringBuilder password = new StringBuilder();
@@ -132,7 +132,7 @@ namespace EasePass.Helper
 
             checks[0] = password.Any(char.IsLower);
             checks[1] = password.Any(char.IsUpper);
-            checks[2] = password.Length >= AppSettings.GetSettingsAsInt(AppSettingsValues.passwordLength, DefaultSettingsValues.PasswordLength);
+            checks[2] = password.Length >= AppSettings.PasswordLength;
             checks[3] = password.Any(char.IsPunctuation);
             checks[4] = password.Any(char.IsDigit);
             checks[5] = !ContainsCommonSequences(password);

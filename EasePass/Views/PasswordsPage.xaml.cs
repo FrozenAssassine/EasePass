@@ -71,7 +71,7 @@ namespace EasePass.Views
                 AppVersionHelper.CheckNewVersion();
 
                 //load the gridsplittervalue back
-                gridSplitterLoadSize.Width = new GridLength(AppSettings.GetSettingsAsInt(AppSettingsValues.gridSplitterWidth, 240), GridUnitType.Pixel);
+                gridSplitterLoadSize.Width = new GridLength(AppSettings.GridSplitterWidth, GridUnitType.Pixel);
             }
 
             if (Database.LoadedInstance != null)
@@ -225,7 +225,7 @@ namespace EasePass.Views
         }
         private void StoreGridSplitterValue()
         {
-            AppSettings.SaveSettings(AppSettingsValues.gridSplitterWidth, gridSplitterLoadSize.Width);
+            AppSettings.GridSplitterWidth = (int)gridSplitterLoadSize.Width.Value;
         }
 
         private void M_window_Closed(object sender, WindowEventArgs args)

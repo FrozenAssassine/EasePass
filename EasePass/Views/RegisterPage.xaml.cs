@@ -71,7 +71,7 @@ namespace EasePass.Views
             if (res == null)
                 return;
 
-            AppSettings.SaveSettings(AppSettingsValues.loadedDatabaseName, res.Name);
+            SettingsManager.SaveSettings(AppSettingsValues.loadedDatabaseName, res.Name);
 
             App.m_frame.Navigate(typeof(LoginPage));
         }

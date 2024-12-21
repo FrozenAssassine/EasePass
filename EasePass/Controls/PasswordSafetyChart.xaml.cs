@@ -113,7 +113,7 @@ namespace EasePass.Controls
         public void EvaluatePassword(string password, bool existingSingleTime = false)
         {
             checks[3] = null;
-            if (!AppSettings.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords))
+            if (!SettingsManager.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords))
             {
                 Task<bool?> task = PasswordHelper.IsPwned(password);
                 TaskAwaiter<bool?> taskAwaiter = task.GetAwaiter();

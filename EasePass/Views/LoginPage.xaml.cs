@@ -39,7 +39,7 @@ namespace EasePass.Views
             base.OnNavigatedTo(e);
 
             var databases = Database.GetAllUnloadedDatabases();
-            var comboboxIndexDBName = AppSettings.GetSettings(AppSettingsValues.loadedDatabaseName, databases.Length > 0 ? databases[0].Name : "");
+            var comboboxIndexDBName = AppSettings.LoadedDatabaseName ?? (databases.Length > 0 ? databases[0].Name : ""); //double check here for correct null check
             foreach (var item in databases)
             {
                 databasebox.Items.Add(item);
@@ -49,8 +49,7 @@ namespace EasePass.Views
                 }
             }
 
-            var lang = AppSettings.GetSettings(AppSettingsValues.language, "en-US");
-            string tip = await DailyTipHelper.GetTodaysTip(lang);
+            string tip = await DailyTipHelper.GetTodaysTip(AppSettings.Language);
             if (string.IsNullOrEmpty(tip))
                 return;
 
@@ -111,7 +110,7 @@ namespace EasePass.Views
             if (databasebox.SelectedItem == null)
                 return;
 
-            AppSettings.SaveSettings(AppSettingsValues.loadedDatabaseName, (databasebox.SelectedItem as Database).Name);
+            AppSettings.LoadedDatabaseName = (databasebox.SelectedItem as Database).Name;
         }
 
         private async void ImportDatabase_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)

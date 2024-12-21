@@ -42,7 +42,7 @@ public class LocalizationHelper
         {
             Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = languageItem.Tag;
 
-            AppSettings.SaveSettings(AppSettingsValues.language, languageItem.Tag);
+            SettingsManager.SaveSettings(AppSettingsValues.language, languageItem.Tag);
         }
     }
 
@@ -50,7 +50,7 @@ public class LocalizationHelper
     {
         RegisterLanguageFromResource();
 
-        var languageTag = AppSettings.GetSettings(AppSettingsValues.language, "en-US");
+        var languageTag = SettingsManager.GetSettings(AppSettingsValues.language, "en-US");
         var res = languages.Find(x => x.Tag == languageTag);
         if (res == null)
         {
