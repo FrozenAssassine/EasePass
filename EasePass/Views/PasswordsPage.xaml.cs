@@ -70,7 +70,6 @@ namespace EasePass.Views
                 InfobarExtension.ClearInfobarsAfterLogin(MainWindow.InfoMessagesPanel);
                 AppVersionHelper.CheckNewVersion();
 
-                //load the gridsplittervalue back
                 gridSplitterLoadSize.Width = new GridLength(AppSettings.GridSplitterWidth, GridUnitType.Pixel);
             }
 
@@ -209,13 +208,6 @@ namespace EasePass.Views
             if (await new GenPasswordDialog().ShowAsync())
                 await GeneratePassword();
         }
-        private void ShowSettingsPage()
-        {
-            App.m_frame.Navigate(typeof(SettingsPage), new SettingsNavigationParameters
-            {
-                PasswordPage = this
-            });
-        }
         private void SetVis(FontIcon icon)
         {
             sortname.Visibility = ConvertHelper.BoolToVisibility(icon == sortname);
@@ -246,14 +238,16 @@ namespace EasePass.Views
         private async void EditPasswordItem_Click(object sender, RoutedEventArgs e) => await EditPasswordItem(SelectedItem);
         private async void Add2FAPasswordItem_Click(object sender, RoutedEventArgs e) => await Add2FAPasswordItem(SelectedItem);
         private async void GenPassword_Click(object sender, RoutedEventArgs e) => await GeneratePassword();
-        private void Settings_Click(object sender, RoutedEventArgs e) => ShowSettingsPage();
+        private void Settings_Click(object sender, RoutedEventArgs e) => NavigationHelper.ToSettings(this);
         private void AboutPage_Click(object sender, RoutedEventArgs e)
         {
-            App.m_frame.Navigate(typeof(AboutPage));
+            NavigationHelper.ToAboutPage();
         }
 
         private void PasswordItemListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            oobe_Grid.Visibility = ConvertHelper.BoolToVisibility(Database.LoadedInstance.Items.Count == 0);
+
             if (passwordItemListView.Items.Count == 0)
             {
                 passwordShowArea.Visibility = Visibility.Collapsed;
@@ -428,6 +422,16 @@ namespace EasePass.Views
         private void EscapeKeyAccel_Invoked(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
             passwordItemListView.SelectedItem = SelectedItem = null;
+        }
+
+        private void OOBE_HyperlinkSettings(Microsoft.UI.Xaml.Documents.Hyperlink sender, Microsoft.UI.Xaml.Documents.HyperlinkClickEventArgs args)
+        {
+            NavigationHelper.ToSettings(this);
+        }
+
+        private void OOBE_HyperlinkManageDB(Microsoft.UI.Xaml.Documents.Hyperlink sender, Microsoft.UI.Xaml.Documents.HyperlinkClickEventArgs args)
+        {
+            NavigationHelper.ToManageDB();
         }
     }
 }

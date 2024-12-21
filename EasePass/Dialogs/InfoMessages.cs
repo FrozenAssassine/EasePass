@@ -16,10 +16,9 @@ copies or substantial portions of the Software.
 
 using CommunityToolkit.WinUI;
 using EasePass.Extensions;
-using EasePass.Views;
+using EasePass.Helper;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Runtime.CompilerServices;
 
 namespace EasePass.Dialogs
 {
@@ -162,7 +161,7 @@ namespace EasePass.Dialogs
             var btn = new Button { Content = "Changelog".Localized("InfoMessages_NewVersion/Content") };
             btn.Click += delegate
             {
-                App.m_frame.Navigate(typeof(AboutPage), 0);
+                NavigationHelper.ToAboutPage(0);
             };
 
             new InfoBar().Show(

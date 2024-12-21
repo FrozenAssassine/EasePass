@@ -172,7 +172,7 @@ namespace EasePass.Views
 
             if (res.Override)
             {
-                for (int i = 0; i < res.Items.Length; i++) // I prefer my way with two loops because it will retain the item order.
+                for (int i = 0; i < res.Items.Length; i++) // I prefer my way with two loops because it will retain the item order. 
                 {
                     bool found = false;
                     for (int j = 0; j < Database.LoadedInstance.Items.Count; j++)
@@ -200,7 +200,7 @@ namespace EasePass.Views
 
         private void ExtensionManage_Click(object sender, RoutedEventArgs e)
         {
-            App.m_frame.Navigate(typeof(ExtensionPage), new SettingsNavigationParameters());
+            NavigationHelper.ToExtensions(new SettingsNavigationParameters());
         }
 
         private void ResetPopularity_Click(object sender, RoutedEventArgs e)
@@ -214,7 +214,7 @@ namespace EasePass.Views
 
         private void ManageDatabases_Click(object sender, RoutedEventArgs e)
         {
-            App.m_frame.Navigate(typeof(ManageDatabasePage));
+            NavigationHelper.ToManageDB();
         }
 
         private void selectLanguageBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

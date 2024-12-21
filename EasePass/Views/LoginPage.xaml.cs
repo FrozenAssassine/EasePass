@@ -88,7 +88,7 @@ namespace EasePass.Views
 
             WrongCount = 0;
 
-            App.m_frame.Navigate(typeof(PasswordsPage));
+            NavigationHelper.ToPasswords();
             return;
         }
         private void Enter_Invoked(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
@@ -120,6 +120,7 @@ namespace EasePass.Views
                 return;
 
             databasebox.Items.Add(res);
+            databasebox.SelectedItem = res;
         }
     }
 }

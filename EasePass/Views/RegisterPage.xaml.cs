@@ -52,7 +52,7 @@ namespace EasePass.Views
             }
 
             Database.LoadedInstance = Database.CreateNewDatabase(Database.GetAllDatabasePaths()[0], pw);
-            App.m_frame.Navigate(typeof(PasswordsPage), pw);
+            NavigationHelper.ToPasswords(pw);
         }
 
         private void passwordBoxRepeat_EnterInvoked(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
@@ -73,7 +73,7 @@ namespace EasePass.Views
 
             SettingsManager.SaveSettings(AppSettingsValues.loadedDatabaseName, res.Name);
 
-            App.m_frame.Navigate(typeof(LoginPage));
+            NavigationHelper.ToLoginPage();
         }
     }
 }
