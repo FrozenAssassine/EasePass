@@ -120,6 +120,7 @@ namespace EasePass.Views
                 return;
 
             databasebox.Items.Add(res);
+            databasebox.SelectedItem = res;
         }
     }
 }
