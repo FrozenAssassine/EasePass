@@ -88,12 +88,12 @@ public class AppSettings
     }
     public static string LoadedDatabaseName
     {
-        get => SettingsManager.GetSettings(AppSettingsValues.loadedDatabaseName);
+        get => SettingsManager.GetSettings(AppSettingsValues.loadedDatabaseName, null);
         set => SettingsManager.SaveSettings(AppSettingsValues.loadedDatabaseName, value);
     }
-    public static int clipboardClearTimeoutSec
+    public static int ClipboardClearTimeoutSec
     {
-        get => SettingsManager.GetSettingsAsInt(AppSettingsValues.loadedDatabaseName, DefaultSettingsValues.ClipboardClearTimeoutSec);
-        set => SettingsManager.SaveSettings(AppSettingsValues.loadedDatabaseName, value);
+        get => SettingsManager.GetSettingsAsInt(AppSettingsValues.clipboardClearTimeoutSec, DefaultSettingsValues.ClipboardClearTimeoutSec);
+        set => SettingsManager.SaveSettings(AppSettingsValues.clipboardClearTimeoutSec, value);
     }
 }

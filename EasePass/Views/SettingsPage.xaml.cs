@@ -51,7 +51,7 @@ namespace EasePass.Views
             pswd_chars.Text = AppSettings.PasswordChars;
             pswd_length.Text = AppSettings.PasswordLength.ToString();
             disableLeakedPasswords.IsOn = !AppSettings.DisableLeakedPasswords;
-            clipboardClearTimeout.Value = AppSettings.clipboardClearTimeoutSec;
+            clipboardClearTimeout.Value = AppSettings.ClipboardClearTimeoutSec;
 
             selectLanguageBox.ItemsSource = MainWindow.localizationHelper.languages;
 
@@ -229,7 +229,7 @@ namespace EasePass.Views
 
         private void clipboardClearTimeout_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            AppSettings.clipboardClearTimeoutSec = (int)clipboardClearTimeout.Value;
+            AppSettings.ClipboardClearTimeoutSec = (int)clipboardClearTimeout.Value;
         }
     }
 }
