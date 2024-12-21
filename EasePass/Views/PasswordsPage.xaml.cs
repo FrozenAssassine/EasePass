@@ -60,7 +60,7 @@ namespace EasePass.Views
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             App.m_window.ShowBackArrow = false;
-
+            UpdateOOBEGrid();
             if (e.NavigationMode == NavigationMode.Back)
             {
                 Database.LoadedInstance.Save();
@@ -219,6 +219,10 @@ namespace EasePass.Views
         {
             AppSettings.GridSplitterWidth = (int)gridSplitterLoadSize.Width.Value;
         }
+        private void UpdateOOBEGrid()
+        {
+            oobe_Grid.Visibility = ConvertHelper.BoolToVisibility(Database.LoadedInstance.Items.Count == 0);
+        }
 
         private void M_window_Closed(object sender, WindowEventArgs args)
         {
@@ -246,8 +250,7 @@ namespace EasePass.Views
 
         private void PasswordItemListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            oobe_Grid.Visibility = ConvertHelper.BoolToVisibility(Database.LoadedInstance.Items.Count == 0);
-
+            UpdateOOBEGrid();
             if (passwordItemListView.Items.Count == 0)
             {
                 passwordShowArea.Visibility = Visibility.Collapsed;

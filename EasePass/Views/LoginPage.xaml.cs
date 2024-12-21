@@ -103,6 +103,7 @@ namespace EasePass.Views
                 return;
 
             databasebox.Items.Add(newDB);
+            databasebox.SelectedItem = newDB;
         }
 
         private void databasebox_SelectionChanged(object sender, SelectionChangedEventArgs e)
