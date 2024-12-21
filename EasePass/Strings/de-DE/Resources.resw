@@ -967,7 +967,7 @@
     <value>Bereits Verwendet:</value>
   </data>
   <data name="PW_SafetyChart_Info_LeakedExploited_Positive.Text" xml:space="preserve">
-    <value>False</value>
+    <value>Nein</value>
   </data>
   <data name="PW_SafetyChart_Info_Punctuation_Positive.Text" xml:space="preserve">
     <value>Ja</value>
@@ -986,9 +986,6 @@
   </data>
   <data name="PW_SafetyChart_Info_LeakedExploited_Negative.Text" xml:space="preserve">
     <value>Ja</value>
-  </data>
-  <data name="PW_SafetyChart_Info_LeakedExploited_Positive.Text" xml:space="preserve">
-    <value>Nein</value>
   </data>
   <data name="PW_SafetyChart_Info_LowerCase.Text" xml:space="preserve">
     <value>Beinhalted Kleinbuchstaben:</value>

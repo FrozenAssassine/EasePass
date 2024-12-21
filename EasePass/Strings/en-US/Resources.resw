@@ -549,6 +549,9 @@
   <data name="PW_SafetyChart_Info_LeakedExploited_Negative.Text" xml:space="preserve">
     <value>True</value>
   </data>
+  <data name="PW_SafetyChart_Info_LeakedExploited_Positive.Text" xml:space="preserve">
+    <value>False</value>
+  </data>
   <data name="PW_SafetyChart_Info_LowerCase.Text" xml:space="preserve">
     <value>Contains Lower case:</value>
   </data>
