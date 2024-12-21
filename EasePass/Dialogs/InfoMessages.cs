@@ -19,6 +19,7 @@ using EasePass.Extensions;
 using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Runtime.CompilerServices;
 
 namespace EasePass.Dialogs
 {
@@ -53,6 +54,12 @@ namespace EasePass.Dialogs
             "InfoMessages_PasswordTooShort",
             InfoBarSeverity.Error
         );
+        public static void PasswordTooShort(InfoBar infoBar) => infoBar.Show(
+            "InfoMessages_PasswordTooShort",
+            InfoBarSeverity.Error,
+            8,
+            false
+        );
         public static void PasswordAlreadyUsed() => new InfoBar().Show(
             "InfoMessages_PasswordAlreadyUsed",
             InfoBarSeverity.Warning, 10
@@ -61,9 +68,21 @@ namespace EasePass.Dialogs
             "InfoMessages_ChangePasswordWrong",
             InfoBarSeverity.Error
         );
-        public static void PasswordsDoNotMatch(Control? control = null) => new InfoBar().Show(
+        public static void ChangePasswordWrong(InfoBar infoBar) => infoBar.Show(
+            "InfoMessages_ChangePasswordWrong",
+            InfoBarSeverity.Error,
+            8,
+            false
+        );
+        public static void PasswordsDoNotMatch() => new InfoBar().Show(
             "InfoMessages_PasswordsDoNotMatch",
             InfoBarSeverity.Error
+        );
+        public static void PasswordsDoNotMatch(InfoBar infoBar) => infoBar.Show(
+            "InfoMessages_PasswordsDoNotMatch",
+            InfoBarSeverity.Error,
+            8,
+            false
         );
         public static void SuccessfullyChangedPassword() => new InfoBar().Show(
             "InfoMessages_SuccessfullyChangedPassword",

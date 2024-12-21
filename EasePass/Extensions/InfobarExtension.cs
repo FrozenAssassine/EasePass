@@ -40,17 +40,17 @@ namespace EasePass.Extensions
         {
             ShowInfobar(infobar, title, message, null, severity, InfobarClearCondition.Login);
         }
-        public static void Show(this InfoBar infobar, string localizationKey, InfoBarSeverity severity, int showSeconds = 8)
+        public static void Show(this InfoBar infobar, string localizationKey, InfoBarSeverity severity, int showSeconds = 8, bool showMainWindow = true)
         {
-            Show(infobar, "".Localized(localizationKey + "/Headline"), "".Localized(localizationKey + "/Text"), null, severity, InfobarClearCondition.Timer, showSeconds);
+            Show(infobar, "".Localized(localizationKey + "/Headline"), "".Localized(localizationKey + "/Text"), null, severity, InfobarClearCondition.Timer, showSeconds, showMainWindow);
         }
-        public static void Show(this InfoBar infobar, string title, string message, InfoBarSeverity severity, int showSeconds = 8)
+        public static void Show(this InfoBar infobar, string title, string message, InfoBarSeverity severity, int showSeconds = 8, bool showMainWindow = true)
         {
-            Show(infobar, title, message, null, severity, InfobarClearCondition.Timer, showSeconds);
+            Show(infobar, title, message, null, severity, InfobarClearCondition.Timer, showSeconds, showMainWindow);
         }
-        public static void Show(this InfoBar infobar, string title, string message, ButtonBase actionButton, InfoBarSeverity severity, InfobarClearCondition clearCondition = InfobarClearCondition.Timer, int showSeconds = 5)
+        public static void Show(this InfoBar infobar, string title, string message, ButtonBase actionButton, InfoBarSeverity severity, InfobarClearCondition clearCondition = InfobarClearCondition.Timer, int showSeconds = 5, bool showMainWindow = true)
         {
-            ShowInfobar(infobar, title, message, actionButton, severity, clearCondition);
+            ShowInfobar(infobar, title, message, actionButton, severity, clearCondition, showMainWindow);
 
             DispatcherTimer autoCloseTimer = new DispatcherTimer();
             autoCloseTimer.Interval = new TimeSpan(0, 0, showSeconds);
@@ -62,7 +62,7 @@ namespace EasePass.Extensions
             };
         }
 
-        private static void ShowInfobar(this InfoBar infobar, string title, string message, ButtonBase actionButton, InfoBarSeverity severity, InfobarClearCondition clearCondition)
+        private static void ShowInfobar(this InfoBar infobar, string title, string message, ButtonBase actionButton, InfoBarSeverity severity, InfobarClearCondition clearCondition, bool showMainWindow = true)
         {
             infobar.Title = title;
             infobar.Message = message;
@@ -71,9 +71,13 @@ namespace EasePass.Extensions
             infobar.Tag = clearCondition;
             infobar.IsOpen = true;
             infobar.Background = Application.Current.Resources["SolidBackgroundFillColorBaseAltBrush"] as Brush;
-            MainWindow.InfoMessagesPanel.Children.Add(infobar);
+
+            if (showMainWindow)
+            {
+                MainWindow.InfoMessagesPanel.Children.Add(infobar);
+            }
         }
-        public static void ShowInfobar(this InfoBar infobar, string title, string message, Control content, InfoBarSeverity severity)
+        public static void ShowInfobar(this InfoBar infobar, string title, string message, Control content, InfoBarSeverity severity, bool showMainWindow = true)
         {
             infobar.Title = title;
             infobar.Message = message;
@@ -82,7 +86,11 @@ namespace EasePass.Extensions
             infobar.Tag = InfobarClearCondition.Manual;
             infobar.IsOpen = true;
             infobar.Background = Application.Current.Resources["SolidBackgroundFillColorBaseAltBrush"] as Brush;
-            MainWindow.InfoMessagesPanel.Children.Add(infobar);
+
+            if (showMainWindow)
+            {
+                MainWindow.InfoMessagesPanel.Children.Add(infobar);
+            }
         }
 
         public static void ClearInfobarsAfterLogin(StackPanel infobarDisplay)

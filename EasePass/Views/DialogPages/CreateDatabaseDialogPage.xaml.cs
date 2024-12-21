@@ -26,13 +26,7 @@ namespace EasePass.Views
     public sealed partial class CreateDatabaseDialogPage : Page
     {
         private string databaseOutputLocation = "";
-        public bool ShowPWMissMatchInfo
-        {
-            set
-            {
-                pwMissMatchInfo.IsOpen = value;
-            }
-        }
+        public InfoBar PasswordInfo => passwordInfo;
 
         public CreateDatabaseDialogPage()
         {

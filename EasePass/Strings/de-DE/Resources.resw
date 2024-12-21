@@ -1053,7 +1053,4 @@
   <data name="InfoMessages_UnhandledException.Headline" xml:space="preserve">
     <value>Unbehandelte Ausnahme:</value>
   </data>
-  <data name="View_CreateDBPage_PWMissMatch" xml:space="preserve">
-    <value>Passwörter stimmen nicht überein!</value>
-  </data>
 </root>
