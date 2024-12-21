@@ -8,6 +8,7 @@
     mc:Ignorable="d">
 
     <StackPanel>
+        <InfoBar x:Uid="View_CreateDBPage_PWMissMatch" x:Name="pwMissMatchInfo" Title="The Passwords do not match!" Severity="Error"></InfoBar>
         <TextBox x:Uid="View_CreateDBPage_DBName" Margin="0,10,0,0" x:Name="databaseName" Header="Database Name" PlaceholderText="Database Name" TextChanged="databaseName_TextChanged" />
         <PasswordBox x:Uid="View_CreateDBPage_EnterPW" Header="Enter Password" PlaceholderText="Enter Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBox"/>
         <PasswordBox x:Uid="View_CreateDBPage_RepeatPW" Header="Repeat Password" PlaceholderText="Repeat Password" Margin="0,10,0,0"  MinWidth="150" x:Name="passwordBoxRepeat"/>

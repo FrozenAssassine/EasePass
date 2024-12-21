@@ -354,6 +354,18 @@
   <data name="InfoMessages_CouldNotGetExtensions.Text" xml:space="preserve">
     <value>Could not get the plugins from the Server:\n</value>
   </data>
+  <data name="InfoMessages_DatabaseDeleted.Headline" xml:space="preserve">
+    <value>Database deleted successfully!</value>
+  </data>
+  <data name="InfoMessages_DatabaseDeleteLoaded.Text" xml:space="preserve">
+    <value>You can't delete a loaded Database!</value>
+  </data>
+  <data name="InfoMessages_DatabaseDeletionFailed.Headline" xml:space="preserve">
+    <value>Can't delete Database!</value>
+  </data>
+  <data name="InfoMessages_DatabaseDeletionFailed.Text" xml:space="preserve">
+    <value>Create another Database to delete this Database!</value>
+  </data>
   <data name="InfoMessages_DatabaseFileNotFoundAt.Headline" xml:space="preserve">
     <value>Database not found</value>
   </data>
@@ -365,6 +377,9 @@
   </data>
   <data name="InfoMessages_DatabaseInvalidData.Text" xml:space="preserve">
     <value>Database could not be loaded. It may be corrupted or invalid.</value>
+  </data>
+  <data name="InfoMessages_DatabaseLoaded.Headline" xml:space="preserve">
+    <value>Database loaded successfully!</value>
   </data>
   <data name="InfoMessages_DatabaseSaveToFileError.Headline" xml:space="preserve">
     <value>Error while saving database</value>
@@ -488,6 +503,9 @@
   </data>
   <data name="InfoMessages_TooManyPasswordAttempts.Text" xml:space="preserve">
     <value>You entered the password wrong three times.</value>
+  </data>
+  <data name="InfoMessages_UnhandledException.Headline" xml:space="preserve">
+    <value>Unhandled Exception:</value>
   </data>
   <data name="PrintDB_Email.Text" xml:space="preserve">
     <value>E-Mail:</value>
@@ -674,6 +692,9 @@
   </data>
   <data name="View_CreateDBPage_EnterPW.PlaceholderText" xml:space="preserve">
     <value>Enter Password</value>
+  </data>
+  <data name="View_CreateDBPage_PWMissMatch.Title" xml:space="preserve">
+    <value>Passwords do not match!</value>
   </data>
   <data name="View_CreateDBPage_RepeatPW.Header" xml:space="preserve">
     <value>Repeat Password</value>

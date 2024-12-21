@@ -18,6 +18,7 @@ using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Models;
 using EasePass.Views;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -37,12 +38,12 @@ namespace EasePass.Dialogs
                 XamlRoot = App.m_window.Content.XamlRoot,
             };
             page = new CreateDatabaseDialogPage();
+            
             dialog.Content = page;
-
             dialog.Closing += Dialog_Closing;
 
             var res = await dialog.ShowAsync();
-            if (res == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
+            if (res == ContentDialogResult.Primary)
             {
                 var eval = page.Evaluate();
                 var path = Path.Combine(eval.path, eval.databaseName + ".epdb");
@@ -51,14 +52,16 @@ namespace EasePass.Dialogs
             return null;
         }
 
-        private void Dialog_Closing(Microsoft.UI.Xaml.Controls.ContentDialog sender, Microsoft.UI.Xaml.Controls.ContentDialogClosingEventArgs args)
+        private void Dialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
         {
-            if (page == null)
+            if (page == null || args.Result != ContentDialogResult.Primary)
                 return;
 
             //cancel on password mismatch:
             if (!page.PasswordsMatch)
             {
+                page.ShowPWMissMatchInfo = true;
+                InfoMessages.PasswordsDoNotMatch();
                 args.Cancel = true;
             }
         }

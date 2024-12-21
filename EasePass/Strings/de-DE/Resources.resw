@@ -1035,4 +1035,25 @@
   <data name="PW_SafetyChart_Info_UpperCase_Positive.Text" xml:space="preserve">
     <value>Ja</value>
   </data>
+  <data name="InfoMessages_DatabaseLoaded.Headline" xml:space="preserve">
+    <value>Datenbank erfolgreich geladen!</value>
+  </data>
+  <data name="InfoMessages_DatabaseDeleted.Headline" xml:space="preserve">
+    <value>Datenbank erfolgreich gelöscht!</value>
+  </data>
+  <data name="InfoMessages_DatabaseDeletionFailed.Headline" xml:space="preserve">
+    <value>Konnte Datenbank nicht löschen!</value>
+  </data>
+  <data name="InfoMessages_DatabaseDeletionFailed.Text" xml:space="preserve">
+    <value>Erstellen Sie eine andere Datenbank um diese Datenbank zu löschen!</value>
+  </data>
+  <data name="InfoMessages_DatabaseDeleteLoaded.Text" xml:space="preserve">
+    <value>Sie können keine geladene Datenbank löschen!</value>
+  </data>
+  <data name="InfoMessages_UnhandledException.Headline" xml:space="preserve">
+    <value>Unbehandelte Ausnahme:</value>
+  </data>
+  <data name="View_CreateDBPage_PWMissMatch" xml:space="preserve">
+    <value>Passwörter stimmen nicht überein!</value>
+  </data>
 </root>
