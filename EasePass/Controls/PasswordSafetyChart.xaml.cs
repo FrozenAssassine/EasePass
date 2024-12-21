@@ -61,7 +61,7 @@ namespace EasePass.Controls
             //true, false, null
             new string[]{ "True".Localized("PW_SafetyChart_Info_LowerCase_Positive/Text"), "False".Localized("PW_SafetyChart_Info_LowerCase_Negative/Text") },
             new string[]{ "True".Localized("PW_SafetyChart_Info_UpperCase_Positive/Text"), "False".Localized("PW_SafetyChart_Info_UpperCase_Negative/Text") },
-            new string[]{ "True".Localized("PW_SafetyChart_Info_Passwordlength_Positive/Text"), "False".Localized("PW_SafetyChart_Info_Passwordlength_Negative/Text") },
+            new string[]{ "Meets Minimum".Localized("PW_SafetyChart_Info_Passwordlength_Positive/Text"), "Doesn't meet Minimum".Localized("PW_SafetyChart_Info_Passwordlength_Negative/Text") },
             new string[]{ "False".Localized("PW_SafetyChart_Info_LeakedExploited_Positive/Text"), "True".Localized("PW_SafetyChart_Info_LeakedExploited_Negative/Text") },
             new string[]{ "True".Localized("PW_SafetyChart_Info_Punctuation_Positive/Text"), "False".Localized("PW_SafetyChart_Info_Punctuation_Negative/Text") },
             new string[]{ "True".Localized("PW_SafetyChart_Info_Digits_Positive/Text"), "False".Localized("PW_SafetyChart_Info_Digits_Negative/Text") },

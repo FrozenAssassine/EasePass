@@ -961,15 +961,78 @@
     <value>Ändern</value>
   </data>
   <data name="PW_SafetyChart_Info_Passwordlength.Text" xml:space="preserve">
-    <value>Passwordlength:</value>
+    <value>Passwort länge:</value>
   </data>
   <data name="PW_SafetyChart_Info_SeenBefore.Text" xml:space="preserve">
-    <value>Seen before:</value>
+    <value>Bereits Verwendet:</value>
   </data>
   <data name="PW_SafetyChart_Info_LeakedExploited_Positive.Text" xml:space="preserve">
     <value>False</value>
   </data>
   <data name="PW_SafetyChart_Info_Punctuation_Positive.Text" xml:space="preserve">
-    <value>True</value>
+    <value>Ja</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Digits.Text" xml:space="preserve">
+    <value>Enthält Zahlen:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Digits_Negative.Text" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Digits_Positive.Text" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LeakedExploited.Text" xml:space="preserve">
+    <value>Veröffentlicht:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LeakedExploited_Negative.Text" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LowerCase.Text" xml:space="preserve">
+    <value>Beinhalted Kleinbuchstaben:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LowerCase_Negative.Text" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LowerCase_Positive.Text" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Passwordlength_Positive.Text" xml:space="preserve">
+    <value>Erfüllt Minimum</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Passwordlength_Negative.Text" xml:space="preserve">
+    <value>Erfüllt Minimum nicht</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Predictability.Text" xml:space="preserve">
+    <value>Vorhersagbarkeit:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Predictability_Negative.Text" xml:space="preserve">
+    <value>Wahrscheinlich</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Predictability_Positive.Text" xml:space="preserve">
+    <value>Unwahrscheinlich</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Punctuation.Text" xml:space="preserve">
+    <value>Beinhaltet Sonderzeichen:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Punctuation_Negative.Text" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="PW_SafetyChart_Info_SeenBefore_Negative.Text" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="PW_SafetyChart_Info_SeenBefore_Positive.Text" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Unknown.Text" xml:space="preserve">
+    <value>Unbekannt</value>
+  </data>
+  <data name="PW_SafetyChart_Info_UpperCase.Text" xml:space="preserve">
+    <value>Beinhaltet Großbuchstaben:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_UpperCase_Negative.Text" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="PW_SafetyChart_Info_UpperCase_Positive.Text" xml:space="preserve">
+    <value>Ja</value>
   </data>
 </root>

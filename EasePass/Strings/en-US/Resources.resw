@@ -540,11 +540,14 @@
   <data name="PW_SafetyChart_Info_LowerCase_Positive.Text" xml:space="preserve">
     <value>True</value>
   </data>
+  <data name="PW_SafetyChart_Info_Passwordlength.Text" xml:space="preserve">
+    <value>Password length:</value>
+  </data>
   <data name="PW_SafetyChart_Info_Passwordlength_Negative.Text" xml:space="preserve">
-    <value>False</value>
+    <value>Doesn't meet Minimum</value>
   </data>
   <data name="PW_SafetyChart_Info_Passwordlength_Positive.Text" xml:space="preserve">
-    <value>True</value>
+    <value>Meets Minimum</value>
   </data>
   <data name="PW_SafetyChart_Info_Predictability.Text" xml:space="preserve">
     <value>Predictability:</value>
@@ -560,6 +563,12 @@
   </data>
   <data name="PW_SafetyChart_Info_Punctuation_Negative.Text" xml:space="preserve">
     <value>False</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Punctuation_Positive.Text" xml:space="preserve">
+    <value>True</value>
+  </data>
+  <data name="PW_SafetyChart_Info_SeenBefore.Text" xml:space="preserve">
+    <value>Seen Before:</value>
   </data>
   <data name="PW_SafetyChart_Info_SeenBefore_Negative.Text" xml:space="preserve">
     <value>True</value>
