@@ -29,6 +29,8 @@ namespace EasePass.Views
 
         public async void GeneratePassword()
         {
+            progressBar.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+
             await _GeneratePassword();
             safetyChart.EvaluatePassword(passwordTB.Password);
             progressBar.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
