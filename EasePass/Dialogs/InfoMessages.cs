@@ -83,6 +83,12 @@ namespace EasePass.Dialogs
             8,
             false
         );
+        public static void InvalidDatabasePath(InfoBar infoBar, bool showMainWindow = true) => infoBar.Show(
+            "InfoMessages_InvalidDatabasePath",
+            InfoBarSeverity.Error,
+            8,
+            showMainWindow
+        );
         public static void SuccessfullyChangedPassword() => new InfoBar().Show(
             "InfoMessages_SuccessfullyChangedPassword",
             InfoBarSeverity.Success

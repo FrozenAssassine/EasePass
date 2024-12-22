@@ -1053,4 +1053,10 @@
   <data name="InfoMessages_UnhandledException.Headline" xml:space="preserve">
     <value>Unbehandelte Ausnahme:</value>
   </data>
+  <data name="InfoMessages_InvalidDatabasePath/Text" xml:space="preserve">
+    <value>Kein gültiger oder falscher Pfad angegeben</value>
+  </data>
+  <data name="InfoMessages_InvalidDatabasePath/Headline" xml:space="preserve">
+    <value>Pfadfehler</value>
+  </data>
 </root>

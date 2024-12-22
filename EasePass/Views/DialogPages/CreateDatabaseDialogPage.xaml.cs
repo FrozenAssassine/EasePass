@@ -39,6 +39,8 @@ namespace EasePass.Views
         }
 
         public bool PasswordsMatch => passwordBoxRepeat.Password == passwordBox.Password;
+        public bool PathValid => databaseOutputLocation.Length > 0;
+        public string DatabasePath => databaseOutputLocation;
 
         private void databaseName_TextChanged(object sender, TextChangedEventArgs e)
         {

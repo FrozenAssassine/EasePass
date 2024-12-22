@@ -63,6 +63,12 @@ namespace EasePass.Dialogs
                 InfoMessages.PasswordsDoNotMatch(page.PasswordInfo);
                 args.Cancel = true;
             }
+
+            if (!page.PathValid)
+            {
+                InfoMessages.InvalidDatabasePath(page.PasswordInfo, false);
+                args.Cancel = true;
+            }
         }
     }
 }
