@@ -18,7 +18,6 @@ using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Settings;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,7 +31,7 @@ namespace EasePass.Models;
 
 public class Database : IDisposable, INotifyPropertyChanged
 {
-    public string Name => System.IO.Path.GetFileNameWithoutExtension(Path);
+    public string Name => MakeDatabaseName();
     public string Path = "";
     public SecureString MasterPassword = null;
     public ObservableCollection<PasswordManagerItem> Items = null;
@@ -57,6 +56,7 @@ public class Database : IDisposable, INotifyPropertyChanged
             }
         }
     }
+    public bool IsTemporaryDatabase { get; set; } = false;
 
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -83,6 +83,11 @@ public class Database : IDisposable, INotifyPropertyChanged
         db.MasterPassword = password;
         db.Save();
         return db;
+    }
+
+    public static bool HasDatabasePath()
+    {
+        return AppSettings.DatabasePaths.Length == 0;
     }
 
     public static string[] GetAllDatabasePaths()
@@ -264,6 +269,15 @@ public class Database : IDisposable, INotifyPropertyChanged
         CallPropertyChanged("Items");
     }
 
+    private string MakeDatabaseName()
+    {
+        var name = System.IO.Path.GetFileNameWithoutExtension(Path);
+        
+        if (IsTemporaryDatabase)
+            name += " (Temp)";
+
+        return name;
+    }
     private static string CreateJsonstring(ObservableCollection<PasswordManagerItem> pwItems)
     {
         if (pwItems == null)

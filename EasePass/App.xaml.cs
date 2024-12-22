@@ -20,8 +20,13 @@ using EasePass.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Shapes;
+using Microsoft.Windows.AppLifecycle;
 using System;
 using System.IO;
+using System.Linq;
+using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 
 namespace EasePass
 {
@@ -45,8 +50,21 @@ namespace EasePass
             m_frame = m_window.MainFrame;
             m_frame.NavigationFailed += OnNavigationFailed;
 
-            string[] dbPaths = Database.GetAllDatabasePaths();
-            if (dbPaths.Length == 1 && !File.Exists(dbPaths[0]))
+            AppActivationArguments appActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
+
+            if (appActivationArguments.Kind is ExtendedActivationKind.File &&
+                appActivationArguments.Data is IFileActivatedEventArgs fileActivatedEventArgs &&
+                fileActivatedEventArgs.Files.FirstOrDefault() is IStorageFile storageFile)
+            {
+                File.WriteAllText("D:\\tempdb.txt", storageFile.Path);
+
+                NavigationHelper.ToLoginPage(storageFile.Path);
+
+                m_window.Activate();
+                return;
+            }
+
+            if (Database.HasDatabasePath())
                 NavigationHelper.ToRegisterPage();
             else
                 NavigationHelper.ToLoginPage();
@@ -54,11 +72,10 @@ namespace EasePass
             m_window.Activate();
         }
 
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             _singleInstanceApp.Launch(args.Arguments);
         }
-
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {

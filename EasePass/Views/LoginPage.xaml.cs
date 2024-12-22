@@ -38,25 +38,13 @@ namespace EasePass.Views
         {
             base.OnNavigatedTo(e);
 
-            var databases = Database.GetAllUnloadedDatabases();
-            var comboboxIndexDBName = AppSettings.LoadedDatabaseName ?? (databases.Length > 0 ? databases[0].Name : ""); //double check here for correct null check
-            foreach (var item in databases)
-            {
-                databasebox.Items.Add(item);
-                if(comboboxIndexDBName.Equals(item.Name, System.StringComparison.OrdinalIgnoreCase))
-                {
-                    databasebox.SelectedItem = item;
-                }
-            }
-
-            string tip = await DailyTipHelper.GetTodaysTip(AppSettings.Language);
-            if (string.IsNullOrEmpty(tip))
-                return;
-
-            dailyTipTextBlock.Text = tip;
-            dailyTipGrid.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+            ManageDatabaseHelper.LoadDatabasesToCombobox(databasebox);
+            TemporaryDatabaseHelper.HandleImportTempDatabase(e, databasebox);
 
             passwordBox.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
+
+            await DailyTipHelper.ShowDailyTip(dailyTipTextBlock, dailyTipGrid);
+
         }
 
         private void PWLogin_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)

@@ -14,6 +14,8 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Settings;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Security.Cryptography;
 using System.Text;
@@ -35,6 +37,16 @@ namespace EasePass.Helper
             Random random = new Random(BitConverter.ToInt32(hash, 0));
             string[] tips = res.result.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             return tips[random.Next(tips.Length)];
+        }
+
+        public static async Task ShowDailyTip(TextBlock renderer, Grid grid)
+        {
+            string tip = await GetTodaysTip(AppSettings.Language);
+            if (string.IsNullOrEmpty(tip))
+                return;
+
+            renderer.Text = tip;
+            grid.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
         }
     }
 }

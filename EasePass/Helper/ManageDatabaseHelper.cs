@@ -16,6 +16,8 @@ copies or substantial portions of the Software.
 
 using EasePass.Dialogs;
 using EasePass.Models;
+using EasePass.Settings;
+using Microsoft.UI.Xaml.Controls;
 using System.Threading.Tasks;
 
 namespace EasePass.Helper;
@@ -85,5 +87,19 @@ internal class ManageDatabaseHelper
         Database.AddDatabasePath(newDB.Path);
         InteropHelper.SetForegroundWindow(InteropHelper.GetWindowHandle(App.m_window));
         return newDB;
+    }
+
+    public static void LoadDatabasesToCombobox(ComboBox databaseBox)
+    {
+        var databases = Database.GetAllUnloadedDatabases();
+        var comboboxIndexDBName = AppSettings.LoadedDatabaseName ?? (databases.Length > 0 ? databases[0].Name : "");
+        foreach (var item in databases)
+        {
+            databaseBox.Items.Add(item);
+            if (comboboxIndexDBName.Equals(item.Name, System.StringComparison.OrdinalIgnoreCase))
+            {
+                databaseBox.SelectedItem = item;
+            }
+        }
     }
 }
