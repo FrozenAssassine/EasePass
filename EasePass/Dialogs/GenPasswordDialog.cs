@@ -21,29 +21,32 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
 
-namespace EasePass.Dialogs
-{
-    internal class GenPasswordDialog
-    {
-        public async Task<bool> ShowAsync()
-        {
-            GenPasswordPage page = new GenPasswordPage();
-            page.GeneratePassword();
-            var dialog = new AutoLogoutContentDialog
-            {
-                Title = "Password generator".Localized("Dialog_PWGenerator_New"),
-                PrimaryButtonText = "New".Localized("Dialog_Button_New/Text"),
-                CloseButtonText = "Done".Localized("Dialog_Button_Done/Text"),
-                XamlRoot = App.m_window.Content.XamlRoot,
-                Content = page
-            };
-            dialog.PrimaryButtonClick += Dialog_PrimaryButtonClick;
-            return await dialog.ShowAsync() == ContentDialogResult.Secondary;
-        }
+namespace EasePass.Dialogs;
 
-        private void Dialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+internal class GenPasswordDialog
+{
+    private GenPasswordPage page = new GenPasswordPage();
+    
+    public async Task<bool> ShowAsync()
+    {
+        page.GeneratePassword();
+        var dialog = new AutoLogoutContentDialog
         {
-            ((GenPasswordPage)sender.Content).GeneratePassword();
+            Title = "Password generator".Localized("Dialog_PWGenerator_New"),
+            PrimaryButtonText = "New".Localized("Dialog_Button_New/Text"),
+            CloseButtonText = "Done".Localized("Dialog_Button_Done/Text"),
+            XamlRoot = App.m_window.Content.XamlRoot,
+            Content = page
+        };
+        dialog.Closing += Dialog_Closing;
+        return await dialog.ShowAsync() == ContentDialogResult.Secondary;
+    }
+
+    private void Dialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
+    {
+        if(args.Result == ContentDialogResult.Primary)
+        {
+            page.GeneratePassword();
             args.Cancel = true;
         }
     }
