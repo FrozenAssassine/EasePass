@@ -56,8 +56,6 @@ namespace EasePass
                 appActivationArguments.Data is IFileActivatedEventArgs fileActivatedEventArgs &&
                 fileActivatedEventArgs.Files.FirstOrDefault() is IStorageFile storageFile)
             {
-                File.WriteAllText("D:\\tempdb.txt", storageFile.Path);
-
                 NavigationHelper.ToLoginPage(storageFile.Path);
 
                 m_window.Activate();

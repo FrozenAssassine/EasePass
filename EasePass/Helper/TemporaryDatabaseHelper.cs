@@ -11,7 +11,6 @@ internal class TemporaryDatabaseHelper
 
     private static Database CreateTempDatabase(string path)
     {
-        File.WriteAllText("D:\\tempdb.txt", path);
         Database db = new Database(path);
         db.IsTemporaryDatabase = true;
         return db;
