@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Extensions;
 using EasePass.Helper;
@@ -32,31 +33,20 @@ namespace EasePass.Views
         public LoginPage()
         {
             this.InitializeComponent();
+
+            passwordBox.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            var databases = Database.GetAllUnloadedDatabases();
-            var comboboxIndexDBName = AppSettings.LoadedDatabaseName ?? (databases.Length > 0 ? databases[0].Name : ""); //double check here for correct null check
-            foreach (var item in databases)
-            {
-                databasebox.Items.Add(item);
-                if(comboboxIndexDBName.Equals(item.Name, System.StringComparison.OrdinalIgnoreCase))
-                {
-                    databasebox.SelectedItem = item;
-                }
-            }
+            ManageDatabaseHelper.LoadDatabasesToCombobox(databasebox);
+            TemporaryDatabaseHelper.HandleImportTempDatabase(e, databasebox);
 
-            string tip = await DailyTipHelper.GetTodaysTip(AppSettings.Language);
-            if (string.IsNullOrEmpty(tip))
-                return;
 
-            dailyTipTextBlock.Text = tip;
-            dailyTipGrid.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+            await DailyTipHelper.ShowDailyTip(dailyTipTextBlock, dailyTipGrid);
 
-            passwordBox.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
         }
 
         private void PWLogin_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -72,22 +62,22 @@ namespace EasePass.Views
             if (databasebox.SelectedItem == null)
                 return;
 
-            var dbToLoad = new Database((databasebox.SelectedItem as Database).Path);
-            var validationResult = dbToLoad.ValidatePwAndLoadDB(pw, false);
-            if (validationResult == PasswordValidationResult.WrongPassword)
+            var selectedDB = (databasebox.SelectedItem as DatabaseItem);
+            var res = selectedDB.CheckPasswordCorrect(pw);
+            if (res.result == PasswordValidationResult.WrongPassword)
             {
                 WrongCount++;
                 InfoMessages.EnteredWrongPassword(WrongCount);
                 return;
             }
-            else if(validationResult == PasswordValidationResult.DatabaseNotFound)
+            else if(res.result == PasswordValidationResult.DatabaseNotFound)
             {
-                InfoMessages.DatabaseFileNotFoundAt(dbToLoad.Path);
+                InfoMessages.DatabaseFileNotFoundAt(selectedDB.Path);
                 return;
             }
-
             WrongCount = 0;
 
+            selectedDB.Load(pw);
             NavigationHelper.ToPasswords();
             return;
         }
@@ -111,7 +101,7 @@ namespace EasePass.Views
             if (databasebox.SelectedItem == null)
                 return;
 
-            AppSettings.LoadedDatabaseName = (databasebox.SelectedItem as Database).Name;
+            AppSettings.LoadedDatabaseName = (databasebox.SelectedItem as DatabaseItem).Name;
         }
 
         private async void ImportDatabase_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)

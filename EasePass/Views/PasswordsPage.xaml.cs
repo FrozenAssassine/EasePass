@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Extensions;
 using EasePass.Helper;
@@ -61,6 +62,7 @@ namespace EasePass.Views
         {
             App.m_window.ShowBackArrow = false;
             UpdateOOBEGrid();
+
             if (e.NavigationMode == NavigationMode.Back)
             {
                 Database.LoadedInstance.Save();
@@ -77,6 +79,8 @@ namespace EasePass.Views
             {
                 passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
                 Database.LoadedInstance.Save();
+
+                TemporaryDatabaseHelper.ShowTempDBButton(loadTempDBButton);
             }
 
             base.OnNavigatedTo(e);
@@ -434,6 +438,12 @@ namespace EasePass.Views
         private void OOBE_HyperlinkManageDB(Microsoft.UI.Xaml.Documents.Hyperlink sender, Microsoft.UI.Xaml.Documents.HyperlinkClickEventArgs args)
         {
             NavigationHelper.ToManageDB();
+        }
+
+        private void LoadTemporaryDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            TemporaryDatabaseHelper.LoadImportedDatabase();
+            loadTempDBButton.Visibility = Visibility.Collapsed;
         }
     }
 }

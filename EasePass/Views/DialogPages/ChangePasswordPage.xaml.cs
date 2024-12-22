@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Core.Database;
 using EasePass.Extensions;
 using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
@@ -43,14 +44,17 @@ public sealed partial class ChangePasswordPage : Page
             return ChangePasswordPageResult.PWTooShort;
         }
 
-        var newDB = new Database(Database.LoadedInstance.Path);
-        if (newDB.ValidatePwAndLoadDB(changePW_currentPw.Password.ConvertToSecureString()) != PasswordValidationResult.Success)
+        var newDB = new DatabaseItem(Database.LoadedInstance.Path);
+        var enteredPW = changePW_currentPw.Password.ConvertToSecureString();
+        if (newDB.CheckPasswordCorrect(enteredPW).result != PasswordValidationResult.Success)
             return ChangePasswordPageResult.IncorrectPassword;
         
         if (!changePW_newPw.Password.Equals(changePW_repeatPw.Password))
         {
             return ChangePasswordPageResult.PWNotMatching;
         }
+
+        newDB.Load(enteredPW);
 
         Database.LoadedInstance.MasterPassword = changePW_newPw.Password.ConvertToSecureString();
         Database.LoadedInstance.Save();
