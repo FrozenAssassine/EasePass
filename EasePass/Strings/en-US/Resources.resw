@@ -438,6 +438,12 @@
   <data name="InfoMessages_Invalid2FA.Text" xml:space="preserve">
     <value>This 2FA secret is not valid!</value>
   </data>
+  <data name="InfoMessages_InvalidDatabasePath/Headline" xml:space="preserve">
+    <value>Invalid Path</value>
+  </data>
+  <data name="InfoMessages_InvalidDatabasePath/Text" xml:space="preserve">
+    <value>No valid or incorrect path provided.</value>
+  </data>
   <data name="InfoMessages_NewVersion.Content" xml:space="preserve">
     <value>Changelog</value>
   </data>

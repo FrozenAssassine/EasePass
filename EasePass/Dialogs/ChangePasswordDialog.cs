@@ -58,15 +58,15 @@ namespace EasePass.Dialogs
             }
             else if (changePWResult == ChangePasswordPageResult.IncorrectPassword)
             {
-                InfoMessages.ChangePasswordWrong(page.PasswordInfo);
+                InfoMessages.ChangePasswordWrong(page.InfoMessageParent);
             }
             else if (changePWResult == ChangePasswordPageResult.PWNotMatching)
             {
-                InfoMessages.PasswordsDoNotMatch(page.PasswordInfo);
+                InfoMessages.PasswordsDoNotMatch(page.InfoMessageParent);
             }
             else if (changePWResult == ChangePasswordPageResult.PWTooShort)
             {
-                InfoMessages.PasswordTooShort(page.PasswordInfo);
+                InfoMessages.PasswordTooShort(page.InfoMessageParent);
             }
             args.Cancel = true;
         }

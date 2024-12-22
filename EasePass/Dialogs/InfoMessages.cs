@@ -53,11 +53,11 @@ namespace EasePass.Dialogs
             "InfoMessages_PasswordTooShort",
             InfoBarSeverity.Error
         );
-        public static void PasswordTooShort(InfoBar infoBar) => infoBar.Show(
+        public static void PasswordTooShort(Panel parent = null) => new InfoBar().Show(
             "InfoMessages_PasswordTooShort",
             InfoBarSeverity.Error,
             8,
-            false
+            parent
         );
         public static void PasswordAlreadyUsed() => new InfoBar().Show(
             "InfoMessages_PasswordAlreadyUsed",
@@ -67,21 +67,27 @@ namespace EasePass.Dialogs
             "InfoMessages_ChangePasswordWrong",
             InfoBarSeverity.Error
         );
-        public static void ChangePasswordWrong(InfoBar infoBar) => infoBar.Show(
+        public static void ChangePasswordWrong(Panel parent = null) => new InfoBar().Show(
             "InfoMessages_ChangePasswordWrong",
             InfoBarSeverity.Error,
             8,
-            false
+            parent
         );
         public static void PasswordsDoNotMatch() => new InfoBar().Show(
             "InfoMessages_PasswordsDoNotMatch",
             InfoBarSeverity.Error
         );
-        public static void PasswordsDoNotMatch(InfoBar infoBar) => infoBar.Show(
+        public static void PasswordsDoNotMatch(Panel parent = null) => new InfoBar().Show(
             "InfoMessages_PasswordsDoNotMatch",
             InfoBarSeverity.Error,
             8,
-            false
+            parent
+        );
+        public static void InvalidDatabasePath(Panel parent = null) => new InfoBar().Show(
+            "InfoMessages_InvalidDatabasePath",
+            InfoBarSeverity.Error,
+            8,
+            parent
         );
         public static void SuccessfullyChangedPassword() => new InfoBar().Show(
             "InfoMessages_SuccessfullyChangedPassword",

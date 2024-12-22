@@ -60,7 +60,13 @@ namespace EasePass.Dialogs
             //cancel on password mismatch:
             if (!page.PasswordsMatch)
             {
-                InfoMessages.PasswordsDoNotMatch(page.PasswordInfo);
+                InfoMessages.PasswordsDoNotMatch(page.InfoMessageParent);
+                args.Cancel = true;
+            }
+
+            if (!page.PathValid)
+            {
+                InfoMessages.InvalidDatabasePath(page.InfoMessageParent);
                 args.Cancel = true;
             }
         }

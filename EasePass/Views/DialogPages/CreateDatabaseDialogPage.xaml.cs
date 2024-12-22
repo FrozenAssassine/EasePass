@@ -26,7 +26,7 @@ namespace EasePass.Views
     public sealed partial class CreateDatabaseDialogPage : Page
     {
         private string databaseOutputLocation = "";
-        public InfoBar PasswordInfo => passwordInfo;
+        public Panel InfoMessageParent => infoMessageParent;
 
         public CreateDatabaseDialogPage()
         {
@@ -39,6 +39,8 @@ namespace EasePass.Views
         }
 
         public bool PasswordsMatch => passwordBoxRepeat.Password == passwordBox.Password;
+        public bool PathValid => databaseOutputLocation.Length > 0;
+        public string DatabasePath => databaseOutputLocation;
 
         private void databaseName_TextChanged(object sender, TextChangedEventArgs e)
         {
