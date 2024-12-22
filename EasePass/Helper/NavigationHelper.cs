@@ -28,7 +28,7 @@ public class NavigationHelper
     public static void ToExtensions(object param = null)
     {
 
-        Navigate(typeof(ManageDatabasePage), param);
+        Navigate(typeof(ExtensionPage), param);
     }
     public static void ToRegisterPage(object param = null)
     {
