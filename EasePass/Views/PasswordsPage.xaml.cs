@@ -204,9 +204,8 @@ namespace EasePass.Views
         }
         private async Task GeneratePassword()
         {
-            //returns true when the regenerate button was pressed
-            if (await new GenPasswordDialog().ShowAsync())
-                await GeneratePassword();
+            //returns true when the Dialog was Closed
+            await new GenPasswordDialog().ShowAsync();
         }
         private void SetVis(FontIcon icon)
         {
