@@ -18,6 +18,7 @@ using EasePass.Models;
 using EasePass.Settings;
 using Microsoft.Windows.ApplicationModel.Resources;
 using System.Collections.Generic;
+using Windows.System.UserProfile;
 
 namespace EasePass.Helper;
 
@@ -33,7 +34,6 @@ public class LocalizationHelper
     {
         resourceContext = resourceManager.CreateResourceContext();
         resourceMap = new ResourceManager().MainResourceMap;
-
     }
 
     public void SetLanguage(LanguageItem languageItem)
@@ -50,11 +50,14 @@ public class LocalizationHelper
     {
         RegisterLanguageFromResource();
 
-        var languageTag = SettingsManager.GetSettings(AppSettingsValues.language, "en-US");
-        var res = languages.Find(x => x.Tag == languageTag);
+        var systemLanguages = GlobalizationPreferences.Languages;
+        string systemLanguage = systemLanguages.Count > 0 ? systemLanguages[0] : DefaultSettingsValues.defaultLanguage;
+
+        var settingsLanguage = SettingsManager.GetSettings(AppSettingsValues.language, systemLanguage);
+        var res = languages.Find(x => x.Tag == settingsLanguage);
         if (res == null)
         {
-            SetLanguage(languages.Find(x => x.Tag == "en-US"));
+            SetLanguage(languages.Find(x => x.Tag == systemLanguage));
             return;
         }
 
