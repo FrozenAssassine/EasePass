@@ -113,5 +113,10 @@ namespace EasePass.Views
             databasebox.Items.Add(res);
             databasebox.SelectedItem = res;
         }
+
+        private void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            passwordBox.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
+        }
     }
 }

@@ -302,6 +302,7 @@ namespace EasePass.Views
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
+            searchbox.Focus(FocusState.Programmatic);
         }
         private void Page_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
