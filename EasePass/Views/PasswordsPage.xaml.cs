@@ -80,9 +80,7 @@ namespace EasePass.Views
                 passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
                 Database.LoadedInstance.Save();
 
-                //TemporaryDatabaseHelper.ShowTempDBButton(loadTempDBButton);
-
-                loadTempDBButton.Label = Database.LoadedInstance.IsTemporaryDatabase.ToString() + Database.LoadedInstance.Name;
+                TemporaryDatabaseHelper.ShowTempDBButton(loadTempDBButton);
             }
 
             base.OnNavigatedTo(e);
@@ -444,8 +442,8 @@ namespace EasePass.Views
 
         private void LoadTemporaryDatabase_Click(object sender, RoutedEventArgs e)
         {
-            //TemporaryDatabaseHelper.LoadImportedDatabase();
-            //loadTempDBButton.Visibility = Visibility.Collapsed;
+            TemporaryDatabaseHelper.LoadImportedDatabase();
+            loadTempDBButton.Visibility = Visibility.Collapsed;
         }
     }
 }
