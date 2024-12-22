@@ -5,9 +5,9 @@
     xmlns:model="using:EasePass.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:models="using:EasePass.Models" 
     xmlns:controls="using:EasePass.Controls" 
     xmlns:controls1="using:CommunityToolkit.WinUI.Controls"
+    xmlns:model1="using:EasePass.Core.Database"
     mc:Ignorable="d">
 
     <ScrollViewer Margin="20">
@@ -27,7 +27,7 @@
                 </Grid.ColumnDefinitions>
                 <GridView x:Name="databaseDisplay" Grid.Column="0" SelectionChanged="databaseDisplay_SelectionChanged">
                     <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="model:Database">
+                        <DataTemplate x:DataType="model1:DatabaseItem">
                             <Grid Width="250" Height="150" Padding="10" Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
