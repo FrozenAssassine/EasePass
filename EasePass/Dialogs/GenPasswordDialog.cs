@@ -37,8 +37,14 @@ namespace EasePass.Dialogs
                 XamlRoot = App.m_window.Content.XamlRoot,
                 Content = page
             };
+            dialog.PrimaryButtonClick += Dialog_PrimaryButtonClick;
+            return await dialog.ShowAsync() == ContentDialogResult.Secondary;
+        }
 
-            return await dialog.ShowAsync() == ContentDialogResult.Primary;
+        private void Dialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            ((GenPasswordPage)sender.Content).GeneratePassword();
+            args.Cancel = true;
         }
     }
 }
