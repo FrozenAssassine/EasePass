@@ -29,7 +29,7 @@ public enum ChangePasswordPageResult
 
 public sealed partial class ChangePasswordPage : Page
 {
-    public InfoBar PasswordInfo => passwordInfo;
+    public Panel InfoMessageParent => infoMessageParent;
 
     public ChangePasswordPage()
     {

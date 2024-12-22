@@ -26,7 +26,7 @@ namespace EasePass.Views
     public sealed partial class CreateDatabaseDialogPage : Page
     {
         private string databaseOutputLocation = "";
-        public InfoBar PasswordInfo => passwordInfo;
+        public Panel InfoMessageParent => infoMessageParent;
 
         public CreateDatabaseDialogPage()
         {
