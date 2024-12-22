@@ -14,9 +14,9 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Helper;
-using EasePass.Models;
 using EasePass.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -51,7 +51,10 @@ namespace EasePass.Views
                 pw.AppendChar(character);
             }
 
-            Database.LoadedInstance = Database.CreateNewDatabase(Database.GetAllDatabasePaths()[0], pw);
+            var dbPath = DefaultSettingsValues.databasePaths;
+            Database.LoadedInstance = Database.CreateNewDatabase(dbPath, pw);
+            Database.AddDatabasePath(dbPath);
+
             NavigationHelper.ToPasswords(pw);
         }
 

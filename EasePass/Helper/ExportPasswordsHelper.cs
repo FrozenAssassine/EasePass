@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Models;
 using System.Collections.Generic;
@@ -24,13 +25,13 @@ using System.Threading.Tasks;
 namespace EasePass.Helper;
 internal class ExportPasswordsHelper
 {
-    public async static Task Export(Database db, ObservableCollection<PasswordManagerItem> items, SecureString newPassword = null, bool showSelectPasswordDialog = true)
+    public async static Task Export(DatabaseItem db, ObservableCollection<PasswordManagerItem> items, SecureString newPassword = null, bool showSelectPasswordDialog = true)
     {
         var res = await FilePickerHelper.PickSaveFile(("Ease Pass database", new List<string>() { ".epdb" }));
         if (!res.success)
             return;
 
-        Database export = new Database(res.path);
+        DatabaseItem export = new DatabaseItem(res.path);
         export.MasterPassword = newPassword ?? db.MasterPassword;
 
         if (showSelectPasswordDialog)

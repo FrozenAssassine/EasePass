@@ -14,9 +14,9 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Core.Database;
 using EasePass.Extensions;
 using EasePass.Helper;
-using EasePass.Models;
 using EasePass.Views.DialogPages;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -29,7 +29,7 @@ namespace EasePass.Dialogs
         private ContentDialog dialog;
         private ChangePasswordPage page;
 
-        public async Task ShowAsync(Database db)
+        public async Task ShowAsync(DatabaseItem db)
         {
             page = new ChangePasswordPage();
             dialog = new AutoLogoutContentDialog

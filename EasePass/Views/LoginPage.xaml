@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:EasePass.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:EasePass.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:EasePass.Core.Database"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 
@@ -31,7 +31,7 @@
                 </Grid.ColumnDefinitions>
                 <ComboBox x:Uid="View_LoginPage_ChooseDB" SelectionChanged="databasebox_SelectionChanged" Grid.Column="0" x:Name="databasebox" Header="Choose database:" HorizontalAlignment="Stretch">
                     <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="models:Database">
+                        <DataTemplate x:DataType="models:DatabaseItem">
                             <TextBlock Text="{x:Bind Name}"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>

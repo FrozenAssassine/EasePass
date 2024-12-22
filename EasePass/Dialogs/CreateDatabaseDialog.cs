@@ -14,9 +14,9 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Core.Database;
 using EasePass.Extensions;
 using EasePass.Helper;
-using EasePass.Models;
 using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -28,7 +28,7 @@ namespace EasePass.Dialogs
     internal class CreateDatabaseDialog
     {
         private CreateDatabaseDialogPage page;
-        public async Task<Database> ShowAsync()
+        public async Task<DatabaseItem> ShowAsync()
         {
             var dialog = new AutoLogoutContentDialog
             {
