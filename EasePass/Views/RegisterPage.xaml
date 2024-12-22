@@ -23,7 +23,7 @@
             </PasswordBox.KeyboardAccelerators>
         </PasswordBox>
         <HyperlinkButton x:Uid="View_RegisterPage_LoadExistingDatabase" Click="LoadExistingDatabase_Click" Content="I already have an existing Database: Import here" Margin="0, 10, 0,0"/>
-
+        <HyperlinkButton x:Uid="View_RegisterPage_CreateAdvancedDB" Click="CreateAdvancedDatabase_Click" Content="Advanced options"/>
         <Button x:Uid="View_RegisterPage_Register" Margin="0,20,0,0" HorizontalAlignment="Center" Style="{ThemeResource AccentButtonStyle}" Padding="20,5,20,5" Content="Register" Click="Register_Click"/>
     </StackPanel>
 </Page>

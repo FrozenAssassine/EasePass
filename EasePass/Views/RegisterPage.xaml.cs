@@ -83,5 +83,18 @@ namespace EasePass.Views
         {
             passwordBox.Focus(FocusState.Programmatic);
         }
+
+        private async void CreateAdvancedDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            var db = await new CreateDatabaseDialog().ShowAsync();
+            if (db == null)
+                return;
+
+            Database.AddDatabasePath(db.Path);
+            Database.LoadedInstance = db;
+
+            //maybe show login page first here?
+            NavigationHelper.ToPasswords(db.MasterPassword);
+        }
     }
 }
