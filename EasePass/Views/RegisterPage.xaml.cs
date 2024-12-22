@@ -75,10 +75,5 @@ namespace EasePass.Views
 
             NavigationHelper.ToLoginPage();
         }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            passwordBox.Focus(FocusState.Programmatic);
-        }
     }
 }
