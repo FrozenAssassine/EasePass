@@ -56,7 +56,6 @@ namespace EasePass.Views
             dailyTipTextBlock.Text = tip;
             dailyTipGrid.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
 
-            passwordBox.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
         }
 
         private void PWLogin_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -122,6 +121,11 @@ namespace EasePass.Views
 
             databasebox.Items.Add(res);
             databasebox.SelectedItem = res;
+        }
+
+        private void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            passwordBox.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
         }
     }
 }
