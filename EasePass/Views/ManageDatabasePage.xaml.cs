@@ -14,9 +14,9 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Helper;
-using EasePass.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -31,15 +31,14 @@ namespace EasePass.Views;
 
 public sealed partial class ManageDatabasePage : Page
 {
-    ObservableCollection<Database> databases;
-    Database selectedDatabase;
+    ObservableCollection<DatabaseItem> databases;
+    DatabaseItem selectedDatabase;
 
     public ManageDatabasePage()
     {
         this.InitializeComponent();
 
-
-        databases = new ObservableCollection<Database>(Database.GetAllUnloadedDatabases());
+        databases = new ObservableCollection<DatabaseItem>(Database.GetAllUnloadedDatabases());
         for (int i = 0; i < databases.Count; i++)
             if (databases[i].Path == Database.LoadedInstance.Path)
                 databases[i] = Database.LoadedInstance;
@@ -54,11 +53,11 @@ public sealed partial class ManageDatabasePage : Page
         LoadPrinter();
     }
 
-    private Database GetDatabase(object sender)
+    private DatabaseItem GetDatabaseItem(object sender)
     {
         //either use the selected DB or the rightlicked one
         var db = selectedDatabase;
-        if (sender is MenuFlyoutItem mf && mf.Tag is Database database)
+        if (sender is MenuFlyoutItem mf && mf.Tag is DatabaseItem database)
             db = database;
         return db;
     }
@@ -71,7 +70,7 @@ public sealed partial class ManageDatabasePage : Page
         }
     }
 
-    private async Task DeleteDatabase(Database db)
+    private async Task DeleteDatabase(DatabaseItem db)
     {
         if (!await new ConfirmDeleteDatabaseDialog().ShowAsync(db))
             return;
@@ -95,7 +94,7 @@ public sealed partial class ManageDatabasePage : Page
     
     private async void Delete_DatabaseItem_Click(object sender, RoutedEventArgs e)
     {
-        var db = GetDatabase(sender);
+        var db = GetDatabaseItem(sender);
         if (db == null)
             return;
 
@@ -104,7 +103,7 @@ public sealed partial class ManageDatabasePage : Page
 
     private async void Export_DatabaseItem_Click(object sender, RoutedEventArgs e)
     {
-        var db = GetDatabase(sender);
+        var db = GetDatabaseItem(sender);
         if (db == null)
             return;
 
@@ -149,7 +148,7 @@ public sealed partial class ManageDatabasePage : Page
 
     private void CopyDatabasePath_Click(object sender, RoutedEventArgs e)
     {
-        var db = GetDatabase(sender);
+        var db = GetDatabaseItem(sender);
         if (db == null)
             return;
 
@@ -175,7 +174,7 @@ public sealed partial class ManageDatabasePage : Page
 
     private async void Export_BackupDatabase_Click(object sender, RoutedEventArgs e)
     {
-        var rightClicked = (sender as MenuFlyoutItem).Tag as Database;
+        var rightClicked = (sender as MenuFlyoutItem).Tag as DatabaseItem;
         if (rightClicked == null)
             return;
 
@@ -193,7 +192,7 @@ public sealed partial class ManageDatabasePage : Page
 
     private async void LoadBackupDatabase_Click(object sender, RoutedEventArgs e)
     {
-        var rightClicked = (sender as MenuFlyoutItem).Tag as Database;
+        var rightClicked = (sender as MenuFlyoutItem).Tag as DatabaseItem;
         if (rightClicked == null)
             return;
 
@@ -207,7 +206,7 @@ public sealed partial class ManageDatabasePage : Page
 
     private async void Delete_BackupDatabase_Click(object sender, RoutedEventArgs e)
     {
-        var rightClicked = (sender as MenuFlyoutItem).Tag as Database;
+        var rightClicked = (sender as MenuFlyoutItem).Tag as DatabaseItem;
         if (rightClicked == null)
             return;
 
@@ -224,7 +223,7 @@ public sealed partial class ManageDatabasePage : Page
         }
         
         //when the database is not loaded, it is required to enter the proper password
-        var db = databaseDisplay.SelectedItem as Database;
+        var db = databaseDisplay.SelectedItem as DatabaseItem;
         if (db.MasterPassword == null)
         {
             var password = (await new EnterPasswordDialog().ShowAsync()).Password;
@@ -258,7 +257,7 @@ public sealed partial class ManageDatabasePage : Page
         if (dialog.Password == null)
             return;
 
-        var db = GetDatabase(sender);
+        var db = GetDatabaseItem(sender);
         if (db == null)
             return;
 

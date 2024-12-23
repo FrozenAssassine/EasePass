@@ -14,9 +14,9 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Helper;
-using EasePass.Models;
 using EasePass.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -51,7 +51,10 @@ namespace EasePass.Views
                 pw.AppendChar(character);
             }
 
-            Database.LoadedInstance = Database.CreateNewDatabase(Database.GetAllDatabasePaths()[0], pw);
+            var dbPath = DefaultSettingsValues.databasePaths;
+            Database.LoadedInstance = Database.CreateNewDatabase(dbPath, pw);
+            Database.AddDatabasePath(dbPath);
+
             NavigationHelper.ToPasswords(pw);
         }
 
@@ -74,6 +77,24 @@ namespace EasePass.Views
             SettingsManager.SaveSettings(AppSettingsValues.loadedDatabaseName, res.Name);
 
             NavigationHelper.ToLoginPage();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            passwordBox.Focus(FocusState.Programmatic);
+        }
+
+        private async void CreateAdvancedDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            var db = await new CreateDatabaseDialog().ShowAsync();
+            if (db == null)
+                return;
+
+            Database.AddDatabasePath(db.Path);
+            Database.LoadedInstance = db;
+
+            //maybe show login page first here?
+            NavigationHelper.ToPasswords(db.MasterPassword);
         }
     }
 }

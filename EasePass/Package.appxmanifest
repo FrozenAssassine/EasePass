@@ -46,9 +46,20 @@
           <uap:Rotation Preference="landscapeFlipped"/>
           <uap:Rotation Preference="portraitFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
-    </Application>
-  </Applications>
-
+	  <Extensions>
+		  <uap:Extension Category="windows.fileTypeAssociation">
+			  <uap:FileTypeAssociation Name="easepass_db">
+				  <uap:SupportedFileTypes>
+					  <uap:FileType>.epdb</uap:FileType>
+				  </uap:SupportedFileTypes>
+				  <uap:DisplayName>Ease Pass Database</uap:DisplayName>
+				  <uap:EditFlags OpenIsSafe="true"/>
+				  <uap:Logo>Assets\AppIcon\Icon.png</uap:Logo>
+			  </uap:FileTypeAssociation>
+		  </uap:Extension>
+	  </Extensions>
+	</Application>
+</Applications>
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
   </Capabilities>

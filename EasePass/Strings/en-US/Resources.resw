@@ -927,6 +927,9 @@
   <data name="View_RegisterPage_ChoosePasswordInfo.Text" xml:space="preserve">
     <value>Please choose a master password to begin using the password manager. Without this password, you will never be able to retrieve your saved passwords.</value>
   </data>
+  <data name="View_RegisterPage_CreateAdvancedDB.Content" xml:space="preserve">
+    <value>Advanced options</value>
+  </data>
   <data name="View_RegisterPage_EnterPW.PlaceholderText" xml:space="preserve">
     <value>Enter Password</value>
   </data>

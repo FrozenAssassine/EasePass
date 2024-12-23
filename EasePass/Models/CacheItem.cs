@@ -65,12 +65,16 @@ namespace EasePass.Models
         }
 
         /// <summary>
-        /// Gets the Size of the Cache
+        /// Gets the disk size of the cache item
+        /// Too small cache items are invalid
         /// </summary>
         /// <returns></returns>
         public long GetCacheSize()
         {
-            return new FileInfo(GetPath()).Length;
+            var path = GetPath();
+            if (!File.Exists(path))
+                return 0;
+            return new FileInfo(path).Length;
         }
 
         /// <summary>
