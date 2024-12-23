@@ -67,7 +67,7 @@ namespace EasePass.Helper
 
             for (int i = 0; i < username.Length; i++)
             {
-                if (!int.TryParse(username[i], out int value)) 
+                if (!int.TryParse(username[i], out int value))
                     CommonSequences.Add(new CommonPasswordSequence(username[i].ToLower()));
             }
 
@@ -88,40 +88,73 @@ namespace EasePass.Helper
         {
             disableLeakedPasswords = AppSettings.DisableLeakedPasswords;
             int length = AppSettings.PasswordLength;
-            string chars = AppSettings.PasswordChars;         
+            string chars = AppSettings.PasswordChars;
             Random r = new Random();
 
             StringBuilder password = new StringBuilder();
-            while (!await IsSecure(chars, length, password.ToString()))
+            do
             {
-                if (password.Length > length)
-                    password.Clear();
+                while (!IsSecure(chars, length, password.ToString()))
+                {
+                    if (password.Length > length)
+                        password.Clear();
 
-                password.Append(chars[r.Next(chars.Length)]);
+                    password.Append(chars[r.Next(chars.Length)]);
+                }
             }
+            while ((!disableLeakedPasswords) && (await IsPwned(password.ToString()) == true));
+
             return password.ToString();
         }
 
-        private static async Task<bool> IsSecure(string chars, int length, string password)
+        private static bool IsSecure(string chars, int length, string password)
         {
             int maxpoints = 2; // 1 because of length + common sequences
-            if (chars.Any(char.IsDigit)) maxpoints++;
-            if (chars.Any(char.IsLower)) maxpoints++;
-            if (chars.Any(char.IsUpper)) maxpoints++;
-            if (chars.Any(char.IsPunctuation)) maxpoints++;
-            int securepoints = 0;
-            if (password.Any(char.IsDigit)) securepoints++;
-            if (password.Any(char.IsLower)) securepoints++;
-            if (password.Any(char.IsUpper)) securepoints++;
-            if (password.Any(char.IsPunctuation)) securepoints++;
-            if (password.Length >= length) securepoints++;
-            if (!ContainsCommonSequences(password)) securepoints++;
-            if (securepoints + 1 < Math.Min(maxpoints, length)) return false; // Skip Request if not necessary
-            if (!disableLeakedPasswords)
+            if (chars.Any(char.IsDigit))
             {
                 maxpoints++;
-                bool? r = await IsPwned(password);
-                if (r != true) securepoints++;
+            }
+            if (chars.Any(char.IsLower))
+            {
+                maxpoints++;
+            }
+            if (chars.Any(char.IsUpper))
+            {
+                maxpoints++;
+            }
+            if (chars.Any(char.IsPunctuation))
+            {
+                maxpoints++;
+            }
+
+            int securepoints = 0;
+            if (password.Any(char.IsDigit))
+            {
+                securepoints++;
+            }
+            if (password.Any(char.IsLower))
+            {
+                securepoints++;
+            }
+            if (password.Any(char.IsUpper))
+            {
+                securepoints++;
+            }
+            if (password.Any(char.IsPunctuation))
+            {
+                securepoints++;
+            }
+            if (password.Length >= length)
+            {
+                securepoints++;
+            }
+            if (!ContainsCommonSequences(password))
+            {
+                securepoints++;
+            }
+            if (securepoints + 1 < Math.Min(maxpoints, length))
+            {
+                return false; // Skip Request if not necessary
             }
             return securepoints == Math.Min(maxpoints, length);
         }
