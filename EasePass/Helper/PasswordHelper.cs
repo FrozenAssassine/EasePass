@@ -124,6 +124,8 @@ namespace EasePass.Helper
             if (securepoints + 1 < Math.Min(maxpoints, length))
                 return false; // Skip Request if not necessary
             
+            
+
             return securepoints == Math.Min(maxpoints, length);
         }
 
@@ -139,18 +141,22 @@ namespace EasePass.Helper
             {
                 if (!digit && char.IsDigit(chars[i]))
                 {
+                    digit = true;
                     maxpoints++;
                 }
                 else if (!lower && char.IsLower(chars[i]))
                 {
+                    lower = true;
                     maxpoints++;
                 }
                 else if (!upper && char.IsUpper(chars[i]))
                 {
+                    upper = true;
                     maxpoints++;
                 }
                 else if (!punctation && char.IsPunctuation(chars[i]))
                 {
+                    punctation = true;
                     maxpoints++;
                 }
                 else if (digit && lower && upper && punctation)
