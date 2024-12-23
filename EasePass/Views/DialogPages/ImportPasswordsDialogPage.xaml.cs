@@ -33,25 +33,17 @@ public sealed partial class ImportPasswordsDialogPage : Page
         this.InitializeComponent();
     }
 
-    public void SetMessage(ImportPasswordsDialog.MsgType msg, bool showProgressbar = false)
+    public void ImportError()
     {
-        switch (msg)
-        {
-            case ImportPasswordsDialog.MsgType.None:
-                if (showProgressbar)
-                    progress.Visibility = Visibility.Visible;
-                break;
-            case ImportPasswordsDialog.MsgType.Error:
-                progress.Visibility = Visibility.Collapsed;
-                errorMsg.Text = "An error has occurred!";
-                errorMsg.Visibility = Visibility.Visible;
-                break;
-            case ImportPasswordsDialog.MsgType.NoPasswords:
-                progress.Visibility = Visibility.Collapsed;
-                errorMsg.Text = "No passwords available!";
-                errorMsg.Visibility = Visibility.Visible;
-                break;
-        }
+        InfoMessages.ImportDBWrongPassword(infoMessageParent);
+    }
+
+    private void selectAll_Checkbox_Toggled(object sender, RoutedEventArgs e)
+    {
+        if (selectAll_Checkbox.IsChecked ?? false)
+            listView.SelectAll();
+        else
+            listView.DeselectAll();
     }
 
     public void SetPasswords(ObservableCollection<PasswordManagerItem> items)
@@ -59,16 +51,9 @@ public sealed partial class ImportPasswordsDialogPage : Page
         if (items == null)
             return;
 
-        PWItems.Clear();
-        for (int i = 0; i < items.Count; i++)
-            PWItems.Add(items[i]);
+        PWItems = items;
 
-        listView.UpdateLayout();
-
-        selectAll_Checkbox.Visibility = Visibility.Visible;
-        progress.Visibility = Visibility.Collapsed;
-
-        listView.SelectRange(new Microsoft.UI.Xaml.Data.ItemIndexRange(0, (uint)listView.Items.Count));
+        UpdateAfterAddingPasswords();
     }
     public void SetPasswords(PasswordManagerItem[] items)
     {
@@ -76,12 +61,20 @@ public sealed partial class ImportPasswordsDialogPage : Page
         for (int i = 0; i < items.Length; i++)
             PWItems.Add(items[i]);
 
-        listView.UpdateLayout();
+        UpdateAfterAddingPasswords();
+    }
 
+    public void ShowProgressBar()
+    {
+        progress.Visibility = Visibility.Visible;
+    }
+
+    private void UpdateAfterAddingPasswords()
+    {
         selectAll_Checkbox.Visibility = Visibility.Visible;
         progress.Visibility = Visibility.Collapsed;
 
-        listView.SelectRange(new Microsoft.UI.Xaml.Data.ItemIndexRange(0, (uint)listView.Items.Count));
+        listView.SelectAll();
     }
 
     public PasswordManagerItem[] GetSelectedPasswords()
@@ -89,11 +82,6 @@ public sealed partial class ImportPasswordsDialogPage : Page
         return listView.SelectedItems.Select(x => x as PasswordManagerItem).ToArray();
     }
 
-    private void CheckBox_Toggled(object sender, RoutedEventArgs e)
-    {
-        if (sender is CheckBox cb && cb.Tag is PasswordManagerItemCheck item && item != null)
-            item.Checked = cb.IsChecked ?? false;
-    }
     public (bool result, CheckBox confirmOverwriteCheckbox) GetConfirmOverwriteState()
     {
         return (confirmOverwritePasswords_Checkbox.IsChecked ?? false, confirmOverwritePasswords_Checkbox);
@@ -103,11 +91,8 @@ public sealed partial class ImportPasswordsDialogPage : Page
         confirmOverwritePasswords_Checkbox.Visibility = Visibility.Visible;
     }
 
-    private void selectAll_Checkbox_Toggled(object sender, RoutedEventArgs e)
+    private void Page_Loaded(object sender, RoutedEventArgs e)
     {
-        if (selectAll_Checkbox.IsChecked ?? false)
-            listView.SelectAll();
-        else
-            listView.DeselectAll();
+        listView.SelectAll();
     }
 }

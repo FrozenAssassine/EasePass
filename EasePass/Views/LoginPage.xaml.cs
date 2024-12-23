@@ -46,7 +46,6 @@ namespace EasePass.Views
 
 
             await DailyTipHelper.ShowDailyTip(dailyTipTextBlock, dailyTipGrid);
-
         }
 
         private void PWLogin_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)

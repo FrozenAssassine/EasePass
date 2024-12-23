@@ -18,7 +18,6 @@ using CommunityToolkit.WinUI;
 using EasePass.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -26,20 +25,12 @@ namespace EasePass.Views.DialogPages;
 
 public sealed partial class SelectExportPasswordsDialogPage : Page
 {
-    List<PasswordManagerItem> PWItems = new();
+    private ObservableCollection<PasswordManagerItem> PWItems;
 
     public SelectExportPasswordsDialogPage(ObservableCollection<PasswordManagerItem> items)
     {
         this.InitializeComponent();
-
-        PWItems.Clear();
-        
-        if(items != null)
-            PWItems.AddRange(items);
-
-        listView.ItemsSource = PWItems;
-
-        listView.SelectAll();
+        this.PWItems = items;
     }
 
     public PasswordManagerItem[] GetSelectedPasswords()
@@ -55,4 +46,8 @@ public sealed partial class SelectExportPasswordsDialogPage : Page
             listView.DeselectAll();
     }
 
+    private void Page_Loaded(object sender, RoutedEventArgs e)
+    {
+        listView.SelectAll();
+    }
 }

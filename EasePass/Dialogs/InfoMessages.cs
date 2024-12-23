@@ -37,9 +37,11 @@ namespace EasePass.Dialogs
             "InfoMessages_TooManyPasswordAttempts",
             InfoBarSeverity.Error
         );
-        public static void ImportDBWrongPassword() => new InfoBar().Show(
+        public static void ImportDBWrongPassword(Panel parent = null) => new InfoBar().Show(
             "InfoMessages_ImportDBWrongPassword",
-            InfoBarSeverity.Error
+            InfoBarSeverity.Error,
+            8,
+            parent
         );
         public static void ImportDBSuccess() => new InfoBar().Show(
             "InfoMessages_ImportDBSuccess",
