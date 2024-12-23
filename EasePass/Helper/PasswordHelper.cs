@@ -94,6 +94,7 @@ namespace EasePass.Helper
             StringBuilder password = new StringBuilder();
             do
             {
+                password.Clear();
                 while (!IsSecure(chars, length, password.ToString()))
                 {
                     if (password.Length > length)
