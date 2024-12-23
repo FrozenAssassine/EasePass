@@ -98,7 +98,7 @@ public class AppSettings
     }
     public static string DatabasePaths
     {
-        get => SettingsManager.GetSettings(AppSettingsValues.databasePaths, DefaultSettingsValues.databasePaths);
+        get => SettingsManager.GetSettings(AppSettingsValues.databasePaths);
         set => SettingsManager.SaveSettings(AppSettingsValues.databasePaths, value);
     }
     public static string LoadedDatabaseName

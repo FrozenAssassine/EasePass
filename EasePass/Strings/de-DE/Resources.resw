@@ -1059,4 +1059,7 @@
   <data name="InfoMessages_InvalidDatabasePath/Headline" xml:space="preserve">
     <value>Pfadfehler</value>
   </data>
+  <data name="View_RegisterPage_CreateAdvancedDB.Content" xml:space="preserve">
+    <value>Erweiterte Optionen</value>
+  </data>
 </root>

@@ -14,8 +14,11 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Models;
+using EasePass.Settings;
+using Microsoft.UI.Xaml.Controls;
 using System.Threading.Tasks;
 
 namespace EasePass.Helper;
@@ -23,7 +26,7 @@ namespace EasePass.Helper;
 internal class ManageDatabaseHelper
 {
     private static readonly string[] extensions = new string[] { ".epdb", ".eped" };
-    public static async Task<Database> ImportDatabase()
+    public static async Task<DatabaseItem> ImportDatabase()
     {
         var pickerResult = await FilePickerHelper.PickOpenFile(extensions);
         if (!pickerResult.success)
@@ -33,8 +36,8 @@ internal class ManageDatabaseHelper
         if (password == null)
             return null; //cancelled by user
 
-        Database db = new Database(pickerResult.path);
-        if (db.ValidatePwAndLoadDB(password) != PasswordValidationResult.Success)
+        DatabaseItem db = new DatabaseItem(pickerResult.path);
+        if (!db.Load(password))
             return null;
 
         Database.AddDatabasePath(db.Path);
@@ -57,7 +60,7 @@ internal class ManageDatabaseHelper
         if (password == null)
             return false; //cancelled by user
 
-        var importedItems = Database.GetItemsFromDatabase(filePath, password);
+        var importedItems = Database.GetItemsFromFile(filePath, password);
 
         var dialog = new ImportPasswordsDialog();
         dialog.SetPagePasswords(importedItems);
@@ -76,14 +79,31 @@ internal class ManageDatabaseHelper
         return true;
     }
 
-    public static async Task<Database> CreateDatabase()
+    public static async Task<DatabaseItem> CreateDatabase()
     {
-        Database newDB = await new CreateDatabaseDialog().ShowAsync();
+        DatabaseItem newDB = await new CreateDatabaseDialog().ShowAsync();
         if (newDB == null)
             return null;
 
         Database.AddDatabasePath(newDB.Path);
         InteropHelper.SetForegroundWindow(InteropHelper.GetWindowHandle(App.m_window));
         return newDB;
+    }
+
+    public static void LoadDatabasesToCombobox(ComboBox databaseBox)
+    {
+        var databases = Database.GetAllUnloadedDatabases();
+        var comboboxIndexDBName = AppSettings.LoadedDatabaseName ?? (databases.Length > 0 ? databases[0].Name : "");
+        foreach (var item in databases)
+        {
+            databaseBox.Items.Add(item);
+            if (comboboxIndexDBName.Equals(item.Name, System.StringComparison.OrdinalIgnoreCase))
+            {
+                databaseBox.SelectedItem = item;
+            }
+        }
+
+        if (databaseBox.SelectedItem == null)
+            databaseBox.SelectedIndex = 0;
     }
 }

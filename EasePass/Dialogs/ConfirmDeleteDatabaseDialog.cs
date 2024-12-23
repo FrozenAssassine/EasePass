@@ -14,9 +14,9 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Core.Database;
 using EasePass.Extensions;
 using EasePass.Helper;
-using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
@@ -25,7 +25,7 @@ namespace EasePass.Dialogs
 {
     internal class ConfirmDeleteDatabaseDialog
     {
-        public async Task<bool> ShowAsync(Database database)
+        public async Task<bool> ShowAsync(DatabaseItem database)
         {
             var dialog = new AutoLogoutContentDialog
             {
