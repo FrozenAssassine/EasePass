@@ -22,9 +22,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
-using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI;
@@ -82,14 +80,14 @@ namespace EasePass.Controls
         public PasswordSafetyChart()
         {
             this.InitializeComponent();
-            paths[0] = path1;
-            paths[1] = path2;
-            paths[2] = path3;
-            paths[3] = path4;
-            paths[4] = path5;
-            paths[5] = path6;
-            paths[6] = path7;
-            paths[7] = path8;
+            paths[0] = path1; //lower case
+            paths[1] = path2; //upper case
+            paths[2] = path3; //length
+            paths[3] = path4; //leaked
+            paths[4] = path5; //punctation
+            paths[5] = path6; //digits
+            paths[6] = path7; //predictability
+            paths[7] = path8; //seen before
         }
 
         private void RaisePropertyChanged(string name)
@@ -110,44 +108,51 @@ namespace EasePass.Controls
             info_right.Height = chartHeight;
         }
 
-        public void EvaluatePassword(string password, bool existingSingleTime = false)
+        private async Task<bool> CheckPwned(string password)
         {
-            checks[3] = null;
-            if (!SettingsManager.GetSettingsAsBool(AppSettingsValues.disableLeakedPasswords, DefaultSettingsValues.disableLeakedPasswords))
+            return await PasswordHelper.IsPwned(password) ?? false;
+        }
+
+        private bool CheckPasswordAlreadyUsed(string password, bool existingSingleTime)
+        {
+            if (Database.LoadedInstance.Items == null)
+                return false;
+
+            int amount = 0;
+            for (int i = 0; i < Database.LoadedInstance.Items.Count; i++)
             {
-                Task<bool?> task = PasswordHelper.IsPwned(password);
-                TaskAwaiter<bool?> taskAwaiter = task.GetAwaiter();
-                taskAwaiter.OnCompleted(new Action(() =>
+                if (Database.LoadedInstance.Items[i].Password == password) amount++;
+            }
+            return amount < (existingSingleTime ? 2 : 1);
+        }
+
+        public async void EvaluatePassword(string password, bool existingSingleTime = false)
+        {
+            if (password.Length == 0)
+            {
+                for (int i = 0; i < checks.Length; i++)
                 {
-                    checks[3] = !task.Result;
-                    SetChartEntry(3);
-                    RaisePropertyChanged("ToString");
-                }));
+                    checks[i] = null;
+                    SetChartEntry(i);
+                }
+                RaisePropertyChanged("ToString");
+                return;
             }
 
             bool[] res = PasswordHelper.EvaluatePassword(password);
-            for (int i = 0; i < 6; i++)
-            {
-                checks[i >= 3 ? i + 1 : i] = res[i];
-            }
-
-            checks[7] = null;
-            if (Database.LoadedInstance.Items != null)
-            {
-                int amount = 0;
-                for (int i = 0; i < Database.LoadedInstance.Items.Count; i++)
-                {
-                    if (Database.LoadedInstance.Items[i].Password == password) amount++;
-                }
-                checks[7] = amount < (existingSingleTime ? 2 : 1);
-            }
-
+            checks[0] = res[0];
+            checks[1] = res[1];
+            checks[2] = res[2];
+            checks[3] = AppSettings.DisableLeakedPasswords ? null : await CheckPwned(password);
+            checks[4] = res[3];
+            checks[5] = res[4];
+            checks[6] = res[5];
+            checks[7] = CheckPasswordAlreadyUsed(password, existingSingleTime);
 
             for (int i = 0; i < checks.Length; i++)
             {
                 SetChartEntry(i);
             }
-
             RaisePropertyChanged("ToString");
         }
 
