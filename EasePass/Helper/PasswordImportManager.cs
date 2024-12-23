@@ -28,13 +28,21 @@ namespace EasePass.Helper
         public async static Task<(PasswordManagerItem[] Items, bool Override)> ManageImport(IPasswordImporter importer)
         {
             ImportPasswordsDialog dlg = new ImportPasswordsDialog();
+
             dlg.ShowProgressBar();
-            var dlgRes = await dlg.ShowAsync(true);
 
-            PasswordItem[] items = importer.ImportPasswords();
-            dlg.SetPagePasswords(items.Select(x => ToPMI(x)).ToArray());
+            var loadingTask = Task.Run(() =>
+            {
+                var items = importer.ImportPasswords();
+                return items.Select(x => ToPMI(x)).ToArray();
+            });
 
-            return dlgRes;
+            var showDialogTask = dlg.ShowAsync(true);
+
+            var passwordItems = await loadingTask;
+            dlg.SetPagePasswords(passwordItems);
+
+            return await showDialogTask;
         }
 
         private static PasswordManagerItem ToPMI(PasswordItem item)
