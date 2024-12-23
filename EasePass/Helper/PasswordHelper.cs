@@ -23,14 +23,15 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EasePass.Helper
 {
     public static class PasswordHelper
     {
+        /// <summary>
+        /// Specifies if it should be checked if the Password has been leaked
+        /// </summary>
         private static bool disableLeakedPasswords = false;
-
         private const string ABC = "abcdefghijklmnopqrstuvwxyz";
         private const int StringMinRepeat = 5;
         private const int IntegerMinRepeat = 4;
@@ -84,6 +85,10 @@ namespace EasePass.Helper
             }
         }
 
+        /// <summary>
+        /// Generates a new Password
+        /// </summary>
+        /// <returns>Returns the generated Password</returns>
         public static async Task<string> GeneratePassword()
         {
             disableLeakedPasswords = AppSettings.DisableLeakedPasswords;
@@ -95,56 +100,32 @@ namespace EasePass.Helper
             do
             {
                 password.Clear();
-                while (!IsSecure(chars, length, password.ToString()))
+                do
                 {
                     if (password.Length > length)
                         password.Clear();
 
                     password.Append(chars[r.Next(chars.Length)]);
                 }
+                while (!IsSecure(chars, length, password.ToString()));
             }
             while ((!disableLeakedPasswords) && (await IsPwned(password.ToString()) == true));
-
+            
             return password.ToString();
         }
 
-        private static bool IsSecure(string chars, int length, string password)
+        /// <summary>
+        /// Validates if the given <paramref name="password"/> is Secure
+        /// </summary>
+        /// <param name="chars">The allowed Characters inside the Password</param>
+        /// <param name="length">The Length, which the Password should have</param>
+        /// <param name="password">The Password</param>
+        /// <returns>Returns <see langword="true"/> if the Password is Secure</returns>
+        private static bool IsSecure(ReadOnlySpan<char> chars, int length, ReadOnlySpan<char> password)
         {
-            int maxpoints = 2; // 1 because of length + common sequences
-            if (chars.Any(char.IsDigit))
-            {
-                maxpoints++;
-            }
-            if (chars.Any(char.IsLower))
-            {
-                maxpoints++;
-            }
-            if (chars.Any(char.IsUpper))
-            {
-                maxpoints++;
-            }
-            if (chars.Any(char.IsPunctuation))
-            {
-                maxpoints++;
-            }
+            int maxpoints = 2 + GetMaxPoints(chars); // 1 because of length + common sequences
+            int securepoints = 0 + GetMaxPoints(password);
 
-            int securepoints = 0;
-            if (password.Any(char.IsDigit))
-            {
-                securepoints++;
-            }
-            if (password.Any(char.IsLower))
-            {
-                securepoints++;
-            }
-            if (password.Any(char.IsUpper))
-            {
-                securepoints++;
-            }
-            if (password.Any(char.IsPunctuation))
-            {
-                securepoints++;
-            }
             if (password.Length >= length)
             {
                 securepoints++;
@@ -153,11 +134,52 @@ namespace EasePass.Helper
             {
                 securepoints++;
             }
-            if (securepoints + 1 < Math.Min(maxpoints, length))
-            {
-                return false; // Skip Request if not necessary
-            }
             return securepoints == Math.Min(maxpoints, length);
+        }
+
+        /// <summary>
+        /// Gets the Amount of Points of the current String
+        /// One point is awarded for each criterion met
+        /// Criterion: Digit, Lower, Upper, Punction
+        /// </summary>
+        /// <param name="chars">The String, which will be rated</param>
+        /// <returns>Returns the Points of the String.</returns>
+        private static int GetMaxPoints(ReadOnlySpan<char> chars)
+        {
+            int maxpoints = 0;
+            bool digit = false;
+            bool lower = false;
+            bool upper = false;
+            bool punctation = false;
+
+            for (int i = 0; i < chars.Length; i++)
+            {
+                if (!digit && char.IsDigit(chars[i]))
+                {
+                    digit = true;
+                    maxpoints++;
+                }
+                else if (!lower && char.IsLower(chars[i]))
+                {
+                    lower = true;
+                    maxpoints++;
+                }
+                else if (!upper && char.IsUpper(chars[i]))
+                {
+                    upper = true;
+                    maxpoints++;
+                }
+                else if (!punctation && char.IsPunctuation(chars[i]))
+                {
+                    punctation = true;
+                    maxpoints++;
+                }
+                else if (digit && lower && upper && punctation)
+                {
+                    break;
+                }
+            }
+            return maxpoints;
         }
 
         public static bool[] EvaluatePassword(string password)
@@ -174,12 +196,13 @@ namespace EasePass.Helper
             return checks;
         }
 
-        private static bool ContainsCommonSequences(string password)
+        private static bool ContainsCommonSequences(ReadOnlySpan<char> password)
         {
             int length = CommonSequences.Count;
             for (int i = 0; i < length; i++)
             {
-                if (CommonSequences[i].ContainsSequence(password)) return true;
+                if (CommonSequences[i].ContainsSequence(password))
+                    return true;
             }
             return false;
         }
@@ -202,9 +225,8 @@ namespace EasePass.Helper
                 using (var data = await client.GetAsync("https://api.pwnedpasswords.com/range/" + hashPrefix))
                 {
                     if (data == null)
-                    {
                         return null;
-                    }
+
                     return ReadIsPwnedData(data, hashSuffix);
                 }
             }
@@ -233,9 +255,7 @@ namespace EasePass.Helper
                     var numberOfTimesPasswordPwned = int.Parse(splitLIne[1]);
 
                     if (lineHashedSuffix == hashSuffix)
-                    {
                         return true;
-                    }
                 }
             }
             return false;
@@ -248,9 +268,7 @@ namespace EasePass.Helper
                 byte[] inputBytes = Encoding.UTF8.GetBytes(input);
                 byte[] hashBytes = sha1.ComputeHash(inputBytes);
 
-                string hashHex = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-
-                return hashHex;
+                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
             }
         }
     }
