@@ -86,5 +86,10 @@ namespace EasePass.Dialogs
         {
             importPage.SetPasswords(items);
         }
+
+        public void ShowProgressBar()
+        {
+            importPage.ShowProgressBar();
+        }
     }
 }

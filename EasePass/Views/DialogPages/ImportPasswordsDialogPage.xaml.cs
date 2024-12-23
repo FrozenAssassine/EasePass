@@ -64,6 +64,11 @@ public sealed partial class ImportPasswordsDialogPage : Page
         UpdateAfterAddingPasswords();
     }
 
+    public void ShowProgressBar()
+    {
+        progress.Visibility = Visibility.Visible;
+    }
+
     private void UpdateAfterAddingPasswords()
     {
         selectAll_Checkbox.Visibility = Visibility.Visible;
