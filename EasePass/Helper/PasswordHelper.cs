@@ -23,7 +23,6 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EasePass.Helper
 {
@@ -95,56 +94,25 @@ namespace EasePass.Helper
             do
             {
                 password.Clear();
-                while (!IsSecure(chars, length, password.ToString()))
+                do
                 {
                     if (password.Length > length)
                         password.Clear();
 
                     password.Append(chars[r.Next(chars.Length)]);
                 }
+                while (!IsSecure(chars, length, password.ToString()));
             }
             while ((!disableLeakedPasswords) && (await IsPwned(password.ToString()) == true));
-
+            
             return password.ToString();
         }
 
-        private static bool IsSecure(string chars, int length, string password)
+        private static bool IsSecure(ReadOnlySpan<char> chars, int length, ReadOnlySpan<char> password)
         {
-            int maxpoints = 2; // 1 because of length + common sequences
-            if (chars.Any(char.IsDigit))
-            {
-                maxpoints++;
-            }
-            if (chars.Any(char.IsLower))
-            {
-                maxpoints++;
-            }
-            if (chars.Any(char.IsUpper))
-            {
-                maxpoints++;
-            }
-            if (chars.Any(char.IsPunctuation))
-            {
-                maxpoints++;
-            }
+            int maxpoints = 2 + GetMaxPoints(chars); // 1 because of length + common sequences
+            int securepoints = 0 + GetMaxPoints(password);
 
-            int securepoints = 0;
-            if (password.Any(char.IsDigit))
-            {
-                securepoints++;
-            }
-            if (password.Any(char.IsLower))
-            {
-                securepoints++;
-            }
-            if (password.Any(char.IsUpper))
-            {
-                securepoints++;
-            }
-            if (password.Any(char.IsPunctuation))
-            {
-                securepoints++;
-            }
             if (password.Length >= length)
             {
                 securepoints++;
@@ -154,10 +122,43 @@ namespace EasePass.Helper
                 securepoints++;
             }
             if (securepoints + 1 < Math.Min(maxpoints, length))
-            {
                 return false; // Skip Request if not necessary
-            }
+            
             return securepoints == Math.Min(maxpoints, length);
+        }
+
+        private static int GetMaxPoints(ReadOnlySpan<char> chars)
+        {
+            int maxpoints = 0;
+            bool digit = false;
+            bool lower = false;
+            bool upper = false;
+            bool punctation = false;
+
+            for (int i = 0; i < chars.Length; i++)
+            {
+                if (!digit && char.IsDigit(chars[i]))
+                {
+                    maxpoints++;
+                }
+                else if (!lower && char.IsLower(chars[i]))
+                {
+                    maxpoints++;
+                }
+                else if (!upper && char.IsUpper(chars[i]))
+                {
+                    maxpoints++;
+                }
+                else if (!punctation && char.IsPunctuation(chars[i]))
+                {
+                    maxpoints++;
+                }
+                else if (digit && lower && upper && punctation)
+                {
+                    break;
+                }
+            }
+            return maxpoints;
         }
 
         public static bool[] EvaluatePassword(string password)
@@ -174,7 +175,7 @@ namespace EasePass.Helper
             return checks;
         }
 
-        private static bool ContainsCommonSequences(string password)
+        private static bool ContainsCommonSequences(ReadOnlySpan<char> password)
         {
             int length = CommonSequences.Count;
             for (int i = 0; i < length; i++)

@@ -1,4 +1,6 @@
-﻿namespace EasePass.Models;
+﻿using System;
+
+namespace EasePass.Models;
 
 public class CommonPasswordSequence
 {
@@ -19,15 +21,15 @@ public class CommonPasswordSequence
         entireSequence = true;
     }
 
-    public bool ContainsSequence(string str)
+    public bool ContainsSequence(ReadOnlySpan<char> str)
     {
-        string lower = str.ToLower();
-        if (entireSequence || sequence.Length <= minLength) 
-            return lower.Contains(sequence);
+
+        if (entireSequence || sequence.Length <= minLength)
+            return str.Contains(sequence, StringComparison.OrdinalIgnoreCase);
 
         for (int i = 0; i < sequence.Length - minLength; i++)
         {
-            if (lower.Contains(sequence.Substring(i, minLength))) 
+            if (str.Contains(sequence.AsSpan(i, minLength), StringComparison.OrdinalIgnoreCase))
                 return true;
         }
         return false;
