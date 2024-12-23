@@ -32,7 +32,7 @@ internal class GenPasswordDialog
         page.GeneratePassword();
         var dialog = new AutoLogoutContentDialog
         {
-            Title = "Password generator".Localized("Dialog_PWGenerator_New"),
+            Title = "Password generator".Localized("Dialog_PWGenerator_New/Text"),
             PrimaryButtonText = "New".Localized("Dialog_Button_New/Text"),
             CloseButtonText = "Done".Localized("Dialog_Button_Done/Text"),
             XamlRoot = App.m_window.Content.XamlRoot,
