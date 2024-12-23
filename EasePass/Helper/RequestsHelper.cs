@@ -17,6 +17,7 @@ copies or substantial portions of the Software.
 using EasePass.Dialogs;
 using System;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace EasePass.Helper
@@ -48,7 +49,18 @@ namespace EasePass.Helper
 
         public static async Task<bool> DownloadFileAsync(string url, string path, int timeoutMillis = 5000, Action<string> error = null)
         {
-            return await DownloadFileAsync(new Uri(url), path, timeoutMillis, error);
+            if(!Uri.TryCreate(url, UriKind.Absolute, out Uri uri))
+            {
+                return false;
+            }
+
+            //check for valid url with toplevel domain
+            if (!Regex.IsMatch(uri.Host, @"^(?!\-)([a-zA-Z0-9\-]{1,63})(?<!\-)\.([a-zA-Z]{2,})$"))
+            {
+                return false;
+            }
+
+            return await DownloadFileAsync(uri, path, timeoutMillis, error);
         }
 
         public static async Task<bool> DownloadFileAsync(Uri url, string path, int timeoutMillis = 5000, Action<string> error = null)

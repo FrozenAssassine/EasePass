@@ -177,6 +177,7 @@ namespace EasePass.Models
             else
                 Icon = null;
 
+            //check for valid item
             if (item.GetCacheSize() < 10)
             {
                 item.Remove();
