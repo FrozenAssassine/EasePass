@@ -54,7 +54,7 @@
 				  </uap:SupportedFileTypes>
 				  <uap:DisplayName>Ease Pass Database</uap:DisplayName>
 				  <uap:EditFlags OpenIsSafe="true"/>
-				  <uap:Logo>Assets\AppIcon\Icon.png</uap:Logo>
+				  <uap:Logo>Assets\AppIcon\Icon300x300.png</uap:Logo>
 			  </uap:FileTypeAssociation>
 		  </uap:Extension>
 	  </Extensions>
