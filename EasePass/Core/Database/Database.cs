@@ -54,7 +54,27 @@ public class Database
     }
     public static bool HasDatabasePath()
     {
-        return AppSettings.DatabasePaths.Length == 0;
+        var dbPath = AppSettings.DatabasePaths;
+        var loadedDb = AppSettings.LoadedDatabaseName;
+
+        //app first start
+        if (dbPath.Length == 0 && loadedDb == null)
+            return false;
+
+        if (dbPath.Length > 0 && loadedDb.Length > 0)
+            return true;
+
+        //fallback -> old version never saved the database to the settings, 
+        //when there was only the default database loaded.
+        if (dbPath.Length == 0 && loadedDb.Length > 0)
+        {
+            if (File.Exists(DefaultSettingsValues.databasePaths))
+            {
+                AppSettings.DatabasePaths = DefaultSettingsValues.databasePaths;
+                return true;
+            }
+        }
+        return false;
     }
     public static string[] GetAllDatabasePaths()
     {
