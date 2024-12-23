@@ -63,9 +63,9 @@ namespace EasePass
             }
 
             if (Database.HasDatabasePath())
-                NavigationHelper.ToRegisterPage();
-            else
                 NavigationHelper.ToLoginPage();
+            else
+                NavigationHelper.ToRegisterPage();
 
             m_window.Activate();
         }
