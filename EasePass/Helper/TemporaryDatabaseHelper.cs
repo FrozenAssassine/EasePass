@@ -1,8 +1,6 @@
 ﻿using EasePass.Core.Database;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using System.Diagnostics;
-using System.IO;
 
 namespace EasePass.Helper;
 
