@@ -70,8 +70,8 @@ namespace EasePass.Helper
             dp1.Tick += async (s, e) =>
             {
                 dp1.Stop();
-                var formats = Clipboard.GetContent().AvailableFormats;
-                if (formats == null)
+                var content = Clipboard.GetContent();
+                if (content == null || !content.Contains(StandardDataFormats.Text))
                 {
                     return;
                 }
