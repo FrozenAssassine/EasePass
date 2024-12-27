@@ -1053,13 +1053,22 @@
   <data name="InfoMessages_UnhandledException.Headline" xml:space="preserve">
     <value>Unbehandelte Ausnahme:</value>
   </data>
-  <data name="InfoMessages_InvalidDatabasePath/Text" xml:space="preserve">
+  <data name="InfoMessages_InvalidDatabasePath.Text" xml:space="preserve">
     <value>Kein gültiger oder falscher Pfad angegeben</value>
   </data>
-  <data name="InfoMessages_InvalidDatabasePath/Headline" xml:space="preserve">
+  <data name="InfoMessages_InvalidDatabasePath.Headline" xml:space="preserve">
     <value>Pfadfehler</value>
   </data>
   <data name="View_RegisterPage_CreateAdvancedDB.Content" xml:space="preserve">
     <value>Erweiterte Optionen</value>
+  </data>
+  <data name="View_PasswordPage_Flyout_ExportNewPassword.Text" xml:space="preserve">
+    <value>Exportieren (anderes Passwort)</value>
+  </data>
+  <data name="View_ManageDB_ExportDBNewPW.Content" xml:space="preserve">
+    <value>Exportieren (anderes Passwort)</value>
+  </data>
+  <data name="View_ManageDB_ExportDBNewPW.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Exportieren sie die Datenbank mit einem anderen Passwort</value>
   </data>
 </root>
