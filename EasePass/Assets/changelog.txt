@@ -1,12 +1,26 @@
 ﻿#Version 1.3.0 [11/21/2024]
-	• Added the option to export selected passwords from the right-click menu in the password list.
-	• Added a button on the register page to directly import a database.
-	• Changed the font to something more readable, especially for characters like "I, l, |".
-	• Added the option to delete selected passwords from the right-click menu in the password list.
-	• Added a progress bar in the generate password box.
-	• Disabled spell checking in text boxes to prevent automatic capitalization and other unwanted changes.
-	• Fixed an issue where you were logged out and lost your entered data in the edit or add item dialog.
-	• Fixed an issue where items from the clipboard were not removed properly.
+	• Introduced the option to export selected passwords via the right-click menu in the password list.
+	• Added a button on the registration page for direct database import.
+	• Updated the font for improved readability, particularly for characters like "I, l, |".
+	• Enabled the deletion of selected passwords through the right-click menu in the password list.
+	• Included a progress bar in the password generation box.
+	• Disabled spell checking in text fields to prevent unwanted capitalization and other auto-corrections.
+	• Resolved an issue where users were logged out, resulting in the loss of data entered in the Edit or Add Item dialog.
+	• Fixed a problem where clipboard items were not being removed correctly.
+	• Made the Notes section in the Add/Edit dialog and password page scrollable.
+	• Added support for drag-and-drop functionality, allowing users to import .epdb files directly into the app.
+	• Improved the out-of-box experience with enhanced usability.
+	• Fixed focus-related issues in dialogs and forms.
+	• Addressed bugs in the password regeneration process.
+	• Resolved issues with database selection during new database creation.
+	• Prevented database creation if no path is specified.
+	• Added or refined translations throughout the application.
+	• Implemented caching for website icons.
+	• Introduced an option to export with a different password.
+	• Added file type associations in Windows to load databases as temporary databases.
+	• Enhanced the Create Database dialog on the registration page (optional).
+	• Made numerous performance improvements.
+	• Fixed various other bugs.
 
 #Version 1.2.1 [05/24/2024]
 	• Fixed a bug where the registration was not working properly
