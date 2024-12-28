@@ -69,6 +69,12 @@ namespace EasePass.Dialogs
                 InfoMessages.InvalidDatabasePath(page.InfoMessageParent);
                 args.Cancel = true;
             }
+
+            if(!page.PasswordLengthCorrect)
+            {
+                InfoMessages.PasswordTooShort(page.InfoMessageParent);
+                args.Cancel = true;
+            }
         }
     }
 }
