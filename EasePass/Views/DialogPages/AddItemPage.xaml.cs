@@ -148,6 +148,7 @@ namespace EasePass.Views
 
         private async void GeneratePassword_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
+            pwTB.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
             generatePasswordButton.IsEnabled = false;
             generatePasswordProgress.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
             generatePasswordProgress.Value = 0;
@@ -159,6 +160,7 @@ namespace EasePass.Views
             generatePasswordButton.IsEnabled = true;
             generatePasswordProgress.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
             RedBorder.Tag = null;
+
         }
     }
 }
