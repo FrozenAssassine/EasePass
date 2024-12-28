@@ -438,10 +438,10 @@
   <data name="InfoMessages_Invalid2FA.Text" xml:space="preserve">
     <value>This 2FA secret is not valid!</value>
   </data>
-  <data name="InfoMessages_InvalidDatabasePath.Headline" xml:space="preserve">
+  <data name="InfoMessages_InvalidDatabasePath/Headline" xml:space="preserve">
     <value>Invalid Path</value>
   </data>
-  <data name="InfoMessages_InvalidDatabasePath.Text" xml:space="preserve">
+  <data name="InfoMessages_InvalidDatabasePath/Text" xml:space="preserve">
     <value>No valid or incorrect path provided.</value>
   </data>
   <data name="InfoMessages_NewVersion.Content" xml:space="preserve">
@@ -873,7 +873,7 @@
   <data name="View_PasswordPage_Flyout_Export.Text" xml:space="preserve">
     <value>Export</value>
   </data>
-  <data name="View_PasswordPage_Flyout_ExportNewPassword.Text" xml:space="preserve">
+  <data name="View_PasswordPage_Flyout_ExportNewPassword/Text" xml:space="preserve">
     <value>Export (diff. password)</value>
   </data>
   <data name="View_PasswordPage_Searchbox.PlaceholderText" xml:space="preserve">
@@ -1050,6 +1050,9 @@
   <data name="View_SettingsPage_ResetPopularityCounter.Content" xml:space="preserve">
     <value>Reset</value>
   </data>
+  <data name="View_SettingsPage_ResetPopularityCounter.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Resets the counter that counts the clicks to sort by popularity.</value>
+  </data>
   <data name="View_SettingsPage_RestartToApply.Text" xml:space="preserve">
     <value>To apply please restart the app</value>
   </data>
@@ -1061,11 +1064,5 @@
   </data>
   <data name="View_SettingsPage_VerifyPWLeaked.Header" xml:space="preserve">
     <value>Verify that the password was not leaked</value>
-  </data>
-    <data name="View_ManageDB_ExportDBNewPW.Content" xml:space="preserve">
-    <value>Export (diff. Password)</value>
-  </data>
-  <data name="View_ManageDB_ExportDBNewPW.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Export the database with a new password</value>
   </data>
 </root>
