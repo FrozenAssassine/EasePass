@@ -312,6 +312,7 @@ namespace EasePass.Views
             {
                 switch (e.Key)
                 {
+
                     case Windows.System.VirtualKey.F:
                         searchbox.Focus(FocusState.Programmatic);
                         break;
@@ -344,6 +345,9 @@ namespace EasePass.Views
                     break;
                 case Windows.System.VirtualKey.F2:
                     EditPasswordItem_Click(null, null);
+                    break;
+                case Windows.System.VirtualKey.Escape:
+                    passwordItemListView.SelectedItem = SelectedItem = null;
                     break;
             }
         }
@@ -426,11 +430,6 @@ namespace EasePass.Views
         private void Grid_DragOver(object sender, DragEventArgs e)
         {
             DatabaseDragDropHelper.DragOver(e);
-        }
-
-        private void EscapeKeyAccel_Invoked(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
-        {
-            passwordItemListView.SelectedItem = SelectedItem = null;
         }
 
         private void OOBE_HyperlinkSettings(Microsoft.UI.Xaml.Documents.Hyperlink sender, Microsoft.UI.Xaml.Documents.HyperlinkClickEventArgs args)
