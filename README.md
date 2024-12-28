@@ -6,7 +6,7 @@
     <a href="https://apps.microsoft.com/store/detail/ease-pass/9NQPF80923F5?hl=en-us&gl=us&ocid=pdpshare">
         <img src="https://img.shields.io/badge/Download-Microsoft%20Store-brightgreen?style=flat"/>
     </a>
-    <a href="http://easepass.frozenassassine.de/">
+    <a href="https://easepass.frozenassassine.de/">
         <img src="https://img.shields.io/badge/Ease Pass-Website-blue"/>
     </a>
     <img src="https://img.shields.io/github/stars/FrozenAssassine/EasePass?style=flat"/>
