@@ -12,50 +12,48 @@ internal class OldDatabaseImporter
 {
     public static string GetDecryptedString(string path, SecureString password)
     {
-        if (FileHelper.HasExtension(path, ".eped"))
+        if (!FileHelper.HasExtension(path, ".eped"))
+            return null;
+     
+        string pw = new System.Net.NetworkCredential(string.Empty, password).Password;
+        EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(path));
+        if (!AuthenticationHelper.VerifyPassword(decryptedJson.PasswordHash, pw))
         {
-            string pw = new System.Net.NetworkCredential(string.Empty, password).Password;
-            EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(path));
-            if (!AuthenticationHelper.VerifyPassword(decryptedJson.PasswordHash, pw))
-            {
-                InfoMessages.ImportDBWrongPassword();
-                return null;
-            }
-            var res = EncryptDecryptHelper.DecryptStringAES(decryptedJson.Data, pw, decryptedJson.Salt);
-            if (!res.correctPassword)
-            {
-                InfoMessages.ImportDBWrongPassword();
-                return null;
-            }
-
-            return res.decryptedString;
+            InfoMessages.ImportDBWrongPassword();
+            return null;
         }
-        return null;
+        var res = EncryptDecryptHelper.DecryptStringAES(decryptedJson.Data, pw, decryptedJson.Salt);
+        if (!res.correctPassword)
+        {
+            InfoMessages.ImportDBWrongPassword();
+            return null;
+        }
+
+        return res.decryptedString;
 
     }
 
     public static (PasswordValidationResult result, string decryptedData) CheckValidPassword(string path, SecureString enteredPassword, bool showWrongPasswordError = false)
     {
-        if (FileHelper.HasExtension(path, ".epeb"))
+        if (!FileHelper.HasExtension(path, ".epeb"))
+            return (PasswordValidationResult.DatabaseNotFound, null);
+
+        string pw = new System.Net.NetworkCredential(string.Empty, enteredPassword).Password;
+        EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(path));
+        if (!AuthenticationHelper.VerifyPassword(decryptedJson.PasswordHash, pw))
         {
-            string pw = new System.Net.NetworkCredential(string.Empty, enteredPassword).Password;
-            EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(path));
-            if (!AuthenticationHelper.VerifyPassword(decryptedJson.PasswordHash, pw))
-            {
-                if (showWrongPasswordError)
-                    InfoMessages.ImportDBWrongPassword();
-                return (PasswordValidationResult.WrongPassword, null);
-            }
-            var res = EncryptDecryptHelper.DecryptStringAES(decryptedJson.Data, pw, decryptedJson.Salt);
-            if (!res.correctPassword)
-            {
-                if (showWrongPasswordError)
-                    InfoMessages.ImportDBWrongPassword();
-                return (PasswordValidationResult.WrongPassword, null);
-            }
-            return (PasswordValidationResult.Success, res.decryptedString);
+            if (showWrongPasswordError)
+                InfoMessages.ImportDBWrongPassword();
+            return (PasswordValidationResult.WrongPassword, null);
         }
-        return (PasswordValidationResult.DatabaseNotFound, null);
+        var res = EncryptDecryptHelper.DecryptStringAES(decryptedJson.Data, pw, decryptedJson.Salt);
+        if (!res.correctPassword)
+        {
+            if (showWrongPasswordError)
+                InfoMessages.ImportDBWrongPassword();
+            return (PasswordValidationResult.WrongPassword, null);
+        }
+        return (PasswordValidationResult.Success, res.decryptedString);
     }
 
     public static void CheckAndFixFile(DatabaseItem dbItem)
