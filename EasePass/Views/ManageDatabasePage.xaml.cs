@@ -233,7 +233,7 @@ public sealed partial class ManageDatabasePage : Page
                 return;
             }
             
-            var res = db.Load(password, true);
+            var res = db.Unlock(password, true);
             if(res == false)
             {
                 databaseDisplay.SelectedItem = null;
