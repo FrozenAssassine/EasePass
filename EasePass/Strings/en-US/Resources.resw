@@ -726,6 +726,9 @@
   <data name="View_ExtensionPage_Store.Text" xml:space="preserve">
     <value>Store:</value>
   </data>
+  <data name="View_ExtensionPage_StoreHint.Text" xml:space="preserve">
+    <value>Due to the Microsoft Store requirements, we cannot offer direct download of plugins. To use plugins anyway, please follow the steps on our website.</value>
+  </data>
   <data name="View_ExtensionPage_Uninstall.Text" xml:space="preserve">
     <value>Uninstall</value>
   </data>
