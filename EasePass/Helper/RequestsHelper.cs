@@ -63,7 +63,6 @@ namespace EasePass.Helper
         {
             try
             {
-
                 using (HttpClient client = new HttpClient(new HttpClientHandler { AllowAutoRedirect = true }))
                 {
                     client.Timeout = TimeSpan.FromMilliseconds(timeoutMillis);
