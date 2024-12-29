@@ -501,7 +501,7 @@
   <data name="PW_SafetyChart_Predictability.Text" xml:space="preserve">
     <value>Vorhersagbarkeit</value>
   </data>
-  <data name="PW_SafetyChart_Punctation.Text" xml:space="preserve">
+  <data name="PW_SafetyChart_SpecialChars.Text" xml:space="preserve">
     <value>Sonderzeichen</value>
   </data>
   <data name="PW_SafetyChart_PWLength.Text" xml:space="preserve">
@@ -969,7 +969,7 @@
   <data name="PW_SafetyChart_Info_LeakedExploited_Positive.Text" xml:space="preserve">
     <value>Nein</value>
   </data>
-  <data name="PW_SafetyChart_Info_Punctuation_Positive.Text" xml:space="preserve">
+  <data name="PW_SafetyChart_Info_SpecialChars_Positive.Text" xml:space="preserve">
     <value>Ja</value>
   </data>
   <data name="PW_SafetyChart_Info_Digits.Text" xml:space="preserve">
@@ -1011,10 +1011,10 @@
   <data name="PW_SafetyChart_Info_Predictability_Positive.Text" xml:space="preserve">
     <value>Unwahrscheinlich</value>
   </data>
-  <data name="PW_SafetyChart_Info_Punctuation.Text" xml:space="preserve">
+  <data name="PW_SafetyChart_Info_SpecialChars.Text" xml:space="preserve">
     <value>Beinhaltet Sonderzeichen:</value>
   </data>
-  <data name="PW_SafetyChart_Info_Punctuation_Negative.Text" xml:space="preserve">
+  <data name="PW_SafetyChart_Info_SpecialChars_Negative.Text" xml:space="preserve">
     <value>Nein</value>
   </data>
   <data name="PW_SafetyChart_Info_SeenBefore_Negative.Text" xml:space="preserve">
@@ -1067,5 +1067,11 @@
   </data>
   <data name="View_SettingsPage_ResetPopularityCounter.ToolTipService.ToolTip" xml:space="preserve">
     <value>Setzt den Beliebtheitszähler zurück, der zählt, wie oft ein Passwort verwendet wurde.</value>
+  </data>
+  <data name="View_ManageDB_ExportDBNewPW.Content" xml:space="preserve">
+    <value>Export (anderem PW)</value>
+  </data>
+  <data name="View_ManageDB_ExportDBNewPW.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Exportieren der ausgewählten Datenbank mit einem anderen Password</value>
   </data>
 </root>

@@ -585,13 +585,13 @@
   <data name="PW_SafetyChart_Info_Predictability_Positive.Text" xml:space="preserve">
     <value>Low</value>
   </data>
-  <data name="PW_SafetyChart_Info_Punctuation.Text" xml:space="preserve">
-    <value>Contains Punctuation:</value>
+  <data name="PW_SafetyChart_Info_SpecialChars.Text" xml:space="preserve">
+    <value>Contains Special Characters:</value>
   </data>
-  <data name="PW_SafetyChart_Info_Punctuation_Negative.Text" xml:space="preserve">
+  <data name="PW_SafetyChart_Info_SpecialChars_Negative.Text" xml:space="preserve">
     <value>False</value>
   </data>
-  <data name="PW_SafetyChart_Info_Punctuation_Positive.Text" xml:space="preserve">
+  <data name="PW_SafetyChart_Info_SpecialChars_Positive.Text" xml:space="preserve">
     <value>True</value>
   </data>
   <data name="PW_SafetyChart_Info_SeenBefore.Text" xml:space="preserve">
@@ -616,7 +616,7 @@
     <value>True</value>
   </data>
   <data name="PW_SafetyChart_LeakedExploited.Text" xml:space="preserve">
-    <value>Leaked or exploited</value>
+    <value>Leaked or Exploited</value>
   </data>
   <data name="PW_SafetyChart_LowerCaseLetters.Text" xml:space="preserve">
     <value>Lower case letters</value>
@@ -624,8 +624,8 @@
   <data name="PW_SafetyChart_Predictability.Text" xml:space="preserve">
     <value>Predictability</value>
   </data>
-  <data name="PW_SafetyChart_Punctation.Text" xml:space="preserve">
-    <value>Punctuation</value>
+  <data name="PW_SafetyChart_SpecialChars.Text" xml:space="preserve">
+    <value>Special Chars</value>
   </data>
   <data name="PW_SafetyChart_PWLength.Text" xml:space="preserve">
     <value>Password length</value>
@@ -1033,7 +1033,7 @@
     <value>Possible characters in password</value>
   </data>
   <data name="View_SettingsPage_PossiblePWCharacters.PlaceholderText" xml:space="preserve">
-    <value>Some letters, digits and punctation...</value>
+    <value>Some letters, digits and special chars...</value>
   </data>
   <data name="View_SettingsPage_PWPopularityCounter.Header" xml:space="preserve">
     <value>Password popularity counter</value>
@@ -1067,5 +1067,11 @@
   </data>
   <data name="View_SettingsPage_VerifyPWLeaked.Header" xml:space="preserve">
     <value>Verify that the password was not leaked</value>
+  </data>
+  <data name="View_ManageDB_ExportDBNewPW.Content" xml:space="preserve">
+    <value>Export (diff. PW)</value>
+  </data>
+  <data name="View_ManageDB_ExportDBNewPW.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Export the database with a new password</value>
   </data>
 </root>
