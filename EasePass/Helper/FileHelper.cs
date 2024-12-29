@@ -5,7 +5,7 @@ namespace EasePass.Helper
     /// <summary>
     /// Includes common Methods for Files
     /// </summary>
-    public static class FileHelper
+    internal static class FileHelper
     {
         /// <summary>
         /// Gets the Extension of the given <paramref name="fileName"/>
