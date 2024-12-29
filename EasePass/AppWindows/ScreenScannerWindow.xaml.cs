@@ -87,6 +87,7 @@ namespace EasePass.AppWindows
 
         private void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
         {
+            InteropHelper.SetForegroundWindow(InteropHelper.GetWindowHandle(App.m_window));
             timer.Stop();
         }
     }

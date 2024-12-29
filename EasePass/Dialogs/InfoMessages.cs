@@ -163,6 +163,12 @@ namespace EasePass.Dialogs
             InfoBarSeverity.Error, 10
             );
 
+        public static void DatabaseWithThatNameAlreadyExists(Panel parent = null) => new InfoBar().Show(
+            "InfoMessages_DatabaseWithThatNameAlreadyExists",
+            InfoBarSeverity.Error, 10,
+            parent
+            );
+
         public static void UnhandledException(Exception ex) => new InfoBar().Show("Unhandled Exception:".Localized("InfoMessages_UnhandledException/Headline"), ex.Message, InfoBarSeverity.Error);
         public static void NewVersionInfo(string version)
         {

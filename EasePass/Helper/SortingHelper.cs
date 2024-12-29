@@ -97,7 +97,7 @@ namespace EasePass.Helper
             int pmi1_res = 0, pmi2_res = 0;
             for (int i = 0; i < strength1.Length; i++)
             {
-                pmi1_res += strength2[i] ? 1 : -1;
+                pmi1_res += strength1[i] ? 1 : -1;
                 pmi2_res += strength2[i] ? 1 : -1;
             }
             return -pmi1_res.CompareTo(pmi2_res);

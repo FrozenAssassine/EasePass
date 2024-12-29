@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Dialogs;
 using EasePass.Extensions;
 using EasePass.Helper;
 using Microsoft.UI.Xaml.Controls;
@@ -32,16 +33,29 @@ namespace EasePass.Views
         {
             this.InitializeComponent();
         }
-
-        public (string path, SecureString masterPassword, string databaseName) Evaluate()
+        private string CreateDatabaseName()
         {
-            return (databaseOutputLocation, passwordBox.Password.ConvertToSecureString(), databaseName.Text.Length == 0 ? "Database" : databaseName.Text);
+            return databaseName.Text.Length == 0 ? "Database" : databaseName.Text;
+        }
+
+        private string CreateDatabasePath()
+        {
+            var path = Path.Combine(databaseOutputLocation, CreateDatabaseName() + ".epdb");
+            
+            return path;
+        }
+
+        public (string path, SecureString masterPassword) Evaluate()
+        {
+            return (CreateDatabasePath(), passwordBox.Password.ConvertToSecureString());
         }
 
         public bool PasswordsMatch => passwordBoxRepeat.Password == passwordBox.Password;
         public bool PathValid => databaseOutputLocation.Length > 0;
         public string DatabasePath => databaseOutputLocation;
         public bool PasswordLengthCorrect => passwordBox.Password.Length > 3;
+        public bool PathAlreadyExists => File.Exists(CreateDatabasePath());
+        
         private void databaseName_TextChanged(object sender, TextChangedEventArgs e)
         {
             char[] invalidChars = Path.GetInvalidFileNameChars();
@@ -63,6 +77,11 @@ namespace EasePass.Views
 
             databasePath.Text = pickerRes.path;
             databaseOutputLocation = pickerRes.path;
+
+            if(PathValid && PathAlreadyExists)
+            {
+                InfoMessages.DatabaseWithThatNameAlreadyExists(infoMessageParent);
+            }
         }
     }
 }

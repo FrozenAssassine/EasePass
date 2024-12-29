@@ -387,6 +387,12 @@
   <data name="InfoMessages_DatabaseSaveToFileError.Text" xml:space="preserve">
     <value>Data save error at {path}. Verify connection or device storage, then retry.</value>
   </data>
+  <data name="InfoMessages_DatabaseWithThatNameAlreadyExists.Headline" xml:space="preserve">
+    <value>Database already exists</value>
+  </data>
+  <data name="InfoMessages_DatabaseWithThatNameAlreadyExists.Text" xml:space="preserve">
+    <value>A database with the same name already exists on the given path</value>
+  </data>
   <data name="InfoMessages_DownloadPluginProgress.Headline" xml:space="preserve">
     <value>Downloading plugin in progress</value>
   </data>
@@ -878,6 +884,18 @@
   </data>
   <data name="View_PasswordPage_Flyout_ExportNewPassword/Text" xml:space="preserve">
     <value>Export (diff. password)</value>
+  </data>
+  <data name="View_PasswordPage_OOBE_Hyperlink.Content" xml:space="preserve">
+    <value>Settings &gt; Manage Database</value>
+  </data>
+  <data name="View_PasswordPage_OOBE_Info1.Text" xml:space="preserve">
+    <value>Use the buttons in the top to create a new entry!</value>
+  </data>
+  <data name="View_PasswordPage_OOBE_Info2.Text" xml:space="preserve">
+    <value>Additionally you can import an existing database by going into:</value>
+  </data>
+  <data name="View_PasswordPage_OOBE_Welcome.Text" xml:space="preserve">
+    <value>Welcome to Ease Pass.</value>
   </data>
   <data name="View_PasswordPage_Searchbox.PlaceholderText" xml:space="preserve">
     <value>Search</value>
