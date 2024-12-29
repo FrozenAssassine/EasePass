@@ -23,6 +23,7 @@ namespace EasePass.Controls
 {
     public sealed partial class CopyPasswordbox : TextBox
     {
+        private Button showPasswordButton = null;
         private PasswordSafetyChart pwSafetyChart = new PasswordSafetyChart
         {
             Margin = new Thickness(6, 2, 5, 2),
@@ -41,6 +42,9 @@ namespace EasePass.Controls
         private void ToggleShowPassword(bool show)
         {
             base.Text = show ? _Password : new string('•', _Password.Length);
+
+            if (showPasswordButton != null)
+                showPasswordButton.Content = ShowPassword ? '\uED1A' : '\uF78D';
         }
 
         private string _Password;
@@ -73,11 +77,7 @@ namespace EasePass.Controls
 
         private void showPW_Toggled(object sender, RoutedEventArgs e)
         {
-            if (sender is Button button)
-            {
-                ShowPassword = !ShowPassword;
-                button.Content = ShowPassword ? '\uED1A' : '\uF78D';
-            }
+            ShowPassword = !ShowPassword;
         }
 
         private void TextBox_PreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -100,6 +100,10 @@ namespace EasePass.Controls
 
             if (!sp.Children.Contains(pwSafetyChart))
                 sp.Children.Add(pwSafetyChart);
+
+            showPasswordButton = GetTemplateChild("showPasswordButton") as Button;
+
+            ToggleShowPassword(false);
         }
     }
 }

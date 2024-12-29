@@ -269,6 +269,7 @@ namespace EasePass.Views
             {
                 SelectedItem = pwItem;
                 SelectedItem.Clicks.Add(DateTime.Now.ToString("d").Replace("/", "."));
+                pwTB.ShowPassword = false;
                 Update2FATimer();
             }
         }
