@@ -2,6 +2,7 @@
 using EasePass.Helper;
 using EasePass.Models;
 using EasePass.Settings;
+using Microsoft.UI.Xaml.Documents;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -74,7 +75,8 @@ namespace EasePass.Core.Database
             CallPropertyChanged("Items");
         }
 
-        public bool Load(SecureString password, bool showWrongPasswordError = true)
+
+        public bool Unlock(SecureString password, bool showWrongPasswordError = true)
         {
             var res = CheckPasswordCorrect(password, showWrongPasswordError);
 
@@ -96,6 +98,13 @@ namespace EasePass.Core.Database
 
             CallPropertyChanged("Items");
             CallPropertyChanged("MasterPassword");
+
+            return true;
+        }
+
+        public bool Load(SecureString password, bool showWrongPasswordError = true)
+        {
+            Unlock(password, showWrongPasswordError);
 
             Database.LoadedInstance = this;
             return true;

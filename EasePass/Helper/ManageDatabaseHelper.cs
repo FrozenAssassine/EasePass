@@ -37,11 +37,10 @@ internal class ManageDatabaseHelper
             return null; //cancelled by user
 
         DatabaseItem db = new DatabaseItem(pickerResult.path);
-        if (!db.Load(password))
+        if (!db.Unlock(password))
             return null;
 
         Database.AddDatabasePath(db.Path);
-        Database.LoadedInstance.Save();
         return db;
     }
 
