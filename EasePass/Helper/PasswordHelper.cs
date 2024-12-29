@@ -16,6 +16,8 @@ copies or substantial portions of the Software.
 
 using EasePass.Models;
 using EasePass.Settings;
+using EasePassExtensibility;
+using Microsoft.UI.Xaml.Documents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +37,8 @@ namespace EasePass.Helper
         private const string ABC = "abcdefghijklmnopqrstuvwxyz";
         private const int StringMinRepeat = 5;
         private const int IntegerMinRepeat = 4;
+
+        private static readonly Random random = new Random();
 
         private static List<CommonPasswordSequence> CommonSequences = new List<CommonPasswordSequence>()
         {
@@ -91,29 +95,106 @@ namespace EasePass.Helper
         /// <returns>Returns the generated Password</returns>
         public static async Task<string> GeneratePassword()
         {
+            Random r = random;
             disableLeakedPasswords = AppSettings.DisableLeakedPasswords;
             int length = AppSettings.PasswordLength;
-            string chars = AppSettings.PasswordChars;
-            Random r = new Random();
-
+            string allowedChars = AppSettings.PasswordChars;
+            int alength = allowedChars.Length;
+            var aIncludes = GetAllowedIncludes(allowedChars);
+            
             StringBuilder password = new StringBuilder();
             do
             {
                 password.Clear();
-                do
+                for (int i = 0; i < length; i++)
                 {
-                    if (password.Length > length)
-                        password.Clear();
-
-                    password.Append(chars[r.Next(chars.Length)]);
+                    password.Append(allowedChars[r.Next(alength)]);
                 }
-                while (!IsSecure(chars, length, password.ToString()));
             }
-            while ((!disableLeakedPasswords) && (await IsPwned(password.ToString()) == true));
+            while ((!IsSecure(password, length, aIncludes)) || ((!disableLeakedPasswords) && (await IsPwned(password.ToString()) == true)));
             
             return password.ToString();
         }
 
+        public static (bool includeUpper, bool includeLower, bool includePunction, bool includeNumber) GetAllowedIncludes(ReadOnlySpan<char> allowedChars)
+        {
+            bool includeUpper = false;
+            bool includeLower = false;
+            bool includePunction = false;
+            bool includeNumber = false;
+
+            for (int i = 0; i < allowedChars.Length; i++)
+            {
+                if (!includeUpper && char.IsUpper(allowedChars[i]))
+                {
+                    includeUpper = true;
+                }
+                else if (!includeLower && char.IsLower(allowedChars[i]))
+                {
+                    includeLower = true;
+                }
+                else if (!includePunction && IsPunction(allowedChars[i]))
+                {
+                    includePunction = true;
+                }
+                else if (!includeNumber && char.IsNumber(allowedChars[i]))
+                {
+                    includeNumber = true;
+                }
+                else if (includeUpper && includeLower && includePunction && includeNumber)
+                {
+                    break;
+                }
+            }
+            return (includeUpper, includeLower, includePunction, includeNumber);
+        }
+
+        public static bool IsPunction(char c)
+        {
+            switch (c)
+            {
+                case '!': return true;
+                case '"': return true;
+                case '§': return true;
+                case '$': return true;
+                case '%': return true;
+                case '&': return true;
+                case '/': return true;
+                case '{': return true;
+                case '(': return true;
+                case '[': return true;
+                case ')': return true;
+                case ']': return true;
+                case '=': return true;
+                case '}': return true;
+                case '?': return true;
+                case '\\': return true;
+                case '`': return true;
+                case '´': return true;
+                case '*': return true;
+                case '+': return true;
+                case '~': return true;
+                case '³': return true;
+                case '\'': return true;
+                case '#': return true;
+                case '-': return true;
+                case '_': return true;
+                case '.': return true;
+                case ':': return true;
+                case ',': return true;
+                case ';': return true;
+                case '<': return true;
+                case '>': return true;
+                case '|': return true;
+                case '²': return true;
+                default: return false;
+            }
+        }
+
+        public static bool IsSecure(StringBuilder sb, int length, (bool includeUpper, bool includeLower, bool includePunction, bool includeNumber) includes)
+        {
+            return IsSecure(sb, length, includes.includeUpper, includes.includeLower, includes.includePunction, includes.includeNumber);
+        }
         /// <summary>
         /// Validates if the given <paramref name="password"/> is Secure
         /// </summary>
@@ -121,66 +202,50 @@ namespace EasePass.Helper
         /// <param name="length">The Length, which the Password should have</param>
         /// <param name="password">The Password</param>
         /// <returns>Returns <see langword="true"/> if the Password is Secure</returns>
-        private static bool IsSecure(ReadOnlySpan<char> chars, int length, ReadOnlySpan<char> password)
+        public static bool IsSecure(StringBuilder sb, int length, bool includeUpper = true, bool includeLower = true, bool includePunction = true, bool includeNumber = true)
         {
-            int maxpoints = 2 + GetMaxPoints(chars); // 1 because of length + common sequences
-            int securepoints = 0 + GetMaxPoints(password);
+            int sLength = sb.Length;
+            Span<char> chars = length < 1025 ? stackalloc char[sLength] : new char[sLength];
+            sb.CopyTo(0, chars, sLength);
 
-            if (password.Length >= length)
+            bool upper = !includeUpper;
+            bool lower = !includeLower;
+            bool punction = !includePunction;
+            bool number = !includeNumber;
+            if (length > chars.Length)
+                return false;
+
+            if (ContainsCommonSequences(chars))
             {
-                securepoints++;
+                return false;
             }
-            if (!ContainsCommonSequences(password))
-            {
-                securepoints++;
-            }
-            return securepoints == Math.Min(maxpoints, length);
-        }
 
-        /// <summary>
-        /// Gets the Amount of Points of the current String
-        /// One point is awarded for each criterion met
-        /// Criterion: Digit, Lower, Upper, Punction
-        /// </summary>
-        /// <param name="chars">The String, which will be rated</param>
-        /// <returns>Returns the Points of the String.</returns>
-        private static int GetMaxPoints(ReadOnlySpan<char> chars)
-        {
-            int maxpoints = 0;
-            bool digit = false;
-            bool lower = false;
-            bool upper = false;
-            bool punctation = false;
-
-            for (int i = 0; i < chars.Length; i++)
+            foreach (char c in chars)
             {
-                if (!digit && char.IsDigit(chars[i]))
-                {
-                    digit = true;
-                    maxpoints++;
-                }
-                else if (!lower && char.IsLower(chars[i]))
-                {
-                    lower = true;
-                    maxpoints++;
-                }
-                else if (!upper && char.IsUpper(chars[i]))
+                if (!upper && char.IsUpper(c))
                 {
                     upper = true;
-                    maxpoints++;
                 }
-                else if (!punctation && char.IsPunctuation(chars[i]))
+                else if (!lower && char.IsLower(c))
                 {
-                    punctation = true;
-                    maxpoints++;
+                    lower = true;
                 }
-                else if (digit && lower && upper && punctation)
+                else if (!punction && char.IsPunctuation(c))
                 {
-                    break;
+                    punction = true;
+                }
+                else if (!number && char.IsNumber(c))
+                {
+                    number = true;
+                }
+                else if (upper && lower && punction && number)
+                {
+                    return true;
                 }
             }
-            return maxpoints;
+            return false;
         }
+
 
         public static bool[] EvaluatePassword(string password)
         {
