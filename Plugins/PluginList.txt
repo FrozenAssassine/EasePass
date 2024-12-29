@@ -1,3 +1,3 @@
 Browser Password Importer|https://github.com/FrozenAssassine/EasePass/raw/master/Plugins/EasePassBrowserPasswordImporter.dll
 WLAN Password Importer|https://github.com/FrozenAssassine/EasePass/raw/master/Plugins/EasePassWLANPasswordImporter.dll
-WLAN Password Importer|https://github.com/FrozenAssassine/EasePass/raw/master/Plugins/EasePassFilePasswordImporter.dll
+File Password Importer|https://github.com/FrozenAssassine/EasePass/raw/master/Plugins/EasePassFilePasswordImporter.dll
