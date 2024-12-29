@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace EasePass.Helper
 {
-    internal class RequestsHelper
+    internal static class RequestsHelper
     {
         public static async Task<(bool success, string result)> MakeRequest(string url)
         {
@@ -49,16 +49,12 @@ namespace EasePass.Helper
 
         public static async Task<bool> DownloadFileAsync(string url, string path, int timeoutMillis = 5000, Action<string> error = null)
         {
-            if(!Uri.TryCreate(url, UriKind.Absolute, out Uri uri))
-            {
+            if (!Uri.TryCreate(url, UriKind.Absolute, out Uri uri))
                 return false;
-            }
 
             //check for valid url with toplevel domain
-            if (!Regex.IsMatch(uri.Host, @"^(?!\-)([a-zA-Z0-9\-]{1,63})(?<!\-)\.([a-zA-Z]{2,})$"))
-            {
+            if (!Regexs.DNS.ValidDNS().IsMatch(uri.Host))
                 return false;
-            }
 
             return await DownloadFileAsync(uri, path, timeoutMillis, error);
         }
@@ -67,7 +63,6 @@ namespace EasePass.Helper
         {
             try
             {
-
                 using (HttpClient client = new HttpClient(new HttpClientHandler { AllowAutoRedirect = true }))
                 {
                     client.Timeout = TimeSpan.FromMilliseconds(timeoutMillis);
