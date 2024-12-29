@@ -879,6 +879,18 @@
   <data name="View_PasswordPage_Flyout_ExportNewPassword/Text" xml:space="preserve">
     <value>Export (diff. password)</value>
   </data>
+  <data name="View_PasswordPage_OOBE_Hyperlink.Content" xml:space="preserve">
+    <value>Settings &gt; Manage Database</value>
+  </data>
+  <data name="View_PasswordPage_OOBE_Info1.Text" xml:space="preserve">
+    <value>Use the buttons in the top to create a new entry!</value>
+  </data>
+  <data name="View_PasswordPage_OOBE_Info2.Text" xml:space="preserve">
+    <value>Additionally you can import an existing database by going into:</value>
+  </data>
+  <data name="View_PasswordPage_OOBE_Welcome.Text" xml:space="preserve">
+    <value>Welcome to Ease Pass.</value>
+  </data>
   <data name="View_PasswordPage_Searchbox.PlaceholderText" xml:space="preserve">
     <value>Search</value>
   </data>

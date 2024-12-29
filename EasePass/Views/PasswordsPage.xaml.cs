@@ -432,12 +432,8 @@ namespace EasePass.Views
             DatabaseDragDropHelper.DragOver(e);
         }
 
-        private void OOBE_HyperlinkSettings(Microsoft.UI.Xaml.Documents.Hyperlink sender, Microsoft.UI.Xaml.Documents.HyperlinkClickEventArgs args)
-        {
-            NavigationHelper.ToSettings(this);
-        }
 
-        private void OOBE_HyperlinkManageDB(Microsoft.UI.Xaml.Documents.Hyperlink sender, Microsoft.UI.Xaml.Documents.HyperlinkClickEventArgs args)
+        private void OOBE_HyperlinkManageDB(object sender, RoutedEventArgs e)
         {
             NavigationHelper.ToManageDB();
         }

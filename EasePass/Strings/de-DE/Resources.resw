@@ -1066,6 +1066,18 @@
     <value>Exportieren (anderes Passwort)</value>
   </data>
   <data name="View_SettingsPage_ResetPopularityCounter.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Setzt den Beliebtheitszähler zurück, der zählt, wie oft ein Passwort verwendet wurde.</value>
+    <value>Setzt den Beliebtheitszähler der Passwörter zurück.</value>
+  </data>
+  <data name="View_PasswordPage_OOBE_Welcome.Text" xml:space="preserve">
+    <value>Willkommen bei Ease Pass</value>
+  </data>
+  <data name="View_PasswordPage_OOBE_Info1.Text" xml:space="preserve">
+    <value>Nutzen Sie die oberen Buttons um einen Eintrag anzulegen!</value>
+  </data>
+  <data name="View_PasswordPage_OOBE_Info2.Text" xml:space="preserve">
+    <value>Sie können aber auch eine Datenbank importieren, gehen Sie dafür auf:</value>
+  </data>
+  <data name="View_PasswordPage_OOBE_Hyperlink.Content" xml:space="preserve">
+    <value>Einstellungen &gt; Datenbank verwalten</value>
   </data>
 </root>
