@@ -34,9 +34,10 @@ namespace EasePass.Controls
         private async void CopyText_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             string txt = this.Text;
-            if (!txt.ToLower().StartsWith("http")) txt = "http://" + txt;
             if (string.IsNullOrEmpty(txt))
                 return;
+
+            if (!txt.ToLower().StartsWith("http")) txt = "http://" + txt;
             try
             {
                 if (IsUrlAction)

@@ -29,6 +29,7 @@ namespace EasePass.Views
         public RegisterPage()
         {
             this.InitializeComponent();
+            App.m_window.ShowBackArrow = false;
         }
 
         private void Register_Click(object sender, RoutedEventArgs e)

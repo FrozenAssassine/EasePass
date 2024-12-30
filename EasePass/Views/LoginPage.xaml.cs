@@ -35,6 +35,7 @@ namespace EasePass.Views
             this.InitializeComponent();
 
             passwordBox.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
+            App.m_window.ShowBackArrow = false;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
