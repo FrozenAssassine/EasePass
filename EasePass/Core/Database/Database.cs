@@ -116,7 +116,7 @@ public class Database
         paths.AddRange(GetAllDatabasePaths());
         for (int i = 0; i < paths.Count; i++)
         {
-            if (paths[i].Equals(path.ToLower(), StringComparison.OrdinalIgnoreCase))
+            if (paths[i].Equals(path, StringComparison.OrdinalIgnoreCase))
             {
                 paths.RemoveAt(i);
                 i--;
