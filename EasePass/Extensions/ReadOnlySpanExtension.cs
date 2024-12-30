@@ -2,8 +2,27 @@
 
 namespace EasePass.Extensions
 {
+    /// <summary>
+    /// Includes all Extension Methods for the <see cref="ReadOnlySpan{T}"/>
+    /// </summary>
     internal static class ReadOnlySpanExtension
     {
+        /// <summary>
+        /// Converts the given <paramref name="value"/> to a <see cref="byte"/>[]
+        /// </summary>
+        /// <param name="value">The Value, which should be converted</param>
+        /// <returns>Returns the <paramref name="value"/> as <see cref="byte"/>[]</returns>
+        public static byte[] ConvertToBytes(this ReadOnlySpan<char> value)
+        {
+            byte[] bytes = new byte[value.Length];
+            
+            for (int i = 0; i < value.Length; i++)
+            {
+                bytes[i] = (byte)value[i];
+            }
+            return bytes;
+        }
+
         /// <summary>
         /// Counts every occurence of the given <paramref name="c"/> in the <paramref name="span"/>
         /// </summary>
