@@ -60,6 +60,9 @@ public sealed partial class SelectExportPasswordsDialogPage : Page
 
     private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        amount.Text = ((ListView)sender).SelectedItems.Count + " / " + PWItems.Count.ToString();
+        if (sender is ListView item)
+        {
+            amount.Text = item.SelectedItems.Count + " / " + PWItems.Count.ToString();
+        }
     }
 }
