@@ -40,9 +40,6 @@ public sealed partial class SelectExportPasswordsDialogPage : Page
 
     private void selectAll_Checkbox_Toggled(object sender, RoutedEventArgs e)
     {
-        if (PWItems == default)
-            return;
-        
         if (selectAll_Checkbox.IsChecked == false)
         {
             listView.SelectAll();
