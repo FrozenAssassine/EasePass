@@ -63,7 +63,7 @@ public sealed partial class SelectExportPasswordsDialogPage : Page
             amount.Text = count + " / " + PWItems.Count;
         }
 
-        if (count <= 0)
+        if (count <= 0 && selectAll_Checkbox.IsChecked == true)
         {
             selectAll_Checkbox.IsChecked = false;
         }
