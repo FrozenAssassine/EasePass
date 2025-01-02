@@ -1,17 +1,17 @@
-﻿namespace EasePass.Core.Database.epdb.v1_1
+﻿namespace EasePass.Core.Database.epdb.v1
 {
-    internal class DatabaseLoader : IDatabaseLoader
+    internal class DatabaseLoader : ADatabaseLoader, IDatabaseLoader
     {
         public static double Version => 1.0;
 
-        public static bool Load(string path)
+        public static string Decrypt()
         {
-            return false;
+            throw new System.NotImplementedException();
         }
 
-        public static bool Save(string path)
+        public static byte[] Encrypt()
         {
-            return false;
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -1,72 +1,51 @@
-﻿using EasePass.Core.Database.Serialization;
-using EasePass.Models;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Security;
+﻿using System;
+using System.Linq;
 
 namespace EasePass.Core.Database.epdb
 {
-    internal interface IDatabaseLoader
+    public interface IDatabaseLoader
     {
-        public static virtual double Version => 1.1;
+        #region Properties
+        /// <summary>
+        /// The Version of the File.
+        /// </summary>
+        public static abstract double Version { get; }
+        #endregion
+
+        #region Decrypt/Encrypt
+        /// <summary>
+        /// Decrypts the Database content
+        /// </summary>
+        /// <returns>Returns the decrypted Databasecontent</returns>
+        public static abstract string Decrypt();
 
         /// <summary>
-        /// Loads the given Database in the <paramref name="path"/>
+        /// Encrypts the Database content
         /// </summary>
-        /// <param name="path">The Path to the Database</param>
-        /// <returns>Returns </returns>
-        public static virtual (PasswordValidationResult result, DatabaseFile database) Load(string path, SecureString password, bool showWrongPasswordError)
+        /// <returns>Returns the encrypted Databasecontent</returns>
+        public static abstract byte[] Encrypt();
+        #endregion
+
+        #region GetDatabaseLoader
+        /// <summary>
+        /// Gets the DatabaseLoader as <see cref="Type"/>
+        /// </summary>
+        /// <param name="version">The Version of the Database</param>
+        /// <returns>Returns the <see cref="Type"/> of the DatabaseLoader</returns>
+        public static Type GetDatabaseLoader(double version)
         {
-            if (password == null)
-                return (PasswordValidationResult.WrongPassword, null);
+            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes())
+                .Where(p => typeof(IDatabaseLoader).IsAssignableFrom(p)).ToArray();
 
-            if (!File.Exists(path))
-                return (PasswordValidationResult.DatabaseNotFound, null);
-
-            var oldImporterRes = OldDatabaseImporter.CheckValidPassword(path, password, showWrongPasswordError);
-            if (oldImporterRes.result == PasswordValidationResult.Success)
+            foreach (var type in types)
             {
-                
+                double versionValue = ((double?)type.GetProperty(nameof(Version)).GetValue(type, null)) ?? 0;
+
+                if (versionValue == version)
+                    return type;
             }
-
-            var (data, success) = Database.ReadFile(path, password, showWrongPasswordError);
-            if (success)
-                //return (PasswordValidationResult.Success, data);
-                return (PasswordValidationResult.Success, null);
-
-            return (PasswordValidationResult.WrongPassword, null);
-
-            return default;
+            return typeof(MainDatabaseLoader);
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static virtual bool Save(string path, SecureString password, ObservableCollection<PasswordManagerItem> items)
-        {
-
-
-            return false;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static virtual string Decrypt()
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static virtual byte[] Encrypt()
-        {
-            return null;
-        }
+        #endregion
     }
 }
