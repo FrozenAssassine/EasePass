@@ -1,5 +1,5 @@
 ﻿using EasePass.Core.Database.Enums;
-using EasePass.Core.Database.Serialization;
+using EasePass.Core.Database.Format.Serialization;
 using EasePass.Helper;
 using EasePass.Models;
 using Newtonsoft.Json;
