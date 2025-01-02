@@ -19,9 +19,10 @@ namespace EasePass.Core.Database.Format.epdb.v1
             settings.UseSecondFactor = false;
 
             DatabaseFile database = new DatabaseFile();
+            database.DatabaseFileType = Enums.DatabaseFileType.epdb;
+            database.Version = Version;
             database.Settings = settings;
             database.Items = IDatabaseLoader.DeserializePasswordManagerItems(data);
-            database.Version = Version;
 
             return (PasswordValidationResult.Success, database);
         }

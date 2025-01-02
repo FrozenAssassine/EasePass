@@ -56,9 +56,10 @@ namespace EasePass.Core.Database.Format.epdb
             }
 
             DatabaseFile database = new DatabaseFile();
+            database.DatabaseFileType = Enums.DatabaseFileType.epdb;
+            database.Version = Version;
             database.Settings = settings;
             database.Data = data;
-            database.Version = Version;
 
             json = database.Serialize();
             data = EncryptDecryptHelper.EncryptStringAES(json, password);

@@ -178,7 +178,7 @@ namespace EasePass.Core.Database.Format
         /// <param name="secondFactor">The SecondFactor Token of the Database if <see cref="DatabaseSettings.UseSecondFactor"/> is <see langword="true"/></param>
         /// <param name="settings">The Settings of the Database</param>
         /// <returns>Returns the <see langword="true"/> if the Database was saved successfully</returns>
-        public static virtual bool Save(string path, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
+        public static bool Save(string path, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
         {
             return MainDatabaseLoader.Save(path, password, secondFactor, settings, items);
         }

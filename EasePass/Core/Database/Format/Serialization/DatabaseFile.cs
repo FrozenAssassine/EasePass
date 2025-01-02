@@ -1,4 +1,5 @@
-﻿using EasePass.Models;
+﻿using EasePass.Core.Database.Enums;
+using EasePass.Models;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
@@ -10,6 +11,11 @@ namespace EasePass.Core.Database.Format.Serialization
     public class DatabaseFile
     {
         #region Properties
+        /// <summary>
+        /// The Type of the Database File
+        /// </summary>
+        public DatabaseFileType DatabaseFileType { get; set; }
+
         /// <summary>
         /// The Version of the Database, this will be used to check if the File needs to be converted in the Future
         /// </summary>
