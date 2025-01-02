@@ -267,7 +267,4 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Database\epeb\" />
-  </ItemGroup>
 </Project>

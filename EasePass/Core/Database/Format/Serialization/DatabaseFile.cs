@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
-namespace EasePass.Core.Database.Serialization
+namespace EasePass.Core.Database.Format.Serialization
 {
     /// <summary>
     /// The Fileformat of the Database which will be used for Serialization/Deserialization
@@ -10,6 +10,11 @@ namespace EasePass.Core.Database.Serialization
     public class DatabaseFile
     {
         #region Properties
+        /// <summary>
+        /// The Version of the Database, this will be used to check if the File needs to be converted in the Future
+        /// </summary>
+        public double Version { get; set; }
+
         /// <summary>
         /// The Settings of the Database
         /// </summary>

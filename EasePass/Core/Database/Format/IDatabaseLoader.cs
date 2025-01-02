@@ -1,44 +1,26 @@
-﻿using EasePass.Core.Database.Serialization;
+﻿using EasePass.Core.Database.Format.epdb;
+using EasePass.Core.Database.Format.Serialization;
 using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Security;
 
-namespace EasePass.Core.Database.epdb
+namespace EasePass.Core.Database.Format
 {
-    public abstract class ADatabaseLoader
+    /// <summary>
+    /// Interface for the DatabaseLoader
+    /// </summary>
+    public interface IDatabaseLoader
     {
-        #region ConvertToDatabaseFile
-        private protected static (PasswordValidationResult result, DatabaseFile database) ConvertToDatabaseFile((PasswordValidationResult result, string decryptedData) content)
-        {
-            DatabaseSettings settings = new DatabaseSettings();
-            settings.SecondFactorType = Enums.SecondFactorType.None;
-            settings.UseSecondFactor = false;
-            settings.Version = MainDatabaseLoader.Version;
-
-            DatabaseFile databaseFile = new DatabaseFile();
-            databaseFile.Settings = settings;
-            databaseFile.Items = GetItems(content.decryptedData);
-            databaseFile.Data = null;
-            
-            return (content.result, databaseFile);
-        }
-        private static ObservableCollection<PasswordManagerItem> GetItems(string json)
-        {
-            try
-            {
-                return JsonConvert.DeserializeObject<ObservableCollection<PasswordManagerItem>>(json);
-            }
-            catch
-            {
-                InfoMessages.DatabaseInvalidData();
-                return null;
-            }
-        }
+        #region Properties
+        /// <summary>
+        /// The Version of the File.
+        /// </summary>
+        public static abstract double Version { get; }
         #endregion
 
         #region DecryptData
@@ -63,7 +45,7 @@ namespace EasePass.Core.Database.epdb
                 }
                 return false;
             }
-            
+
             decryptedData = result.decryptedString;
             return true;
         }
@@ -110,37 +92,17 @@ namespace EasePass.Core.Database.epdb
         /// <returns>Returns the <see cref="Type"/> of the DatabaseLoader</returns>
         public static Type GetDatabaseLoader(double version)
         {
-            return IDatabaseLoader.GetDatabaseLoader(version);
-        }
-        #endregion
+            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes())
+                .Where(p => typeof(IDatabaseLoader).IsAssignableFrom(p)).ToArray();
 
-        #region Load
-        /// <summary>
-        /// Loads the given Database in the <paramref name="path"/>
-        /// </summary>
-        /// <param name="path">The Path to the Database</param>
-        /// <param name="password">The Password of the Database</param>
-        /// <param name="showWrongPasswordError">Specifies if an Error should occure if the Password is wrong</param>
-        /// <returns>Returns </returns>
-        public static (PasswordValidationResult result, DatabaseFile database) Load(string path, SecureString password, bool showWrongPasswordError)
-        {
-            if (password == null)
-                return (PasswordValidationResult.WrongPassword, null);
+            foreach (var type in types)
+            {
+                double versionValue = (double?)type.GetProperty(nameof(Version)).GetValue(type, null) ?? 0;
 
-            if (!File.Exists(path))
-                return (PasswordValidationResult.DatabaseNotFound, null);
-
-            var oldImporterRes = OldDatabaseImporter.CheckValidPassword(path, password, showWrongPasswordError);
-            if (oldImporterRes.result == PasswordValidationResult.Success)
-                return ConvertToDatabaseFile(oldImporterRes);
-
-            var (data, success) = Database.ReadFile(path, password, showWrongPasswordError);
-            if (success)
-                return ConvertToDatabaseFile((PasswordValidationResult.Success, data));
-
-
-
-            return (PasswordValidationResult.WrongPassword, null);
+                if (versionValue == version)
+                    return type;
+            }
+            return typeof(MainDatabaseLoader);
         }
         #endregion
 
@@ -194,33 +156,31 @@ namespace EasePass.Core.Database.epdb
         }
         #endregion
 
+        #region Load
+        /// <summary>
+        /// Loads the given Database in the <paramref name="path"/>
+        /// </summary>
+        /// <param name="path">The Path to the Database</param>
+        /// <param name="password">The Password of the Database</param>
+        /// <param name="showWrongPasswordError">Specifies if an Error should occure if the Password is wrong</param>
+        /// <returns>Returns the <see cref="PasswordValidationResult"/> and the <see cref="DatabaseFile"/>.
+        /// If the <see cref="PasswordValidationResult"/> is not equal to <see cref="PasswordValidationResult.Success"/> the
+        /// <see cref="DatabaseFile"/> is equal to <see cref="default"/></returns>
+        public abstract static (PasswordValidationResult result, DatabaseFile database) Load(string path, SecureString password, bool showWrongPasswordError);
+        #endregion
+
         #region Save
         /// <summary>
         /// Saves the Database to the given <paramref name="path"/> and encrypts the content with the <paramref name="password"/>
         /// </summary>
         /// <param name="path">The Path to the Database</param>
+        /// <param name="password">The Master Password of the Database</param>
+        /// <param name="secondFactor">The SecondFactor Token of the Database if <see cref="DatabaseSettings.UseSecondFactor"/> is <see langword="true"/></param>
+        /// <param name="settings">The Settings of the Database</param>
         /// <returns>Returns the <see langword="true"/> if the Database was saved successfully</returns>
-        public static bool Save(string path, SecureString password, SecureString secondFactor, DatabaseSettings settings)
+        public static virtual bool Save(string path, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
         {
-            return MainDatabaseLoader.Save(path, password, secondFactor, settings);
-        }
-        /// <summary>
-        /// Saves the Database to the given <paramref name="path"/> and encrypts the content with the <paramref name="password"/>
-        /// </summary>
-        /// <param name="path">The Path to the Database</param>
-        /// <returns>Returns the <see langword="true"/> if the Database was saved successfully</returns>
-        public static bool Save(string path, SecureString password, ObservableCollection<PasswordManagerItem> items)
-        {
-            return MainDatabaseLoader.Save(path, password, items);
-        }
-        /// <summary>
-        /// Saves the Database to the given <paramref name="path"/> and encrypts the content with the <paramref name="password"/>
-        /// </summary>
-        /// <param name="path">The Path to the Database</param>
-        /// <returns>Returns the <see langword="true"/> if the Database was saved successfully</returns>
-        public static bool Save(string path, SecureString password, SecureString secondFactor, ObservableCollection<PasswordManagerItem> items)
-        {
-            return MainDatabaseLoader.Save(path, password, secondFactor, items);
+            return MainDatabaseLoader.Save(path, password, secondFactor, settings, items);
         }
         #endregion
     }

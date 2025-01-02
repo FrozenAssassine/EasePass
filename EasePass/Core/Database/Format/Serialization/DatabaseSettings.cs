@@ -1,6 +1,6 @@
 ﻿using EasePass.Core.Database.Enums;
 
-namespace EasePass.Core.Database.Serialization
+namespace EasePass.Core.Database.Format.Serialization
 {
     /// <summary>
     /// Includes all Settings of the Database
@@ -18,11 +18,6 @@ namespace EasePass.Core.Database.Serialization
         /// The Type of the SecondFactor
         /// </summary>
         public SecondFactorType SecondFactorType { get; set; }
-
-        /// <summary>
-        /// The Version of the Database, this will be used to check if the File needs to be converted in the Future
-        /// </summary>
-        public double Version { get; set; }
         #endregion
 
         #region Deserialize
