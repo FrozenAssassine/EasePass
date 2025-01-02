@@ -34,7 +34,11 @@ namespace EasePass.Core.Database.Format.epdb
             if (!IDatabaseLoader.DecryptData(database.Data, password, showWrongPasswordError, out data))
                 return (PasswordValidationResult.WrongPassword, default);
 
-            database.Items = IDatabaseLoader.DeserializePasswordManagerItems(data);
+            ObservableCollection<PasswordManagerItem> items = IDatabaseLoader.DeserializePasswordManagerItems(data);
+            if (items == default)
+                return (PasswordValidationResult.WrongFormat, default);
+
+            database.Items = items;
             database.Data = Array.Empty<byte>();
 
             return (PasswordValidationResult.Success, database);

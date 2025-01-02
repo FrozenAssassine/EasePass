@@ -84,28 +84,6 @@ namespace EasePass.Core.Database.Format
         }
         #endregion
 
-        #region GetDatabaseLoader
-        /// <summary>
-        /// Gets the DatabaseLoader as <see cref="Type"/>
-        /// </summary>
-        /// <param name="version">The Version of the Database</param>
-        /// <returns>Returns the <see cref="Type"/> of the DatabaseLoader</returns>
-        public static Type GetDatabaseLoader(double version)
-        {
-            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes())
-                .Where(p => typeof(IDatabaseLoader).IsAssignableFrom(p)).ToArray();
-
-            foreach (var type in types)
-            {
-                double versionValue = (double?)type.GetProperty(nameof(Version)).GetValue(type, null) ?? 0;
-
-                if (versionValue == version)
-                    return type;
-            }
-            return typeof(MainDatabaseLoader);
-        }
-        #endregion
-
         #region ReadFile
         /// <summary>
         /// Reads the <see cref="byte"/>[] of the File in the given <paramref name="path"/>

@@ -15,7 +15,7 @@ namespace EasePass.Core.Database.Format.epeb
 
         public static (PasswordValidationResult result, DatabaseFile database) Load(string path, SecureString password, bool showWrongPasswordError)
         {
-            if (!FileHelper.HasExtension(path, ".epeb"))
+            if (!FileHelper.HasExtension(path, ".epeb") || !File.Exists(path))
                 return (PasswordValidationResult.DatabaseNotFound, default);
 
             string pw = new System.Net.NetworkCredential(string.Empty, password).Password;
@@ -23,14 +23,19 @@ namespace EasePass.Core.Database.Format.epeb
             if (!AuthenticationHelper.VerifyPassword(decryptedJson.PasswordHash, pw))
             {
                 if (showWrongPasswordError)
+                {
                     InfoMessages.ImportDBWrongPassword();
-                return (PasswordValidationResult.WrongPassword, null);
+                }
+                return (PasswordValidationResult.WrongPassword, default);
             }
 
             if (!IDatabaseLoader.DecryptData(decryptedJson.Data, password, showWrongPasswordError, out string data))
                 return (PasswordValidationResult.WrongPassword, default);
 
             ObservableCollection<PasswordManagerItem> items = IDatabaseLoader.DeserializePasswordManagerItems(data);
+            if (items == default)
+                return (PasswordValidationResult.WrongFormat, default);
+
             DatabaseSettings settings = new DatabaseSettings();
             settings.SecondFactorType = Enums.SecondFactorType.None;
             settings.UseSecondFactor = false;
@@ -40,7 +45,7 @@ namespace EasePass.Core.Database.Format.epeb
             database.Version = Version;
             database.Items = items;
             database.Settings = settings;
-            
+
             return (PasswordValidationResult.Success, database);
         }
     }
