@@ -112,17 +112,30 @@ public class Database
     }
     public static void RemoveDatabasePath(string path)
     {
-        List<string> paths = new List<string>();
-        paths.AddRange(GetAllDatabasePaths());
-        for (int i = 0; i < paths.Count; i++)
+        string[] paths = GetAllDatabasePaths();
+        if (paths == default || paths.Length == 0)
         {
-            if (paths[i].Equals(path, StringComparison.OrdinalIgnoreCase))
+            SetAllDatabasePaths(string.Empty);
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < paths.Length; i++)
+        {
+            if (!paths[i].Equals(path, StringComparison.OrdinalIgnoreCase))
             {
-                paths.RemoveAt(i);
-                i--;
+                sb.Append(paths[i]);
+                sb.Append('|');
             }
         }
-        SetAllDatabasePaths(string.Join('|', paths));
+
+        if (sb.Length <= 0)
+        {
+            SetAllDatabasePaths(string.Empty);
+            return;
+        }
+        sb.Remove(sb.Length - 1, 1);
+        SetAllDatabasePaths(sb.ToString());
     }
     public static DatabaseItem[] GetAllUnloadedDatabases()
     {
