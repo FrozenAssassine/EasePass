@@ -40,14 +40,32 @@ public sealed partial class SelectExportPasswordsDialogPage : Page
 
     private void selectAll_Checkbox_Toggled(object sender, RoutedEventArgs e)
     {
-        if (selectAll_Checkbox.IsChecked ?? false)
+        if (selectAll_Checkbox.IsChecked == true)
+        {
             listView.SelectAll();
+        }
         else
+        {
             listView.DeselectAll();
+        }
     }
 
     private void Page_Loaded(object sender, RoutedEventArgs e)
     {
         listView.SelectAll();
+    }
+
+    private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        int count = listView.SelectedItems.Count;
+        if (sender is ListView item)
+        {
+            amount.Text = count + " / " + PWItems.Count;
+        }
+
+        if (count <= 0 && selectAll_Checkbox.IsChecked == true)
+        {
+            selectAll_Checkbox.IsChecked = false;
+        }
     }
 }
