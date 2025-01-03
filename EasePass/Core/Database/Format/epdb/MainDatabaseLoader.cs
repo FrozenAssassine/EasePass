@@ -1,10 +1,12 @@
 ﻿using EasePass.Core.Database.Format.Serialization;
+using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Security;
+using System.Threading.Tasks;
 
 namespace EasePass.Core.Database.Format.epdb
 {
@@ -15,7 +17,7 @@ namespace EasePass.Core.Database.Format.epdb
         #endregion
 
         #region Load
-        public static (PasswordValidationResult result, DatabaseFile database) Load(string path, SecureString password, bool showWrongPasswordError)
+        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(string path, SecureString password, bool showWrongPasswordError)
         {
             if (!File.Exists(path))
                 return (PasswordValidationResult.DatabaseNotFound, default);
@@ -31,7 +33,23 @@ namespace EasePass.Core.Database.Format.epdb
             // - After receiving the Token check the SecondFactor Type
             // - Need to do that how the Decryption have to be done
 
-            if (!IDatabaseLoader.DecryptData(database.Data, password, showWrongPasswordError, out data))
+            if (database == default)
+                return (PasswordValidationResult.WrongFormat, default);
+
+            SecureString pw;
+            if (database.Settings.UseSecondFactor)
+            {
+                EnterSecondFactorDialog secondFactorDialog = new EnterSecondFactorDialog();
+                await secondFactorDialog.ShowAsync();
+                pw = secondFactorDialog.Token;
+                database.SecondFactor = pw;
+            }
+            else
+            {
+                pw = password;
+            }
+
+            if (!IDatabaseLoader.DecryptData(database.Data, pw, showWrongPasswordError, out data))
                 return (PasswordValidationResult.WrongPassword, default);
 
             ObservableCollection<PasswordManagerItem> items = IDatabaseLoader.DeserializePasswordManagerItems(data);

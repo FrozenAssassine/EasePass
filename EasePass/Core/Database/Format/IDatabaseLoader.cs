@@ -3,11 +3,13 @@ using EasePass.Core.Database.Format.Serialization;
 using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Security;
+using System.Threading.Tasks;
 
 namespace EasePass.Core.Database.Format
 {
@@ -77,10 +79,12 @@ namespace EasePass.Core.Database.Format
         {
             try
             {
-                return System.Text.Json.JsonSerializer.Serialize(items);
+                return JsonConvert.SerializeObject(items, Formatting.Indented);
             }
-            catch { }
-            return string.Empty;
+            catch
+            {
+                return string.Empty;
+            }
         }
         #endregion
 
@@ -144,7 +148,7 @@ namespace EasePass.Core.Database.Format
         /// <returns>Returns the <see cref="PasswordValidationResult"/> and the <see cref="DatabaseFile"/>.
         /// If the <see cref="PasswordValidationResult"/> is not equal to <see cref="PasswordValidationResult.Success"/> the
         /// <see cref="DatabaseFile"/> is equal to <see cref="default"/></returns>
-        public abstract static (PasswordValidationResult result, DatabaseFile database) Load(string path, SecureString password, bool showWrongPasswordError);
+        public abstract static Task<(PasswordValidationResult result, DatabaseFile database)> Load(string path, SecureString password, bool showWrongPasswordError);
         #endregion
 
         #region Save
@@ -155,6 +159,7 @@ namespace EasePass.Core.Database.Format
         /// <param name="password">The Master Password of the Database</param>
         /// <param name="secondFactor">The SecondFactor Token of the Database if <see cref="DatabaseSettings.UseSecondFactor"/> is <see langword="true"/></param>
         /// <param name="settings">The Settings of the Database</param>
+        /// <param name="items">The PasswordItems of the Database</param>
         /// <returns>Returns the <see langword="true"/> if the Database was saved successfully</returns>
         public static bool Save(string path, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
         {

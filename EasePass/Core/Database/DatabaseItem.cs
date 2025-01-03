@@ -1,17 +1,13 @@
-﻿using EasePass.Dialogs;
-using EasePass.Helper;
+﻿using EasePass.Core.Database.Format;
+using EasePass.Core.Database.Format.Serialization;
+using EasePass.Dialogs;
 using EasePass.Models;
-using EasePass.Settings;
-using Microsoft.UI.Xaml.Documents;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Security;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EasePass.Core.Database
@@ -19,12 +15,13 @@ namespace EasePass.Core.Database
     public class DatabaseItem : IDisposable, INotifyPropertyChanged
     {
         public string Name => MakeDatabaseName();
-        public string Path = "";
-        public SecureString MasterPassword = null;
-        public ObservableCollection<PasswordManagerItem> Items = null;
+        public string Path { get; set; } = "";
+        public SecureString MasterPassword { get; set; } = null;
+        public SecureString SecondFactor { get; set; } = null;
+        public DatabaseSettings Settings { get; set; } = null;
+        public ObservableCollection<PasswordManagerItem> Items { get; set; } = null;
         public DateTime LastModified => File.GetLastWriteTime(Path);
         public string LastModifiedStr => Name; //LastModified.ToString("D");
-
         public bool IsTemporaryDatabase { get; set; } = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -43,11 +40,11 @@ namespace EasePass.Core.Database
 
         private string MakeDatabaseName()
         {
-            var name = System.IO.Path.GetFileNameWithoutExtension(Path);
-
+            string name = System.IO.Path.GetFileNameWithoutExtension(Path);
             if (IsTemporaryDatabase)
+            {
                 name += " (Temp)";
-
+            }
             return name;
         }
 
@@ -58,7 +55,6 @@ namespace EasePass.Core.Database
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
-
 
         public void LoadedInstanceChanged()
         {
@@ -75,10 +71,9 @@ namespace EasePass.Core.Database
             CallPropertyChanged("Items");
         }
 
-
-        public bool Unlock(SecureString password, bool showWrongPasswordError = true)
+        public async Task<bool> Unlock(SecureString password, bool showWrongPasswordError = true)
         {
-            var res = CheckPasswordCorrect(password, showWrongPasswordError);
+            var res = await CheckPasswordCorrect(password, showWrongPasswordError);
 
             if (res.result == PasswordValidationResult.DatabaseNotFound)
             {
@@ -86,14 +81,18 @@ namespace EasePass.Core.Database
                 return false;
             }
 
-            if (res.result == PasswordValidationResult.WrongPassword)
+            if (res.result == PasswordValidationResult.WrongPassword || res.result == PasswordValidationResult.WrongFormat || res.result == PasswordValidationResult.WrongPassword)
                 return false;
 
             MasterPassword = password;
 
-            OldDatabaseImporter.CheckAndFixFile(this);
+            //OldDatabaseImporter.CheckAndFixFile(this);
 
-            Items = Database.LoadItems(res.decryptedData);
+            Items = res.database.Items;
+            Settings = res.database.Settings;
+            SecondFactor = res.database.SecondFactor;
+            res.database.SecondFactor = null;
+
             ClearOldClicksCache();
 
             CallPropertyChanged("Items");
@@ -102,15 +101,15 @@ namespace EasePass.Core.Database
             return true;
         }
 
-        public bool Load(SecureString password, bool showWrongPasswordError = true)
+        public async Task<bool> Load(SecureString password, bool showWrongPasswordError = true)
         {
-            Unlock(password, showWrongPasswordError);
+            await Unlock(password, showWrongPasswordError);
 
             Database.LoadedInstance = this;
             return true;
         }
 
-        public (PasswordValidationResult result, string decryptedData) CheckPasswordCorrect(SecureString enteredPassword, bool showWrongPasswordError = false)
+        public async Task<(PasswordValidationResult result, DatabaseFile database)> CheckPasswordCorrect(SecureString enteredPassword, bool showWrongPasswordError = false)
         {
             if (enteredPassword == null)
                 return (PasswordValidationResult.WrongPassword, null);
@@ -118,21 +117,16 @@ namespace EasePass.Core.Database
             if (!File.Exists(Path))
                 return (PasswordValidationResult.DatabaseNotFound, null);
 
-            var oldImporterRes = OldDatabaseImporter.CheckValidPassword(this.Path, enteredPassword, showWrongPasswordError);
-            if (oldImporterRes.result == PasswordValidationResult.Success)
-                return oldImporterRes;
-
-            var (data, success) = Database.ReadFile(Path, enteredPassword, showWrongPasswordError);
-            if (success)
-                return (PasswordValidationResult.Success, data);
-            
-            return (PasswordValidationResult.WrongPassword, null);
+            return await DatabaseFormatHelper.Load(Path, enteredPassword, showWrongPasswordError);
         }
 
         public void Save(string path = null)
         {
-            var data = Database.CreateJsonstring(Items);
-            Database.WriteFile(path ?? Path, data, MasterPassword);
+            path ??= Path;
+            if (string.IsNullOrWhiteSpace(path))
+                return;
+
+            DatabaseFormatHelper.Save(path, MasterPassword, SecondFactor, Settings, Items);
         }
 
         public void ClearOldClicksCache()
@@ -234,6 +228,7 @@ namespace EasePass.Core.Database
 
             CallPropertyChanged("Items");
         }
+
         public void SetNewPasswords(PasswordManagerItem[] items)
         {
             if (items == null)
@@ -248,6 +243,5 @@ namespace EasePass.Core.Database
 
             CallPropertyChanged("Items");
         }
-
     }
 }

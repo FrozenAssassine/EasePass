@@ -45,11 +45,10 @@ namespace EasePass.Views
             ManageDatabaseHelper.LoadDatabasesToCombobox(databasebox);
             TemporaryDatabaseHelper.HandleImportTempDatabase(e, databasebox);
 
-
             await DailyTipHelper.ShowDailyTip(dailyTipTextBlock, dailyTipGrid);
         }
 
-        private void PWLogin_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private async void PWLogin_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             if (WrongCount > 2)
             {
@@ -62,8 +61,8 @@ namespace EasePass.Views
             if (databasebox.SelectedItem == null)
                 return;
 
-            var selectedDB = (databasebox.SelectedItem as DatabaseItem);
-            var res = selectedDB.CheckPasswordCorrect(pw);
+            DatabaseItem selectedDB = (databasebox.SelectedItem as DatabaseItem);
+            var res = await selectedDB.CheckPasswordCorrect(pw);
             if (res.result == PasswordValidationResult.WrongPassword)
             {
                 WrongCount++;
@@ -77,7 +76,7 @@ namespace EasePass.Views
             }
             WrongCount = 0;
 
-            selectedDB.Load(pw);
+            await selectedDB.Load(pw);
             NavigationHelper.ToPasswords();
             return;
         }
@@ -88,7 +87,7 @@ namespace EasePass.Views
 
         private async void CreateDatabase_Click(SplitButton sender, SplitButtonClickEventArgs args)
         {
-            var newDB = await ManageDatabaseHelper.CreateDatabase();
+            DatabaseItem newDB = await ManageDatabaseHelper.CreateDatabase();
             if (newDB == null)
                 return;
 
@@ -106,7 +105,7 @@ namespace EasePass.Views
 
         private async void ImportDatabase_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            var res = await ManageDatabaseHelper.ImportDatabase();
+            DatabaseItem res = await ManageDatabaseHelper.ImportDatabase();
             if (res == null)
                 return;
 

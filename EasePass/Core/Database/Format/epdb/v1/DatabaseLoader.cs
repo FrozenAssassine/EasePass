@@ -2,6 +2,7 @@
 using EasePass.Models;
 using System.Collections.ObjectModel;
 using System.Security;
+using System.Threading.Tasks;
 
 namespace EasePass.Core.Database.Format.epdb.v1
 {
@@ -9,7 +10,7 @@ namespace EasePass.Core.Database.Format.epdb.v1
     {
         public static double Version => 1.0;
 
-        public static (PasswordValidationResult result, DatabaseFile database) Load(string path, SecureString password, bool showWrongPasswordError)
+        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(string path, SecureString password, bool showWrongPasswordError)
         {
             byte[] content = IDatabaseLoader.ReadFile(path);
             if (!IDatabaseLoader.DecryptData(content, password, showWrongPasswordError, out string data))

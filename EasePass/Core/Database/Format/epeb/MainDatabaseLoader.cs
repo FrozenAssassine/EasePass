@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Security;
+using System.Threading.Tasks;
 
 namespace EasePass.Core.Database.Format.epeb
 {
@@ -13,7 +14,7 @@ namespace EasePass.Core.Database.Format.epeb
     {
         public static double Version => 1.0;
 
-        public static (PasswordValidationResult result, DatabaseFile database) Load(string path, SecureString password, bool showWrongPasswordError)
+        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(string path, SecureString password, bool showWrongPasswordError)
         {
             if (!FileHelper.HasExtension(path, ".epeb") || !File.Exists(path))
                 return (PasswordValidationResult.DatabaseNotFound, default);

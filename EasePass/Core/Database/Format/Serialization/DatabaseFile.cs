@@ -1,6 +1,7 @@
 ﻿using EasePass.Core.Database.Enums;
 using EasePass.Models;
 using System.Collections.ObjectModel;
+using System.Security;
 using System.Text.Json.Serialization;
 
 namespace EasePass.Core.Database.Format.Serialization
@@ -36,6 +37,12 @@ namespace EasePass.Core.Database.Format.Serialization
         /// </summary>
         [JsonIgnore]
         public ObservableCollection<PasswordManagerItem> Items { get; set; } = null;
+
+        /// <summary>
+        /// The SecondFactor for the Database
+        /// </summary>
+        [JsonIgnore]
+        public SecureString SecondFactor { get; set; } = null;
         #endregion
 
         #region Deserialize
