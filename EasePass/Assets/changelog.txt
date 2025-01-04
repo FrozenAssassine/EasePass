@@ -1,4 +1,4 @@
-﻿#Version 1.3.0 [11/21/2024]
+﻿#Version 1.3.0 [06.01.2024]
 	• Introduced the option to export selected passwords via the right-click menu in the password list.
 	• Added a button on the registration page for direct database import.
 	• Updated the font for improved readability, particularly for characters like "I, l, |".
@@ -23,10 +23,10 @@
 	• Made numerous performance improvements.
 	• Fixed various other bugs.
 
-#Version 1.2.1 [05/24/2024]
+#Version 1.2.1 [24.05.2024]
 	• Fixed a bug where the registration was not working properly
 
-#Version 1.2.0 [05/15/2024]
+#Version 1.2.0 [15.05.2024]
 	• Added option to create and choose from multiple databases
 	• Added daily tips to the login page
 	• Added dialog to select which passwords to export
@@ -53,7 +53,7 @@
 	• Fix you can now select multiple entries to delete those
 	• Fix can not enter letters by pressing Ctrl + Alt (Alt Gr) in password box
 
-#Version 1.1.0 [09/28/2023]
+#Version 1.1.0 [28.09.2023]
 	• 2FA token generator
 	• Password generator 
 	• Icons in menubar
