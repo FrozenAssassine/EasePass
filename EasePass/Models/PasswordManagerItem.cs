@@ -71,7 +71,7 @@ namespace EasePass.Models
             set
             {
                 const string iconCache = "icons";
-                _Website = value;
+                _Website = value.Trim();
                 if (!ShowIcon)
                 {
                     Icon = null;
