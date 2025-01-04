@@ -22,6 +22,8 @@ namespace EasePass.Core.Database.Format.epdb
             if (!File.Exists(path))
                 return (PasswordValidationResult.DatabaseNotFound, default);
 
+            
+
             if (!IDatabaseLoader.DecryptData(IDatabaseLoader.ReadFile(path), password, showWrongPasswordError, out string data))
                 return (PasswordValidationResult.WrongPassword, default);
 
@@ -60,6 +62,11 @@ namespace EasePass.Core.Database.Format.epdb
             database.Data = Array.Empty<byte>();
 
             return (PasswordValidationResult.Success, database);
+        }
+
+        public static async Task<(PasswordValidationResult result, DatabaseFile database)> LoadInternal(SecureString password, DatabaseFile database)
+        {
+            return default;
         }
         #endregion
 

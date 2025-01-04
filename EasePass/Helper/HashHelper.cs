@@ -14,9 +14,12 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Extensions;
 using EasePass.Helper;
+using Konscious.Security.Cryptography;
 using System;
 using System.IO;
+using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -24,6 +27,21 @@ namespace EasePass.Helper
 {
     internal class HashHelper
     {
+        public static byte[] HashPasswordWithArgon2id(SecureString password, byte[] salt, int degreeOfParallelism, int iterations, int memorySize, int hashLength)
+        {
+
+            if (password == null)
+                return null;
+
+            using Argon2id Argon2id = new Argon2id(password.ToBytes());
+            Argon2id.Salt = salt;
+            Argon2id.DegreeOfParallelism = degreeOfParallelism;
+            Argon2id.Iterations = iterations;
+            Argon2id.MemorySize = memorySize;
+
+            return Argon2id.GetBytes(hashLength);
+        }
+
         public static string HashFile(string path)
         {
             byte[] file = File.ReadAllBytes(path);

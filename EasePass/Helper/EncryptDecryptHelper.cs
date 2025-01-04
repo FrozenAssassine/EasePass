@@ -94,30 +94,9 @@ namespace EasePass.Helper
             }
         }
 
-        private static byte[] ToBytes(SecureString secureString)
-        {
-            var pUnicodeBytes = Marshal.SecureStringToGlobalAllocUnicode(secureString);
-            try
-            {
-                byte[] unicodeBytes = new byte[secureString.Length * 2];
-                byte[] bytes = new byte[unicodeBytes.Length];
-
-                for (var idx = 0; idx < unicodeBytes.Length; ++idx)
-                {
-                    bytes[idx] = Marshal.ReadByte(pUnicodeBytes, idx);
-                }
-
-                return bytes;
-            }
-            finally
-            {
-                Marshal.ZeroFreeGlobalAllocUnicode(pUnicodeBytes);
-            }
-        }
-
         public static byte[] DeriveEncryptionKey(SecureString password, byte[] salt, int keySizeInBytes, int iterations)
         {
-            using (Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(ToBytes(password), salt, iterations))
+            using (Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(password.ToBytes(), salt, iterations))
             {
                 return pbkdf2.GetBytes(keySizeInBytes);
             }

@@ -8,8 +8,11 @@ namespace EasePass.Core.Database.Format.epdb.v1
 {
     internal class DatabaseLoader : IDatabaseLoader
     {
+        #region Property
         public static double Version => 1.0;
+        #endregion
 
+        #region Load
         public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(string path, SecureString password, bool showWrongPasswordError)
         {
             byte[] content = IDatabaseLoader.ReadFile(path);
@@ -32,5 +35,11 @@ namespace EasePass.Core.Database.Format.epdb.v1
 
             return (PasswordValidationResult.Success, database);
         }
+
+        public static async Task<(PasswordValidationResult result, DatabaseFile database)> LoadInternal(SecureString password, DatabaseFile database)
+        {
+            return default;
+        }
+        #endregion
     }
 }

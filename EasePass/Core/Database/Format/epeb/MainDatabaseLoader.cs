@@ -49,5 +49,10 @@ namespace EasePass.Core.Database.Format.epeb
 
             return (PasswordValidationResult.Success, database);
         }
+
+        public static async Task<(PasswordValidationResult result, DatabaseFile database)> LoadInternal(SecureString password, DatabaseFile database)
+        {
+            return default;
+        }
     }
 }

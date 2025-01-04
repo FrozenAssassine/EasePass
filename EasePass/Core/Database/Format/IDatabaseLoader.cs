@@ -149,6 +149,19 @@ namespace EasePass.Core.Database.Format
         /// If the <see cref="PasswordValidationResult"/> is not equal to <see cref="PasswordValidationResult.Success"/> the
         /// <see cref="DatabaseFile"/> is equal to <see cref="default"/></returns>
         public abstract static Task<(PasswordValidationResult result, DatabaseFile database)> Load(string path, SecureString password, bool showWrongPasswordError);
+
+        /// <summary>
+        /// Loads the given <paramref name="database"/>
+        /// Do not use this Method if you do not know how it works!!!
+        /// This Method is used as Callback if a DatabaseLoader noticed that the Database has a Version of a DatabaseLoader.
+        /// We do not just call the Load Method to prevent doing the same thing twice since we have already loaded the Database
+        /// </summary>
+        /// <param name="password">The Password of the Database</param>
+        /// <param name="database">The Database, which should be loaded</param>
+        /// <returns>Returns the <see cref="PasswordValidationResult"/> and the <see cref="DatabaseFile"/>.
+        /// If the <see cref="PasswordValidationResult"/> is not equal to <see cref="PasswordValidationResult.Success"/> the
+        /// <see cref="DatabaseFile"/> is equal to <see cref="default"/></returns>
+        public abstract static Task<(PasswordValidationResult result, DatabaseFile database)> LoadInternal(SecureString password, DatabaseFile database);
         #endregion
 
         #region Save
