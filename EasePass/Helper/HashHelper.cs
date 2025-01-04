@@ -27,11 +27,21 @@ namespace EasePass.Helper
 {
     internal class HashHelper
     {
+        /// <summary>
+        /// Hashes the given <paramref name="password"/> with the Argon2id Algorithm
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="salt"></param>
+        /// <param name="degreeOfParallelism"></param>
+        /// <param name="iterations"></param>
+        /// <param name="memorySize"></param>
+        /// <param name="hashLength"></param>
+        /// <returns></returns>
         public static byte[] HashPasswordWithArgon2id(SecureString password, byte[] salt, int degreeOfParallelism, int iterations, int memorySize, int hashLength)
         {
 
             if (password == null)
-                return null;
+                return Array.Empty<byte>();
 
             using Argon2id Argon2id = new Argon2id(password.ToBytes());
             Argon2id.Salt = salt;
@@ -52,9 +62,10 @@ namespace EasePass.Helper
             for (int i = 0; i < length; i++)
             {
                 if (char.IsLetter(base64[i]))
+                {
                     sb.Append(base64[i]);
+                }
             }
-
             return sb.ToString();
         }
     }

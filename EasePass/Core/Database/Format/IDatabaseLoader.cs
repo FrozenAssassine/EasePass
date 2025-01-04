@@ -151,6 +151,20 @@ namespace EasePass.Core.Database.Format
         public abstract static Task<(PasswordValidationResult result, DatabaseFile database)> Load(string path, SecureString password, bool showWrongPasswordError);
 
         /// <summary>
+        /// Loads the given Database in the <paramref name="path"/>
+        /// </summary>
+        /// <param name="path">The Path to the Database</param>
+        /// <param name="password">The Password of the Database</param>
+        /// <param name="showWrongPasswordError">Specifies if an Error should occure if the Password is wrong</param>
+        /// <returns>Returns the <see cref="PasswordValidationResult"/> and the <see cref="DatabaseFile"/>.
+        /// If the <see cref="PasswordValidationResult"/> is not equal to <see cref="PasswordValidationResult.Success"/> the
+        /// <see cref="DatabaseFile"/> is equal to <see cref="default"/></returns>
+        public static Task<(PasswordValidationResult result, DatabaseFile database)> Load<T>(string path, SecureString password, bool showWrongPasswordError) where T : IDatabaseLoader
+        {
+            return T.Load(path, password, showWrongPasswordError);
+        }
+
+        /// <summary>
         /// Loads the given <paramref name="database"/>
         /// Do not use this Method if you do not know how it works!!!
         /// This Method is used as Callback if a DatabaseLoader noticed that the Database has a Version of a DatabaseLoader.
