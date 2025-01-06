@@ -133,15 +133,12 @@ namespace EasePass.Controls
                 RaisePropertyChanged("ToString");
                 return;
             }
-
-            PwnedResult isPwned = IsPwnedHelper.IsPwned(password);
             
             bool[] res = PasswordHelper.EvaluatePassword(password);
             checks[0] = res[0];
             checks[1] = res[1];
             checks[2] = res[2];
-            checks[3] = AppSettings.DisableLeakedPasswords ? null :
-                (isPwned == PwnedResult.Error ? null : isPwned != PwnedResult.Leaked);
+            checks[3] = AppSettings.DisableLeakedPasswords ? null : !PasswordHelper.IsPwned(password);
             checks[4] = res[3];
             checks[5] = res[4];
             checks[6] = res[5];
