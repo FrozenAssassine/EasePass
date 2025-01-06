@@ -20,6 +20,7 @@
 	• Added file type associations in Windows to load databases as temporary databases.
 	• Enhanced the Create Database dialog on the registration page.
 	• Added text that shows the amount of selected entries in import/export dialog
+	• Fixed Pwned check and made it offline available.
 	• Made numerous performance improvements.
 	• Fixed various other bugs.
 
