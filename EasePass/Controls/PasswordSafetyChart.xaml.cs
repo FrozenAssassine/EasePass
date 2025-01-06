@@ -108,11 +108,6 @@ namespace EasePass.Controls
             info_right.Height = chartHeight;
         }
 
-        private async Task<bool> CheckPwned(string password)
-        {
-            return await PasswordHelper.IsPwned(password) ?? false;
-        }
-
         private bool CheckPasswordAlreadyUsed(string password, bool existingSingleTime)
         {
             if (Database.LoadedInstance.Items == null)
@@ -126,7 +121,7 @@ namespace EasePass.Controls
             return amount < (existingSingleTime ? 2 : 1);
         }
 
-        public async Task EvaluatePassword(string password, bool existingSingleTime = false)
+        public void EvaluatePassword(string password, bool existingSingleTime = false)
         {
             if (password.Length == 0)
             {
@@ -139,11 +134,14 @@ namespace EasePass.Controls
                 return;
             }
 
+            PwnedResult isPwned = IsPwnedHelper.IsPwned(password);
+            
             bool[] res = PasswordHelper.EvaluatePassword(password);
             checks[0] = res[0];
             checks[1] = res[1];
             checks[2] = res[2];
-            checks[3] = AppSettings.DisableLeakedPasswords ? null : !await CheckPwned(password);
+            checks[3] = AppSettings.DisableLeakedPasswords ? null :
+                (isPwned == PwnedResult.Error ? null : isPwned != PwnedResult.Leaked);
             checks[4] = res[3];
             checks[5] = res[4];
             checks[6] = res[5];
