@@ -10,10 +10,10 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
     <Authors>Julius Kirsch, Finn Freitag</Authors>
-    <Copyright>Copyright © 2023-2024 </Copyright>
+    <Copyright>Copyright © 2023-2025</Copyright>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>31005D76C01117397C1391884CCCB2CD42D16455</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>9528B8A89B3432F61C4F321BE3088D9488AE2140</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
@@ -24,7 +24,7 @@
     <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
     <RepositoryUrl>https://github.com/FrozenAssassine/EasePass.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageProjectUrl>http://easepass.frozenassassine.de/</PackageProjectUrl>
+    <PackageProjectUrl>https://easepass.frozenassassine.de/</PackageProjectUrl>
     <ApplicationIcon>Assets\AppIcon\appicon.ico</ApplicationIcon>
     <UseWindowsForms>False</UseWindowsForms>
     <AssemblyVersion>1.3.0</AssemblyVersion>
