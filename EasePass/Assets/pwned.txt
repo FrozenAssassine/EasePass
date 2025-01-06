@@ -1,11 +1,4 @@
-﻿***  Please note that this file contains the top 100,000 passwords from the Have I Been Pwned (https://haveibeenpwned.com) data set (by Troy Hunt).
-***  If you see a password that you use in this list you should change it immediately.
-***  This blog explains why you should do this, and answers some common questions about password denylists: https://www.ncsc.gov.uk/blog-post/passwords-passwords-everywhere
-***  A JSON formatted version of this file is available here: [https://www.ncsc.gov.uk/static-assets/documents/PwnedPasswordsTop100k.json]
-
---
-
-123456
+﻿123456
 123456789
 qwerty
 password
