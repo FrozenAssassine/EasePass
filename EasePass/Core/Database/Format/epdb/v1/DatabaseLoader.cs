@@ -19,7 +19,7 @@ namespace EasePass.Core.Database.Format.epdb.v1
             if (!IDatabaseLoader.DecryptData(content, password, showWrongPasswordError, out string data))
                 return (PasswordValidationResult.WrongPassword, default);
 
-            ObservableCollection<PasswordManagerItem> items = IDatabaseLoader.DeserializePasswordManagerItems(data);
+            ObservableCollection<PasswordManagerItem> items = PasswordManagerItem.DeserializeItems(data);
             if (items == default)
                 return (PasswordValidationResult.WrongFormat, default);
 
@@ -36,9 +36,9 @@ namespace EasePass.Core.Database.Format.epdb.v1
             return (PasswordValidationResult.Success, database);
         }
 
-        public static async Task<(PasswordValidationResult result, DatabaseFile database)> LoadInternal(SecureString password, DatabaseFile database)
+        public static async Task<(PasswordValidationResult result, DatabaseFile database)> LoadInternal(SecureString password, DatabaseFile database, bool showWrongPasswordError)
         {
-            return default;
+            return (PasswordValidationResult.Success, database);
         }
         #endregion
     }

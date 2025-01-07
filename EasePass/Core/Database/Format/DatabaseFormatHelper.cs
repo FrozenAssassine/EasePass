@@ -1,5 +1,4 @@
-﻿using EasePass.Core.Database.Enums;
-using EasePass.Core.Database.Format.Serialization;
+﻿using EasePass.Core.Database.Format.Serialization;
 using EasePass.Helper;
 using EasePass.Models;
 using System;
@@ -35,7 +34,7 @@ namespace EasePass.Core.Database.Format
             {
                 file = await epdb.v1.DatabaseLoader.Load(path, password, showWrongPasswordError);
                 
-                if (file.result == PasswordValidationResult.WrongFormat)
+                if (file.result == PasswordValidationResult.WrongFormat || file.result == PasswordValidationResult.WrongPassword)
                     return await epdb.MainDatabaseLoader.Load(path, password, showWrongPasswordError);
             }
 
@@ -71,10 +70,10 @@ namespace EasePass.Core.Database.Format
         /// <returns>Returns the <see cref="Type"/> of the DatabaseLoader</returns>
         private static Type GetDatabaseLoader(double version)
         {
-            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes())
+            Type[] types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(s => s.GetTypes())
                 .Where(p => typeof(IDatabaseLoader).IsAssignableFrom(p)).ToArray();
 
-            foreach (var type in types)
+            foreach (Type type in types)
             {
                 double versionValue = (double?)type.GetProperty(nameof(Version)).GetValue(type, null) ?? 0;
 

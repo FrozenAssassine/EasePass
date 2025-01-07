@@ -6,7 +6,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Security;
+using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EasePass.Core.Database.Format.epdb
 {
@@ -14,6 +16,16 @@ namespace EasePass.Core.Database.Format.epdb
     {
         #region Properties
         public static double Version => 1.1;
+
+        /// <summary>
+        /// The Salt, which will be used for the Argon Hash algorithm
+        /// </summary>
+        private readonly static byte[] salt = Encoding.UTF8.GetBytes("EasePassArgonHash");
+
+        /// <summary>
+        /// The Associated Data, which will be used for the Argon Hash algorithm
+        /// </summary>
+        private readonly static byte[] associatedData = Encoding.UTF8.GetBytes("Database_Version_" + Version);
         #endregion
 
         #region Load
@@ -22,9 +34,9 @@ namespace EasePass.Core.Database.Format.epdb
             if (!File.Exists(path))
                 return (PasswordValidationResult.DatabaseNotFound, default);
 
-            
+            byte[] pass = HashHelper.HashPasswordWithArgon2id(password, salt, associatedData);
 
-            if (!IDatabaseLoader.DecryptData(IDatabaseLoader.ReadFile(path), password, showWrongPasswordError, out string data))
+            if (!IDatabaseLoader.DecryptData(IDatabaseLoader.ReadFile(path), pass, showWrongPasswordError, out string data))
                 return (PasswordValidationResult.WrongPassword, default);
 
             DatabaseFile database = DatabaseFile.Deserialize(data);
@@ -38,23 +50,19 @@ namespace EasePass.Core.Database.Format.epdb
             if (database == default)
                 return (PasswordValidationResult.WrongFormat, default);
 
-            SecureString pw;
             if (database.Settings.UseSecondFactor)
             {
                 EnterSecondFactorDialog secondFactorDialog = new EnterSecondFactorDialog();
                 await secondFactorDialog.ShowAsync();
-                pw = secondFactorDialog.Token;
-                database.SecondFactor = pw;
-            }
-            else
-            {
-                pw = password;
+
+                database.SecondFactor = secondFactorDialog.Token;
+                pass = HashHelper.HashPasswordWithArgon2id(secondFactorDialog.Token, salt, associatedData);
             }
 
-            if (!IDatabaseLoader.DecryptData(database.Data, pw, showWrongPasswordError, out data))
+            if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out data))
                 return (PasswordValidationResult.WrongPassword, default);
 
-            ObservableCollection<PasswordManagerItem> items = IDatabaseLoader.DeserializePasswordManagerItems(data);
+            ObservableCollection<PasswordManagerItem> items = PasswordManagerItem.DeserializeItems(data);
             if (items == default)
                 return (PasswordValidationResult.WrongFormat, default);
 
@@ -64,8 +72,36 @@ namespace EasePass.Core.Database.Format.epdb
             return (PasswordValidationResult.Success, database);
         }
 
-        public static async Task<(PasswordValidationResult result, DatabaseFile database)> LoadInternal(SecureString password, DatabaseFile database)
+        public static async Task<(PasswordValidationResult result, DatabaseFile database)> LoadInternal(SecureString password, DatabaseFile database, bool showWrongPasswordError)
         {
+            byte[] pass;
+
+            if (database == default)
+                return (PasswordValidationResult.WrongFormat, default);
+
+            if (database.Settings.UseSecondFactor)
+            {
+                EnterSecondFactorDialog secondFactorDialog = new EnterSecondFactorDialog();
+                await secondFactorDialog.ShowAsync();
+
+                database.SecondFactor = secondFactorDialog.Token;
+                pass = HashHelper.HashPasswordWithArgon2id(secondFactorDialog.Token, salt, associatedData);
+            }
+            else
+            {
+                pass = HashHelper.HashPasswordWithArgon2id(password, salt, associatedData);
+            }
+
+            if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out string data))
+                return (PasswordValidationResult.WrongPassword, default);
+
+            ObservableCollection<PasswordManagerItem> items = PasswordManagerItem.DeserializeItems(data);
+            if (items == default)
+                return (PasswordValidationResult.WrongFormat, default);
+
+            database.Items = items;
+            database.Data = Array.Empty<byte>();
+
             return default;
         }
         #endregion
@@ -74,14 +110,18 @@ namespace EasePass.Core.Database.Format.epdb
         public static bool Save(string path, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
         {
             byte[] data;
-            string json = IDatabaseLoader.SerializePasswordManagerItems(items);
+            string json = PasswordManagerItem.SerializeItems(items);
+            byte[] pass;
+            
             if (secondFactor == null)
             {
-                data = EncryptDecryptHelper.EncryptStringAES(json, password);
+                pass = HashHelper.HashPasswordWithArgon2id(password, salt, associatedData);
+                data = EncryptDecryptHelper.EncryptStringAES(json, pass);
             }
             else
             {
-                data = EncryptDecryptHelper.EncryptStringAES(json, secondFactor);
+                pass = HashHelper.HashPasswordWithArgon2id(secondFactor, salt, associatedData);
+                data = EncryptDecryptHelper.EncryptStringAES(json, pass);
             }
 
             DatabaseFile database = new DatabaseFile();
@@ -91,7 +131,12 @@ namespace EasePass.Core.Database.Format.epdb
             database.Data = data;
 
             json = database.Serialize();
-            data = EncryptDecryptHelper.EncryptStringAES(json, password);
+
+            if (secondFactor != null)
+            {
+                pass = HashHelper.HashPasswordWithArgon2id(password, salt, associatedData);
+            }
+            data = EncryptDecryptHelper.EncryptStringAES(json, pass);
 
             return IDatabaseLoader.SaveFile(path, data);
         }

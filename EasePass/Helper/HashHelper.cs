@@ -30,14 +30,16 @@ namespace EasePass.Helper
         /// <summary>
         /// Hashes the given <paramref name="password"/> with the Argon2id Algorithm
         /// </summary>
-        /// <param name="password"></param>
-        /// <param name="salt"></param>
-        /// <param name="degreeOfParallelism"></param>
-        /// <param name="iterations"></param>
-        /// <param name="memorySize"></param>
-        /// <param name="hashLength"></param>
-        /// <returns></returns>
-        public static byte[] HashPasswordWithArgon2id(SecureString password, byte[] salt, int degreeOfParallelism, int iterations, int memorySize, int hashLength)
+        /// <param name="password">The Password, which should be hashed</param>
+        /// <param name="salt">The Salt, which should be used for the hash</param>
+        /// <param name="associatedData">The Associated Data for the Hash</param>
+        /// <param name="degreeOfParallelism">The degree of Parallelism</param>
+        /// <param name="iterations">The amount of iterations for the hash</param>
+        /// <param name="memorySize">The amount of Memory, which should be uused</param>
+        /// <param name="hashLength">The length of the Hash</param>
+        /// <returns>Returns the Hash of the <paramref name="password"/> with the given <paramref name="hashLength"/>.
+        /// If the <paramref name="password"/> is equal to <see langword="null"/> <see cref="Array.Empty{T}"/> will be returned.</returns>
+        public static byte[] HashPasswordWithArgon2id(SecureString password, byte[] salt, byte[] associatedData = null, int degreeOfParallelism = 10, int iterations = 10, int memorySize = 1_000_000, int hashLength = 100)
         {
 
             if (password == null)
@@ -49,6 +51,10 @@ namespace EasePass.Helper
             Argon2id.Iterations = iterations;
             Argon2id.MemorySize = memorySize;
 
+            if (associatedData != null)
+            {
+                Argon2id.AssociatedData = associatedData;
+            }
             return Argon2id.GetBytes(hashLength);
         }
 

@@ -3,11 +3,9 @@ using EasePass.Core.Database.Format.Serialization;
 using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Security;
 using System.Threading.Tasks;
 
@@ -34,11 +32,30 @@ namespace EasePass.Core.Database.Format
         /// <param name="showWrongPasswordError">Specifies if a Message will be shown if the Password is wrong</param>
         /// <param name="decryptedData">Contains the decrypted Data if the <paramref name="content"/> could be decrypted, otherwise contain <see cref="string.Empty"/></param>
         /// <returns>Returns <see langword="true"/> if the <paramref name="content"/> could be encrypted, otherwise <see langword="false"/></returns>
+        private protected static bool DecryptData(byte[] content, byte[] password, bool showWrongPasswordError, out string decryptedData)
+        {
+            decryptedData = string.Empty;
+            var result = EncryptDecryptHelper.DecryptStringAES(content, password);
+
+            return DecryptInternal(result, showWrongPasswordError, ref decryptedData);
+        }
+        /// <summary>
+        /// Checks if the <paramref name="content"/> can be decrypted with the given <paramref name="password"/>
+        /// </summary>
+        /// <param name="content">The Content, which should be decrypted</param>
+        /// <param name="password">The Password, which should be used for the decryption</param>
+        /// <param name="showWrongPasswordError">Specifies if a Message will be shown if the Password is wrong</param>
+        /// <param name="decryptedData">Contains the decrypted Data if the <paramref name="content"/> could be decrypted, otherwise contain <see cref="string.Empty"/></param>
+        /// <returns>Returns <see langword="true"/> if the <paramref name="content"/> could be encrypted, otherwise <see langword="false"/></returns>
         private protected static bool DecryptData(byte[] content, SecureString password, bool showWrongPasswordError, out string decryptedData)
         {
             decryptedData = string.Empty;
             var result = EncryptDecryptHelper.DecryptStringAES(content, password);
 
+            return DecryptInternal(result, showWrongPasswordError, ref decryptedData);
+        }
+        private static bool DecryptInternal((string decryptedString, bool correctPassword) result, bool showWrongPasswordError, ref string decryptedData)
+        {
             if (!result.correctPassword)
             {
                 if (showWrongPasswordError)
@@ -47,44 +64,8 @@ namespace EasePass.Core.Database.Format
                 }
                 return false;
             }
-
             decryptedData = result.decryptedString;
             return true;
-        }
-        #endregion
-
-        #region Deserialize/SerializePasswordManagerItems
-        /// <summary>
-        /// Deserialize the given <paramref name="json"/> to the <see cref="ObservableCollection{PasswordManagerItem}"/>
-        /// </summary>
-        /// <param name="json">The JSON String, which should be deserialized to a <see cref="ObservableCollection{PasswordManagerItem}"/> object</param>
-        /// <returns>Returns an Instance of <see cref="ObservableCollection{PasswordManagerItem}"/> if the Deserialization was successfull, otherwise <see cref="default"/> will be returned</returns>
-        [Obsolete]
-        private protected static ObservableCollection<PasswordManagerItem> DeserializePasswordManagerItems(string json)
-        {
-            try
-            {
-                return System.Text.Json.JsonSerializer.Deserialize<ObservableCollection<PasswordManagerItem>>(json);
-            }
-            catch { }
-            return default;
-        }
-        /// <summary>
-        /// Serialize the given <paramref name="items"/> to a <see cref="string"/>
-        /// </summary>
-        /// <param name="json">The JSON String, which should be serialized to a <see cref="string"/></param>
-        /// <returns>Returns an Instance of <see cref="string"/> if the Serialization was successfull, otherwise <see cref="string.Empty"/> will be returned</returns>
-        [Obsolete]
-        private protected static string SerializePasswordManagerItems(ObservableCollection<PasswordManagerItem> items)
-        {
-            try
-            {
-                return JsonConvert.SerializeObject(items, Formatting.Indented);
-            }
-            catch
-            {
-                return string.Empty;
-            }
         }
         #endregion
 
@@ -175,7 +156,7 @@ namespace EasePass.Core.Database.Format
         /// <returns>Returns the <see cref="PasswordValidationResult"/> and the <see cref="DatabaseFile"/>.
         /// If the <see cref="PasswordValidationResult"/> is not equal to <see cref="PasswordValidationResult.Success"/> the
         /// <see cref="DatabaseFile"/> is equal to <see cref="default"/></returns>
-        public abstract static Task<(PasswordValidationResult result, DatabaseFile database)> LoadInternal(SecureString password, DatabaseFile database);
+        public abstract static Task<(PasswordValidationResult result, DatabaseFile database)> LoadInternal(SecureString password, DatabaseFile database, bool showWrongPasswordError);
         #endregion
 
         #region Save
