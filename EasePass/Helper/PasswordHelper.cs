@@ -109,7 +109,7 @@ namespace EasePass.Helper
                     password.Append(allowedChars[r.Next(alength)]);
                 }
             }
-            while ((!IsSecure(password, length, aIncludes)) || ((!disableLeakedPasswords) && (await IsPwned(password.ToString()) == true)));
+            while ((!IsSecure(password, length, aIncludes)) || ((!disableLeakedPasswords) && (IsPwned(password.ToString()) == true)));
 
             return password.ToString();
         }
@@ -262,64 +262,10 @@ namespace EasePass.Helper
         /// </summary>
         /// <param name="password">The Password which will be checked</param>
         /// <returns>Returns <see langword="true"/> if the Password has been leaked</returns>
-        public static async Task<bool?> IsPwned(string password)
+        public static bool? IsPwned(string password)
         {
-            try
-            {
-                string hash = GetSha1Hash(password);
-                string hashPrefix = hash.Substring(0, 5);
-                string hashSuffix = hash.Substring(5);
-
-                using (var client = new HttpClient())
-                // Checks if the Password has been leaked
-                using (var data = await client.GetAsync("https://api.pwnedpasswords.com/range/" + hashPrefix))
-                {
-                    if (data == null)
-                        return null;
-
-                    return ReadIsPwnedData(data, hashSuffix);
-                }
-            }
-            catch
-            {
-                return null;
-            }
-        }
-        private static bool ReadIsPwnedData(HttpResponseMessage data, string hashSuffix)
-        {
-            using (var reader = new System.IO.StreamReader(data.Content.ReadAsStream()))
-            {
-                while (!reader.EndOfStream)
-                {
-                    var line = reader.ReadLine();
-
-                    if (line == null)
-                        continue;
-
-                    // Each line of the returned hash list has the following form "hash:numberOfTimesFound"
-                    // The first element is the hash
-                    // The second element is the numberOfTimesFound
-                    var splitLIne = line.Split(':');
-
-                    var lineHashedSuffix = splitLIne[0];
-                    var numberOfTimesPasswordPwned = int.Parse(splitLIne[1]);
-
-                    if (lineHashedSuffix == hashSuffix)
-                        return true;
-                }
-            }
-            return false;
-        }
-
-        private static string GetSha1Hash(string input)
-        {
-            using (SHA1 sha1 = SHA1.Create())
-            {
-                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
-                byte[] hashBytes = sha1.ComputeHash(inputBytes);
-
-                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-            }
+            var res = IsPwnedHelper.IsPwned(password);
+            return res == PwnedResult.Error ? null : res == PwnedResult.Leaked;
         }
     }
 }

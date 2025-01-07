@@ -33,7 +33,7 @@
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
         DisplayName="Ease Pass"
-        Description="A simple password manager"
+        Description="Your secure Password Manager with easy organization and strong password generation."
         BackgroundColor="transparent"
         Square150x150Logo="Assets\AppIcon\Generated\Square150x150Logo.png"
         Square44x44Logo="Assets\AppIcon\Generated\Square44x44Logo.png">

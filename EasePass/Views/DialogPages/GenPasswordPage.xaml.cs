@@ -32,7 +32,7 @@ namespace EasePass.Views
             progressBar.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
 
             await _GeneratePassword();
-            await safetyChart.EvaluatePassword(passwordTB.Password);
+            safetyChart.EvaluatePassword(passwordTB.Password);
             progressBar.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
         }
 
@@ -41,9 +41,9 @@ namespace EasePass.Views
             passwordTB.Password = await PasswordHelper.GeneratePassword();
         }
 
-        private async void passwordTB_TextChanged(object sender, TextChangedEventArgs e)
+        private void passwordTB_TextChanged(object sender, TextChangedEventArgs e)
         {
-            await safetyChart.EvaluatePassword(passwordTB.Password);
+            safetyChart.EvaluatePassword(passwordTB.Password);
         }
     }
 }
