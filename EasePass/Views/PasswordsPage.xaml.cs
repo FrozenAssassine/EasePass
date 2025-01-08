@@ -302,6 +302,20 @@ namespace EasePass.Views
                 searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
                 return;
             }
+
+            //Tag search with /TAG
+            if (searchbox.Text.StartsWith("/"))
+            {
+                var searchText = searchbox.Text.Replace("/", "");
+                if (searchText.Length == 0)
+                    return;
+
+                ObservableCollection<PasswordManagerItem> items = Database.LoadedInstance.FindItemsByTag(searchText);
+                passwordItemListView.ItemsSource = items;
+                return;
+            }
+
+
             var search_res = Database.LoadedInstance.FindItemsByName(searchbox.Text);
             passwordItemListView.ItemsSource = search_res;
             searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
