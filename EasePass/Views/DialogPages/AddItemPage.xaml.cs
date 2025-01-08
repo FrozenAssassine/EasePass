@@ -55,6 +55,8 @@ namespace EasePass.Views
             nameTB.Text = input.DisplayName;
             websiteTB.Text = input.Website;
 
+            PasswordItemTagHelper.FillTags(tagsTB, input);
+
             if (!string.IsNullOrEmpty(input.Secret))
             {
                 secretTB.Password = input.Secret;
@@ -80,12 +82,12 @@ namespace EasePass.Views
             input.Username = usernameTB.Text;
             input.DisplayName = nameTB.Text;
             input.Website = websiteTB.Text;
+            PasswordItemTagHelper.ParseToTags(tagsTB.Text, input);
 
             input.Secret = secretTB.Password;
             input.Digits = digitsTB.Text;
             input.Interval = intervalTB.Text;
             input.Algorithm = (string)algorithmTB.SelectedItem;
-
 
             if (pwTB.Password.Length > 0 && !(pe(pwTB.Password) == 0 || (isEditMode && pe(pwTB.Password) == 1))) InfoMessages.PasswordAlreadyUsed();
 
