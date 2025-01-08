@@ -310,8 +310,10 @@ namespace EasePass.Views
                 if (searchText.Length == 0)
                     return;
 
-                ObservableCollection<PasswordManagerItem> items = Database.LoadedInstance.FindItemsByTag(searchText);
-                passwordItemListView.ItemsSource = items;
+                var tagSearchRes = Database.LoadedInstance.FindItemsByTag(searchText);
+                passwordItemListView.ItemsSource = tagSearchRes;
+                searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
+
                 return;
             }
 
