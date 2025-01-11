@@ -80,7 +80,7 @@ namespace EasePass.Core.Database
         #region AddRange
         public void AddRange(PasswordManagerItem[] items)
         {
-            foreach (var item in items)
+            foreach (PasswordManagerItem item in items)
             {
                 Items.Add(item);
             }
@@ -90,7 +90,7 @@ namespace EasePass.Core.Database
 
         public void AddRange(ObservableCollection<PasswordManagerItem> items)
         {
-            foreach (var item in items)
+            foreach (PasswordManagerItem item in items)
             {
                 Items.Add(item);
             }

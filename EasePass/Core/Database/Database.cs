@@ -142,53 +142,6 @@ public class Database
     }
     #endregion
 
-    #region LoadItems
-    public static ObservableCollection<PasswordManagerItem> LoadItems(string json)
-    {
-        try
-        {
-            return JsonConvert.DeserializeObject<ObservableCollection<PasswordManagerItem>>(json);
-        }
-        catch
-        {
-            InfoMessages.DatabaseInvalidData();
-            return null;
-        }
-    }
-    #endregion
-
-    #region ReadFile
-    public static (string data, bool success) ReadFile(string path, SecureString pw, bool showWrongPasswordError = true)
-    {
-        byte[] fileData = null;
-
-        try
-        {
-            fileData = File.ReadAllBytes(path);
-        }
-        catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
-        {
-            InfoMessages.DatabaseFileNotFoundAt(path);
-        }
-        catch (UnauthorizedAccessException)
-        {
-            InfoMessages.NoAccessToPathDatabaseNotLoaded(path);
-        }
-
-        if (fileData != null)
-        {
-            var res = EncryptDecryptHelper.DecryptStringAES(fileData, pw);
-            if (res.correctPassword)
-                return (res.decryptedString, true);
-
-            if (showWrongPasswordError)
-                InfoMessages.ImportDBWrongPassword();
-        }
-
-        return ("", false);
-    }
-    #endregion
-
     #region RemoveDatabasePath
     public static void RemoveDatabasePath(string path)
     {
@@ -223,28 +176,6 @@ public class Database
     public static void SetAllDatabasePaths(string paths)
     {
         AppSettings.DatabasePaths = paths;
-    }
-    #endregion
-
-    #region WriteFile
-    public static void WriteFile(string path, string jsonString, SecureString pw)
-    {
-        if (pw == null)
-            return;
-
-        byte[] bytes = EncryptDecryptHelper.EncryptStringAES(jsonString, pw);
-        try
-        {
-            File.WriteAllBytes(path, bytes);
-        }
-        catch (UnauthorizedAccessException)
-        {
-            InfoMessages.NoAccessToPathDatabaseNotSaved(path);
-        }
-        catch (IOException)
-        {
-            InfoMessages.DatabaseSaveToFileError(path);
-        }
     }
     #endregion
 }
