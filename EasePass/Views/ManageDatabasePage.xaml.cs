@@ -267,4 +267,11 @@ public sealed partial class ManageDatabasePage : Page
 
         await ExportPasswordsHelper.Export(db, Database.LoadedInstance.Items, dialog.Password);
     }
+
+    private async void ManageSecondFactor_Click(object sender, RoutedEventArgs e)
+    {
+        DatabaseItem database = databaseDisplay.SelectedItem as DatabaseItem;
+        var sfPage = await new ManageSecondFactorDialog().ShowAsync(database.Name, database.Settings);
+        
+    }
 }

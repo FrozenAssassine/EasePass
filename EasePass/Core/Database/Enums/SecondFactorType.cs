@@ -18,7 +18,7 @@
         /// <summary>
         /// A One Time Token will be generated after every Login
         /// </summary>
-        OneTimeToken = 2,
+        OTP = 2,
 
         /// <summary>
         /// Authenticatior as SecondFactor

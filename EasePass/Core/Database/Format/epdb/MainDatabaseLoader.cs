@@ -8,14 +8,13 @@ using System.IO;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EasePass.Core.Database.Format.epdb
 {
     internal class MainDatabaseLoader : IDatabaseLoader
     {
         #region Properties
-        public static double Version => 1.1;
+        public static double Version => 1.4;
 
         /// <summary>
         /// The Salt, which will be used for the Argon Hash algorithm
@@ -40,12 +39,6 @@ namespace EasePass.Core.Database.Format.epdb
                 return (PasswordValidationResult.WrongPassword, default);
 
             DatabaseFile database = DatabaseFile.Deserialize(data);
-
-            // TODO:
-            // - Need to check if SecondFactor is in use
-            // - If SecondFactor is in use get the Token
-            // - After receiving the Token check the SecondFactor Type
-            // - Need to do that how the Decryption have to be done
 
             if (database == default)
                 return (PasswordValidationResult.WrongFormat, default);

@@ -1092,4 +1092,7 @@
   <data name="View_ManageDB_ExportDBNewPW.ToolTipService.ToolTip" xml:space="preserve">
     <value>Export the database with a new password</value>
   </data>
+  <data name="Dialog_ManageSecondFactor_Headline.Text" xml:space="preserve">
+    <value>Manage SecondFactor for</value>
+  </data>
 </root>

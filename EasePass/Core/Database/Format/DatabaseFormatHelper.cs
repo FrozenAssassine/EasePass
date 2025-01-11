@@ -32,7 +32,8 @@ namespace EasePass.Core.Database.Format
             }
             else
             {
-                file = await epdb.v1.DatabaseLoader.Load(path, password, showWrongPasswordError);
+                // Do not show an error because we do not know if the Password is for real wrong since it has changed in the new Version
+                file = await epdb.v1.DatabaseLoader.Load(path, password, false);
                 
                 if (file.result == PasswordValidationResult.WrongFormat || file.result == PasswordValidationResult.WrongPassword)
                     return await epdb.MainDatabaseLoader.Load(path, password, showWrongPasswordError);

@@ -1,4 +1,5 @@
 ﻿using EasePass.Core.Database.Enums;
+using System;
 
 namespace EasePass.Core.Database.Format.Serialization
 {
@@ -6,7 +7,7 @@ namespace EasePass.Core.Database.Format.Serialization
     /// Includes all Settings of the Database
     /// This Class will be used for the Serialization/Deserialization
     /// </summary>
-    public class DatabaseSettings
+    public class DatabaseSettings : ICloneable
     {
         #region Properties
         /// <summary>
@@ -56,6 +57,13 @@ namespace EasePass.Core.Database.Format.Serialization
             }
             catch { }
             return string.Empty;
+        }
+        #endregion
+
+        #region Clone
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
         #endregion
     }
