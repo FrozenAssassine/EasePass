@@ -41,13 +41,6 @@ public static class StringExtension
     /// <returns>Returns the <paramref name="plainString"/> as <see cref="SecureString"/></returns>
     public static SecureString ConvertToSecureString(this string plainString)
     {
-        SecureString secureString = new SecureString();
-
-        foreach (char c in plainString)
-        {
-            secureString.AppendChar(c);
-        }
-        secureString.MakeReadOnly();
-        return secureString;
+        return plainString.AsSpan().ConvertToSecureString();
     }
 }

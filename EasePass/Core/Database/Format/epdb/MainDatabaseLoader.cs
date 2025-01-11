@@ -34,6 +34,7 @@ namespace EasePass.Core.Database.Format.epdb
                 return (PasswordValidationResult.DatabaseNotFound, default);
 
             byte[] pass = HashHelper.HashPasswordWithArgon2id(password, salt, associatedData);
+            GC.Collect();
 
             if (!IDatabaseLoader.DecryptData(IDatabaseLoader.ReadFile(path), pass, showWrongPasswordError, out string data))
                 return (PasswordValidationResult.WrongPassword, default);
@@ -61,6 +62,8 @@ namespace EasePass.Core.Database.Format.epdb
 
             database.Items = items;
             database.Data = Array.Empty<byte>();
+
+            //GC.Collect();
 
             return (PasswordValidationResult.Success, database);
         }

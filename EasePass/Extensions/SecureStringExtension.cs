@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using System.Security;
 
 namespace EasePass.Extensions
@@ -8,6 +9,35 @@ namespace EasePass.Extensions
     /// </summary>
     internal static class SecureStringExtension
     {
+        #region Convert
+        /// <summary>
+        /// Converts the <paramref name="secureString"/> to a <see cref="string"/>.
+        /// This Method should be carefully! By this Method the Secured string will be allocated decrypted!
+        /// </summary>
+        /// <param name="secureString">The <see cref="SecureString"/>, which should be converted</param>
+        /// <returns>Returns the <see cref="SecureString"/> as <see cref="string"/>.</returns>
+        public static string ConvertToString(this SecureString secureString)
+        {
+            if (secureString == null || secureString.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            IntPtr intPtr = IntPtr.Zero;
+            try
+            {
+                intPtr = Marshal.SecureStringToGlobalAllocUnicode(secureString);
+                return Marshal.PtrToStringUni(intPtr);
+            }
+            finally
+            {
+                if (intPtr != IntPtr.Zero)
+                {
+                    Marshal.ZeroFreeGlobalAllocUnicode(intPtr);
+                }
+            }
+        }
+
         /// <summary>
         /// Converts the given <paramref name="secureString"/> to a <see cref="byte"/>[]
         /// </summary>
@@ -32,5 +62,6 @@ namespace EasePass.Extensions
                 Marshal.ZeroFreeGlobalAllocUnicode(pUnicodeBytes);
             }
         }
+        #endregion
     }
 }

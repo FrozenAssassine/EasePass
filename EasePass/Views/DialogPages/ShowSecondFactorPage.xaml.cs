@@ -18,16 +18,12 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace EasePass.Views.DialogPages
 {
-    public sealed partial class EnterSecondFactorPage : Page
+    public sealed partial class ShowSecondFactorPage : Page
     {
-        public EnterSecondFactorPage()
+        public ShowSecondFactorPage(string token)
         {
             this.InitializeComponent();
-        }
-
-        public string GetPassword()
-        {
-            return tokenBox.Password;
+            tokenBox.Token = token;
         }
     }
 }

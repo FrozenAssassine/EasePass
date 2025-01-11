@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="EasePass.Views.DialogPages.EnterSecondFactorPage"
+    x:Class="EasePass.Views.DialogPages.ShowSecondFactorPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:EasePass.Views.DialogPages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:EasePass.Controls"
+    xmlns:models="using:EasePass.Models"
     mc:Ignorable="d">
-    <PasswordBox x:Uid="View_EnterSFPage_TokenBox" x:Name="tokenBox" Header="Enter SecondFactor:" Margin="0,10,0,0" PlaceholderText="Token..."/>
+    <controls:CopyTokenBox x:Uid="View_ShowSFPage_TokenBox" x:Name="tokenBox" Header="SecondFactor Token:" Margin="0,10,0,0" PlaceholderText="Token..."/>
 </Page>

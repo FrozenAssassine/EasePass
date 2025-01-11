@@ -18,10 +18,12 @@ using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Extensions;
 using EasePass.Helper;
+using EasePass.Helper.Security;
 using EasePass.Models;
 using EasePass.Settings;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System;
 using System.Security;
 
 namespace EasePass.Views
@@ -76,7 +78,15 @@ namespace EasePass.Views
             }
             WrongCount = 0;
 
-            await selectedDB.Load(pw);
+            selectedDB.Load(pw, res.database);
+            if (selectedDB.Settings.UseSecondFactor && selectedDB.Settings.SecondFactorType == Core.Database.Enums.SecondFactorType.OTP)
+            {
+                string token = TokenHelper.Generate(12);
+                await new ShowSecondFactorDialog().ShowAsync(token);
+                selectedDB.SecondFactor = token.ConvertToSecureString();
+                token = null;
+                selectedDB.Save();
+            }
             NavigationHelper.ToPasswords();
             return;
         }

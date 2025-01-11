@@ -210,8 +210,7 @@ public sealed partial class ManageDatabasePage : Page
 
     private async void Delete_BackupDatabase_Click(object sender, RoutedEventArgs e)
     {
-        DatabaseItem rightClicked = (sender as MenuFlyoutItem).Tag as DatabaseItem;
-        if (rightClicked == null)
+        if ((sender as MenuFlyoutItem).Tag is not DatabaseItem rightClicked)
             return;
 
         await DeleteDatabase(rightClicked);
@@ -271,7 +270,17 @@ public sealed partial class ManageDatabasePage : Page
     private async void ManageSecondFactor_Click(object sender, RoutedEventArgs e)
     {
         DatabaseItem database = databaseDisplay.SelectedItem as DatabaseItem;
-        var sfPage = await new ManageSecondFactorDialog().ShowAsync(database.Name, database.Settings);
-        
+        var sfPage = await new ManageSecondFactorDialog().ShowAsync(database.Name, database.Settings, database.SecondFactor);
+
+        if (sfPage.Result)
+        {
+            if (!database.Settings.UseSecondFactor && sfPage.Settings.UseSecondFactor && !await new AddSecondFactorConfirmationDialog().ShowAsync(database.Name))
+            {
+                return;
+            }
+            database.Settings = sfPage.Settings;
+            database.SecondFactor = sfPage.Token;
+            database.Save();
+        }
     }
 }

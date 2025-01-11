@@ -61,7 +61,7 @@ internal class ManageDatabaseHelper
         if (password == null)
             return false; //cancelled by user
 
-        ObservableCollection<PasswordManagerItem> importedItems = Database.GetItemsFromFile(filePath, password);
+        ObservableCollection<PasswordManagerItem> importedItems = await Database.GetItemsFromFile(filePath, password);
 
         ImportPasswordsDialog dialog = new ImportPasswordsDialog();
         dialog.SetPagePasswords(importedItems);

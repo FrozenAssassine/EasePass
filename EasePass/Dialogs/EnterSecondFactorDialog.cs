@@ -35,7 +35,7 @@ namespace EasePass.Dialogs
             page = new EnterSecondFactorPage();
             dialog = new AutoLogoutContentDialog
             {
-                Title = "Enter password of the database".Localized("Dialogs_EnterPW_Title/Text"),
+                Title = "Enter the SecondFactor Token of the Database".Localized("Dialogs_EnterSF_Title/Text"),
                 PrimaryButtonText = "Done".Localized("Dialog_Button_Done/Text"),
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
                 XamlRoot = App.m_window.Content.XamlRoot,

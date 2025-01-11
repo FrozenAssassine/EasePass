@@ -14,38 +14,83 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-using EasePass.AppWindows;
+using EasePass.Core.Database.Enums;
 using EasePass.Core.Database.Format.Serialization;
-using EasePass.Helper;
+using EasePass.Extensions;
+using EasePass.Helper.Security;
+using EasePassExtensibility;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Text;
-using EasePass.Controls;
+using System.Security;
 
 namespace EasePass.Views
 {
     public sealed partial class ManageSecondFactorPage : Page
     {
-        DatabaseSettings Settings { get; set; }
+        #region Properties
+        /// <summary>
+        /// The Token which should be used
+        /// </summary>
+        public SecureString Token { get; set; }
+        /// <summary>
+        /// A Copy of the Settings, which will be set with new values if the User configure it different
+        /// </summary>
+        public DatabaseSettings Settings { get; set; }
+        #endregion
 
-        public ManageSecondFactorPage(DatabaseSettings settings)
+        #region Constructor
+        public ManageSecondFactorPage(DatabaseSettings settings, SecureString token)
         {
             this.InitializeComponent();
+            Settings = (DatabaseSettings)settings.Clone();
+            Settings.SecondFactorType = SecondFactorType.Token;
+
+            Token = token;
+            Token ??= TokenHelper.Generate(12).ConvertToSecureString();
+
             enableSecondFactor.IsOn = settings.UseSecondFactor;
+            
             secondFactorTypeTB.SelectedValue = settings.SecondFactorType;
             if (secondFactorTypeTB.SelectedValue == default)
             {
                 secondFactorTypeTB.SelectedValue = "Token";
             }
-
-            Settings = (DatabaseSettings)settings.Clone();
-            Settings.SecondFactorType = Core.Database.Enums.SecondFactorType.Token;
         }
+        #endregion
 
         private void enableSecondFactor_Toggled(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             ToggleSwitch toggle = (ToggleSwitch)sender;
-            secondFactorTypeTB.IsEnabled = toggle.IsOn;
+            bool isOn = toggle.IsOn;
+            secondFactorTypeTB.IsEnabled = isOn;
+            Settings.UseSecondFactor = isOn;
+
+            if (isOn)
+            {
+                Settings.SecondFactorType = (SecondFactorType)Enum.Parse(typeof(SecondFactorType), (string)secondFactorTypeTB.SelectedValue);
+                secondFactorToken.Token = Token.ConvertToString();
+            }
+            else
+            {
+                Settings.SecondFactorType = SecondFactorType.None;
+                secondFactorToken.Token = "";
+            }
+        }
+
+        private void SecondFactorTypeTB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (enableSecondFactor.IsOn)
+            {
+                ComboBox combo = (ComboBox)sender;
+                if (combo.SelectedValue == null)
+                    return;
+
+                try
+                {
+                    Settings.SecondFactorType = (SecondFactorType)Enum.Parse(typeof(SecondFactorType), (string)secondFactorTypeTB.SelectedValue);
+                }
+                catch { }
+            }
         }
     }
 }
