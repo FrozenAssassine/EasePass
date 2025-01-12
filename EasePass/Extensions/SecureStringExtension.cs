@@ -1,34 +1,67 @@
-﻿/*
-MIT License
-
-Copyright (c) 2023 Julius Kirsch
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-*/
-
+﻿using System;
+using System.Runtime.InteropServices;
 using System.Security;
 
-namespace EasePass.Extensions;
-
-public static class SecureStringExtension
+namespace EasePass.Extensions
 {
-    public static SecureString ConvertToSecureString(this string plainString)
+    /// <summary>
+    /// Includes every Extension for the <see cref="SecureString"/>
+    /// </summary>
+    internal static class SecureStringExtension
     {
-        SecureString secureString = new SecureString();
-
-        foreach (char c in plainString)
+        #region Convert
+        /// <summary>
+        /// Converts the <paramref name="secureString"/> to a <see cref="string"/>.
+        /// This Method should be carefully! By this Method the Secured string will be allocated decrypted!
+        /// </summary>
+        /// <param name="secureString">The <see cref="SecureString"/>, which should be converted</param>
+        /// <returns>Returns the <see cref="SecureString"/> as <see cref="string"/>.</returns>
+        public static string ConvertToString(this SecureString secureString)
         {
-            secureString.AppendChar(c);
+            if (secureString == null || secureString.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            IntPtr intPtr = IntPtr.Zero;
+            try
+            {
+                intPtr = Marshal.SecureStringToGlobalAllocUnicode(secureString);
+                return Marshal.PtrToStringUni(intPtr);
+            }
+            finally
+            {
+                if (intPtr != IntPtr.Zero)
+                {
+                    Marshal.ZeroFreeGlobalAllocUnicode(intPtr);
+                }
+            }
         }
-        secureString.MakeReadOnly();
-        return secureString;
+
+        /// <summary>
+        /// Converts the given <paramref name="secureString"/> to a <see cref="byte"/>[]
+        /// </summary>
+        /// <param name="secureString">The <see cref="SecureString"/>, which should be converted</param>
+        /// <returns>Returns the <paramref name="secureString"/> as <see cref="byte"/>[]</returns>
+        public static byte[] ToBytes(this SecureString secureString)
+        {
+            nint pUnicodeBytes = Marshal.SecureStringToGlobalAllocUnicode(secureString);
+            try
+            {
+                byte[] unicodeBytes = new byte[secureString.Length * 2];
+                byte[] bytes = new byte[unicodeBytes.Length];
+
+                for (int idx = 0; idx < unicodeBytes.Length; ++idx)
+                {
+                    bytes[idx] = Marshal.ReadByte(pUnicodeBytes, idx);
+                }
+                return bytes;
+            }
+            finally
+            {
+                Marshal.ZeroFreeGlobalAllocUnicode(pUnicodeBytes);
+            }
+        }
+        #endregion
     }
 }

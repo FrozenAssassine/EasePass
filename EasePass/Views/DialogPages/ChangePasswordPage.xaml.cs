@@ -18,6 +18,8 @@ using EasePass.Core.Database;
 using EasePass.Extensions;
 using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
+using System.Security;
+using System.Threading.Tasks;
 
 namespace EasePass.Views.DialogPages;
 public enum ChangePasswordPageResult
@@ -37,16 +39,16 @@ public sealed partial class ChangePasswordPage : Page
         this.InitializeComponent();
     }
 
-    public ChangePasswordPageResult ChangePassword()
+    public async Task<ChangePasswordPageResult> ChangePassword()
     {
         if (changePW_newPw.Password.Length < 4)
         {
             return ChangePasswordPageResult.PWTooShort;
         }
 
-        var newDB = new DatabaseItem(Database.LoadedInstance.Path);
-        var enteredPW = changePW_currentPw.Password.ConvertToSecureString();
-        if (newDB.CheckPasswordCorrect(enteredPW).result != PasswordValidationResult.Success)
+        DatabaseItem newDB = new DatabaseItem(Database.LoadedInstance.Path);
+        SecureString enteredPW = changePW_currentPw.Password.ConvertToSecureString();
+        if ((await newDB.CheckPasswordCorrect(enteredPW)).result != PasswordValidationResult.Success)
             return ChangePasswordPageResult.IncorrectPassword;
         
         if (!changePW_newPw.Password.Equals(changePW_repeatPw.Password))
@@ -54,7 +56,7 @@ public sealed partial class ChangePasswordPage : Page
             return ChangePasswordPageResult.PWNotMatching;
         }
 
-        newDB.Load(enteredPW);
+        await newDB.Load(enteredPW);
 
         Database.LoadedInstance.MasterPassword = changePW_newPw.Password.ConvertToSecureString();
         Database.LoadedInstance.Save();

@@ -51,6 +51,7 @@
                 <controls1:GridSplitter Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" Grid.Column="1"/>
                 <StackPanel Padding="20" CornerRadius="10" Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}" HorizontalAlignment="Center" Orientation="Vertical" Grid.Column="2" x:Name="editDatabaseView" Visibility="Collapsed">
                     <TextBlock FontSize="20" x:Name="loadedDBName"/>
+                    <controls:IconButton x:Uid="View_ManageDB_ManageSecondFactor" HorizontalAlignment="Stretch" Glyph="&#xE710;" ToolTipService.ToolTip="Manage the SecondFactor Authentication of the Database" Margin="0,20,0,0" Content="Manage SecondFactor" Click="ManageSecondFactor_Click" />
                     <controls:IconButton x:Uid="View_ManageDB_ImportPasswords" HorizontalAlignment="Stretch" Glyph="&#xE710;" ToolTipService.ToolTip="Import passwords from an external database into this one" Margin="0,20,0,0" Content="Import into" Click="ImportIntoDatabase_Click" />
                     <controls:IconButton x:Uid="View_ManageDB_DeleteDB" HorizontalAlignment="Stretch" Glyph="&#xE74D;" Content="Delete database" ToolTipService.ToolTip="Delete database" Margin="0,20,0,0" Click="Delete_DatabaseItem_Click" />
                     <controls:IconButton x:Uid="View_ManageDB_ExportDB" HorizontalAlignment="Stretch" Glyph="&#xEDE1;" Content="Export database" ToolTipService.ToolTip="Export database" Margin="0,20,0,0" Click="Export_DatabaseItem_Click" />
