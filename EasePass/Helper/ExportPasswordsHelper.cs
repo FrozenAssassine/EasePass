@@ -33,17 +33,21 @@ internal class ExportPasswordsHelper
 
         DatabaseItem export = new DatabaseItem(res.path);
         export.MasterPassword = newPassword ?? db.MasterPassword;
+        export.SecondFactor = db.SecondFactor;
+        export.Settings = db.Settings;
 
         if (showSelectPasswordDialog)
         {
-            var exportItems = await new SelectExportPasswordsDialog().ShowAsync(items);
+            PasswordManagerItem[] exportItems = await new SelectExportPasswordsDialog().ShowAsync(items);
             if (exportItems == null)
                 return;
 
             export.SetNewPasswords(exportItems);
         }
         else
+        {
             export.SetNewPasswords(items);
+        }
 
         export.Save();
 
