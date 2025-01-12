@@ -41,21 +41,25 @@ namespace EasePass.Helper
         /// If the <paramref name="password"/> is equal to <see langword="null"/> <see cref="Array.Empty{T}"/> will be returned.</returns>
         public static byte[] HashPasswordWithArgon2id(SecureString password, byte[] salt, byte[] associatedData = null, int degreeOfParallelism = 10, int iterations = 10, int memorySize = 256_000, int hashLength = 100)
         {
-
             if (password == null)
                 return Array.Empty<byte>();
 
-            using Argon2id Argon2id = new Argon2id(password.ToBytes());
-            Argon2id.Salt = salt;
-            Argon2id.DegreeOfParallelism = degreeOfParallelism;
-            Argon2id.Iterations = iterations;
-            Argon2id.MemorySize = memorySize;
-
-            if (associatedData != null)
+            byte[] hash;
+            using (Argon2id Argon2id = new Argon2id(password.ToBytes()))
             {
-                Argon2id.AssociatedData = associatedData;
+                Argon2id.Salt = salt;
+                Argon2id.DegreeOfParallelism = degreeOfParallelism;
+                Argon2id.Iterations = iterations;
+                Argon2id.MemorySize = memorySize;
+
+                if (associatedData != null)
+                {
+                    Argon2id.AssociatedData = associatedData;
+                }
+                hash = Argon2id.GetBytes(hashLength);
             }
-            return Argon2id.GetBytes(hashLength);
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Aggressive);
+            return hash;
         }
 
         public static string HashFile(string path)
