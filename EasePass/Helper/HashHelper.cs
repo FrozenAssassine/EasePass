@@ -39,7 +39,7 @@ namespace EasePass.Helper
         /// <param name="hashLength">The length of the Hash</param>
         /// <returns>Returns the Hash of the <paramref name="password"/> with the given <paramref name="hashLength"/>.
         /// If the <paramref name="password"/> is equal to <see langword="null"/> <see cref="Array.Empty{T}"/> will be returned.</returns>
-        public static byte[] HashPasswordWithArgon2id(SecureString password, byte[] salt, byte[] associatedData = null, int degreeOfParallelism = 10, int iterations = 10, int memorySize = 256_000, int hashLength = 100)
+        public static byte[] HashPasswordWithArgon2id(SecureString password, byte[] salt, byte[] associatedData = null, int degreeOfParallelism = 10, int iterations = 10, int memorySize = 256_000, int hashLength = 256)
         {
             if (password == null)
                 return Array.Empty<byte>();
