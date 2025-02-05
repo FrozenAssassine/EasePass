@@ -33,7 +33,7 @@ namespace EasePass.Core.Database.Format.epdb
             if (!File.Exists(path))
                 return (PasswordValidationResult.DatabaseNotFound, default);
 
-            byte[] pass = HashHelper.HashPasswordWithArgon2id(password, salt, associatedData);
+            byte[] pass = HashHelper.HashPasswordWithArgon2id(password, salt);
 
             if (!IDatabaseLoader.DecryptData(IDatabaseLoader.ReadFile(path), pass, showWrongPasswordError, out string data))
                 return (PasswordValidationResult.WrongPassword, default);
@@ -50,6 +50,12 @@ namespace EasePass.Core.Database.Format.epdb
 
                 database.SecondFactor = secondFactorDialog.Token;
                 pass = HashHelper.HashPasswordWithArgon2id(secondFactorDialog.Token, salt, associatedData);
+            }
+            else
+            {
+
+
+                //pass = HashHelper.HashPasswordWithArgon2id()
             }
 
             if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out data))
