@@ -15,11 +15,8 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.Core.Database.Format;
-using EasePass.Dialogs;
-using EasePass.Helper;
 using EasePass.Models;
 using EasePass.Settings;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

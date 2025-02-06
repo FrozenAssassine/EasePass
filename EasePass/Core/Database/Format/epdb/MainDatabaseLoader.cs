@@ -1,10 +1,13 @@
 ﻿using EasePass.Core.Database.Format.Serialization;
 using EasePass.Dialogs;
+using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Models;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,9 +56,10 @@ namespace EasePass.Core.Database.Format.epdb
             }
             else
             {
-
-
-                //pass = HashHelper.HashPasswordWithArgon2id()
+                char[] base64 = password.ToBytes().ToBase64();
+                Array.Reverse(base64);
+                pass = HashHelper.HashPasswordWithArgon2id(base64, salt, associatedData);
+                base64.ZeroOut();
             }
 
             if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out data))
@@ -90,7 +94,9 @@ namespace EasePass.Core.Database.Format.epdb
             }
             else
             {
-                pass = HashHelper.HashPasswordWithArgon2id(password, salt, associatedData);
+                char[] base64 = password.ToBytes().ToBase64();
+                Array.Reverse(base64);
+                pass = HashHelper.HashPasswordWithArgon2id(base64, salt, associatedData);
             }
 
             if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out string data))
@@ -116,7 +122,9 @@ namespace EasePass.Core.Database.Format.epdb
             
             if (secondFactor == null)
             {
-                pass = HashHelper.HashPasswordWithArgon2id(password, salt, associatedData);
+                char[] base64 = password.ToBytes().ToBase64();
+                Array.Reverse(base64);
+                pass = HashHelper.HashPasswordWithArgon2id(base64, salt, associatedData);
                 data = EncryptDecryptHelper.EncryptStringAES(json, pass);
             }
             else
@@ -135,7 +143,7 @@ namespace EasePass.Core.Database.Format.epdb
 
             if (secondFactor != null)
             {
-                pass = HashHelper.HashPasswordWithArgon2id(password, salt, associatedData);
+                pass = HashHelper.HashPasswordWithArgon2id(password, salt);
             }
             data = EncryptDecryptHelper.EncryptStringAES(json, pass);
 

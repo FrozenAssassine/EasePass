@@ -1,10 +1,11 @@
 ﻿namespace EasePass.Extensions
 {
     /// <summary>
-    /// Includes every Extension for the <see cref="char"/>[]
+    /// Includes every Extension for the <see cref="char"/>
     /// </summary>
     internal static class CharExtension
     {
+        #region IsSpecialChar
         /// <summary>
         /// Checks if the given <paramref name="c"/> is a Special Character
         /// </summary>
@@ -54,5 +55,6 @@
                     return false;
             }
         }
+        #endregion
     }
 }

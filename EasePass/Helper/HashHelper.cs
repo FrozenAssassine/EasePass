@@ -15,7 +15,6 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.Extensions;
-using EasePass.Helper;
 using Konscious.Security.Cryptography;
 using System;
 using System.IO;
@@ -44,8 +43,46 @@ namespace EasePass.Helper
             if (password == null)
                 return Array.Empty<byte>();
 
+            return HashPasswordWithArgon2id(password.ToBytes(), salt, associatedData);
+        }
+        /// <summary>
+        /// Hashes the given <paramref name="password"/> with the Argon2id Algorithm
+        /// </summary>
+        /// <param name="password">The Password, which should be hashed</param>
+        /// <param name="salt">The Salt, which should be used for the hash</param>
+        /// <param name="associatedData">The Associated Data for the Hash</param>
+        /// <param name="degreeOfParallelism">The degree of Parallelism</param>
+        /// <param name="iterations">The amount of iterations for the hash</param>
+        /// <param name="memorySize">The amount of Memory, which should be uused</param>
+        /// <param name="hashLength">The length of the Hash</param>
+        /// <returns>Returns the Hash of the <paramref name="password"/> with the given <paramref name="hashLength"/>.
+        /// If the <paramref name="password"/> is equal to <see langword="null"/> <see cref="Array.Empty{T}"/> will be returned.</returns>
+        public static byte[] HashPasswordWithArgon2id(char[] password, byte[] salt, byte[] associatedData = null, int degreeOfParallelism = 10, int iterations = 10, int memorySize = 256_000, int hashLength = 256)
+        {
+            if (password == null)
+                return Array.Empty<byte>();
+
+            return HashPasswordWithArgon2id(Encoding.UTF8.GetBytes(password), salt, associatedData);
+        }
+        /// <summary>
+        /// Hashes the given <paramref name="password"/> with the Argon2id Algorithm
+        /// </summary>
+        /// <param name="password">The Password, which should be hashed</param>
+        /// <param name="salt">The Salt, which should be used for the hash</param>
+        /// <param name="associatedData">The Associated Data for the Hash</param>
+        /// <param name="degreeOfParallelism">The degree of Parallelism</param>
+        /// <param name="iterations">The amount of iterations for the hash</param>
+        /// <param name="memorySize">The amount of Memory, which should be uused</param>
+        /// <param name="hashLength">The length of the Hash</param>
+        /// <returns>Returns the Hash of the <paramref name="password"/> with the given <paramref name="hashLength"/>.
+        /// If the <paramref name="password"/> is equal to <see langword="null"/> <see cref="Array.Empty{T}"/> will be returned.</returns>
+        public static byte[] HashPasswordWithArgon2id(byte[] password, byte[] salt, byte[] associatedData = null, int degreeOfParallelism = 10, int iterations = 10, int memorySize = 256_000, int hashLength = 256)
+        {
+            if (password == null)
+                return Array.Empty<byte>();
+
             byte[] hash;
-            using (Argon2id Argon2id = new Argon2id(password.ToBytes()))
+            using (Argon2id Argon2id = new Argon2id(password))
             {
                 Argon2id.Salt = salt;
                 Argon2id.DegreeOfParallelism = degreeOfParallelism;
