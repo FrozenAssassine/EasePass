@@ -45,7 +45,7 @@ namespace EasePass.Helper
         {
             using (Aes aesAlg = Aes.Create())
             {
-                aesAlg.Key = GetCryptionKey(password, salt);
+                aesAlg.Key = password.Length == 32 ? password : GetCryptionKey(password, salt);
                 aesAlg.IV = cipherText.Take(16).ToArray();
 
                 return DecryptInternal(aesAlg, cipherText);
@@ -87,11 +87,12 @@ namespace EasePass.Helper
                 return EncryptInternal(aesAlg, plainText);
             }
         }
+
         public static byte[] EncryptStringAES(string plainText, byte[] password, string salt = "")
         {
             using (Aes aesAlg = Aes.Create())
             {
-                aesAlg.Key = GetCryptionKey(password, salt);
+                aesAlg.Key = password.Length == 32 ? password : GetCryptionKey(password, salt);
                 aesAlg.GenerateIV();
 
                 return EncryptInternal(aesAlg, plainText);

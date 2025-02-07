@@ -141,10 +141,7 @@ namespace EasePass.Core.Database.Format.epdb
 
             json = database.Serialize();
 
-            if (secondFactor != null)
-            {
-                pass = HashHelper.HashPasswordWithArgon2id(password, salt);
-            }
+            pass = HashHelper.HashPasswordWithArgon2id(password, salt);
             data = EncryptDecryptHelper.EncryptStringAES(json, pass);
 
             return IDatabaseLoader.SaveFile(path, data);
