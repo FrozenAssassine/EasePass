@@ -154,7 +154,7 @@ namespace EasePass.Views
             if (item == null)
                 return;
 
-            var editItem = await new EditItemDialog().ShowAsync(Database.LoadedInstance.PasswordAlreadyExists, item);
+            PasswordManagerItem editItem = await new EditItemDialog().ShowAsync(Database.LoadedInstance.GetPasswordOccurence, item);
             if (editItem == null)
                 return;
 
@@ -162,7 +162,7 @@ namespace EasePass.Views
         }
         private async Task AddPasswordItem()
         {
-            var newItem = await new AddItemDialog().ShowAsync(Database.LoadedInstance.PasswordAlreadyExists);
+            PasswordManagerItem newItem = await new AddItemDialog().ShowAsync(Database.LoadedInstance.GetPasswordOccurence);
             if (newItem == null)
                 return;
 

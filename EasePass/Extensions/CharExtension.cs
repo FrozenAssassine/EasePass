@@ -1,7 +1,16 @@
 ﻿namespace EasePass.Extensions
 {
-    public static class CharExtension
+    /// <summary>
+    /// Includes every Extension for the <see cref="char"/>
+    /// </summary>
+    internal static class CharExtension
     {
+        #region IsSpecialChar
+        /// <summary>
+        /// Checks if the given <paramref name="c"/> is a Special Character
+        /// </summary>
+        /// <param name="c">The Character, which will be checked</param>
+        /// <returns>Returns <see langword="true"/> if the given <paramref name="c"/> is a Special Character</returns>
         public static bool IsSpecialChar(this char c)
         {
             switch (c)
@@ -46,5 +55,6 @@
                     return false;
             }
         }
+        #endregion
     }
 }

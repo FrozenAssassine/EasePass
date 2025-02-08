@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CopyPasswordBox_Copy.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Kopieren</value>
-  </data>
   <data name="CopyTextbox_Copy.ToolTipService.ToolTip" xml:space="preserve">
     <value>Kopieren</value>
   </data>
@@ -1080,10 +1077,10 @@
   <data name="View_PasswordPage_OOBE_Hyperlink.Content" xml:space="preserve">
     <value>Einstellungen &gt; Datenbank verwalten</value>
   </data>
-	<data name="InfoMessages_DatabaseWithThatNameAlreadyExists.Headline" xml:space="preserve">
+  <data name="InfoMessages_DatabaseWithThatNameAlreadyExists.Headline" xml:space="preserve">
     <value>Datenbank existiert bereits</value>
   </data>
-	<data name="InfoMessages_DatabaseWithThatNameAlreadyExists.Text" xml:space="preserve">
+  <data name="InfoMessages_DatabaseWithThatNameAlreadyExists.Text" xml:space="preserve">
     <value>Eine Datenbank mit dem gleichen Namen existiert bereits an dem gegebenen Pfad</value>
   </data>
   <data name="View_ManageDB_ExportDBNewPW.Content" xml:space="preserve">
@@ -1091,5 +1088,51 @@
   </data>
   <data name="View_ManageDB_ExportDBNewPW.ToolTipService.ToolTip" xml:space="preserve">
     <value>Exportieren der ausgewählten Datenbank mit einem anderen Password</value>
+  </data>
+  <data name="Dialog_ManageSecondFactor_Headline.Text" xml:space="preserve">
+    <value>Zwei-Faktor-Authentifizierung verwalten von</value>
+  </data>
+  <data name="CopyTokenBox_Copy.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Kopieren</value>
+  </data>
+  <data name="CopyTokenBox_Show.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Anzeigen</value>
+  </data>
+  <data name="Dialog_ConfirmAddSecondFactor_Item.Text" xml:space="preserve">
+    <value>Sind Sie sicher, dass Sie die Zwei-Faktor-Authentifizierung aktivieren woll für die Datenbank "@@@Name@@@"?
+Wenn Sie Ihr Token vergessen, haben Sie keinen Zugriff mehr auf Ihre Datenbank!</value>
+  </data>
+  <data name="Dialog_ConfirmAddSecondFactor_Headline.Text" xml:space="preserve">
+    <value>Bestätigen Sie die aktivierun der Zwei-Faktor-Authentifizierung</value>
+  </data>
+  <data name="View_EnterSFPage_TokenBox.Header" xml:space="preserve">
+    <value>Geben Sie Ihren Zwei-Faktor Token ein:</value>
+  </data>
+  <data name="Dialogs_EnterSF_Title.Text" xml:space="preserve">
+    <value>Geben Sie den Zwei-Faktor Token von der Datenbank ein</value>
+  </data>
+  <data name="View_ManageDB_ManageSecondFactor.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Zwei-Faktor-Authentifizierung für die Datenbank verwalten</value>
+  </data>
+  <data name="View_ManageDB_ManageSecondFactor.Content" xml:space="preserve">
+    <value>Zwei-Faktor-Authentifizierung verwalten</value>
+  </data>
+  <data name="View_ManageSecondFactorPage_EnableSecondFactor.Text" xml:space="preserve">
+    <value>Zwei-Faktor-Authentifizierung aktivieren</value>
+  </data>
+  <data name="View_ManageSecondFactorPage_ToggleEnableSecondFactor.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Aktiviert die Zwei-Faktor-Authentifizierung für die Datenbank</value>
+  </data>
+  <data name="View_ManageSecondFactorPage_SecondFactorType.Text" xml:space="preserve">
+    <value>Zweiter-Faktor Typ</value>
+  </data>
+  <data name="View_ManageSecondFactorPage_SecondFactorToken.Text" xml:space="preserve">
+    <value>Zwei-Faktor Token</value>
+  </data>
+  <data name="View_ShowSFPage_TokenBox.Header" xml:space="preserve">
+    <value>Zweiter-Faktor Token:</value>
+  </data>
+  <data name="Dialogs_ShowSF_Title.Text" xml:space="preserve">
+    <value>Der neue OTP-Token für die Datenbank</value>
   </data>
 </root>
