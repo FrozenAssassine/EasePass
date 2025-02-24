@@ -1080,10 +1080,10 @@
   <data name="View_PasswordPage_OOBE_Hyperlink.Content" xml:space="preserve">
     <value>Einstellungen &gt; Datenbank verwalten</value>
   </data>
-	<data name="InfoMessages_DatabaseWithThatNameAlreadyExists.Headline" xml:space="preserve">
+  <data name="InfoMessages_DatabaseWithThatNameAlreadyExists.Headline" xml:space="preserve">
     <value>Datenbank existiert bereits</value>
   </data>
-	<data name="InfoMessages_DatabaseWithThatNameAlreadyExists.Text" xml:space="preserve">
+  <data name="InfoMessages_DatabaseWithThatNameAlreadyExists.Text" xml:space="preserve">
     <value>Eine Datenbank mit dem gleichen Namen existiert bereits an dem gegebenen Pfad</value>
   </data>
   <data name="View_ManageDB_ExportDBNewPW.Content" xml:space="preserve">
@@ -1091,5 +1091,8 @@
   </data>
   <data name="View_ManageDB_ExportDBNewPW.ToolTipService.ToolTip" xml:space="preserve">
     <value>Exportieren der ausgewählten Datenbank mit einem anderen Password</value>
+  </data>
+  <data name="View_ExtensionPage_RequirementsInfo.Content" xml:space="preserve">
+    <value>Webseite öffnen</value>
   </data>
 </root>
