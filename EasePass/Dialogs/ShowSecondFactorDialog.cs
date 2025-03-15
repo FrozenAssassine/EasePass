@@ -1,5 +1,5 @@
 ﻿using EasePass.Extensions;
-using EasePass.Helper;
+using EasePass.Helper.Logout;
 using EasePass.Views.DialogPages;
 using System;
 using System.Threading.Tasks;

@@ -33,7 +33,7 @@ namespace EasePass.Dialogs
         public async Task<EnterSecondFactorDialog> ShowAsync()
         {
             page = new EnterSecondFactorPage();
-            dialog = new AutoLogoutContentDialog
+            dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Enter the SecondFactor Token of the Database".Localized("Dialogs_EnterSF_Title/Text"),
                 PrimaryButtonText = "Done".Localized("Dialog_Button_Done/Text"),

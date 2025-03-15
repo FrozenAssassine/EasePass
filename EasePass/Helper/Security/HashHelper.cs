@@ -22,7 +22,7 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace EasePass.Helper
+namespace EasePass.Helper.Security
 {
     internal class HashHelper
     {

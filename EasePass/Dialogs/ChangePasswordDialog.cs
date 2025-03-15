@@ -32,7 +32,7 @@ namespace EasePass.Dialogs
         public async Task ShowAsync(DatabaseItem db)
         {
             page = new ChangePasswordPage();
-            dialog = new AutoLogoutContentDialog
+            dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Change Password for".Localized("Dialog_ChangePassword_Title/Text") + " " + db.Name,
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),

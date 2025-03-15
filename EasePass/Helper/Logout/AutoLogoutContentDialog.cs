@@ -17,7 +17,7 @@ copies or substantial portions of the Software.
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 
-namespace EasePass.Helper
+namespace EasePass.Helper.Logout
 {
     internal class AutoLogoutContentDialog : ContentDialog
     {
@@ -40,7 +40,7 @@ namespace EasePass.Helper
         {
             doPreventAutoLogoutDialog = preventAutoLogout;
             Dialogs.Add(this);
-            this.Closing += AutoLogoutContentDialog_Closing;
+            Closing += AutoLogoutContentDialog_Closing;
         }
 
         private void AutoLogoutContentDialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)

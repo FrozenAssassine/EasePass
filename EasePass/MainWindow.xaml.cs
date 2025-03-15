@@ -17,6 +17,10 @@ copies or substantial portions of the Software.
 using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Helper;
+using EasePass.Helper.Extension;
+using EasePass.Helper.Logout;
+using EasePass.Helper.Security.Generator;
+using EasePass.Helper.Window;
 using EasePass.Settings;
 using EasePass.Views;
 using Microsoft.UI.Dispatching;

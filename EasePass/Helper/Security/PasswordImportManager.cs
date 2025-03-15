@@ -15,13 +15,14 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.Dialogs;
+using EasePass.Helper.FileSystem;
 using EasePass.Models;
 using EasePassExtensibility;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EasePass.Helper
+namespace EasePass.Helper.Security
 {
     internal static class PasswordImportManager
     {
@@ -49,7 +50,7 @@ namespace EasePass.Helper
 
         private static string FilePicker(string[] extensions)
         {
-            var res = Task.Run<(string path, bool success)>(async () => await FilePickerHelper.PickOpenFile(extensions)).Result;
+            var res = Task.Run(async () => await FilePickerHelper.PickOpenFile(extensions)).Result;
             if (res.success)
                 return res.path;
             return "";

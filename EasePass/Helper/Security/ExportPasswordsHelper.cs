@@ -16,13 +16,14 @@ copies or substantial portions of the Software.
 
 using EasePass.Core.Database;
 using EasePass.Dialogs;
+using EasePass.Helper.FileSystem;
 using EasePass.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Security;
 using System.Threading.Tasks;
 
-namespace EasePass.Helper;
+namespace EasePass.Helper.Security;
 internal class ExportPasswordsHelper
 {
     public async static Task Export(DatabaseItem db, ObservableCollection<PasswordManagerItem> items, SecureString newPassword = null, bool showSelectPasswordDialog = true)

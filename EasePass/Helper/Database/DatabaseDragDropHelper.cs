@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 
-namespace EasePass.Helper
+namespace EasePass.Helper.Database
 {
     internal class DatabaseDragDropHelper
     {

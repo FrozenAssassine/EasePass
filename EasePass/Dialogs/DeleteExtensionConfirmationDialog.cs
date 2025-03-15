@@ -27,7 +27,7 @@ namespace EasePass.Dialogs
     {
         public async Task<bool> ShowAsync(Extension deleteItem)
         {
-            var dialog = new AutoLogoutContentDialog
+            var dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Confirm Deletion".Localized("Dialog_ConfirmDelete_Headline/Text"),
                 PrimaryButtonText = "Delete".Localized("Dialog_Button_Delete/Text"),

@@ -15,7 +15,7 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.AppWindows;
-using EasePass.Helper;
+using EasePass.Helper.Security.Generator;
 using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
 using System;

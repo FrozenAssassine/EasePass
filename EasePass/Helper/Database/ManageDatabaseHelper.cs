@@ -16,6 +16,7 @@ copies or substantial portions of the Software.
 
 using EasePass.Core.Database;
 using EasePass.Dialogs;
+using EasePass.Helper.FileSystem;
 using EasePass.Models;
 using EasePass.Settings;
 using Microsoft.UI.Xaml.Controls;
@@ -23,7 +24,7 @@ using System.Collections.ObjectModel;
 using System.Security;
 using System.Threading.Tasks;
 
-namespace EasePass.Helper;
+namespace EasePass.Helper.Database;
 
 internal class ManageDatabaseHelper
 {
@@ -42,7 +43,7 @@ internal class ManageDatabaseHelper
         if (!await db.Unlock(password))
             return null;
 
-        Database.AddDatabasePath(db.Path);
+        Core.Database.Database.AddDatabasePath(db.Path);
         return db;
     }
 
@@ -61,7 +62,7 @@ internal class ManageDatabaseHelper
         if (password == null)
             return false; //cancelled by user
 
-        ObservableCollection<PasswordManagerItem> importedItems = await Database.GetItemsFromFile(filePath, password);
+        ObservableCollection<PasswordManagerItem> importedItems = await Core.Database.Database.GetItemsFromFile(filePath, password);
 
         ImportPasswordsDialog dialog = new ImportPasswordsDialog();
         dialog.SetPagePasswords(importedItems);
@@ -72,11 +73,11 @@ internal class ManageDatabaseHelper
 
         if (importItemsResult.Override)
         {
-            Database.LoadedInstance.Items.Clear();
+            Core.Database.Database.LoadedInstance.Items.Clear();
         }
 
-        Database.LoadedInstance.AddRange(importItemsResult.Items);
-        Database.LoadedInstance.Save();
+        Core.Database.Database.LoadedInstance.AddRange(importItemsResult.Items);
+        Core.Database.Database.LoadedInstance.Save();
         return true;
     }
 
@@ -86,14 +87,14 @@ internal class ManageDatabaseHelper
         if (newDB == null)
             return null;
 
-        Database.AddDatabasePath(newDB.Path);
-        InteropHelper.SetForegroundWindow(InteropHelper.GetWindowHandle(App.m_window));
+        Core.Database.Database.AddDatabasePath(newDB.Path);
+        InteropHelper.SetForegroundWindow(InteropHelper.GetWindowHandle(EasePass.App.m_window));
         return newDB;
     }
 
     public static void LoadDatabasesToCombobox(ComboBox databaseBox)
     {
-        DatabaseItem[] databases = Database.GetAllUnloadedDatabases();
+        DatabaseItem[] databases = Core.Database.Database.GetAllUnloadedDatabases();
         string comboboxIndexDBName = AppSettings.LoadedDatabaseName ?? (databases.Length > 0 ? databases[0].Name : "");
         foreach (DatabaseItem item in databases)
         {

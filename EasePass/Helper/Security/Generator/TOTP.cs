@@ -17,7 +17,7 @@ copies or substantial portions of the Software.
 using System;
 using System.Security.Cryptography;
 
-namespace EasePass.Helper
+namespace EasePass.Helper.Security.Generator
 {
     public class TOTP // https://github.com/finn-freitag/Authenticator/blob/main/Authenticator/TOTP.cs
     {
@@ -177,16 +177,16 @@ namespace EasePass.Helper
                 int mask;
                 if (bitsRemaining > 5)
                 {
-                    mask = cValue << (bitsRemaining - 5);
+                    mask = cValue << bitsRemaining - 5;
                     curByte = (byte)(curByte | mask);
                     bitsRemaining -= 5;
                 }
                 else
                 {
-                    mask = cValue >> (5 - bitsRemaining);
+                    mask = cValue >> 5 - bitsRemaining;
                     curByte = (byte)(curByte | mask);
                     returnArray[arrayIndex++] = curByte;
-                    curByte = (byte)(cValue << (3 + bitsRemaining));
+                    curByte = (byte)(cValue << 3 + bitsRemaining);
                     bitsRemaining += 3;
                 }
             }

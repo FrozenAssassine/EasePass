@@ -19,14 +19,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 
-namespace EasePass.Helper
+namespace EasePass.Helper.FileSystem
 {
     internal class FilePickerHelper
     {
         public static async Task<(string path, bool success)> PickOpenFile(string[] extensions)
         {
             var openPicker = new FileOpenPicker();
-            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(App.m_window);
+            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(EasePass.App.m_window);
 
             WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
 
@@ -46,7 +46,7 @@ namespace EasePass.Helper
         {
             FileSavePicker savePicker = new FileSavePicker();
 
-            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(App.m_window);
+            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(EasePass.App.m_window);
             WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hWnd);
 
             savePicker.FileTypeChoices.Add(extensions.val, extensions.ext);
@@ -61,7 +61,7 @@ namespace EasePass.Helper
         {
             FolderPicker openPicker = new FolderPicker();
 
-            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(App.m_window);
+            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(EasePass.App.m_window);
             WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
 
             openPicker.SuggestedStartLocation = PickerLocationId.Desktop;

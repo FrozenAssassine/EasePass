@@ -1,6 +1,6 @@
-﻿using EasePass.Core.Database.Format;
-using EasePass.Core.Database.Format.Serialization;
+﻿using EasePass.Core.Database.Format.Serialization;
 using EasePass.Dialogs;
+using EasePass.Helper.Database;
 using EasePass.Models;
 using System;
 using System.Collections.ObjectModel;

@@ -21,7 +21,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
 
-namespace EasePass.Helper
+namespace EasePass.Helper.Security.Generator
 {
     internal class TOTPTokenUpdater
     {

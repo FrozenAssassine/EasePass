@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EasePass.Helper
+namespace EasePass.Helper.FileSystem
 {
     /// <summary>
     /// Includes common Methods for Files

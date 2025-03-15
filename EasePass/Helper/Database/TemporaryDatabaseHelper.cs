@@ -2,7 +2,7 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
-namespace EasePass.Helper;
+namespace EasePass.Helper.Database;
 
 internal class TemporaryDatabaseHelper
 {
@@ -30,12 +30,12 @@ internal class TemporaryDatabaseHelper
 
     public static void LoadImportedDatabase()
     {
-        Database.LoadedInstance.IsTemporaryDatabase = false;
-        Database.AddDatabasePath(Database.LoadedInstance.Path);
+        Core.Database.Database.LoadedInstance.IsTemporaryDatabase = false;
+        Core.Database.Database.AddDatabasePath(Core.Database.Database.LoadedInstance.Path);
     }
 
     public static void ShowTempDBButton(Button button)
     {
-        button.Visibility = ConvertHelper.BoolToVisibility(Database.LoadedInstance.IsTemporaryDatabase);
+        button.Visibility = ConvertHelper.BoolToVisibility(Core.Database.Database.LoadedInstance.IsTemporaryDatabase);
     }
 }

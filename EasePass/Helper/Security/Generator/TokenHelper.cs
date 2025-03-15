@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EasePass.Helper.Security
+namespace EasePass.Helper.Security.Generator
 {
     internal static class TokenHelper
     {

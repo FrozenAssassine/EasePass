@@ -24,7 +24,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EasePass.Helper
+namespace EasePass.Helper.Security.Generator
 {
     public static class PasswordHelper
     {
@@ -109,7 +109,7 @@ namespace EasePass.Helper
                     password.Append(allowedChars[r.Next(alength)]);
                 }
             }
-            while ((!IsSecure(password, length, aIncludes)) || ((!disableLeakedPasswords) && (IsPwned(password.ToString()) == true)));
+            while (!IsSecure(password, length, aIncludes) || !disableLeakedPasswords && IsPwned(password.ToString()) == true);
 
             return password.ToString();
         }

@@ -1,7 +1,7 @@
 ﻿using EasePass.Core.Database.Format.Serialization;
 using EasePass.Dialogs;
 using EasePass.Extensions;
-using EasePass.Helper;
+using EasePass.Helper.Security;
 using EasePass.Models;
 using System;
 using System.Collections.Generic;

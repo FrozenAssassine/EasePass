@@ -16,11 +16,9 @@ copies or substantial portions of the Software.
 
 using EasePass.Core.Database;
 using EasePass.Extensions;
-using EasePass.Helper;
 using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs
@@ -30,7 +28,7 @@ namespace EasePass.Dialogs
         private CreateDatabaseDialogPage page;
         public async Task<DatabaseItem> ShowAsync()
         {
-            var dialog = new AutoLogoutContentDialog
+            var dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Create Database".Localized("Dialog_CreateDB_Headline/Text"),
                 PrimaryButtonText = "Create".Localized("Dialog_Button_Create/Text"),

@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace EasePass.Helper
+namespace EasePass.Helper.Extension
 {
     internal class ReflectionHelper
     {
@@ -30,8 +30,8 @@ namespace EasePass.Helper
             {
                 List<IExtensionInterface> res = new List<IExtensionInterface>();
                 Assembly plugin = Assembly.LoadFrom(path);
-                IEnumerable<System.Type> types = GetLoadableTypes(plugin);
-                foreach (System.Type t in types)
+                IEnumerable<Type> types = GetLoadableTypes(plugin);
+                foreach (Type t in types)
                 {
                     if (t.GetInterfaces().Contains(typeof(IExtensionInterface)))
                     {

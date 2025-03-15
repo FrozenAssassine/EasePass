@@ -16,7 +16,7 @@ copies or substantial portions of the Software.
 
 using EasePass.Core.Database.Format.Serialization;
 using EasePass.Extensions;
-using EasePass.Helper;
+using EasePass.Helper.Logout;
 using EasePass.Models;
 using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;

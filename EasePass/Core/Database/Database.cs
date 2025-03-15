@@ -14,7 +14,7 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-using EasePass.Core.Database.Format;
+using EasePass.Helper.Database;
 using EasePass.Models;
 using EasePass.Settings;
 using System;
