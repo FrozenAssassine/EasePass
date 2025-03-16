@@ -63,6 +63,7 @@ public class Database
         db.MasterPassword = password;
         db.Settings = new Format.Serialization.DatabaseSettings();
         db.Settings.UseSecondFactor = false;
+        db.Settings.SecondFactorType = Enums.SecondFactorType.None;
         db.Save();
         return db;
     }
