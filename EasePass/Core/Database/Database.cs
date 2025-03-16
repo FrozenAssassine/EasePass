@@ -61,6 +61,8 @@ public class Database
     {
         DatabaseItem db = new DatabaseItem(path);
         db.MasterPassword = password;
+        db.Settings = new Format.Serialization.DatabaseSettings();
+        db.Settings.UseSecondFactor = false;
         db.Save();
         return db;
     }
