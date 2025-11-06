@@ -46,7 +46,7 @@ namespace EasePass.Core.Database.Format.epdb
             if (database == default)
                 return (PasswordValidationResult.WrongFormat, default);
 
-            if (database.Settings.UseSecondFactor)
+            if (database.Settings != null && database.Settings.UseSecondFactor)
             {
                 EnterSecondFactorDialog secondFactorDialog = new EnterSecondFactorDialog();
                 await secondFactorDialog.ShowAsync();
