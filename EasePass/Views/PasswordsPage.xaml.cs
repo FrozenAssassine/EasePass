@@ -307,6 +307,22 @@ namespace EasePass.Views
                 searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
                 return;
             }
+
+            //Tag search with /TAG
+            if (searchbox.Text.StartsWith("/"))
+            {
+                var searchText = searchbox.Text.Replace("/", "");
+                if (searchText.Length == 0)
+                    return;
+
+                var tagSearchRes = Database.LoadedInstance.FindItemsByTag(searchText);
+                passwordItemListView.ItemsSource = tagSearchRes;
+                searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
+
+                return;
+            }
+
+
             var search_res = Database.LoadedInstance.FindItemsByName(searchbox.Text);
             passwordItemListView.ItemsSource = search_res;
             searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();

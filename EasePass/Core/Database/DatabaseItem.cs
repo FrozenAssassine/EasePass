@@ -177,6 +177,12 @@ namespace EasePass.Core.Database
         {
             return new ObservableCollection<PasswordManagerItem>(Items.Where(x => x.DisplayName.Contains(name, StringComparison.OrdinalIgnoreCase)));
         }
+        public ObservableCollection<PasswordManagerItem> FindItemsByTag(string tag)
+        {
+            return new ObservableCollection<PasswordManagerItem>(
+                Items.Where(x => x.Tags != null && x.Tags.Any(t => t.Contains(tag, StringComparison.OrdinalIgnoreCase)))
+            );
+        }
         #endregion
 
         #region Items_CollectionChanged

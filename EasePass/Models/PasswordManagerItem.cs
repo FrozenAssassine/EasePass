@@ -50,6 +50,10 @@ namespace EasePass.Models
         public string Interval { get; set; } = "30";
         public string Algorithm { get; set; } = "SHA1";
         public List<string> Clicks { get; } = new List<string>();
+
+        private string[] _Tags;
+        public string[] Tags { get=>  _Tags; set { _Tags = value; NotifyPropertyChanged("Tags"); } }
+
         [JsonIgnore]
         private string _DisplayName;
         public string DisplayName
