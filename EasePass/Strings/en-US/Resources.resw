@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CopyPasswordBox_Copy.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Copy</value>
-  </data>
   <data name="CopyPasswordBox_TT_Copy.ToolTipService.ToolTip" xml:space="preserve">
     <value>Copy</value>
   </data>
@@ -1091,5 +1088,51 @@
   </data>
   <data name="View_ManageDB_ExportDBNewPW.ToolTipService.ToolTip" xml:space="preserve">
     <value>Export the database with a new password</value>
+  </data>
+  <data name="Dialog_ManageSecondFactor_Headline.Text" xml:space="preserve">
+    <value>Manage SecondFactor for</value>
+  </data>
+  <data name="CopyTokenBox_Copy.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="CopyTokenBox_Show.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="Dialog_ConfirmAddSecondFactor_Item.Text" xml:space="preserve">
+    <value>Are you sure you want to enable a SecondFactor for the Database "@@@Name@@@"?
+If you Forget your Token you will have no Access to your Database!</value>
+  </data>
+  <data name="Dialog_ConfirmAddSecondFactor_Headline.Text" xml:space="preserve">
+    <value>Confirm enabling SecondFactor</value>
+  </data>
+  <data name="View_EnterSFPage_TokenBox.Header" xml:space="preserve">
+    <value>Enter SecondFactor Token:</value>
+  </data>
+  <data name="Dialogs_EnterSF_Title.Text" xml:space="preserve">
+    <value>Enter the SecondFactor Token of the Database</value>
+  </data>
+  <data name="View_ManageDB_ManageSecondFactor.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Manage the SecondFactor Authentication of the Database</value>
+  </data>
+  <data name="View_ManageDB_ManageSecondFactor.Content" xml:space="preserve">
+    <value>Manage SecondFactor</value>
+  </data>
+  <data name="View_ManageSecondFactorPage_EnableSecondFactor.Text" xml:space="preserve">
+    <value>Enable SecondFactor</value>
+  </data>
+  <data name="View_ManageSecondFactorPage_ToggleEnableSecondFactor.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Enables the SecondFactor for the Database</value>
+  </data>
+  <data name="View_ManageSecondFactorPage_SecondFactorType.Text" xml:space="preserve">
+    <value>SecondFactor Type</value>
+  </data>
+  <data name="View_ManageSecondFactorPage_SecondFactorToken.Text" xml:space="preserve">
+    <value>SecondFactor Token</value>
+  </data>
+  <data name="View_ShowSFPage_TokenBox.Header" xml:space="preserve">
+    <value>SecondFactor Token</value>
+  </data>
+  <data name="Dialogs_ShowSF_Title.Text" xml:space="preserve">
+    <value>The new OTP-Token for the Database</value>
   </data>
 </root>

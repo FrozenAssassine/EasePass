@@ -16,6 +16,9 @@ copies or substantial portions of the Software.
 
 using EasePass.Dialogs;
 using EasePass.Helper;
+using EasePass.Helper.Extension;
+using EasePass.Helper.FileSystem;
+using EasePass.Helper.Security;
 using EasePass.Models;
 using EasePassExtensibility;
 using Microsoft.UI.Xaml;

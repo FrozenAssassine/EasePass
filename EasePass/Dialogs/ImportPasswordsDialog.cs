@@ -38,7 +38,7 @@ namespace EasePass.Dialogs
 
         public async Task<(PasswordManagerItem[] Items, bool Override)> ShowAsync(bool showProgressbar)
         {
-            var dialog = new AutoLogoutContentDialog
+            var dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Import passwords".Localized("Dialog_ImportPW_Headline/Text"),
                 PrimaryButtonText = "Add".Localized("Dialog_Button_Add/Text"),

@@ -33,7 +33,7 @@ namespace EasePass.Dialogs
         public async Task<EnterPasswordDialog> ShowAsync()
         {
             page = new EnterPasswordPage();
-            dialog = new AutoLogoutContentDialog
+            dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Enter password of the database".Localized("Dialogs_EnterPW_Title/Text"),
                 PrimaryButtonText = "Done".Localized("Dialog_Button_Done/Text"),

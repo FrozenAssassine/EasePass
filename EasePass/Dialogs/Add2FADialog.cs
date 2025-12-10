@@ -29,7 +29,7 @@ namespace EasePass.Dialogs
         public async Task<bool> ShowAsync(PasswordManagerItem item)
         {
             var page = new Add2FAPage(item);
-            var dialog = new AutoLogoutContentDialog
+            var dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Add 2FA to".Localized("Dialog_Add2FA_Headline/Text") + " " + item.DisplayName,
                 PrimaryButtonText = "Add".Localized("Dialog_Button_Add/Text"),
