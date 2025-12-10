@@ -17,7 +17,7 @@ copies or substantial portions of the Software.
 using EasePass.Core.Database.Enums;
 using EasePass.Core.Database.Format.Serialization;
 using EasePass.Extensions;
-using EasePass.Helper.Security;
+using EasePass.Helper.Security.Generator;
 using EasePassExtensibility;
 using Microsoft.UI.Xaml.Controls;
 using System;

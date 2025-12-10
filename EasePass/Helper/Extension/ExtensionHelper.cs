@@ -15,6 +15,7 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.Core.Database;
+using EasePass.Helper.FileSystem;
 using EasePass.Models;
 using EasePassExtensibility;
 using System;
@@ -24,11 +25,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace EasePass.Helper;
+namespace EasePass.Helper.Extension;
 
 public static class ExtensionHelper
 {
-    public static List<Extension> Extensions = new List<Extension>();
+    public static List<Models.Extension> Extensions = new List<Models.Extension>();
 
     public static void Init()
     {
@@ -54,7 +55,7 @@ public static class ExtensionHelper
                 {
                     if (FileHelper.HasExtension(extensionPaths[i], ".dll"))
                     {
-                        Extensions.Add(new Extension(ReflectionHelper.GetAllExternalInstances(extensionPaths[i]), Path.GetFileNameWithoutExtension(extensionPaths[i])));
+                        Extensions.Add(new Models.Extension(ReflectionHelper.GetAllExternalInstances(extensionPaths[i]), Path.GetFileNameWithoutExtension(extensionPaths[i])));
                     }
                 }
 
@@ -65,7 +66,7 @@ public static class ExtensionHelper
                     {
                         if(Extensions[i].Interfaces[j] is IDatabasePaths)
                         {
-                            ((IDatabasePaths)Extensions[i].Interfaces[j]).Init(Database.GetAllDatabasePaths());
+                            ((IDatabasePaths)Extensions[i].Interfaces[j]).Init(Core.Database.Database.GetAllDatabasePaths());
                         }
                     }
                 }

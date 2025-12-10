@@ -19,7 +19,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace EasePass.Helper
+namespace EasePass.Helper.Security
 {
     public static class NTPClient // https://github.com/finn-freitag/Authenticator/blob/main/Authenticator/NTPClient.cs
     {
@@ -57,11 +57,11 @@ namespace EasePass.Helper
                 return DateTime.Now;
             }
 
-            ulong intPart = (ulong)ntpData[40] << 24 | (ulong)ntpData[41] << 16 | (ulong)ntpData[42] << 8 | (ulong)ntpData[43];
-            ulong fractPart = (ulong)ntpData[44] << 24 | (ulong)ntpData[45] << 16 | (ulong)ntpData[46] << 8 | (ulong)ntpData[47];
+            ulong intPart = (ulong)ntpData[40] << 24 | (ulong)ntpData[41] << 16 | (ulong)ntpData[42] << 8 | ntpData[43];
+            ulong fractPart = (ulong)ntpData[44] << 24 | (ulong)ntpData[45] << 16 | (ulong)ntpData[46] << 8 | ntpData[47];
 
-            var milliseconds = (intPart * 1000) + ((fractPart * 1000) / 0x100000000L);
-            var networkDateTime = (new DateTime(1900, 1, 1)).AddMilliseconds((long)milliseconds);
+            var milliseconds = intPart * 1000 + fractPart * 1000 / 0x100000000L;
+            var networkDateTime = new DateTime(1900, 1, 1).AddMilliseconds((long)milliseconds);
 
             DateTime onlineTime = networkDateTime.ToLocalTime();
             TimeSpan ts = DateTime.Now - onlineTime;

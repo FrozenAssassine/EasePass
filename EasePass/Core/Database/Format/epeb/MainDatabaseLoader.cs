@@ -1,6 +1,7 @@
 ﻿using EasePass.Core.Database.Format.Serialization;
 using EasePass.Dialogs;
-using EasePass.Helper;
+using EasePass.Helper.FileSystem;
+using EasePass.Helper.Security;
 using EasePass.Models;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;

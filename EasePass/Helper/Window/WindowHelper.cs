@@ -14,16 +14,21 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-namespace EasePass.Helper
-{
-    internal class AuthenticationHelper
-    {
-        public static bool VerifyPassword(string hash, string password)
-        {
-            if (hash.Length == 0)
-                return false;
+using Microsoft.UI.Windowing;
+using Microsoft.UI.Xaml;
 
-            return BCrypt.Net.BCrypt.Verify(password, hash);
+namespace EasePass.Helper.Window
+{
+    internal class WindowHelper
+    {
+        public static void MakeToolWindow(Microsoft.UI.Xaml.Window window)
+        {
+            var presenter = window.AppWindow.Presenter as OverlappedPresenter;
+            //presenter.(false, true);
+            presenter.IsResizable = false;
+            presenter.IsAlwaysOnTop = true;
+            presenter.IsMaximizable = false;
+            presenter.IsMinimizable = false;
         }
     }
 }

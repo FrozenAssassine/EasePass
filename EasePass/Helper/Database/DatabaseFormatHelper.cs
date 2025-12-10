@@ -1,5 +1,6 @@
-﻿using EasePass.Core.Database.Format.Serialization;
-using EasePass.Helper;
+﻿using EasePass.Core.Database.Format;
+using EasePass.Core.Database.Format.Serialization;
+using EasePass.Helper.FileSystem;
 using EasePass.Models;
 using System;
 using System.Collections.ObjectModel;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Security;
 using System.Threading.Tasks;
 
-namespace EasePass.Core.Database.Format
+namespace EasePass.Helper.Database
 {
     internal static class DatabaseFormatHelper
     {
@@ -27,21 +28,21 @@ namespace EasePass.Core.Database.Format
             (PasswordValidationResult result, DatabaseFile database) file;
             if (FileHelper.HasExtension(path, "epeb"))
             {
-                file = await epeb.MainDatabaseLoader.Load(path, password, showWrongPasswordError);
+                file = await Core.Database.Format.epeb.MainDatabaseLoader.Load(path, password, showWrongPasswordError);
                 path = Path.ChangeExtension(path, "epdb");
             }
             else
             {
                 // Do not show an error because we do not know if the Password is for real wrong since it has changed in the new Version
-                file = await epdb.v1.DatabaseLoader.Load(path, password, false);
+                file = await Core.Database.Format.epdb.v1.DatabaseLoader.Load(path, password, false);
                 
                 if (file.result == PasswordValidationResult.WrongFormat || file.result == PasswordValidationResult.WrongPassword)
-                    return await epdb.MainDatabaseLoader.Load(path, password, showWrongPasswordError);
+                    return await Core.Database.Format.epdb.MainDatabaseLoader.Load(path, password, showWrongPasswordError);
             }
 
             if (file.result == PasswordValidationResult.Success)
             {
-                epdb.MainDatabaseLoader.Save(path, password, default, file.database.Settings, file.database.Items);
+                Core.Database.Format.epdb.MainDatabaseLoader.Save(path, password, default, file.database.Settings, file.database.Items);
             }
             return file;
         }
@@ -81,7 +82,7 @@ namespace EasePass.Core.Database.Format
                 if (versionValue == version)
                     return type;
             }
-            return typeof(epdb.MainDatabaseLoader);
+            return typeof(Core.Database.Format.epdb.MainDatabaseLoader);
         }
         #endregion
     }

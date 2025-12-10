@@ -2,13 +2,13 @@
 using EasePass.Views;
 using Microsoft.UI.Xaml.Controls;
 
-namespace EasePass.Helper;
+namespace EasePass.Helper.App;
 
 public class NavigationHelper
 {
     private static void Navigate(System.Type page, object param = null)
     {
-        App.m_frame.Navigate(page, param);
+        EasePass.App.m_frame.Navigate(page, param);
     }
     public static void ToPasswords(object param = null)
     {

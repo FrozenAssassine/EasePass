@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using Windows.ApplicationModel;
 
-namespace EasePass.Helper
+namespace EasePass.Helper.Security
 {
     internal class IsPwnedHelper
     {

@@ -30,7 +30,7 @@ namespace EasePass.Dialogs
         public async Task<PasswordManagerItem[]> ShowAsync(ObservableCollection<PasswordManagerItem> items)
         {
             var page = new SelectExportPasswordsDialogPage(items);
-            var dialog = new AutoLogoutContentDialog
+            var dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Select items to export".Localized("Dialog_Export_Headline/Text"),
                 PrimaryButtonText = "Export".Localized("Dialog_Button_Export/Text"),

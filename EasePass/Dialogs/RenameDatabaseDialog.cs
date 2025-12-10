@@ -32,7 +32,7 @@ internal class RenameDatabaseDialog
             Text = "", //databaseItem.Name
         };
 
-        var dialog = new AutoLogoutContentDialog
+        var dialog = new Helper.Logout.AutoLogoutContentDialog
         {
             Title = "Rename Database".Localized("Dialog_RenameDB_Headline/Text"),
             PrimaryButtonText = "Rename".Localized("Dialog_Button_Rename/Text"),

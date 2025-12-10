@@ -18,7 +18,7 @@ using EasePass.Settings;
 using Microsoft.UI.Xaml;
 using System;
 
-namespace EasePass.Helper
+namespace EasePass.Helper.Logout
 {
     public class InactivityHelper
     {
