@@ -40,10 +40,15 @@ Ease Pass is a straightforward yet powerful password manager that makes managing
 
 
 ## 👨‍👩‍👧‍👦 Contribute to EasePass
-- Code Contributions: Fork, enhance and submit pull requests on GitHub.
-- Bug Reports: Help us by reporting glitches or bugs on our GitHub repository.
-- Feature Requests: Share your ideas for new features.
-- Translations: Contribute to making EasePass more inclusive.
+- Help us by reporting bugs.
+- Share your ideas for new features.
+- Contribute a translation for EasePass.
+
+### How to Contribute a Translation:
+- Create a folder inside the Strings folder of the repository
+- Inside this folder create a folder with the desired [language identifier.](https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/app-package-requirements#supported-languages)
+- Inside the folder create a new Resource.resw file or copy the existing english Resource.resw file to translate it directly.
+- Also add an entry for the new language inside the LanguageList.resw.
 
 ## ⌨ Code Style Guidelines
 - **camelCase** for variables and function parameters.

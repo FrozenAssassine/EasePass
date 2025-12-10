@@ -1,0 +1,22 @@
+<Page
+    x:Class="EasePass.Views.ManageSecondFactorPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:EasePass.Controls"
+    xmlns:models="using:EasePass.Models"
+    mc:Ignorable="d">
+
+    <StackPanel>
+        <TextBlock Margin="0,10,0,0" x:Uid="View_ManageSecondFactorPage_EnableSecondFactor" Text="Enable SecondFactor" />
+        <ToggleSwitch x:Uid="View_ManageSecondFactorPage_ToggleEnableSecondFactor" x:Name="enableSecondFactor" Toggled="enableSecondFactor_Toggled" ToolTipService.ToolTip="Enables the SecondFactor for the Database"/>
+        <TextBlock Margin="0,10,0,0" x:Uid="View_ManageSecondFactorPage_SecondFactorType" Text="SecondFactor Type" />
+        <ComboBox x:Name="secondFactorTypeTB" HorizontalAlignment="Stretch" SelectedItem="Token" IsEnabled="False" SelectionChanged="SecondFactorTypeTB_SelectionChanged">
+            <x:String>Token</x:String>
+            <x:String>OTP</x:String>
+        </ComboBox>
+        <TextBlock x:Uid="View_ManageSecondFactorPage_SecondFactorToken" Margin="0,10,0,0" Text="SecondFactor Token"/>
+        <controls:CopyTokenBox Token="" Grid.Column="0" HorizontalAlignment="Stretch" x:Name="secondFactorToken"/>
+    </StackPanel>
+</Page>

@@ -28,7 +28,7 @@ namespace EasePass.Dialogs
         public async Task<ContentDialogResult> ShowAsync(string info, string extensionName)
         {
             var page = new TextInfoPage(info);
-            var dialog = new AutoLogoutContentDialog
+            var dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = extensionName + " " + "info".Localized("Dialog_Info_Headline/Text"),
                 CloseButtonText = "Close".Localized("Dialog_Button_Close/Text"),

@@ -16,7 +16,7 @@ copies or substantial portions of the Software.
 
 using CommunityToolkit.WinUI;
 using EasePass.Extensions;
-using EasePass.Helper;
+using EasePass.Helper.App;
 using Microsoft.UI.Xaml.Controls;
 using System;
 

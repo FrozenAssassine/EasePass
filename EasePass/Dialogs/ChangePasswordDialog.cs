@@ -32,7 +32,7 @@ namespace EasePass.Dialogs
         public async Task ShowAsync(DatabaseItem db)
         {
             page = new ChangePasswordPage();
-            dialog = new AutoLogoutContentDialog
+            dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Change Password for".Localized("Dialog_ChangePassword_Title/Text") + " " + db.Name,
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
@@ -44,12 +44,12 @@ namespace EasePass.Dialogs
             await dialog.ShowAsync();
         }
 
-        private void Dialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
+        private async void Dialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
         {
             if (args.Result != ContentDialogResult.Primary)
                 return;
 
-            var changePWResult = page.ChangePassword();
+            ChangePasswordPageResult changePWResult = await page.ChangePassword();
             if (changePWResult == ChangePasswordPageResult.Success)
             {
                 InfoMessages.SuccessfullyChangedPassword();
@@ -70,6 +70,5 @@ namespace EasePass.Dialogs
             }
             args.Cancel = true;
         }
-
     }
 }

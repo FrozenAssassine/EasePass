@@ -18,6 +18,11 @@ using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Extensions;
 using EasePass.Helper;
+using EasePass.Helper.App;
+using EasePass.Helper.Database;
+using EasePass.Helper.Logout;
+using EasePass.Helper.Security;
+using EasePass.Helper.Security.Generator;
 using EasePass.Models;
 using EasePass.Settings;
 using Microsoft.UI.Xaml;
@@ -154,7 +159,7 @@ namespace EasePass.Views
             if (item == null)
                 return;
 
-            var editItem = await new EditItemDialog().ShowAsync(Database.LoadedInstance.PasswordAlreadyExists, item);
+            PasswordManagerItem editItem = await new EditItemDialog().ShowAsync(Database.LoadedInstance.GetPasswordOccurence, item);
             if (editItem == null)
                 return;
 
@@ -162,7 +167,7 @@ namespace EasePass.Views
         }
         private async Task AddPasswordItem()
         {
-            var newItem = await new AddItemDialog().ShowAsync(Database.LoadedInstance.PasswordAlreadyExists);
+            PasswordManagerItem newItem = await new AddItemDialog().ShowAsync(Database.LoadedInstance.GetPasswordOccurence);
             if (newItem == null)
                 return;
 

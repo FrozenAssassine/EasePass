@@ -30,7 +30,7 @@ internal class GenPasswordDialog
     public async Task<bool> ShowAsync()
     {
         page.GeneratePassword();
-        var dialog = new AutoLogoutContentDialog
+        var dialog = new Helper.Logout.AutoLogoutContentDialog
         {
             Title = "Password generator".Localized("Dialog_PWGenerator_New/Text"),
             PrimaryButtonText = "New".Localized("Dialog_Button_New/Text"),
