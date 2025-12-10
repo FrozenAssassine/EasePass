@@ -17,22 +17,21 @@ copies or substantial portions of the Software.
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 
-namespace EasePass.Helper.Window
-{
-    internal class WindowStateHelper
-    {
-        public static OverlappedPresenterState GetWindowState(Microsoft.UI.Xaml.Window window)
-        {
-            return (window.AppWindow.Presenter as OverlappedPresenter).State;
-        }
+namespace EasePass.Helper.Window;
 
-        public static void SetWindowState(Microsoft.UI.Xaml.Window window, OverlappedPresenterState state)
-        {
-            var presenter = window.AppWindow.Presenter as OverlappedPresenter;
-            if (state == OverlappedPresenterState.Maximized)
-                presenter.Maximize();
-            else if (state == OverlappedPresenterState.Minimized)
-                presenter.Minimize();
-        }
+public class WindowStateHelper
+{
+    public static OverlappedPresenterState GetWindowState(Microsoft.UI.Xaml.Window window)
+    {
+        return (window.AppWindow.Presenter as OverlappedPresenter).State;
+    }
+
+    public static void SetWindowState(Microsoft.UI.Xaml.Window window, OverlappedPresenterState state)
+    {
+        var presenter = window.AppWindow.Presenter as OverlappedPresenter;
+        if (state == OverlappedPresenterState.Maximized)
+            presenter.Maximize();
+        else if (state == OverlappedPresenterState.Minimized)
+            presenter.Minimize();
     }
 }
