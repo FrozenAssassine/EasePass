@@ -19,6 +19,8 @@ using EasePass.Dialogs;
 using EasePass.Models;
 using EasePass.Settings;
 using Microsoft.UI.Xaml.Controls;
+using System.Collections.ObjectModel;
+using System.Security;
 using System.Threading.Tasks;
 
 namespace EasePass.Helper;
@@ -32,12 +34,12 @@ internal class ManageDatabaseHelper
         if (!pickerResult.success)
             return null;
 
-        var password = (await new EnterPasswordDialog().ShowAsync()).Password;
+        SecureString password = (await new EnterPasswordDialog().ShowAsync()).Password;
         if (password == null)
             return null; //cancelled by user
 
         DatabaseItem db = new DatabaseItem(pickerResult.path);
-        if (!db.Unlock(password))
+        if (!await db.Unlock(password))
             return null;
 
         Database.AddDatabasePath(db.Path);
@@ -55,13 +57,13 @@ internal class ManageDatabaseHelper
             filePath = pickerResult.path;
         }
 
-        var password = (await new EnterPasswordDialog().ShowAsync()).Password;
+        SecureString password = (await new EnterPasswordDialog().ShowAsync()).Password;
         if (password == null)
             return false; //cancelled by user
 
-        var importedItems = Database.GetItemsFromFile(filePath, password);
+        ObservableCollection<PasswordManagerItem> importedItems = await Database.GetItemsFromFile(filePath, password);
 
-        var dialog = new ImportPasswordsDialog();
+        ImportPasswordsDialog dialog = new ImportPasswordsDialog();
         dialog.SetPagePasswords(importedItems);
 
         var importItemsResult = await dialog.ShowAsync(false);
@@ -91,9 +93,9 @@ internal class ManageDatabaseHelper
 
     public static void LoadDatabasesToCombobox(ComboBox databaseBox)
     {
-        var databases = Database.GetAllUnloadedDatabases();
-        var comboboxIndexDBName = AppSettings.LoadedDatabaseName ?? (databases.Length > 0 ? databases[0].Name : "");
-        foreach (var item in databases)
+        DatabaseItem[] databases = Database.GetAllUnloadedDatabases();
+        string comboboxIndexDBName = AppSettings.LoadedDatabaseName ?? (databases.Length > 0 ? databases[0].Name : "");
+        foreach (DatabaseItem item in databases)
         {
             databaseBox.Items.Add(item);
             if (comboboxIndexDBName.Equals(item.Name, System.StringComparison.OrdinalIgnoreCase))
@@ -103,6 +105,8 @@ internal class ManageDatabaseHelper
         }
 
         if (databaseBox.SelectedItem == null)
+        {
             databaseBox.SelectedIndex = 0;
+        }
     }
 }

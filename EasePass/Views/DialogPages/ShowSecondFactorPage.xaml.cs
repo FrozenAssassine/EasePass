@@ -1,4 +1,4 @@
-﻿/*
+/*
 MIT License
 
 Copyright (c) 2023 Julius Kirsch
@@ -14,12 +14,16 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-namespace EasePass.Models;
+using Microsoft.UI.Xaml.Controls;
 
-public enum PasswordValidationResult
+namespace EasePass.Views.DialogPages
 {
-    Success,
-    WrongPassword,
-    WrongFormat,
-    DatabaseNotFound
+    public sealed partial class ShowSecondFactorPage : Page
+    {
+        public ShowSecondFactorPage(string token)
+        {
+            this.InitializeComponent();
+            tokenBox.Token = token;
+        }
+    }
 }
