@@ -35,15 +35,15 @@ namespace EasePass.Helper.Security
         /// <param name="degreeOfParallelism">The degree of Parallelism</param>
         /// <param name="iterations">The amount of iterations for the hash</param>
         /// <param name="memorySize">The amount of Memory, which should be uused</param>
-        /// <param name="hashLength">The length of the Hash</param>
+        /// <param name="hashLength">The length of the Hash in bytes (32 bytes = 256 bits)</param>
         /// <returns>Returns the Hash of the <paramref name="password"/> with the given <paramref name="hashLength"/>.
         /// If the <paramref name="password"/> is equal to <see langword="null"/> <see cref="Array.Empty{T}"/> will be returned.</returns>
-        public static byte[] HashPasswordWithArgon2id(SecureString password, byte[] salt, byte[] associatedData = null, int degreeOfParallelism = 10, int iterations = 10, int memorySize = 256_000, int hashLength = 256)
+        public static byte[] HashPasswordWithArgon2id(SecureString password, byte[] salt, byte[] associatedData = null, int degreeOfParallelism = 10, int iterations = 10, int memorySize = 256_000, int hashLength = 32)
         {
             if (password == null)
                 return Array.Empty<byte>();
 
-            return HashPasswordWithArgon2id(password.ToBytes(), salt, associatedData);
+            return HashPasswordWithArgon2id(password.ToBytes(), salt, associatedData, degreeOfParallelism, iterations, memorySize, hashLength);
         }
         /// <summary>
         /// Hashes the given <paramref name="password"/> with the Argon2id Algorithm
@@ -54,15 +54,15 @@ namespace EasePass.Helper.Security
         /// <param name="degreeOfParallelism">The degree of Parallelism</param>
         /// <param name="iterations">The amount of iterations for the hash</param>
         /// <param name="memorySize">The amount of Memory, which should be uused</param>
-        /// <param name="hashLength">The length of the Hash</param>
+        /// <param name="hashLength">The length of the Hash in bytes (32 bytes = 256 bits)</param>
         /// <returns>Returns the Hash of the <paramref name="password"/> with the given <paramref name="hashLength"/>.
         /// If the <paramref name="password"/> is equal to <see langword="null"/> <see cref="Array.Empty{T}"/> will be returned.</returns>
-        public static byte[] HashPasswordWithArgon2id(char[] password, byte[] salt, byte[] associatedData = null, int degreeOfParallelism = 10, int iterations = 10, int memorySize = 256_000, int hashLength = 256)
+        public static byte[] HashPasswordWithArgon2id(char[] password, byte[] salt, byte[] associatedData = null, int degreeOfParallelism = 10, int iterations = 10, int memorySize = 256_000, int hashLength = 32)
         {
             if (password == null)
                 return Array.Empty<byte>();
 
-            return HashPasswordWithArgon2id(Encoding.UTF8.GetBytes(password), salt, associatedData);
+            return HashPasswordWithArgon2id(Encoding.UTF8.GetBytes(password), salt, associatedData, degreeOfParallelism, iterations, memorySize, hashLength);
         }
         /// <summary>
         /// Hashes the given <paramref name="password"/> with the Argon2id Algorithm
@@ -73,7 +73,7 @@ namespace EasePass.Helper.Security
         /// <param name="degreeOfParallelism">The degree of Parallelism</param>
         /// <param name="iterations">The amount of iterations for the hash</param>
         /// <param name="memorySize">The amount of Memory, which should be uused</param>
-        /// <param name="hashLength">The length of the Hash</param>
+        /// <param name="hashLength">The length of the Hash in bytes (32 bytes = 256 bits)</param>
         /// <returns>Returns the Hash of the <paramref name="password"/> with the given <paramref name="hashLength"/>.
         /// If the <paramref name="password"/> is equal to <see langword="null"/> <see cref="Array.Empty{T}"/> will be returned.</returns>
         public static byte[] HashPasswordWithArgon2id(byte[] password, byte[] salt, byte[] associatedData = null, int degreeOfParallelism = 10, int iterations = 10, int memorySize = 256_000, int hashLength = 32)
