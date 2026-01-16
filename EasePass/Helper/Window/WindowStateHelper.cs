@@ -15,15 +15,18 @@ copies or substantial portions of the Software.
 */
 
 using Microsoft.UI.Windowing;
-using Microsoft.UI.Xaml;
 
 namespace EasePass.Helper.Window;
 
-public class WindowStateHelper
+internal class WindowStateHelper
 {
     public static OverlappedPresenterState GetWindowState(Microsoft.UI.Xaml.Window window)
     {
-        return (window.AppWindow.Presenter as OverlappedPresenter).State;
+        var presenter = (window.AppWindow.Presenter as OverlappedPresenter);
+        if (presenter == null)
+            return OverlappedPresenterState.Restored;
+
+        return presenter.State;
     }
 
     public static void SetWindowState(Microsoft.UI.Xaml.Window window, OverlappedPresenterState state)

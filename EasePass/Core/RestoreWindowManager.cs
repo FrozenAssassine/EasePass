@@ -1,8 +1,8 @@
-﻿using EasePass.Helper.Window;
+﻿using EasePass.Helper;
+using EasePass.Helper.Window;
 using EasePass.Settings;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using System.Diagnostics;
 using Windows.Graphics;
 
 namespace EasePass.Core;
@@ -35,13 +35,6 @@ public class RestoreWindowManager
             width = 1100;
         if (height < 100)
             height = 700;
-
-        if(left == -5000)
-            left = 0;
-        if (top == -5000)
-            top = 0;
-
-        Debug.WriteLine(left + ":" + top);
 
         RectInt32 restoreBounds = new RectInt32(left, top, width, height);
 
