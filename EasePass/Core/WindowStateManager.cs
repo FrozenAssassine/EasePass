@@ -1,4 +1,5 @@
 ﻿using EasePass.Helper;
+using EasePass.Helper.Window;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Windows.Graphics;
