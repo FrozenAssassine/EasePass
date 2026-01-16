@@ -15,7 +15,6 @@ copies or substantial portions of the Software.
 */
 
 using Microsoft.UI.Windowing;
-using Microsoft.UI.Xaml;
 
 namespace EasePass.Helper.Window;
 
