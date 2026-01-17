@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CopyPasswordBox_Copy.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Copiar</value>
-  </data>
-  <data name="CopyPasswordBox_TT_Copy.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Copiar</value>
-  </data>
-  <data name="CopyPasswordBox_TT_Show.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Mostrar</value>
-  </data>
   <data name="CopyTextbox_Copy.ToolTipService.ToolTip" xml:space="preserve">
     <value>Copiar</value>
   </data>
@@ -143,9 +134,6 @@
   </data>
   <data name="Dialog_Add2FA_Interval.Text" xml:space="preserve">
     <value>Intervalo (seg)</value>
-  </data>
-  <data name="Dialog_Add2FA_Or.Text" xml:space="preserve">
-    <value>ou</value>
   </data>
   <data name="Dialog_Add2FA_ScreenButton.Content" xml:space="preserve">
     <value>Ler QR code na tela</value>
@@ -183,9 +171,6 @@
   <data name="Dialog_AddItem_Export2FA.Content" xml:space="preserve">
     <value>Exportar 2FA</value>
   </data>
-  <data name="Dialog_AddItem_GeneratePW.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Gerar senha</value>
-  </data>
   <data name="Dialog_AddItem_Headline.Text" xml:space="preserve">
     <value>Adicionar Credencial</value>
   </data>
@@ -216,9 +201,6 @@
   <data name="Dialog_Button_Cancel.Text" xml:space="preserve">
     <value>Cancelar</value>
   </data>
-  <data name="Dialog_Button_Change.Text" xml:space="preserve">
-    <value>Alterar</value>
-  </data>
   <data name="Dialog_Button_Close.Text" xml:space="preserve">
     <value>Fechar</value>
   </data>
@@ -245,15 +227,6 @@
   </data>
   <data name="Dialog_Button_Rename.Text" xml:space="preserve">
     <value>Renomear</value>
-  </data>
-  <data name="Dialog_ChangePassword_Title.Text" xml:space="preserve">
-    <value>Alterar senha para</value>
-  </data>
-  <data name="Dialog_ConfirmDeleteDatabase_Content.Text" xml:space="preserve">
-    <value>Confirme para excluir o banco de dados:</value>
-  </data>
-  <data name="Dialog_ConfirmDeleteDatabase_Title.Text" xml:space="preserve">
-    <value>Confirmar exclusão do banco de dados</value>
   </data>
   <data name="Dialog_ConfirmDelete_Extension.Text" xml:space="preserve">
     <value>Tem certeza de que deseja apagar a extensão: </value>
@@ -354,18 +327,6 @@
   <data name="InfoMessages_CouldNotGetExtensions.Text" xml:space="preserve">
     <value>Não foi possível obter os plugins do servidor:\n</value>
   </data>
-  <data name="InfoMessages_DatabaseDeleted.Headline" xml:space="preserve">
-    <value>Banco de dados excluído com sucesso!</value>
-  </data>
-  <data name="InfoMessages_DatabaseDeleteLoaded.Text" xml:space="preserve">
-    <value>Você não pode excluir um banco de dados carregado!</value>
-  </data>
-  <data name="InfoMessages_DatabaseDeletionFailed.Headline" xml:space="preserve">
-    <value>Não é possível excluir o banco de dados!</value>
-  </data>
-  <data name="InfoMessages_DatabaseDeletionFailed.Text" xml:space="preserve">
-    <value>Crie outro banco de dados para excluir este banco de dados!</value>
-  </data>
   <data name="InfoMessages_DatabaseFileNotFoundAt.Headline" xml:space="preserve">
     <value>Banco de dados não encontrado</value>
   </data>
@@ -378,20 +339,11 @@
   <data name="InfoMessages_DatabaseInvalidData.Text" xml:space="preserve">
     <value>Não foi possível carregar o banco de dados. Ele pode estar corrompido ou inválido.</value>
   </data>
-  <data name="InfoMessages_DatabaseLoaded.Headline" xml:space="preserve">
-    <value>Banco de dados carregado com sucesso!</value>
-  </data>
   <data name="InfoMessages_DatabaseSaveToFileError.Headline" xml:space="preserve">
     <value>Erro ao salvar banco de dados</value>
   </data>
   <data name="InfoMessages_DatabaseSaveToFileError.Text" xml:space="preserve">
     <value>Erro ao salvar dados em {path}. Verifique a conexão ou o dispositivo de armazenamento e tente novamente.</value>
-  </data>
-  <data name="InfoMessages_DatabaseWithThatNameAlreadyExists.Headline" xml:space="preserve">
-    <value>O banco de dados já existe</value>
-  </data>
-  <data name="InfoMessages_DatabaseWithThatNameAlreadyExists.Text" xml:space="preserve">
-    <value>Já existe um banco de dados com o mesmo nome no caminho informado</value>
   </data>
   <data name="InfoMessages_DownloadPluginProgress.Headline" xml:space="preserve">
     <value>Baixando plugin</value>
@@ -443,12 +395,6 @@
   </data>
   <data name="InfoMessages_Invalid2FA.Text" xml:space="preserve">
     <value>Esta chave 2FA não é válida!</value>
-  </data>
-  <data name="InfoMessages_InvalidDatabasePath/Headline" xml:space="preserve">
-    <value>Caminho inválido</value>
-  </data>
-  <data name="InfoMessages_InvalidDatabasePath/Text" xml:space="preserve">
-    <value>Caminho inválido ou incorreto.</value>
   </data>
   <data name="InfoMessages_NewVersion.Content" xml:space="preserve">
     <value>Changelog</value>
@@ -516,9 +462,6 @@
   <data name="InfoMessages_TooManyPasswordAttempts.Text" xml:space="preserve">
     <value>Você digitou a senha errada três vezes.</value>
   </data>
-  <data name="InfoMessages_UnhandledException.Headline" xml:space="preserve">
-    <value>Exceção não tratada:</value>
-  </data>
   <data name="PrintDB_Email.Text" xml:space="preserve">
     <value>E-Mail:</value>
   </data>
@@ -545,81 +488,6 @@
   </data>
   <data name="PW_SafetyChart_Digits.Text" xml:space="preserve">
     <value>Números</value>
-  </data>
-  <data name="PW_SafetyChart_Info_Digits.Text" xml:space="preserve">
-    <value>Contém números:</value>
-  </data>
-  <data name="PW_SafetyChart_Info_Digits_Negative.Text" xml:space="preserve">
-    <value>Não</value>
-  </data>
-  <data name="PW_SafetyChart_Info_Digits_Positive.Text" xml:space="preserve">
-    <value>Sim</value>
-  </data>
-  <data name="PW_SafetyChart_Info_LeakedExploited.Text" xml:space="preserve">
-    <value>Vazado:</value>
-  </data>
-  <data name="PW_SafetyChart_Info_LeakedExploited_Negative.Text" xml:space="preserve">
-    <value>Não</value>
-  </data>
-  <data name="PW_SafetyChart_Info_LeakedExploited_Positive.Text" xml:space="preserve">
-    <value>Sim</value>
-  </data>
-  <data name="PW_SafetyChart_Info_LowerCase.Text" xml:space="preserve">
-    <value>Contém minúsculas:</value>
-  </data>
-  <data name="PW_SafetyChart_Info_LowerCase_Negative.Text" xml:space="preserve">
-    <value>Não</value>
-  </data>
-  <data name="PW_SafetyChart_Info_LowerCase_Positive.Text" xml:space="preserve">
-    <value>Sim</value>
-  </data>
-  <data name="PW_SafetyChart_Info_Passwordlength.Text" xml:space="preserve">
-    <value>Tamanho da senha:</value>
-  </data>
-  <data name="PW_SafetyChart_Info_Passwordlength_Negative.Text" xml:space="preserve">
-    <value>Não atende ao mínimo</value>
-  </data>
-  <data name="PW_SafetyChart_Info_Passwordlength_Positive.Text" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="PW_SafetyChart_Info_Predictability.Text" xml:space="preserve">
-    <value>Previsibilidade:</value>
-  </data>
-  <data name="PW_SafetyChart_Info_Predictability_Negative.Text" xml:space="preserve">
-    <value>Alta</value>
-  </data>
-  <data name="PW_SafetyChart_Info_Predictability_Positive.Text" xml:space="preserve">
-    <value>Baixa</value>
-  </data>
-  <data name="PW_SafetyChart_Info_SpecialChars.Text" xml:space="preserve">
-    <value>Contém caracteres especiais:</value>
-  </data>
-  <data name="PW_SafetyChart_Info_SpecialChars_Negative.Text" xml:space="preserve">
-    <value>Não</value>
-  </data>
-  <data name="PW_SafetyChart_Info_SpecialChars_Positive.Text" xml:space="preserve">
-    <value>Sim</value>
-  </data>
-  <data name="PW_SafetyChart_Info_SeenBefore.Text" xml:space="preserve">
-    <value>Visto antes:</value>
-  </data>
-  <data name="PW_SafetyChart_Info_SeenBefore_Negative.Text" xml:space="preserve">
-    <value>Sim</value>
-  </data>
-  <data name="PW_SafetyChart_Info_SeenBefore_Positive.Text" xml:space="preserve">
-    <value>Não</value>
-  </data>
-  <data name="PW_SafetyChart_Info_Unknown.Text" xml:space="preserve">
-    <value>Desconhecido</value>
-  </data>
-  <data name="PW_SafetyChart_Info_UpperCase.Text" xml:space="preserve">
-    <value>Contém maiúsculas:</value>
-  </data>
-  <data name="PW_SafetyChart_Info_UpperCase_Negative.Text" xml:space="preserve">
-    <value>Não</value>
-  </data>
-  <data name="PW_SafetyChart_Info_UpperCase_Positive.Text" xml:space="preserve">
-    <value>Sim</value>
   </data>
   <data name="PW_SafetyChart_LeakedExploited.Text" xml:space="preserve">
     <value>Vazado ou explorado</value>
@@ -657,9 +525,6 @@
   <data name="View_About_Contribute.Text" xml:space="preserve">
     <value>Contribuir</value>
   </data>
-  <data name="View_About_Contributor.Header" xml:space="preserve">
-    <value>Colaboradores</value>
-  </data>
   <data name="View_About_DependenciesUsed.Text" xml:space="preserve">
     <value>Dependências adicionais usadas</value>
   </data>
@@ -674,9 +539,6 @@
   </data>
   <data name="View_About_HeadlineMore.Header" xml:space="preserve">
     <value>Mais</value>
-  </data>
-  <data name="View_About_PrivacyPolicy.Text" xml:space="preserve">
-    <value>Política de Privacidade</value>
   </data>
   <data name="View_About_ReportBug.Content" xml:space="preserve">
     <value>Reportar Bug</value>
@@ -882,21 +744,6 @@
   <data name="View_PasswordPage_Flyout_Export.Text" xml:space="preserve">
     <value>Exportar</value>
   </data>
-  <data name="View_PasswordPage_Flyout_ExportNewPassword/Text" xml:space="preserve">
-    <value>Exportar (diff. PW)</value>
-  </data>
-  <data name="View_PasswordPage_OOBE_Hyperlink.Content" xml:space="preserve">
-    <value>Configurações &gt; Gerenciar banco de dados</value>
-  </data>
-  <data name="View_PasswordPage_OOBE_Info1.Text" xml:space="preserve">
-    <value>Adicione suas senhas</value>
-  </data>
-  <data name="View_PasswordPage_OOBE_Info2.Text" xml:space="preserve">
-    <value>ou importe um banco de dados existente acessando:</value>
-  </data>
-  <data name="View_PasswordPage_OOBE_Welcome.Text" xml:space="preserve">
-    <value>Bem-vindo ao Easy Pass!</value>
-  </data>
   <data name="View_PasswordPage_Searchbox.PlaceholderText" xml:space="preserve">
     <value>Procurar</value>
   </data>
@@ -951,9 +798,6 @@
   <data name="View_RegisterPage_ChoosePasswordInfo.Text" xml:space="preserve">
     <value>Escolha uma senha mestre para começar a usar o gerenciador de senhas. Caso perca essa senha, não sera possível recuperar suas senhas salvas.</value>
   </data>
-  <data name="View_RegisterPage_CreateAdvancedDB.Content" xml:space="preserve">
-    <value>Opções avançadas</value>
-  </data>
   <data name="View_RegisterPage_EnterPW.PlaceholderText" xml:space="preserve">
     <value>Digite a senha</value>
   </data>
@@ -980,9 +824,6 @@
   </data>
   <data name="View_SettingsPage_ClipboardClearTimeout.Header" xml:space="preserve">
     <value>Tempo para limpeza da área de transferência</value>
-  </data>
-  <data name="View_SettingsPage_ClipboardClearTimeoutTime.Header" xml:space="preserve">
-    <value>Segundos</value>
   </data>
   <data name="View_SettingsPage_CurrentPassword.Header" xml:space="preserve">
     <value>Senha atual</value>
@@ -1071,12 +912,6 @@
   <data name="View_SettingsPage_ResetPopularityCounter.Content" xml:space="preserve">
     <value>Redefinir</value>
   </data>
-  <data name="View_SettingsPage_ResetPopularityCounter.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Redefine o contador que conta os cliques para classificar por popularidade.</value>
-  </data>
-  <data name="View_SettingsPage_RestartToApply.Text" xml:space="preserve">
-    <value>Para aplicar as configurações feche o aplicativo</value>
-  </data>
   <data name="View_SettingsPage_ShowIcons.Header" xml:space="preserve">
     <value>Mostrar ícones</value>
   </data>
@@ -1086,10 +921,179 @@
   <data name="View_SettingsPage_VerifyPWLeaked.Header" xml:space="preserve">
     <value>Verifiar se a senha aparece em vazamentos</value>
   </data>
+  <data name="CopyPasswordBox_TT_Copy.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Copiar</value>
+  </data>
+  <data name="CopyPasswordBox_TT_Show.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Mostrar</value>
+  </data>
+  <data name="Dialog_Add2FA_Or.Text" xml:space="preserve">
+    <value>ou</value>
+  </data>
+  <data name="View_About_Contributor.Header" xml:space="preserve">
+    <value>Colaboradores</value>
+  </data>
+  <data name="View_About_PrivacyPolicy.Text" xml:space="preserve">
+    <value>Política de Privacidade</value>
+  </data>
+  <data name="View_SettingsPage_RestartToApply.Text" xml:space="preserve">
+    <value>Para aplicar as configurações feche o aplicativo</value>
+  </data>
+  <data name="View_SettingsPage_ClipboardClearTimeoutTime.Header" xml:space="preserve">
+    <value>Segundos</value>
+  </data>
+  <data name="Dialog_AddItem_GeneratePW.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Gerar senha</value>
+  </data>
+  <data name="Dialog_ConfirmDeleteDatabase_Title.Text" xml:space="preserve">
+    <value>Confirmar exclusão do banco de dados</value>
+  </data>
+  <data name="Dialog_ConfirmDeleteDatabase_Content.Text" xml:space="preserve">
+    <value>Confirme para excluir o banco de dados:</value>
+  </data>
+  <data name="Dialog_ChangePassword_Title.Text" xml:space="preserve">
+    <value>Alterar senha para</value>
+  </data>
+  <data name="Dialog_Button_Change.Text" xml:space="preserve">
+    <value>Alterar</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Passwordlength.Text" xml:space="preserve">
+    <value>Tamanho da senha:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_SeenBefore.Text" xml:space="preserve">
+    <value>Visto antes:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LeakedExploited_Positive.Text" xml:space="preserve">
+    <value>Sim</value>
+  </data>
+  <data name="PW_SafetyChart_Info_SpecialChars_Positive.Text" xml:space="preserve">
+    <value>Sim</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Digits.Text" xml:space="preserve">
+    <value>Contém números:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Digits_Negative.Text" xml:space="preserve">
+    <value>Não</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Digits_Positive.Text" xml:space="preserve">
+    <value>Sim</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LeakedExploited.Text" xml:space="preserve">
+    <value>Vazado:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LeakedExploited_Negative.Text" xml:space="preserve">
+    <value>Não</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LowerCase.Text" xml:space="preserve">
+    <value>Contém minúsculas:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LowerCase_Negative.Text" xml:space="preserve">
+    <value>Não</value>
+  </data>
+  <data name="PW_SafetyChart_Info_LowerCase_Positive.Text" xml:space="preserve">
+    <value>Sim</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Passwordlength_Positive.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Passwordlength_Negative.Text" xml:space="preserve">
+    <value>Não atende ao mínimo</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Predictability.Text" xml:space="preserve">
+    <value>Previsibilidade:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Predictability_Negative.Text" xml:space="preserve">
+    <value>Alta</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Predictability_Positive.Text" xml:space="preserve">
+    <value>Baixa</value>
+  </data>
+  <data name="PW_SafetyChart_Info_SpecialChars.Text" xml:space="preserve">
+    <value>Contém caracteres especiais:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_SpecialChars_Negative.Text" xml:space="preserve">
+    <value>Não</value>
+  </data>
+  <data name="PW_SafetyChart_Info_SeenBefore_Negative.Text" xml:space="preserve">
+    <value>Sim</value>
+  </data>
+  <data name="PW_SafetyChart_Info_SeenBefore_Positive.Text" xml:space="preserve">
+    <value>Não</value>
+  </data>
+  <data name="PW_SafetyChart_Info_Unknown.Text" xml:space="preserve">
+    <value>Desconhecido</value>
+  </data>
+  <data name="PW_SafetyChart_Info_UpperCase.Text" xml:space="preserve">
+    <value>Contém maiúsculas:</value>
+  </data>
+  <data name="PW_SafetyChart_Info_UpperCase_Negative.Text" xml:space="preserve">
+    <value>Não</value>
+  </data>
+  <data name="PW_SafetyChart_Info_UpperCase_Positive.Text" xml:space="preserve">
+    <value>Sim</value>
+  </data>
+  <data name="InfoMessages_DatabaseLoaded.Headline" xml:space="preserve">
+    <value>Banco de dados carregado com sucesso!</value>
+  </data>
+  <data name="InfoMessages_DatabaseDeleted.Headline" xml:space="preserve">
+    <value>Banco de dados excluído com sucesso!</value>
+  </data>
+  <data name="InfoMessages_DatabaseDeletionFailed.Headline" xml:space="preserve">
+    <value>Não é possível excluir o banco de dados!</value>
+  </data>
+  <data name="InfoMessages_DatabaseDeletionFailed.Text" xml:space="preserve">
+    <value>Crie outro banco de dados para excluir este banco de dados!</value>
+  </data>
+  <data name="InfoMessages_DatabaseDeleteLoaded.Text" xml:space="preserve">
+    <value>Você não pode excluir um banco de dados carregado!</value>
+  </data>
+  <data name="InfoMessages_UnhandledException.Headline" xml:space="preserve">
+    <value>Exceção não tratada:</value>
+  </data>
+  <data name="InfoMessages_InvalidDatabasePath/Text" xml:space="preserve">
+    <value>Caminho inválido ou incorreto.</value>
+  </data>
+  <data name="InfoMessages_InvalidDatabasePath/Headline" xml:space="preserve">
+    <value>Caminho inválido</value>
+  </data>
+  <data name="View_RegisterPage_CreateAdvancedDB.Content" xml:space="preserve">
+    <value>Opções avançadas</value>
+  </data>
+  <data name="View_PasswordPage_Flyout_ExportNewPassword/Text" xml:space="preserve">
+    <value>Exportar (diff. PW)</value>
+  </data>
+  <data name="View_SettingsPage_ResetPopularityCounter.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Redefine o contador que conta os cliques para classificar por popularidade.</value>
+  </data>
+  <data name="View_PasswordPage_OOBE_Welcome.Text" xml:space="preserve">
+    <value>Bem-vindo ao Easy Pass!</value>
+  </data>
+  <data name="View_PasswordPage_OOBE_Info1.Text" xml:space="preserve">
+    <value>Adicione suas senhas</value>
+  </data>
+  <data name="View_PasswordPage_OOBE_Info2.Text" xml:space="preserve">
+    <value>ou importe um banco de dados existente acessando:</value>
+  </data>
+  <data name="View_PasswordPage_OOBE_Hyperlink.Content" xml:space="preserve">
+    <value>Configurações &gt; Gerenciar banco de dados</value>
+  </data>
+  <data name="InfoMessages_DatabaseWithThatNameAlreadyExists.Headline" xml:space="preserve">
+    <value>O banco de dados já existe</value>
+  </data>
+  <data name="InfoMessages_DatabaseWithThatNameAlreadyExists.Text" xml:space="preserve">
+    <value>Já existe um banco de dados com o mesmo nome no caminho informado</value>
+  </data>
   <data name="View_ManageDB_ExportDBNewPW.Content" xml:space="preserve">
     <value>Exportar (diff. PW)</value>
   </data>
   <data name="View_ManageDB_ExportDBNewPW.ToolTipService.ToolTip" xml:space="preserve">
     <value>Exportar o banco de dados com uma nova senha</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="View_ShowSFPage_TokenBox.Header" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="View_ExtensionPage_OpenWebsite" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
 </root>

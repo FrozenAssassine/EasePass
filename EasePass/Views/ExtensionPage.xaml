@@ -67,7 +67,7 @@
         <TextBlock x:Uid="View_ExtensionPage_Store" Grid.Row="1" Grid.Column="1" Margin="0,0,40,0" FontSize="30" Text="Store:" HorizontalAlignment="Center" />
         <StackPanel HorizontalAlignment="Center" x:Name="hintBox" Grid.Row="2" Grid.Column="1" Visibility="Collapsed">
             <TextBlock x:Uid="View_ExtensionPage_StoreHint" Text="Due to the Microsoft Store requirements, we cannot offer direct download of plugins. To use plugins anyway, please follow the steps on our website." TextWrapping="WrapWholeWords" />
-            <Button Style="{ThemeResource AccentButtonStyle}" Margin="5,10,5,5" HorizontalAlignment="Stretch" Content="Open Website" Click="OpenWebsite_Click" />
+            <Button x:Uid="View_ExtensionPage_OpenWebsite" Style="{ThemeResource AccentButtonStyle}" Margin="5,10,5,5" HorizontalAlignment="Stretch" Content="Open Website" Click="OpenWebsite_Click" />
         </StackPanel>
         <ScrollViewer Grid.Row="3" Grid.Column="1" VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <GridView x:Name="downloadView" ItemTemplate="{StaticResource ExtensionDownloadTemplate}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="fetchedExtensionsGridView_SelectionChanged"/>

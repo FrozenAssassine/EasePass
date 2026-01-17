@@ -1135,4 +1135,7 @@ Wenn Sie Ihr Token vergessen, haben Sie keinen Zugriff mehr auf Ihre Datenbank!<
   <data name="Dialogs_ShowSF_Title.Text" xml:space="preserve">
     <value>Der neue OTP-Token für die Datenbank</value>
   </data>
+  <data name="View_ExtensionPage_OpenWebsite" xml:space="preserve">
+    <value>Webseite öffnen</value>
+  </data>
 </root>
