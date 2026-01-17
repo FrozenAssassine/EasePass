@@ -29,7 +29,7 @@ namespace EasePass.Dialogs
         public async Task<PasswordManagerItem> ShowAsync(PasswordsPage.PasswordExists pe)
         {
             var page = new AddItemPage(pe);
-            var dialog = new AutoLogoutContentDialog(true)
+            var dialog = new Helper.Logout.AutoLogoutContentDialog(true)
             {
                 Title = "Add Password".Localized("Dialog_AddItem_Headline/Text"),
                 PrimaryButtonText = "Add".Localized("Dialog_Button_Add/Text"),

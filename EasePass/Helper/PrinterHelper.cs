@@ -16,6 +16,7 @@ copies or substantial portions of the Software.
 
 using EasePass.Dialogs;
 using EasePass.Extensions;
+using EasePass.Helper.Security.Generator;
 using EasePass.Models;
 using System;
 using System.Collections.ObjectModel;

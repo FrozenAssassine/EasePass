@@ -17,11 +17,14 @@ copies or substantial portions of the Software.
 using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Extensions;
-using EasePass.Helper;
+using EasePass.Helper.App;
+using EasePass.Helper.Database;
+using EasePass.Helper.Security.Generator;
 using EasePass.Models;
 using EasePass.Settings;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System;
 using System.Security;
 
 namespace EasePass.Views
@@ -45,11 +48,10 @@ namespace EasePass.Views
             ManageDatabaseHelper.LoadDatabasesToCombobox(databasebox);
             TemporaryDatabaseHelper.HandleImportTempDatabase(e, databasebox);
 
-
             await DailyTipHelper.ShowDailyTip(dailyTipTextBlock, dailyTipGrid);
         }
 
-        private void PWLogin_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private async void PWLogin_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             if (WrongCount > 2)
             {
@@ -62,8 +64,8 @@ namespace EasePass.Views
             if (databasebox.SelectedItem == null)
                 return;
 
-            var selectedDB = (databasebox.SelectedItem as DatabaseItem);
-            var res = selectedDB.CheckPasswordCorrect(pw);
+            DatabaseItem selectedDB = (databasebox.SelectedItem as DatabaseItem);
+            var res = await selectedDB.CheckPasswordCorrect(pw);
             if (res.result == PasswordValidationResult.WrongPassword)
             {
                 WrongCount++;
@@ -77,7 +79,15 @@ namespace EasePass.Views
             }
             WrongCount = 0;
 
-            selectedDB.Load(pw);
+            selectedDB.Load(pw, res.database);
+            if (selectedDB.Settings.UseSecondFactor && selectedDB.Settings.SecondFactorType == Core.Database.Enums.SecondFactorType.OTP)
+            {
+                string token = TokenHelper.Generate(12);
+                await new ShowSecondFactorDialog().ShowAsync(token);
+                selectedDB.SecondFactor = token.ConvertToSecureString();
+                token = null;
+                selectedDB.Save();
+            }
             NavigationHelper.ToPasswords();
             return;
         }
@@ -88,7 +98,7 @@ namespace EasePass.Views
 
         private async void CreateDatabase_Click(SplitButton sender, SplitButtonClickEventArgs args)
         {
-            var newDB = await ManageDatabaseHelper.CreateDatabase();
+            DatabaseItem newDB = await ManageDatabaseHelper.CreateDatabase();
             if (newDB == null)
                 return;
 
@@ -106,7 +116,7 @@ namespace EasePass.Views
 
         private async void ImportDatabase_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            var res = await ManageDatabaseHelper.ImportDatabase();
+            DatabaseItem res = await ManageDatabaseHelper.ImportDatabase();
             if (res == null)
                 return;
 

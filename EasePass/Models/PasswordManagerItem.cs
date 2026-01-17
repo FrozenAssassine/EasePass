@@ -22,6 +22,7 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Security.Cryptography;
@@ -49,6 +50,10 @@ namespace EasePass.Models
         public string Interval { get; set; } = "30";
         public string Algorithm { get; set; } = "SHA1";
         public List<string> Clicks { get; } = new List<string>();
+
+        private string[] _Tags;
+        public string[] Tags { get=>  _Tags; set { _Tags = value; NotifyPropertyChanged("Tags"); } }
+
         [JsonIgnore]
         private string _DisplayName;
         public string DisplayName
@@ -181,6 +186,37 @@ namespace EasePass.Models
             if (item.GetCacheSize() < 10)
             {
                 item.Remove();
+            }
+        }
+
+        /// <summary>
+        /// Deserialize the given <paramref name="json"/> to the <see cref="ObservableCollection{PasswordManagerItem}"/>
+        /// </summary>
+        /// <param name="json">The JSON String, which should be deserialized to a <see cref="ObservableCollection{PasswordManagerItem}"/> object</param>
+        /// <returns>Returns an Instance of <see cref="ObservableCollection{PasswordManagerItem}"/> if the Deserialization was successfull, otherwise <see cref="default"/> will be returned</returns>
+        public static ObservableCollection<PasswordManagerItem> DeserializeItems(string json)
+        {
+            try
+            {
+                return System.Text.Json.JsonSerializer.Deserialize<ObservableCollection<PasswordManagerItem>>(json);
+            }
+            catch { }
+            return default;
+        }
+        /// <summary>
+        /// Serialize the given <paramref name="items"/> to a <see cref="string"/>
+        /// </summary>
+        /// <param name="json">The JSON String, which should be serialized to a <see cref="string"/></param>
+        /// <returns>Returns an Instance of <see cref="string"/> if the Serialization was successfull, otherwise <see cref="string.Empty"/> will be returned</returns>
+        public static string SerializeItems(ObservableCollection<PasswordManagerItem> items)
+        {
+            try
+            {
+                return JsonConvert.SerializeObject(items, Formatting.Indented);
+            }
+            catch
+            {
+                return string.Empty;
             }
         }
     }

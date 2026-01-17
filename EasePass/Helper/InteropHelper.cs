@@ -32,7 +32,7 @@ namespace EasePass.Helper
                 return new IntPtr(SetWindowLong32(hWnd, nIndex, dwNewLong.ToInt32()));
         }
 
-        public static IntPtr GetWindowHandle(Window window)
+        public static IntPtr GetWindowHandle(Microsoft.UI.Xaml.Window window)
         {
             return WinRT.Interop.WindowNative.GetWindowHandle(window);
         }

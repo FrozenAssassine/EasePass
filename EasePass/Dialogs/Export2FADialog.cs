@@ -27,7 +27,7 @@ namespace EasePass.Dialogs
         public async Task ShowAsync(string qrcode)
         {
             var page = new Export2FAPage(qrcode);
-            var dialog = new AutoLogoutContentDialog
+            var dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Export 2FA".Localized("Dialog_Export2FA_Headline/Text"),
                 PrimaryButtonText = "Done".Localized("Dialog_Button_Done/Text"),

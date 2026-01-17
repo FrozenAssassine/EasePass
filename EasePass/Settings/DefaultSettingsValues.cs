@@ -33,7 +33,7 @@ namespace EasePass.Settings
 
         public const int windowWidth = 1100;
         public const int windowHeight = 700;
-        public const int windowLeft = -5000;
-        public const int windowTop = -5000;
+        public const int windowLeft = 0;
+        public const int windowTop = 0;
     }
 }

@@ -26,7 +26,7 @@ namespace EasePass.Dialogs
     {
         public async Task<bool> Dialog(Extension extension)
         {
-            var dialog = new AutoLogoutContentDialog
+            var dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Warning!",
                 PrimaryButtonText = "Allow",

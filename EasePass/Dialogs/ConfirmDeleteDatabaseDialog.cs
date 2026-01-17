@@ -16,7 +16,6 @@ copies or substantial portions of the Software.
 
 using EasePass.Core.Database;
 using EasePass.Extensions;
-using EasePass.Helper;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
@@ -27,7 +26,7 @@ namespace EasePass.Dialogs
     {
         public async Task<bool> ShowAsync(DatabaseItem database)
         {
-            var dialog = new AutoLogoutContentDialog
+            var dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Confirm delete Database".Localized("Dialog_ConfirmDeleteDatabase_Title/Text"),
                 PrimaryButtonText = "Delete".Localized("Dialog_Button_Delete/Text"),
