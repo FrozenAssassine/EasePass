@@ -68,12 +68,7 @@ namespace EasePass.Views
             App.m_window.ShowBackArrow = false;
             UpdateOOBEGrid();
 
-            if (e.NavigationMode == NavigationMode.Back)
-            {
-                //is this really required?
-                await Database.LoadedInstance.SaveAsync();
-            }
-            else if (e.NavigationMode == NavigationMode.New)
+            if (e.NavigationMode == NavigationMode.New)
             {
                 InfobarExtension.ClearInfobarsAfterLogin(MainWindow.InfoMessagesPanel);
                 AppVersionHelper.CheckNewVersion();
@@ -84,8 +79,6 @@ namespace EasePass.Views
             if (Database.LoadedInstance != null)
             {
                 passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
-                //is this really required?
-                await Database.LoadedInstance.ForceSaveAsync();
 
                 TemporaryDatabaseHelper.ShowTempDBButton(loadTempDBButton);
             }
