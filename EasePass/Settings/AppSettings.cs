@@ -84,7 +84,7 @@ public class AppSettings
     public static OverlappedPresenterState WindowState
     {
         get => (OverlappedPresenterState)SettingsManager.GetSettingsAsInt(AppSettingsValues.windowState, 2);
-        set => SettingsManager.SaveSettings(AppSettingsValues.windowState, value);
+        set => SettingsManager.SaveSettings(AppSettingsValues.windowState, value.GetHashCode());
     }
     public static string AppVersion
     {
