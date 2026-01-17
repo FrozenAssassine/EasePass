@@ -2,6 +2,7 @@
 using EasePass.Dialogs;
 using EasePass.Helper.Database;
 using EasePass.Models;
+using EasePass.Settings;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -53,6 +54,8 @@ namespace EasePass.Core.Database
         public bool IsTemporaryDatabase { get; set; } = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public DeferredSaveHelper deferredSaver { get; } = new DeferredSaveHelper(new TimeSpan(0, 0, DefaultSettingsValues.databaseDeferredSaveTime_Sec));
         #endregion
 
         #region Constructor
@@ -343,7 +346,31 @@ namespace EasePass.Core.Database
         /// </summary>
         /// <param name="path">The Path of the Database. If the Path is equal to <see langword="null"/> the <see cref="Path"/> will be used</param>
         /// <returns>Returns <see langword="true"/> if the Database was saved successfully, otherwise <see langword="false"/> will be returned</returns>
-        public bool Save(string path = null)
+        public async Task<bool> SaveAsync(string path = null)
+        {
+            return await deferredSaver.RequestSaveAsync(() => ForceSave(path));
+        }
+
+        /// <summary>
+        /// Immediately executes a save and cancels any pending scheduled saves.
+        /// Useful for App Shutdown and some more cases
+        /// </summary>
+        public async Task<bool> ForceSaveAsync(string path = null)
+        {
+            deferredSaver.CancelPending();
+            return await Task.Run(() => ForceSave(path));
+        }
+
+        /// <summary>
+        /// Synchronous version of ForceSaveAsync. 
+        /// </summary>
+        public bool ForceSave(string path = null)
+        {
+            deferredSaver.CancelPending();
+            return SaveDatabase(path);
+        }
+
+        private bool SaveDatabase(string path = null)
         {
             path ??= Path;
             if (string.IsNullOrWhiteSpace(path))

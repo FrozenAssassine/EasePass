@@ -283,7 +283,7 @@ public sealed partial class ManageDatabasePage : Page
             }
             database.Settings = sfPage.Settings;
             database.SecondFactor = sfPage.Token;
-            database.Save();
+            await database.ForceSaveAsync();
         }
     }
 }

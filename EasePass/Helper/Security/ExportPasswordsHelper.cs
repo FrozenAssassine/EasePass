@@ -50,8 +50,8 @@ internal class ExportPasswordsHelper
             export.SetNewPasswords(items);
         }
 
-        export.Save();
-
-        InfoMessages.ExportDBSuccess();
+        if(await export.ForceSaveAsync())
+            InfoMessages.ExportDBSuccess();
+        //todo export db failed?
     }
 }

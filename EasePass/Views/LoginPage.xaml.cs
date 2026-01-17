@@ -87,7 +87,7 @@ namespace EasePass.Views
                 await new ShowSecondFactorDialog().ShowAsync(token);
                 selectedDB.SecondFactor = token.ConvertToSecureString();
                 token = null;
-                selectedDB.Save();
+                await selectedDB.SaveAsync();
             }
             return true;
         }

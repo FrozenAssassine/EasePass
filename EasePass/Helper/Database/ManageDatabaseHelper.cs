@@ -77,7 +77,7 @@ internal class ManageDatabaseHelper
         }
 
         Core.Database.Database.LoadedInstance.AddRange(importItemsResult.Items);
-        Core.Database.Database.LoadedInstance.Save();
+        await Core.Database.Database.LoadedInstance.SaveAsync();
         return true;
     }
 

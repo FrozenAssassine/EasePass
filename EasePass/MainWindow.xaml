@@ -35,5 +35,6 @@
         </Grid>
         <Frame Margin="0,30,0,0" x:Name="navigationFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         <StackPanel Margin="20,40,20,20" MinWidth="300" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" x:Name="infoMessagesPanel"/>
+        <ProgressRing CornerRadius="10" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="databaseSavingProgressRing" Width="80" Height="80" IsIndeterminate="True" Visibility="Collapsed"/>
     </Grid>
 </Window>

@@ -35,5 +35,7 @@ namespace EasePass.Settings
         public const int windowHeight = 700;
         public const int windowLeft = 0;
         public const int windowTop = 0;
+
+        public const int databaseDeferredSaveTime_Sec = 5;
     }
 }
