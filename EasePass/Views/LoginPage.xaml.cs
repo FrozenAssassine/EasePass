@@ -17,6 +17,7 @@ copies or substantial portions of the Software.
 using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Extensions;
+using EasePass.Helper;
 using EasePass.Helper.App;
 using EasePass.Helper.Database;
 using EasePass.Helper.Security.Generator;
@@ -26,6 +27,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Security;
+using System.Threading.Tasks;
 
 namespace EasePass.Views
 {
@@ -51,18 +53,17 @@ namespace EasePass.Views
             await DailyTipHelper.ShowDailyTip(dailyTipTextBlock, dailyTipGrid);
         }
 
-        private async void PWLogin_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private async Task<bool> TryLogin()
         {
             if (WrongCount > 2)
             {
                 InfoMessages.TooManyPasswordAttempts();
-                return;
+                return false;
             }
 
             SecureString pw = passwordBox.Password.ConvertToSecureString();
-            
             if (databasebox.SelectedItem == null)
-                return;
+                return false;
 
             DatabaseItem selectedDB = (databasebox.SelectedItem as DatabaseItem);
             var res = await selectedDB.CheckPasswordCorrect(pw);
@@ -70,12 +71,12 @@ namespace EasePass.Views
             {
                 WrongCount++;
                 InfoMessages.EnteredWrongPassword(WrongCount);
-                return;
+                return false;
             }
-            else if(res.result == PasswordValidationResult.DatabaseNotFound)
+            else if (res.result == PasswordValidationResult.DatabaseNotFound)
             {
                 InfoMessages.DatabaseFileNotFoundAt(selectedDB.Path);
-                return;
+                return false;
             }
             WrongCount = 0;
 
@@ -88,8 +89,18 @@ namespace EasePass.Views
                 token = null;
                 selectedDB.Save();
             }
-            NavigationHelper.ToPasswords();
-            return;
+            return true;
+        }
+
+        private async void PWLogin_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            loginInProgress.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+
+            await Task.Delay(50); //ui needs time to update. No idea how to make it proper :(
+
+            bool loginRes = await TryLogin();
+            if (loginRes)
+                NavigationHelper.ToPasswords();
         }
         private void Enter_Invoked(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {

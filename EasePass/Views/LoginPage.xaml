@@ -51,6 +51,7 @@
                     <KeyboardAccelerator Key="Enter" Invoked="Enter_Invoked"/>
                 </PasswordBox.KeyboardAccelerators>
             </PasswordBox>
+            <ProgressBar Margin="0,5,0,0" Visibility="Collapsed" IsIndeterminate="True" x:Name="loginInProgress"/>
             <Button x:Uid="View_LoginPage_LoginButton" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Center" Padding="20,5" Margin="10" Click="PWLogin_Click" Content="Login"/>
         </StackPanel>
 
