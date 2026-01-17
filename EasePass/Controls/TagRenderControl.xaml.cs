@@ -35,10 +35,11 @@ public sealed partial class TagRenderControl : UserControl, INotifyPropertyChang
 
     private void UpdateTagsUI()
     {
+        tagRenderer.Children.Clear();
+
         if (Tags == null || Tags.Length == 0)
             return;
 
-        tagRenderer.Children.Clear();
         foreach (var tag in Tags)
         {
             MD5 md5Hasher = MD5.Create();
