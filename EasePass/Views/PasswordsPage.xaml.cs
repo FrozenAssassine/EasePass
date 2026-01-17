@@ -70,6 +70,7 @@ namespace EasePass.Views
 
             if (e.NavigationMode == NavigationMode.Back)
             {
+                //is this really required?
                 await Database.LoadedInstance.SaveAsync();
             }
             else if (e.NavigationMode == NavigationMode.New)
@@ -84,7 +85,7 @@ namespace EasePass.Views
             {
                 passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
                 //is this really required?
-                //await Database.LoadedInstance.ForceSaveAsync();
+                await Database.LoadedInstance.ForceSaveAsync();
 
                 TemporaryDatabaseHelper.ShowTempDBButton(loadTempDBButton);
             }
