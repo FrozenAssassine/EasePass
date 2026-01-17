@@ -1138,4 +1138,10 @@ Wenn Sie Ihr Token vergessen, haben Sie keinen Zugriff mehr auf Ihre Datenbank!<
   <data name="View_ExtensionPage_OpenWebsite" xml:space="preserve">
     <value>Webseite öffnen</value>
   </data>
+  <data name="InfoMessages_ExportDBFailed.Headline" xml:space="preserve">
+    <value>Export fehlgeschlagen</value>
+  </data>
+  <data name="InfoMessages_ExportDBFailed.Text" xml:space="preserve">
+    <value>Der Datenbank Export ist fehlgeschlagen.</value>
+  </data>
 </root>

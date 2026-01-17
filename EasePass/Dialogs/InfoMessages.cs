@@ -51,6 +51,10 @@ namespace EasePass.Dialogs
             "InfoMessages_ExportDBSuccess",
             InfoBarSeverity.Success
         );
+        public static void ExportDBFailed() => new InfoBar().Show(
+            "InfoMessages_ExportDBFailed",
+            InfoBarSeverity.Error
+        );
         public static void PasswordTooShort() => new InfoBar().Show(
             "InfoMessages_PasswordTooShort",
             InfoBarSeverity.Error

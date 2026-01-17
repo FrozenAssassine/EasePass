@@ -52,6 +52,7 @@ internal class ExportPasswordsHelper
 
         if(await export.ForceSaveAsync())
             InfoMessages.ExportDBSuccess();
-        //todo export db failed?
+        else
+            InfoMessages.ExportDBFailed();
     }
 }
