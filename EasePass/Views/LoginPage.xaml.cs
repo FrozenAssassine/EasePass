@@ -78,7 +78,6 @@ namespace EasePass.Views
                 InfoMessages.DatabaseFileNotFoundAt(selectedDB.Path);
                 return false;
             }
-            WrongCount = 0;
 
             selectedDB.Load(pw, res.database);
             if (selectedDB.Settings == null)
@@ -90,6 +89,7 @@ namespace EasePass.Views
                 InfoMessages.EnteredWrongPassword(WrongCount);
                 return false;
             }
+            WrongCount = 0;
 
             if (selectedDB.Settings.UseSecondFactor && selectedDB.Settings.SecondFactorType == Core.Database.Enums.SecondFactorType.OTP)
             {
