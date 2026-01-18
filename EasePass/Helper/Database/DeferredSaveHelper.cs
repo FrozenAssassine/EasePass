@@ -38,6 +38,7 @@ public class DeferredSaveHelper
         {
             _saveScheduled = true;
             _cts?.Cancel();
+            _cts?.Dispose();
             _cts = new CancellationTokenSource();
         }
 
