@@ -78,16 +78,26 @@ namespace EasePass.Views
                 InfoMessages.DatabaseFileNotFoundAt(selectedDB.Path);
                 return false;
             }
-            WrongCount = 0;
 
             selectedDB.Load(pw, res.database);
+            if (selectedDB.Settings == null)
+            {
+                //I somehow got it working, that entering a wrong password for a db,
+                //did not trigger the WrongPassword branch above, but went here with Settings being null.
+                //so this for savety.
+                WrongCount++;
+                InfoMessages.EnteredWrongPassword(WrongCount);
+                return false;
+            }
+            WrongCount = 0;
+
             if (selectedDB.Settings.UseSecondFactor && selectedDB.Settings.SecondFactorType == Core.Database.Enums.SecondFactorType.OTP)
             {
                 string token = TokenHelper.Generate(12);
                 await new ShowSecondFactorDialog().ShowAsync(token);
                 selectedDB.SecondFactor = token.ConvertToSecureString();
                 token = null;
-                selectedDB.Save();
+                await selectedDB.SaveAsync();
             }
             return true;
         }
@@ -101,6 +111,8 @@ namespace EasePass.Views
             bool loginRes = await TryLogin();
             if (loginRes)
                 NavigationHelper.ToPasswords();
+            else
+                loginInProgress.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
         }
         private void Enter_Invoked(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {

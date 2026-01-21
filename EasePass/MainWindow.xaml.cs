@@ -75,6 +75,29 @@ public sealed partial class MainWindow : Window
         ExtendsContentIntoTitleBar = true;
         SetTitleBar(titleBar);
         ShowBackArrow = false;
+
+        this.AppWindow.Closing += AppWindow_Closing;
+    }
+
+    private bool _isClosingForcefully = false;
+
+    private async void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
+    {
+        if (_isClosingForcefully) return;
+
+        if (Database.LoadedInstance != null && Database.LoadedInstance.deferredSaver.SaveScheduled)
+        {
+            args.Cancel = true;
+
+            databaseSavingProgressRing.Visibility = Visibility.Visible;
+
+            await Database.LoadedInstance.ForceSaveAsync();
+
+            databaseSavingProgressRing.Visibility = Visibility.Collapsed;
+
+            _isClosingForcefully = true;
+            this.Close();
+        }
     }
 
     private void InactivityHelper_InactivityStarted()

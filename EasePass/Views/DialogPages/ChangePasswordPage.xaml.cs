@@ -59,7 +59,7 @@ public sealed partial class ChangePasswordPage : Page
         await newDB.Load(enteredPW);
 
         Database.LoadedInstance.MasterPassword = changePW_newPw.Password.ConvertToSecureString();
-        Database.LoadedInstance.Save();
+        await Database.LoadedInstance.ForceSaveAsync();
 
         return ChangePasswordPageResult.Success;
     }

@@ -64,7 +64,7 @@ public class Database
         db.Settings = new Format.Serialization.DatabaseSettings();
         db.Settings.UseSecondFactor = false;
         db.Settings.SecondFactorType = Enums.SecondFactorType.None;
-        db.Save();
+        db.ForceSave();
         return db;
     }
     #endregion

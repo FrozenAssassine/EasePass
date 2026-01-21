@@ -1138,4 +1138,10 @@ If you Forget your Token you will have no Access to your Database!</value>
   <data name="View_ExtensionPage_OpenWebsite" xml:space="preserve">
     <value>Open Website</value>
   </data>
+  <data name="InfoMessages_ExportDBFailed.Headline" xml:space="preserve">
+    <value>Export failed</value>
+  </data>
+  <data name="InfoMessages_ExportDBFailed.Text" xml:space="preserve">
+    <value>The database export has failed.</value>
+  </data>
 </root>

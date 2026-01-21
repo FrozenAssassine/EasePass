@@ -199,7 +199,7 @@ namespace EasePass.Views
                 }
             }
 
-            Database.LoadedInstance.Save();
+            await Database.LoadedInstance.ForceSaveAsync();
         }
 
         private void ExtensionManage_Click(object sender, RoutedEventArgs e)
@@ -207,13 +207,13 @@ namespace EasePass.Views
             NavigationHelper.ToExtensions(new SettingsNavigationParameters());
         }
 
-        private void ResetPopularity_Click(object sender, RoutedEventArgs e)
+        private async void ResetPopularity_Click(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i < Database.LoadedInstance.Items.Count; i++)
             {
                 Database.LoadedInstance.Items[i].Clicks.Clear();
             }
-            Database.LoadedInstance.Save();
+            await Database.LoadedInstance.SaveAsync();
         }
 
         private void ManageDatabases_Click(object sender, RoutedEventArgs e)
