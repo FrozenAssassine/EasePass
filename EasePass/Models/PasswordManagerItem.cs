@@ -174,13 +174,19 @@ namespace EasePass.Models
                 return;
             }
 
-            if (await RequestsHelper.DownloadFileAsync(_Website + "/favicon.ico", item.GetPath(), 30000))
+            try // It once failed here with InteropServices.COMException. Reason unknown. Try/catch to prevent crash.
             {
-                Icon = new BitmapImage(new Uri(item.GetPath()));
-                Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; NotifyPropertyChanged("Icon"); };
-            }
-            else
+                if (await RequestsHelper.DownloadFileAsync(_Website + "/favicon.ico", item.GetPath(), 30000))
+                {
+                    Icon = new BitmapImage(new Uri(item.GetPath())); // Error occured here
+                    Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; NotifyPropertyChanged("Icon"); };
+                }
+                else
+                    Icon = null;
+            }catch(Exception ex)
+            {
                 Icon = null;
+            }
 
             //check for valid item
             if (item.GetCacheSize() < 10)
