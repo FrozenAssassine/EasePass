@@ -182,6 +182,16 @@ namespace EasePass.Dialogs
             "This database could not be opened, because another user/device is using it.",
             InfoBarSeverity.Error, 10
             );
+        public static void DatabaseProviderLoadingFailed(string providername) => new InfoBar().Show(
+            "Database provider loading error",
+            $"The database provider \"{providername}\" failed on loading databases.",
+            InfoBarSeverity.Error, 10
+            );
+        public static void UnknownDatabaseSourceError(string sourcename) => new InfoBar().Show(
+            "Database source error",
+            $"The database source \"{sourcename}\" failed on internal processes.",
+            InfoBarSeverity.Error, 10
+            );
 
         public static void UnhandledException(Exception ex) => new InfoBar().Show("Unhandled Exception:".Localized("InfoMessages_UnhandledException/Headline"), ex.Message, InfoBarSeverity.Error);
         public static void NewVersionInfo(string version)

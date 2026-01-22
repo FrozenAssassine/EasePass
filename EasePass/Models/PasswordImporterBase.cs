@@ -39,12 +39,26 @@ namespace EasePass.Models
 
         public PasswordItem[] ImportPasswords()
         {
-            return _passwordImporter.ImportPasswords();
+            try
+            {
+                return _passwordImporter.ImportPasswords();
+            }
+            catch
+            {
+                return Array.Empty<PasswordItem>();
+            }
         }
 
         public bool PasswordsAvailable()
         {
-            return _passwordImporter.PasswordsAvailable();
+            try
+            {
+                return _passwordImporter.PasswordsAvailable();
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

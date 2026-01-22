@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace EasePass.Helper.Extension
 {
@@ -36,6 +37,14 @@ namespace EasePass.Helper.Extension
                     if (t.GetInterfaces().Contains(typeof(IExtensionInterface)))
                     {
                         IExtensionInterface obj = (IExtensionInterface)GetInstanceOf(t);
+                        if(obj is IInitializer initializer)
+                        {
+                            try
+                            {
+                                initializer.Init();
+                            }
+                            catch { }
+                        }
                         if (obj != null) res.Add(obj);
                     }
                 }
@@ -43,7 +52,7 @@ namespace EasePass.Helper.Extension
             }
             catch
             {
-                return new IExtensionInterface[0];
+                return [];
             }
         }
 
