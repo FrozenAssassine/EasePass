@@ -349,9 +349,9 @@ namespace EasePass.Core.Database
 
         #region Save
         /// <summary>
-        /// Saves the Database to the <paramref name="path"/>
+        /// Saves the Database to the <paramref name="source"/>
         /// </summary>
-        /// <param name="path">The Path of the Database. If the Path is equal to <see langword="null"/> the <see cref="Path"/> will be used</param>
+        /// <param name="source">The Source of the Database. If the Source is equal to <see langword="null"/> the <see cref="DatabaseSource"/> will be used</param>
         /// <returns>Returns <see langword="true"/> if the Database was saved successfully, otherwise <see langword="false"/> will be returned</returns>
         public async Task<bool> SaveAsync(IDatabaseSource source = null)
         {

@@ -18,7 +18,7 @@ namespace EasePass.Helper.Database
         /// <summary>
         /// Loads the given Database in the <paramref name="path"/>
         /// </summary>
-        /// <param name="path">The Path to the Database</param>
+        /// <param name="source">The Source to the Database</param>
         /// <param name="password">The Password of the Database</param>
         /// <param name="showWrongPasswordError">Specifies if an Error should occure if the Password is wrong</param>
         /// <returns>Returns the <see cref="PasswordValidationResult"/> and the <see cref="DatabaseFile"/>.
@@ -51,9 +51,9 @@ namespace EasePass.Helper.Database
 
         #region Save
         /// <summary>
-        /// Saves the Database to the given <paramref name="path"/> and encrypts the content with the <paramref name="password"/>
+        /// Saves the Database to the given <paramref name="source"/> and encrypts the content with the <paramref name="password"/>
         /// </summary>
-        /// <param name="path">The Path to the Database</param>
+        /// <param name="source">The Source to the Database</param>
         /// <param name="password">The Master Password of the Database</param>
         /// <param name="secondFactor">The SecondFactor Token of the Database if <see cref="DatabaseSettings.UseSecondFactor"/> is <see langword="true"/></param>
         /// <param name="settings">The Settings of the Database</param>

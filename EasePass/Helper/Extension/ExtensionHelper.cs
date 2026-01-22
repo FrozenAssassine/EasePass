@@ -75,7 +75,8 @@ public static class ExtensionHelper
                     }
                 }
 
-                foreach(IDatabaseProvider dbProv in GetAllClassesWithInterface<IDatabaseProvider>())
+                DatabaseSources.Clear();
+                foreach (IDatabaseProvider dbProv in GetAllClassesWithInterface<IDatabaseProvider>())
                 {
                     try
                     {

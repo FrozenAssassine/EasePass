@@ -173,23 +173,23 @@ namespace EasePass.Dialogs
             parent
             );
         public static void CantDeleteRemoteDatabase() => new InfoBar().Show(
-            "Could not delete remote database",
-            "Remote databases are provides by plugins. To remove them, remove the plugin.",
+            "Could not delete remote database".Localized("InfoMessages_CantDeleteRemoteDatabase/Headline"),
+            "Remote databases are provides by plugins. To remove them, remove the plugin.".Localized("InfoMessages_CantDeleteRemoteDatabase/Text"),
             InfoBarSeverity.Error, 10
             );
         public static void DatabaseLockedByOtherUser() => new InfoBar().Show(
-            "Database locked by other user",
-            "This database could not be opened, because another user/device is using it.",
+            "Database locked by other user".Localized("InfoMessages_DatabaseLockedByOtherUser/Headline"),
+            "This database could not be opened, because another user/device is using it.".Localized("InfoMessages_DatabaseLockedByOtherUser/Text"),
             InfoBarSeverity.Error, 10
             );
         public static void DatabaseProviderLoadingFailed(string providername) => new InfoBar().Show(
-            "Database provider loading error",
-            $"The database provider \"{providername}\" failed on loading databases.",
+            "Database provider loading error".Localized("InfoMessages_DatabaseProviderLoadingFailed/Headline"),
+            $"The database provider \"{providername}\" failed on loading databases.".Localized("InfoMessages_DatabaseProviderLoadingFailed/Text").Replace("{providername}", providername),
             InfoBarSeverity.Error, 10
             );
         public static void UnknownDatabaseSourceError(string sourcename) => new InfoBar().Show(
-            "Database source error",
-            $"The database source \"{sourcename}\" failed on internal processes.",
+            "Database source error".Localized("InfoMessages_UnknownDatabaseSourceError/Headline"),
+            $"The database source \"{sourcename}\" failed on internal processes.".Localized("InfoMessages_UnknownDatabaseSourceError/Text").Replace("{sourcename}", sourcename),
             InfoBarSeverity.Error, 10
             );
 

@@ -21,8 +21,6 @@ using EasePass.Helper;
 using EasePass.Helper.Extension;
 using EasePass.Helper.Logout;
 using EasePass.Helper.Security.Generator;
-using EasePass.Helper.Window;
-using EasePass.Settings;
 using EasePass.Views;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;

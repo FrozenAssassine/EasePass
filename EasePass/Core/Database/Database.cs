@@ -18,7 +18,6 @@ using EasePass.Helper.Database;
 using EasePass.Helper.Extension;
 using EasePass.Models;
 using EasePass.Settings;
-using EasePassExtensibility;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -102,7 +101,10 @@ public class Database
     #region GetAllUnloadedDatabases
     public static DatabaseItem[] GetAllUnloadedDatabases()
     {
-        return GetAllDatabasePaths().Select(x => new DatabaseItem(new NativeDatabaseSource(x))).Concat(ExtensionHelper.DatabaseSources.Select(x => new DatabaseItem(x))).ToArray();
+        return GetAllDatabasePaths()
+            .Select(x => new DatabaseItem(new NativeDatabaseSource(x)))
+            .Concat(ExtensionHelper.DatabaseSources.Select(x => new DatabaseItem(x)))
+            .ToArray();
     }
     #endregion
 

@@ -43,17 +43,15 @@ namespace EasePass.Views
             passwordBox.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
             App.m_window.ShowBackArrow = false;
 
-            MainWindow.CurrentInstance.ExtensionsInitialized += (x, y) => UIThreadInvoker.Invoke(() => OnNavigatedTo(null));
+            MainWindow.CurrentInstance.ExtensionsInitialized += (x, y) => UIThreadInvoker.Invoke(() => ManageDatabaseHelper.LoadDatabasesToCombobox(databasebox));
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e != null)
-                base.OnNavigatedTo(e);
+            base.OnNavigatedTo(e);
 
             ManageDatabaseHelper.LoadDatabasesToCombobox(databasebox);
-            if (e != null)
-                TemporaryDatabaseHelper.HandleImportTempDatabase(e, databasebox);
+            TemporaryDatabaseHelper.HandleImportTempDatabase(e, databasebox);
 
             await DailyTipHelper.ShowDailyTip(dailyTipTextBlock, dailyTipGrid);
         }
