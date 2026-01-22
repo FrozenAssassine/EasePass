@@ -71,9 +71,9 @@
                 </Expander.Header>
                 <Expander.Content>
                     <Grid>
-                        <ListView MaxWidth="600" ItemsSource="{x:Bind dbProviders}" HorizontalAlignment="Stretch">
+                        <ListView MaxWidth="600" ItemsSource="{x:Bind dbProviders}" HorizontalAlignment="Stretch" SelectionMode="None">
                             <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="models:DBProviderJVMContainer">
+                                <DataTemplate x:DataType="models:DBProviderUIWrapper">
                                     <Expander Margin="0,3,0,0" HorizontalAlignment="Stretch">
                                         <Expander.Header>
                                             <StackPanel Grid.Column="0" Orientation="Horizontal">
@@ -82,7 +82,18 @@
                                             </StackPanel>
                                         </Expander.Header>
                                         <Expander.Content>
-                                            <TextBlock Text="test" />
+                                            <TextBox
+                                                AcceptsReturn="True" 
+                                                TextWrapping="NoWrap"
+                                                Header="JSON Config"
+                                                PlaceholderText="{x:Bind Provider.GetSampleJsonConfig(), Mode=OneTime}"
+                                                MinWidth="400"
+                                                MinHeight="200"
+                                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                                ScrollViewer.VerticalScrollMode="Enabled"
+                                                LostFocus="JsonBox_LostFocus"
+                                                Tag="{x:Bind Provider}"
+                                                Text="{x:Bind Provider.GetConfigurationJSON(), Mode=OneTime}"/>
                                         </Expander.Content>
                                     </Expander>
                                 </DataTemplate>

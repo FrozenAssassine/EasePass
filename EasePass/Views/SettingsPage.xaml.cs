@@ -38,7 +38,7 @@ namespace EasePass.Views
     {
         PasswordsPage passwordsPage = null;
         ObservableCollection<PasswordImporterBase> passwordImporter = null;
-        ObservableCollection<DBProviderJVMContainer> dbProviders = null;
+        ObservableCollection<DBProviderUIWrapper> dbProviders = null;
         bool blockEventsOnloadSettings = false;
 
         public SettingsPage()
@@ -92,10 +92,10 @@ namespace EasePass.Views
                 noPluginsInfo.Visibility = Visibility.Visible;
             }
 
-            dbProviders = new ObservableCollection<DBProviderJVMContainer>();
+            dbProviders = new ObservableCollection<DBProviderUIWrapper>();
             foreach (var provider in ExtensionHelper.GetAllClassesWithInterface<IDatabaseProvider>())
             {
-                dbProviders.Add(new DBProviderJVMContainer(provider));
+                dbProviders.Add(new DBProviderUIWrapper(provider));
             }
 
             if(dbProviders.Count == 0)
@@ -246,6 +246,22 @@ namespace EasePass.Views
         private void clipboardClearTimeout_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             AppSettings.ClipboardClearTimeoutSec = (int)clipboardClearTimeout.Value;
+        }
+
+        private void JsonBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TextBox jsonBox = sender as TextBox;
+                var viewModelContainer = jsonBox.Tag as IDatabaseProvider;
+                string json = jsonBox.Text;
+                if (json.Length > 0)
+                    viewModelContainer.SetConfigurationJSON(json);
+            }
+            catch (Exception)
+            {
+                
+            }
         }
     }
 }

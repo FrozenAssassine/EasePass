@@ -49,5 +49,11 @@ namespace EasePassExtensibility
         /// must conform to the expected schema for configuration.</param>
         /// <returns>true if the configuration was successfully applied; otherwise, false.</returns>
         bool SetConfigurationJSON(string configJson);
+        /// <summary>
+        /// Returns a sample JSON configuration string that demonstrates the expected format for configuration files.
+        /// </summary>
+        /// <returns>A string containing a sample JSON configuration. The returned string can be used as a template or reference
+        /// for creating valid configuration files.</returns>
+        string GetSampleJsonConfig();
     }
 }
