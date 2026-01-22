@@ -21,5 +21,6 @@ public enum PasswordValidationResult
     Success,
     WrongPassword,
     WrongFormat,
-    DatabaseNotFound
+    DatabaseNotFound,
+    LockedByOtherUser,
 }

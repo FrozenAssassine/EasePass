@@ -172,6 +172,16 @@ namespace EasePass.Dialogs
             InfoBarSeverity.Error, 10,
             parent
             );
+        public static void CantDeleteRemoteDatabase() => new InfoBar().Show(
+            "Could not delete remote database",
+            "Remote databases are provides by plugins. To remove them, remove the plugin.",
+            InfoBarSeverity.Error, 10
+            );
+        public static void DatabaseLockedByOtherUser() => new InfoBar().Show(
+            "Database locked by other user",
+            "This database could not be opened, because another user/device is using it.",
+            InfoBarSeverity.Error, 10
+            );
 
         public static void UnhandledException(Exception ex) => new InfoBar().Show("Unhandled Exception:".Localized("InfoMessages_UnhandledException/Headline"), ex.Message, InfoBarSeverity.Error);
         public static void NewVersionInfo(string version)

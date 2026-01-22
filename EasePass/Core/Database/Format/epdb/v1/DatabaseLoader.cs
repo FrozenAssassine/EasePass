@@ -1,5 +1,6 @@
 ﻿using EasePass.Core.Database.Format.Serialization;
 using EasePass.Models;
+using EasePassExtensibility;
 using System.Collections.ObjectModel;
 using System.Security;
 using System.Threading.Tasks;
@@ -13,9 +14,9 @@ namespace EasePass.Core.Database.Format.epdb.v1
         #endregion
 
         #region Load
-        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(string path, SecureString password, bool showWrongPasswordError)
+        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError)
         {
-            byte[] content = IDatabaseLoader.ReadFile(path);
+            byte[] content = source.GetDatabaseFileBytes();
             if (!IDatabaseLoader.DecryptData(content, password, showWrongPasswordError, out string data))
                 return (PasswordValidationResult.WrongPassword, default);
 

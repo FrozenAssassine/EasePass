@@ -2,6 +2,7 @@
 using EasePass.Core.Database.Format.Serialization;
 using EasePass.Helper.FileSystem;
 using EasePass.Models;
+using EasePassExtensibility;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -23,26 +24,26 @@ namespace EasePass.Helper.Database
         /// <returns>Returns the <see cref="PasswordValidationResult"/> and the <see cref="DatabaseFile"/>.
         /// If the <see cref="PasswordValidationResult"/> is not equal to <see cref="PasswordValidationResult.Success"/> the
         /// <see cref="DatabaseFile"/> is equal to <see cref="default"/></returns>
-        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(string path, SecureString password, bool showWrongPasswordError)
+        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError)
         {
             (PasswordValidationResult result, DatabaseFile database) file;
-            if (FileHelper.HasExtension(path, "epeb"))
+            if (source is NativeDatabaseSource nativeDBSource && FileHelper.HasExtension(nativeDBSource.Path, "epeb"))
             {
-                file = await Core.Database.Format.epeb.MainDatabaseLoader.Load(path, password, showWrongPasswordError);
-                path = Path.ChangeExtension(path, "epdb");
+                file = await Core.Database.Format.epeb.MainDatabaseLoader.Load(nativeDBSource, password, showWrongPasswordError);
+                nativeDBSource.Path = Path.ChangeExtension(nativeDBSource.Path, "epdb");
             }
             else
             {
                 // Do not show an error because we do not know if the Password is for real wrong since it has changed in the new Version
-                file = await Core.Database.Format.epdb.v1.DatabaseLoader.Load(path, password, false);
-                
+                file = await Core.Database.Format.epdb.v1.DatabaseLoader.Load(source, password, false);
+
                 if (file.result == PasswordValidationResult.WrongFormat || file.result == PasswordValidationResult.WrongPassword)
-                    return await Core.Database.Format.epdb.MainDatabaseLoader.Load(path, password, showWrongPasswordError);
+                    return await Core.Database.Format.epdb.MainDatabaseLoader.Load(source, password, showWrongPasswordError);
             }
 
             if (file.result == PasswordValidationResult.Success)
             {
-                Core.Database.Format.epdb.MainDatabaseLoader.Save(path, password, default, file.database.Settings, file.database.Items);
+                Core.Database.Format.epdb.MainDatabaseLoader.Save(source, password, default, file.database.Settings, file.database.Items);
             }
             return file;
         }
@@ -58,9 +59,9 @@ namespace EasePass.Helper.Database
         /// <param name="settings">The Settings of the Database</param>
         /// <param name="items">The PasswordItems of the Database</param>
         /// <returns>Returns the <see langword="true"/> if the Database was saved successfully</returns>
-        public static bool Save(string path, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
+        public static bool Save(IDatabaseSource source, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
         {
-            return IDatabaseLoader.Save(path, password, secondFactor, settings, items);
+            return IDatabaseLoader.Save(source, password, secondFactor, settings, items);
         }
         #endregion
 

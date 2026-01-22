@@ -3,6 +3,7 @@ using EasePass.Core.Database.Format.Serialization;
 using EasePass.Dialogs;
 using EasePass.Helper.Security;
 using EasePass.Models;
+using EasePassExtensibility;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -69,56 +70,6 @@ namespace EasePass.Core.Database.Format
         }
         #endregion
 
-        #region ReadFile
-        /// <summary>
-        /// Reads the <see cref="byte"/>[] of the File in the given <paramref name="path"/>
-        /// </summary>
-        /// <param name="path">The Path to the Database</param>
-        /// <returns>Returns the <see cref="byte"/>[] of the Databasefile. If a Error occures <see cref="Array.Empty{T}"/> will be returned</returns>
-        private protected static byte[] ReadFile(string path)
-        {
-            try
-            {
-                return File.ReadAllBytes(path);
-            }
-            catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
-            {
-                InfoMessages.DatabaseFileNotFoundAt(path);
-            }
-            catch (UnauthorizedAccessException)
-            {
-                InfoMessages.NoAccessToPathDatabaseNotLoaded(path);
-            }
-            return Array.Empty<byte>();
-        }
-        #endregion
-
-        #region SaveFile
-        /// <summary>
-        /// Saves the <paramref name="content"/> to the File given in the <paramref name="path"/>
-        /// </summary>
-        /// <param name="path">The Path to the File, which should be saved</param>
-        /// <param name="content">The Content, which should be written in the File</param>
-        /// <returns>Returns <see langword="true"/> if the File was saved successfully, otherwise <see langword="false"/> will be returned</returns>
-        private protected static bool SaveFile(string path, byte[] content)
-        {
-            try
-            {
-                File.WriteAllBytes(path, content);
-                return true;
-            }
-            catch (UnauthorizedAccessException)
-            {
-                InfoMessages.NoAccessToPathDatabaseNotSaved(path);
-            }
-            catch (IOException)
-            {
-                InfoMessages.DatabaseSaveToFileError(path);
-            }
-            return false;
-        }
-        #endregion
-
         #region Load
         /// <summary>
         /// Loads the given Database in the <paramref name="path"/>
@@ -129,7 +80,7 @@ namespace EasePass.Core.Database.Format
         /// <returns>Returns the <see cref="PasswordValidationResult"/> and the <see cref="DatabaseFile"/>.
         /// If the <see cref="PasswordValidationResult"/> is not equal to <see cref="PasswordValidationResult.Success"/> the
         /// <see cref="DatabaseFile"/> is equal to <see cref="default"/></returns>
-        public abstract static Task<(PasswordValidationResult result, DatabaseFile database)> Load(string path, SecureString password, bool showWrongPasswordError);
+        public abstract static Task<(PasswordValidationResult result, DatabaseFile database)> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError);
 
         /// <summary>
         /// Loads the given Database in the <paramref name="path"/>
@@ -140,9 +91,9 @@ namespace EasePass.Core.Database.Format
         /// <returns>Returns the <see cref="PasswordValidationResult"/> and the <see cref="DatabaseFile"/>.
         /// If the <see cref="PasswordValidationResult"/> is not equal to <see cref="PasswordValidationResult.Success"/> the
         /// <see cref="DatabaseFile"/> is equal to <see cref="default"/></returns>
-        public static Task<(PasswordValidationResult result, DatabaseFile database)> Load<T>(string path, SecureString password, bool showWrongPasswordError) where T : IDatabaseLoader
+        public static Task<(PasswordValidationResult result, DatabaseFile database)> Load<T>(IDatabaseSource source, SecureString password, bool showWrongPasswordError) where T : IDatabaseLoader
         {
-            return T.Load(path, password, showWrongPasswordError);
+            return T.Load(source, password, showWrongPasswordError);
         }
 
         /// <summary>
@@ -169,9 +120,9 @@ namespace EasePass.Core.Database.Format
         /// <param name="settings">The Settings of the Database</param>
         /// <param name="items">The PasswordItems of the Database</param>
         /// <returns>Returns the <see langword="true"/> if the Database was saved successfully</returns>
-        public static bool Save(string path, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
+        public static bool Save(IDatabaseSource source, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
         {
-            return MainDatabaseLoader.Save(path, password, secondFactor, settings, items);
+            return MainDatabaseLoader.Save(source, password, secondFactor, settings, items);
         }
         #endregion
     }

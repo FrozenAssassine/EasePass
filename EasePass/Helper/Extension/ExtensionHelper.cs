@@ -30,6 +30,7 @@ namespace EasePass.Helper.Extension;
 public static class ExtensionHelper
 {
     public static List<Models.Extension> Extensions = new List<Models.Extension>();
+    public static List<IDatabaseSource> DatabaseSources = new List<IDatabaseSource>();
 
     public static void Init()
     {
@@ -69,6 +70,14 @@ public static class ExtensionHelper
                             ((IDatabasePaths)Extensions[i].Interfaces[j]).Init(Core.Database.Database.GetAllDatabasePaths());
                         }
                     }
+                }
+
+                foreach(IDatabaseProvider dbProv in GetAllClassesWithInterface<IDatabaseProvider>())
+                {
+                    dbProv.GetDatabases().ToList().ForEach((item) =>
+                    {
+                        DatabaseSources.Add(item);
+                    });
                 }
             }
         }));

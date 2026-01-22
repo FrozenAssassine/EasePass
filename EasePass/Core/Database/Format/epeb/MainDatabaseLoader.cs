@@ -3,6 +3,7 @@ using EasePass.Dialogs;
 using EasePass.Helper.FileSystem;
 using EasePass.Helper.Security;
 using EasePass.Models;
+using EasePassExtensibility;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -15,13 +16,15 @@ namespace EasePass.Core.Database.Format.epeb
     {
         public static double Version => 1.0;
 
-        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(string path, SecureString password, bool showWrongPasswordError)
+        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError)
         {
-            if (!FileHelper.HasExtension(path, ".epeb") || !File.Exists(path))
+            if (source is not NativeDatabaseSource nds)
+                return (PasswordValidationResult.WrongFormat, default);
+            if (!FileHelper.HasExtension(nds.Path, ".epeb") || !File.Exists(nds.Path))
                 return (PasswordValidationResult.DatabaseNotFound, default);
 
             string pw = new System.Net.NetworkCredential(string.Empty, password).Password;
-            EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(path));
+            EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(nds.Path));
             if (!AuthenticationHelper.VerifyPassword(decryptedJson.PasswordHash, pw))
             {
                 if (showWrongPasswordError)
