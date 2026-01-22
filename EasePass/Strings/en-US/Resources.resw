@@ -1168,4 +1168,7 @@ If you Forget your Token you will have no Access to your Database!</value>
   <data name="InfoMessages_UnknownDatabaseSourceError.Text" xml:space="preserve">
     <value>The database source "{sourcename}" failed on internal processes.</value>
   </data>
+  <data name="View_SettingsPage_RemoteDatabaseSettings" xml:space="preserve">
+    <value>Remote Database Settings</value>
+  </data>
 </root>

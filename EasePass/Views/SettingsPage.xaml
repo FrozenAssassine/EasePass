@@ -63,6 +63,38 @@
                     </Grid>
                 </Expander.Content>
             </Expander>
+            <Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Height="70">
+                        <TextBlock x:Uid="View_SettingsPage_RemoteDatabaseSettings" FontSize="20" Margin="10" VerticalAlignment="Center" Text="Remote Database Settings" />
+                    </StackPanel>
+                </Expander.Header>
+                <Expander.Content>
+                    <Grid>
+                        <ListView MaxWidth="600" ItemsSource="{x:Bind dbProviders}" HorizontalAlignment="Stretch">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:DBProviderJVMContainer">
+                                    <Expander Margin="0,3,0,0" HorizontalAlignment="Stretch">
+                                        <Expander.Header>
+                                            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                                <Image Margin="20" Width="40" Height="40" Stretch="UniformToFill" Source="{x:Bind SourceIcon}" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                                <TextBlock FontSize="20" Text="{x:Bind Provider.SourceName}" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" />
+                                            </StackPanel>
+                                        </Expander.Header>
+                                        <Expander.Content>
+                                            <TextBlock Text="test" />
+                                        </Expander.Content>
+                                    </Expander>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <StackPanel Visibility="Collapsed" x:Name="noProviderPluginsInfo" Orientation="Vertical">
+                            <TextBlock x:Uid="View_SettingsPage_NoPluginsInfo" Margin="5" Text="No plugins installed click below to download"/>
+                            <Button x:Uid="View_SettingsPage_DownloadPlugins" Click="ExtensionManage_Click" Content="Download Plugins" Margin="5"/>
+                        </StackPanel>
+                    </Grid>
+                </Expander.Content>
+            </Expander>
 
             <controls:SettingsItemSeparator Header="Security" x:Uid="View_SettingsPage_HeadlineSecurity"/>
             <controls:SettingsControl Header="Inactivity Logout" x:Uid="View_SettingsPage_InactivityLogout">

@@ -1168,4 +1168,7 @@ Wenn Sie Ihr Token vergessen, haben Sie keinen Zugriff mehr auf Ihre Datenbank!<
   <data name="InfoMessages_UnknownDatabaseSourceError.Text" xml:space="preserve">
     <value>Laden der Quelle "{sourcename}" ist fehlgeschlagen.</value>
   </data>
+  <data name="View_SettingsPage_RemoteDatabaseSettings" xml:space="preserve">
+    <value>Fernzugriffsdatenbankeinstellungen</value>
+  </data>
 </root>

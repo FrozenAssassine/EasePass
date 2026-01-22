@@ -38,6 +38,7 @@ namespace EasePass.Views
     {
         PasswordsPage passwordsPage = null;
         ObservableCollection<PasswordImporterBase> passwordImporter = null;
+        ObservableCollection<DBProviderJVMContainer> dbProviders = null;
         bool blockEventsOnloadSettings = false;
 
         public SettingsPage()
@@ -89,6 +90,17 @@ namespace EasePass.Views
             if (passwordImporter.Count == 0)
             {
                 noPluginsInfo.Visibility = Visibility.Visible;
+            }
+
+            dbProviders = new ObservableCollection<DBProviderJVMContainer>();
+            foreach (var provider in ExtensionHelper.GetAllClassesWithInterface<IDatabaseProvider>())
+            {
+                dbProviders.Add(new DBProviderJVMContainer(provider));
+            }
+
+            if(dbProviders.Count == 0)
+            {
+                noProviderPluginsInfo.Visibility = Visibility.Visible;
             }
         }
 
