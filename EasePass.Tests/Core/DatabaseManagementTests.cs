@@ -1,0 +1,112 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
+using System;
+using System.Linq;
+using EasePass.Core.Database;
+using EasePass.Settings;
+using Windows.Storage;
+
+namespace EasePass.Tests.Core
+{
+    [TestClass]
+    public class DatabaseManagementTests
+    {
+        private string _originalDatabasePaths;
+        private string _originalLoadedDatabaseName;
+
+        
+        [TestInitialize]
+        public void Setup()
+        {
+            _originalDatabasePaths = "%temp%\\EasePassTests\\testdb.epdb";
+            _originalLoadedDatabaseName = "testdb.epdb";
+
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            //todo
+        }
+
+        [TestMethod]
+        public void TestAddDatabasePath()
+        {
+             string newPath = DatabaseTestHelper.GetTempDatabasePath();
+             File.WriteAllText(newPath, "dummy");
+             try
+             {
+                 Database.AddDatabasePath(newPath);
+                 var paths = Database.GetAllDatabasePaths();
+                 Assert.IsTrue(paths.Contains(newPath), "Database path should be added.");
+             }
+             finally
+             {
+                 if(File.Exists(newPath)) File.Delete(newPath);
+             }
+        }
+
+        [TestMethod]
+        public void TestRemoveDatabasePath()
+        {
+             string newPath = DatabaseTestHelper.GetTempDatabasePath();
+             File.WriteAllText(newPath, "dummy");
+             try
+             {
+                 Database.AddDatabasePath(newPath);
+                 var paths = Database.GetAllDatabasePaths();
+                 Assert.IsTrue(paths.Contains(newPath));
+
+                 Database.RemoveDatabasePath(newPath);
+                 paths = Database.GetAllDatabasePaths();
+                 Assert.IsFalse(paths.Contains(newPath), "Database path should be removed.");
+             }
+             finally
+             {
+                 if(File.Exists(newPath)) File.Delete(newPath);
+             }
+        }
+        
+        [TestMethod]
+        public void TestCreateNewDatabase()
+        {
+            string dbPath = DatabaseTestHelper.GetTempDatabasePath();
+            var password = DatabaseTestHelper.ToSecureString("password123");
+            
+            try
+            {
+                var db = Database.CreateNewDatabase(dbPath, password);
+                Assert.IsNotNull(db);
+                Assert.AreEqual(dbPath, db.Path);
+                Assert.IsTrue(File.Exists(dbPath));
+            }
+            finally
+            {
+                if(File.Exists(dbPath)) File.Delete(dbPath);
+            }
+        }
+
+        [TestMethod]
+        public void TestHasDatabasePath()
+        {
+             // Ensure clean state
+             AppSettings.DatabasePaths = "";
+             AppSettings.LoadedDatabaseName = null;
+             Assert.IsFalse(Database.HasDatabasePath());
+
+             string newPath = DatabaseTestHelper.GetTempDatabasePath();
+             File.WriteAllText(newPath, "dummy");
+             try
+             {
+                 Database.AddDatabasePath(newPath);
+                 // Need to mimic loaded database behavior
+                 AppSettings.LoadedDatabaseName = "dummy";
+                 Assert.IsTrue(Database.HasDatabasePath());
+             }
+             finally
+             {
+                 if(File.Exists(newPath)) File.Delete(newPath);
+             }
+        }
+    }
+}
