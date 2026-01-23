@@ -39,7 +39,11 @@ namespace EasePass.Core.Database.Format.epdb
 
             byte[] pass = HashHelper.HashPasswordWithArgon2id(password, salt);
 
-            if (!IDatabaseLoader.DecryptData(source.GetDatabaseFileBytes(), pass, showWrongPasswordError, out string data))
+            byte[] content = source.GetDatabaseFileBytes();
+            if (content == null || content.Length == 0)
+                return (PasswordValidationResult.DatabaseNotFound, default);
+
+            if (!IDatabaseLoader.DecryptData(content, pass, showWrongPasswordError, out string data))
                 return (PasswordValidationResult.WrongPassword, default);
 
             DatabaseFile database = DatabaseFile.Deserialize(data);

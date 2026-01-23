@@ -29,6 +29,8 @@ namespace EasePass.Helper.Database
             (PasswordValidationResult result, DatabaseFile database) file;
             if (source is NativeDatabaseSource nativeDBSource && FileHelper.HasExtension(nativeDBSource.Path, "epeb"))
             {
+                if (!File.Exists(nativeDBSource.Path))
+                    return (PasswordValidationResult.DatabaseNotFound, default);
                 file = await Core.Database.Format.epeb.MainDatabaseLoader.Load(nativeDBSource, password, showWrongPasswordError);
                 nativeDBSource.Path = Path.ChangeExtension(nativeDBSource.Path, "epdb");
             }

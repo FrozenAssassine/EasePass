@@ -119,11 +119,6 @@ namespace EasePass.Core.Database
             if(DatabaseSource.GetAvailability() == IDatabaseSource.DatabaseAvailability.LockedByOtherUser)
                 return (PasswordValidationResult.LockedByOtherUser, null);
 
-            byte[] databaseBytes = DatabaseSource.GetDatabaseFileBytes();
-
-            if (databaseBytes == null || databaseBytes.Length == 0)
-                return (PasswordValidationResult.DatabaseNotFound, null);
-
             var result = await DatabaseFormatHelper.Load(DatabaseSource, enteredPassword, showWrongPasswordError);
             return result;
         }

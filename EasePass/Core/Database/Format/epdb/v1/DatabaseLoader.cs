@@ -16,7 +16,12 @@ namespace EasePass.Core.Database.Format.epdb.v1
         #region Load
         public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError)
         {
+            if (source.GetAvailability() == IDatabaseSource.DatabaseAvailability.LockedByOtherUser)
+                return (PasswordValidationResult.LockedByOtherUser, default);
+
             byte[] content = source.GetDatabaseFileBytes();
+            if (content == null || content.Length == 0)
+                return (PasswordValidationResult.DatabaseNotFound, default);
             if (!IDatabaseLoader.DecryptData(content, password, showWrongPasswordError, out string data))
                 return (PasswordValidationResult.WrongPassword, default);
 
