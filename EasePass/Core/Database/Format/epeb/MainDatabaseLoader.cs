@@ -16,7 +16,7 @@ namespace EasePass.Core.Database.Format.epeb
     {
         public static double Version => 1.0;
 
-        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError)
+        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError, byte[] preloaded = null)
         {
             if (source is not NativeDatabaseSource nds)
                 return (PasswordValidationResult.WrongFormat, default);

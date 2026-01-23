@@ -36,11 +36,12 @@ namespace EasePass.Helper.Database
             }
             else
             {
+                byte[] preloaded = source.GetDatabaseFileBytes();
                 // Do not show an error because we do not know if the Password is for real wrong since it has changed in the new Version
-                file = await Core.Database.Format.epdb.v1.DatabaseLoader.Load(source, password, false);
+                file = await Core.Database.Format.epdb.v1.DatabaseLoader.Load(source, password, false, preloaded);
 
                 if (file.result == PasswordValidationResult.WrongFormat || file.result == PasswordValidationResult.WrongPassword)
-                    return await Core.Database.Format.epdb.MainDatabaseLoader.Load(source, password, showWrongPasswordError);
+                    return await Core.Database.Format.epdb.MainDatabaseLoader.Load(source, password, showWrongPasswordError, preloaded);
             }
 
             if (file.result == PasswordValidationResult.Success)
