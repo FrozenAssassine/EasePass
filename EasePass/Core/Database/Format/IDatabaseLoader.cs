@@ -22,6 +22,11 @@ namespace EasePass.Core.Database.Format
         /// The Version of the File.
         /// </summary>
         public static abstract double Version { get; }
+        /// <summary>
+        /// Sorry for implementing the version twice, but I need it as integer and also the double version in epeb and epdb v1 is the same !?
+        /// I don't know if this is a feature, but I better don't touch it...
+        /// </summary>
+        public static abstract int VersionInt { get; }
         #endregion
 
         #region DecryptData

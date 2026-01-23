@@ -1,16 +1,19 @@
 ﻿using EasePass.Core.Database.Format.Serialization;
 using EasePass.Models;
 using EasePassExtensibility;
+using System;
 using System.Collections.ObjectModel;
 using System.Security;
 using System.Threading.Tasks;
 
 namespace EasePass.Core.Database.Format.epdb.v1
 {
+    [Obsolete("Just used for backward compatibility.")]
     internal class DatabaseLoader : IDatabaseLoader
     {
         #region Property
         public static double Version => 1.0;
+        public static int VersionInt => 2;
         #endregion
 
         #region Load
