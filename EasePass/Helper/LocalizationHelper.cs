@@ -53,7 +53,7 @@ public class LocalizationHelper
         var systemLanguages = GlobalizationPreferences.Languages;
         string systemLanguage = systemLanguages.Count > 0 ? systemLanguages[0] : DefaultSettingsValues.defaultLanguage;
 
-        var settingsLanguage = SettingsManager.GetSettings(AppSettingsValues.language, systemLanguage);
+        var settingsLanguage = AppSettings.Language;
         var res = languages.Find(x => x.Tag == settingsLanguage);
         if (res == null)
         {

@@ -65,7 +65,8 @@ namespace EasePass.Helper
             };
 
             var dp1 = new DispatcherTimer();
-            dp1.Interval = new TimeSpan(0, 0, SettingsManager.GetSettingsAsInt(AppSettingsValues.clipboardClearTimeoutSec, DefaultSettingsValues.ClipboardClearTimeoutSec));
+            
+            dp1.Interval = new TimeSpan(0, 0, AppSettings.ClipboardClearTimeoutSec);
             dp1.Start();
             dp1.Tick += async (s, e) =>
             {

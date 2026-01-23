@@ -53,7 +53,7 @@ namespace EasePass.Controls
 
         private void TextBox_DoubleTapped(object sender, Microsoft.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
         {
-            if (SettingsManager.GetSettingsAsBool(AppSettingsValues.doubleTapToCopy, DefaultSettingsValues.doubleTapToCopy))
+            if (AppSettings.DoubleTapToCopy)
                 CopyText_Click(this, null);
         }
     }
