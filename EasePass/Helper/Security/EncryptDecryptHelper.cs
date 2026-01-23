@@ -135,7 +135,7 @@ namespace EasePass.Helper.Security
         #region GetCryptionKey
         private static byte[] GetCryptionKey(byte[] pw, string salt = "")
         {
-            byte[] saltFromDatabase = Encoding.UTF8.GetBytes(salt.Length == 0 ? SettingsManager.GetSettings(AppSettingsValues.pSalt) : "");
+            byte[] saltFromDatabase = Encoding.UTF8.GetBytes(salt);
             int keySizeInBytes = 32;
             int iterations = 10000;
 
@@ -143,7 +143,7 @@ namespace EasePass.Helper.Security
         }
         private static byte[] GetCryptionKey(SecureString pw, string salt = "")
         {
-            byte[] saltFromDatabase = Encoding.UTF8.GetBytes(salt.Length == 0 ? SettingsManager.GetSettings(AppSettingsValues.pSalt) : "");
+            byte[] saltFromDatabase = Encoding.UTF8.GetBytes(salt);
             int keySizeInBytes = 32;
             int iterations = 10000;
 

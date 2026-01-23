@@ -25,11 +25,6 @@ public class AppSettings
         set => SettingsManager.SaveSettings(AppSettingsValues.language, value);
     }
 
-    public static string PasswordSalt
-    {
-        get => SettingsManager.GetSettings(AppSettingsValues.pSalt);
-        set => SettingsManager.SaveSettings(AppSettingsValues.pSalt, value);
-    }
     public static int WindowWidth
     {
         get => SettingsManager.GetSettingsAsInt(AppSettingsValues.windowWidth, DefaultSettingsValues.windowWidth);
