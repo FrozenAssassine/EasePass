@@ -32,6 +32,10 @@ namespace EasePassExtensibility
         /// </summary>
         Uri SourceIcon { get; }
         /// <summary>
+        /// Gets a value indicating whether external configuration editing is supported.
+        /// </summary>
+        bool ExternalConfigEditingSupport { get; }
+        /// <summary>
         /// Retrieves all available database sources.
         /// </summary>
         /// <returns>An array of <see cref="IDatabaseSource"/> objects representing the available databases. The array is empty if no databases are available.</returns>
@@ -55,5 +59,9 @@ namespace EasePassExtensibility
         /// <returns>A string containing a sample JSON configuration. The returned string can be used as a template or reference
         /// for creating valid configuration files.</returns>
         string GetSampleJsonConfig();
+        /// <summary>
+        /// Opens the external configuration editor application for the user to modify configuration settings.
+        /// </summary>
+        void OpenExternalConfigEditor();
     }
 }

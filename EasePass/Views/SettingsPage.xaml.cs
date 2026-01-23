@@ -260,7 +260,22 @@ namespace EasePass.Views
             }
             catch (Exception)
             {
-                
+                UIThreadInvoker.Invoke(() => InfoMessages.RemoteDBSettingsCouldNotBeSaved());
+            }
+        }
+
+        private void OpenExternalConfigEditor_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+                var provider = button.Tag as IDatabaseProvider;
+                if (provider.ExternalConfigEditingSupport)
+                    provider.OpenExternalConfigEditor();
+            }
+            catch (Exception)
+            {
+                UIThreadInvoker.Invoke(() => InfoMessages.OpenExternalRemoteConfigEditorFailed());
             }
         }
     }

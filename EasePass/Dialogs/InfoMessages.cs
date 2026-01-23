@@ -192,6 +192,16 @@ namespace EasePass.Dialogs
             $"The database source \"{sourcename}\" failed on internal processes.".Localized("InfoMessages_UnknownDatabaseSourceError/Text").Replace("{sourcename}", sourcename),
             InfoBarSeverity.Error, 10
             );
+        public static void RemoteDBSettingsCouldNotBeSaved() => new InfoBar().Show(
+            "Remote Database Settings saving failed".Localized("InfoMessages_RemoteDBSettingsCouldNotBeSaved"),
+            "",
+            InfoBarSeverity.Error, 10
+            );
+        public static void OpenExternalRemoteConfigEditorFailed() => new InfoBar().Show(
+            "Opening External Remote Config Editor failed".Localized("InfoMessages_OpenExternalRemoteConfigEditorFailed"),
+            "",
+            InfoBarSeverity.Error, 10
+            );
 
         public static void UnhandledException(Exception ex) => new InfoBar().Show("Unhandled Exception:".Localized("InfoMessages_UnhandledException/Headline"), ex.Message, InfoBarSeverity.Error);
         public static void NewVersionInfo(string version)

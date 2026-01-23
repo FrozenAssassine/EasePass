@@ -82,18 +82,21 @@
                                             </StackPanel>
                                         </Expander.Header>
                                         <Expander.Content>
-                                            <TextBox
-                                                AcceptsReturn="True" 
-                                                TextWrapping="NoWrap"
-                                                Header="JSON Config"
-                                                PlaceholderText="{x:Bind Provider.GetSampleJsonConfig(), Mode=OneTime}"
-                                                MinWidth="400"
-                                                MinHeight="200"
-                                                ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                                ScrollViewer.VerticalScrollMode="Enabled"
-                                                LostFocus="JsonBox_LostFocus"
-                                                Tag="{x:Bind Provider}"
-                                                Text="{x:Bind Provider.GetConfigurationJSON(), Mode=OneTime}"/>
+                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                                <TextBox
+                                                    AcceptsReturn="True" 
+                                                    TextWrapping="NoWrap"
+                                                    Header="JSON Config"
+                                                    PlaceholderText="{x:Bind Provider.GetSampleJsonConfig(), Mode=OneTime}"
+                                                    MinWidth="400"
+                                                    MinHeight="200"
+                                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                                    ScrollViewer.VerticalScrollMode="Enabled"
+                                                    LostFocus="JsonBox_LostFocus"
+                                                    Tag="{x:Bind Provider}"
+                                                    Text="{x:Bind Provider.GetConfigurationJSON(), Mode=OneTime}"/>
+                                                <Button x:Uid="View_SettingsPage_OpenExternalConfigEditor" Click="OpenExternalConfigEditor_Click" Content="Open External Config Editor" Margin="5" Visibility="{x:Bind Provider.ExternalConfigEditingSupport}" Tag="{x:Bind Provider}" />
+                                            </StackPanel>
                                         </Expander.Content>
                                     </Expander>
                                 </DataTemplate>

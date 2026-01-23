@@ -1171,4 +1171,13 @@ Wenn Sie Ihr Token vergessen, haben Sie keinen Zugriff mehr auf Ihre Datenbank!<
   <data name="View_SettingsPage_RemoteDatabaseSettings" xml:space="preserve">
     <value>Fernzugriffsdatenbankeinstellungen</value>
   </data>
+  <data name="View_SettingsPage_OpenExternalConfigEditor" xml:space="preserve">
+    <value>Externen Konfigurationseditor öffnen</value>
+  </data>
+  <data name="InfoMessages_RemoteDBSettingsCouldNotBeSaved" xml:space="preserve">
+    <value>Speichern der Fernzugriffsdatenbankeinstellungen fehlgeschlagen</value>
+  </data>
+  <data name="InfoMessages_OpenExternalRemoteConfigEditorFailed" xml:space="preserve">
+    <value>Öffnen eines externen Konfigurationseditors fehlgeschlagen</value>
+  </data>
 </root>
