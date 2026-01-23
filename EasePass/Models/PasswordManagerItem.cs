@@ -176,7 +176,7 @@ namespace EasePass.Models
 
             try // It once failed here with InteropServices.COMException. Reason unknown. Try/catch to prevent crash.
             {
-                if (await RequestsHelper.DownloadFileAsync(_Website + "/favicon.ico", item.GetPath(), 30000))
+                if (await RequestsHelper.DownloadFileAsync(_Website + "/favicon.ico", item.GetPath(), 3000))
                 {
                     Icon = new BitmapImage(new Uri(item.GetPath())); // Error occured here
                     Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; NotifyPropertyChanged("Icon"); };
