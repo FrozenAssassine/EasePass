@@ -4,7 +4,6 @@ using System;
 using System.Linq;
 using EasePass.Core.Database;
 using EasePass.Settings;
-using Windows.Storage;
 using EasePass.Models;
 
 namespace EasePass.Tests.Core
@@ -102,6 +101,25 @@ namespace EasePass.Tests.Core
              finally
              {
                  if(File.Exists(newPath)) File.Delete(newPath);
+             }
+        }
+
+        [TestMethod]
+        public void TestLoadedInstanceUpdatesSettings()
+        {
+             string dbPath = DatabaseTestHelper.GetTempDatabasePath();
+             File.WriteAllText(dbPath, "dummy");
+             
+             try 
+             {
+                 DatabaseItem db = new DatabaseItem(dbPath);
+                 Database.LoadedInstance = db;
+
+                Assert.AreEqual(db.Name, AppSettings.LoadedDatabaseName);
+             }
+             finally
+             {
+                 if(File.Exists(dbPath)) File.Delete(dbPath);
              }
         }
     }
