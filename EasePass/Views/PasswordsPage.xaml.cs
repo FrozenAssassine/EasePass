@@ -473,5 +473,10 @@ namespace EasePass.Views
             TemporaryDatabaseHelper.LoadImportedDatabase();
             loadTempDBButton.Visibility = Visibility.Collapsed;
         }
+
+        private void LogOut_Click(object sender, RoutedEventArgs e)
+        {
+            LogoutHelper.Logout();
+        }
     }
 }
