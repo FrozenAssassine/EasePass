@@ -1,4 +1,4 @@
-﻿using EasePass.Core.Database.Format.Serialization;
+using EasePass.Core.Database.Format.Serialization;
 using EasePass.Dialogs;
 using EasePass.Helper.Database;
 using EasePass.Models;
@@ -348,9 +348,9 @@ namespace EasePass.Core.Database
         /// </summary>
         /// <param name="source">The Source of the Database. If the Source is equal to <see langword="null"/> the <see cref="DatabaseSource"/> will be used</param>
         /// <returns>Returns <see langword="true"/> if the Database was saved successfully, otherwise <see langword="false"/> will be returned</returns>
-        public async Task<bool> SaveAsync(IDatabaseSource source = null)
+        public async Task SaveAsync(IDatabaseSource source = null)
         {
-            return await deferredSaver.RequestSaveAsync(() => ForceSave(source));
+            await deferredSaver.RequestSaveAsync(() => ForceSave(source));
         }
 
         /// <summary>

@@ -24,6 +24,23 @@ namespace EasePass.Settings
     internal class SettingsManager
     {
         private static Dictionary<string, EventHandler<string>> events = new Dictionary<string, EventHandler<string>>();
+        private static Dictionary<string, object> localSettingsCache = new Dictionary<string, object>();
+        private static bool? isAppPackaged = null;
+
+        //required for testing, since appsettings only work in packaged app
+        private static bool IsAppPackaged
+        {
+            get
+            {
+                if (isAppPackaged == null)
+                {
+                    try { var x = ApplicationData.Current.LocalSettings; isAppPackaged = true; }
+                    catch { isAppPackaged = false; }
+                }
+                return isAppPackaged.Value;
+            }
+        }
+
         public static void RegisterSettingsChangedEvent(string Value, EventHandler<string> eventHandler)
         {
             if (events.ContainsKey(Value)) events[Value] += eventHandler;
@@ -39,21 +56,30 @@ namespace EasePass.Settings
             if (data.ToString() == data.GetType().Name)
                 return;
 
-            ApplicationData.Current.LocalSettings.Values[Value] = data.ToString();
+            if (IsAppPackaged)
+                ApplicationData.Current.LocalSettings.Values[Value] = data.ToString();
+            else
+                localSettingsCache[Value] = data.ToString();
 
             if (events.TryGetValue(Value, out EventHandler<string> value) && value != null) value(null, Value);
         }
         public static string GetSettings(string value, string defaultValue = "")
         {
-            return ApplicationData.Current.LocalSettings.Values[value] as string ?? defaultValue;
+            object val = null;
+            if (IsAppPackaged)
+                val = ApplicationData.Current.LocalSettings.Values[value];
+            else
+                localSettingsCache.TryGetValue(value, out val);
+
+            return val as string ?? defaultValue;
         }
         public static int GetSettingsAsInt(string value, int defaultValue = 0)
         {
-            return ConvertHelper.ToInt(ApplicationData.Current.LocalSettings.Values[value] as string, defaultValue);
+            return ConvertHelper.ToInt(GetSettings(value, null), defaultValue);
         }
         public static bool GetSettingsAsBool(string value, bool defaultValue = false)
         {
-            return ConvertHelper.ToBoolean(ApplicationData.Current.LocalSettings.Values[value] as string, defaultValue);
+            return ConvertHelper.ToBoolean(GetSettings(value, null), defaultValue);
         }
     }
 }
