@@ -18,7 +18,7 @@ using Windows.Storage;
 
 namespace EasePass.Settings
 {
-    internal static class DefaultSettingsValues
+    public static class DefaultSettingsValues
     {
         public const string passwordChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!\"§$%&/()=?*+'#-_.:,;<>";
         public const int passwordLength = 15;
