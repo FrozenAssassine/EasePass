@@ -157,7 +157,7 @@ namespace EasePass.Helper
             if (string.IsNullOrEmpty(item.Secret))
                 return (false, null);
 
-            string codeContent = TOTP.EncodeUrl(item.DisplayName, string.IsNullOrEmpty(item.Username) ? item.Email : item.Username, item.Secret, TOTP.StringToHashMode(item.Algorithm), Convert.ToInt32(item.Digits), Convert.ToInt32(item.Interval));
+            string codeContent = TOTP.EncodeUrl(item.DisplayName, item.Username, item.Email, item.Secret, TOTP.StringToHashMode(item.Algorithm), Convert.ToInt32(item.Digits), Convert.ToInt32(item.Interval));
 
             QrCodeEncodingOptions options = new QrCodeEncodingOptions()
             {
