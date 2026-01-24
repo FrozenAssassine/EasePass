@@ -18,6 +18,7 @@ using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Helper.App;
 using EasePass.Helper.Database;
+using EasePass.Models;
 using EasePass.Settings;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -92,7 +93,8 @@ namespace EasePass.Views
             if (db == null)
                 return;
 
-            Database.AddDatabasePath(db.Path);
+            if (db.DatabaseSource is NativeDatabaseSource nds)
+                Database.AddDatabasePath(nds.Path);
             Database.LoadedInstance = db;
 
             //maybe show login page first here?

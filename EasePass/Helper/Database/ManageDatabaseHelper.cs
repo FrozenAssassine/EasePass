@@ -39,11 +39,12 @@ internal class ManageDatabaseHelper
         if (password == null)
             return null; //cancelled by user
 
-        DatabaseItem db = new DatabaseItem(pickerResult.path);
+        string path = pickerResult.path;
+        DatabaseItem db = new DatabaseItem(new NativeDatabaseSource(path));
         if (!await db.Unlock(password))
             return null;
 
-        Core.Database.Database.AddDatabasePath(db.Path);
+        Core.Database.Database.AddDatabasePath(path);
         return db;
     }
 
@@ -87,7 +88,8 @@ internal class ManageDatabaseHelper
         if (newDB == null)
             return null;
 
-        Core.Database.Database.AddDatabasePath(newDB.Path);
+        if (newDB.DatabaseSource is NativeDatabaseSource nds)
+            Core.Database.Database.AddDatabasePath(nds.Path);
         InteropHelper.SetForegroundWindow(InteropHelper.GetWindowHandle(EasePass.App.m_window));
         return newDB;
     }
@@ -96,6 +98,7 @@ internal class ManageDatabaseHelper
     {
         DatabaseItem[] databases = Core.Database.Database.GetAllUnloadedDatabases();
         string comboboxIndexDBName = AppSettings.LoadedDatabaseName ?? (databases.Length > 0 ? databases[0].Name : "");
+        databaseBox.Items.Clear();
         foreach (DatabaseItem item in databases)
         {
             databaseBox.Items.Add(item);

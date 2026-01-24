@@ -1144,4 +1144,40 @@ If you Forget your Token you will have no Access to your Database!</value>
   <data name="InfoMessages_ExportDBFailed.Text" xml:space="preserve">
     <value>The database export has failed.</value>
   </data>
+  <data name="InfoMessages_CantDeleteRemoteDatabase.Headline" xml:space="preserve">
+    <value>Could not delete remote database</value>
+  </data>
+  <data name="InfoMessages_CantDeleteRemoteDatabase.Text" xml:space="preserve">
+    <value>Remote databases are provides by plugins. To remove them, remove the plugin.</value>
+  </data>
+  <data name="InfoMessages_DatabaseLockedByOtherUser.Headline" xml:space="preserve">
+    <value>Database locked by other user</value>
+  </data>
+  <data name="InfoMessages_DatabaseLockedByOtherUser.Text" xml:space="preserve">
+    <value>This database could not be opened, because another user/device is using it.</value>
+  </data>
+  <data name="InfoMessages_DatabaseProviderLoadingFailed.Headline" xml:space="preserve">
+    <value>Database provider loading error</value>
+  </data>
+  <data name="InfoMessages_DatabaseProviderLoadingFailed.Text" xml:space="preserve">
+    <value>The database provider "{providername}" failed on loading databases.</value>
+  </data>
+  <data name="InfoMessages_UnknownDatabaseSourceError.Headline" xml:space="preserve">
+    <value>Database source error</value>
+  </data>
+  <data name="InfoMessages_UnknownDatabaseSourceError.Text" xml:space="preserve">
+    <value>The database source "{sourcename}" failed on internal processes.</value>
+  </data>
+  <data name="View_SettingsPage_RemoteDatabaseSettings" xml:space="preserve">
+    <value>Remote Database Settings</value>
+  </data>
+  <data name="View_SettingsPage_OpenExternalConfigEditor" xml:space="preserve">
+    <value>Open External Config Editor</value>
+  </data>
+  <data name="InfoMessages_RemoteDBSettingsCouldNotBeSaved" xml:space="preserve">
+    <value>Failed to save remote database settings</value>
+  </data>
+  <data name="InfoMessages_OpenExternalRemoteConfigEditorFailed" xml:space="preserve">
+    <value>Opening External Remote Config Editor failed</value>
+  </data>
 </root>

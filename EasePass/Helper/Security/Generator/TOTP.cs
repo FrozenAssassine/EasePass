@@ -114,16 +114,22 @@ namespace EasePass.Helper.Security.Generator
             return ("", "", "", HashMode.SHA1, 0, 0);
         }
 
-        public static string EncodeUrl(string Issuer, string Username, string Secret, HashMode Algorithm = HashMode.SHA1, int Digits = 6, int Period = 30)
+        public static string EncodeUrl(string Issuer, string Username, string email, string Secret, HashMode Algorithm = HashMode.SHA1, int Digits = 6, int Period = 30)
         {
+            string user = email != null && email.Length > 0 ? email : Username;
             return "otpauth://totp/" +
-                Uri.EscapeDataString(Issuer) + ':' +
-                Uri.EscapeDataString(Username) + "?secret=" +
-                Uri.EscapeDataString(Secret) + "&issuer=" +
-                Uri.EscapeDataString(Issuer) + "&algorithm=" +
+                encode(Issuer) + ':' +
+                encode(user) + "?secret=" +
+                encode(Secret) + "&issuer=" +
+                encode(Issuer) + "&algorithm=" +
                 HashModeToString(Algorithm) + "&digits=" +
                 Convert.ToString(Digits) + "&period=" +
                 Convert.ToString(Period);
+        }
+
+        private static string encode(string s)
+        {
+            return Uri.EscapeDataString(s).Replace(" ","%20");
         }
 
         public static HashMode StringToHashMode(string str)
@@ -141,9 +147,9 @@ namespace EasePass.Helper.Security.Generator
         {
             return hashMode switch
             {
-                HashMode.SHA1 => "sha1",
-                HashMode.SHA256 => "sha256",
-                HashMode.SHA512 => "sha512",
+                HashMode.SHA1 => "SHA1",
+                HashMode.SHA256 => "SHA256",
+                HashMode.SHA512 => "SHA512",
                 _ => throw new InvalidCastException()
             };
         }

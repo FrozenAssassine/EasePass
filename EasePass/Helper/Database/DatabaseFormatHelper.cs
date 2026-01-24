@@ -2,6 +2,7 @@
 using EasePass.Core.Database.Format.Serialization;
 using EasePass.Helper.FileSystem;
 using EasePass.Models;
+using EasePassExtensibility;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -14,53 +15,73 @@ namespace EasePass.Helper.Database
     internal static class DatabaseFormatHelper
     {
         #region Load
+
         /// <summary>
         /// Loads the given Database in the <paramref name="path"/>
         /// </summary>
-        /// <param name="path">The Path to the Database</param>
+        /// <param name="source">The Source to the Database</param>
         /// <param name="password">The Password of the Database</param>
         /// <param name="showWrongPasswordError">Specifies if an Error should occure if the Password is wrong</param>
         /// <returns>Returns the <see cref="PasswordValidationResult"/> and the <see cref="DatabaseFile"/>.
         /// If the <see cref="PasswordValidationResult"/> is not equal to <see cref="PasswordValidationResult.Success"/> the
         /// <see cref="DatabaseFile"/> is equal to <see cref="default"/></returns>
-        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(string path, SecureString password, bool showWrongPasswordError)
+        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError)
         {
             (PasswordValidationResult result, DatabaseFile database) file;
-            if (FileHelper.HasExtension(path, "epeb"))
+            if (source is NativeDatabaseSource nativeDBSource && FileHelper.HasExtension(nativeDBSource.Path, "epeb"))
             {
-                file = await Core.Database.Format.epeb.MainDatabaseLoader.Load(path, password, showWrongPasswordError);
-                path = Path.ChangeExtension(path, "epdb");
+                file = await Core.Database.Format.epeb.MainDatabaseLoader.Load(nativeDBSource, password, showWrongPasswordError);
+                nativeDBSource.Path = Path.ChangeExtension(nativeDBSource.Path, "epdb");
             }
             else
             {
-                // Do not show an error because we do not know if the Password is for real wrong since it has changed in the new Version
-                file = await Core.Database.Format.epdb.v1.DatabaseLoader.Load(path, password, false);
-                
-                if (file.result == PasswordValidationResult.WrongFormat || file.result == PasswordValidationResult.WrongPassword)
-                    return await Core.Database.Format.epdb.MainDatabaseLoader.Load(path, password, showWrongPasswordError);
-            }
+                var preloaded = DatabaseVersionTagHelper.GetVersionTag(source.GetDatabaseFileBytes());
 
-            if (file.result == PasswordValidationResult.Success)
-            {
-                Core.Database.Format.epdb.MainDatabaseLoader.Save(path, password, default, file.database.Settings, file.database.Items);
+                if (preloaded.version > 0)
+                {
+                    // Check all versions from versiontag to prevent decrypting twice
+                    switch (preloaded.version)
+                    {
+                        case 2:
+                            // Do not show an error because we do not know if the Password is for real wrong since it has changed in the new Version
+                            file = await Core.Database.Format.epdb.v1.DatabaseLoader.Load(source, password, false, preloaded.data);
+                            break;
+                        case 3:
+                            return await Core.Database.Format.epdb.MainDatabaseLoader.Load(source, password, showWrongPasswordError, preloaded.data);
+                    }
+                    file = (PasswordValidationResult.WrongFormat, default);
+                }
+                else
+                {
+                    // Versiontag missing. Decrypt using every format.
+
+                    // Do not show an error because we do not know if the Password is for real wrong since it has changed in the new Version
+                    file = await Core.Database.Format.epdb.v1.DatabaseLoader.Load(source, password, false, preloaded.data);
+
+                    if (file.result == PasswordValidationResult.WrongFormat || file.result == PasswordValidationResult.WrongPassword)
+                        return await Core.Database.Format.epdb.MainDatabaseLoader.Load(source, password, showWrongPasswordError, preloaded.data);
+                }
             }
+            // Validate using latest format.
+            if (file.result == PasswordValidationResult.Success)
+                Core.Database.Format.epdb.MainDatabaseLoader.Save(source, password, default, file.database.Settings, file.database.Items);
             return file;
         }
         #endregion
 
         #region Save
         /// <summary>
-        /// Saves the Database to the given <paramref name="path"/> and encrypts the content with the <paramref name="password"/>
+        /// Saves the Database to the given <paramref name="source"/> and encrypts the content with the <paramref name="password"/>
         /// </summary>
-        /// <param name="path">The Path to the Database</param>
+        /// <param name="source">The Source to the Database</param>
         /// <param name="password">The Master Password of the Database</param>
         /// <param name="secondFactor">The SecondFactor Token of the Database if <see cref="DatabaseSettings.UseSecondFactor"/> is <see langword="true"/></param>
         /// <param name="settings">The Settings of the Database</param>
         /// <param name="items">The PasswordItems of the Database</param>
         /// <returns>Returns the <see langword="true"/> if the Database was saved successfully</returns>
-        public static bool Save(string path, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
+        public static bool Save(IDatabaseSource source, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
         {
-            return IDatabaseLoader.Save(path, password, secondFactor, settings, items);
+            return IDatabaseLoader.Save(source, password, secondFactor, settings, items);
         }
         #endregion
 

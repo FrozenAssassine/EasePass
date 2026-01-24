@@ -15,6 +15,7 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.Helper.Database;
+using EasePass.Helper.Extension;
 using EasePass.Models;
 using EasePass.Settings;
 using System;
@@ -59,7 +60,7 @@ public class Database
     #region CreateNewDatabase
     public static DatabaseItem CreateNewDatabase(string path, SecureString password)
     {
-        DatabaseItem db = new DatabaseItem(path);
+        DatabaseItem db = new DatabaseItem(new NativeDatabaseSource(path));
         db.MasterPassword = password;
         db.Settings = new Format.Serialization.DatabaseSettings();
         db.Settings.UseSecondFactor = false;
@@ -100,14 +101,17 @@ public class Database
     #region GetAllUnloadedDatabases
     public static DatabaseItem[] GetAllUnloadedDatabases()
     {
-        return GetAllDatabasePaths().Select(x => new DatabaseItem(x)).ToArray();
+        return GetAllDatabasePaths()
+            .Select(x => new DatabaseItem(new NativeDatabaseSource(x)))
+            .Concat(ExtensionHelper.DatabaseSources.Select(x => new DatabaseItem(x)))
+            .ToArray();
     }
     #endregion
 
     #region GetItemsFromFile
     public async static Task<ObservableCollection<PasswordManagerItem>> GetItemsFromFile(string path, SecureString password)
     {
-        var result = await DatabaseFormatHelper.Load(path, password, true);
+        var result = await DatabaseFormatHelper.Load(new NativeDatabaseSource(path), password, true);
         if (result.result != PasswordValidationResult.Success)
             return new ObservableCollection<PasswordManagerItem>();
         

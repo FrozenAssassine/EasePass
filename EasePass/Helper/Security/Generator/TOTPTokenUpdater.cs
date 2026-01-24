@@ -62,10 +62,13 @@ namespace EasePass.Helper.Security.Generator
 
             string final = "";
             int length = token.Length;
+            int spacing = 2;
+            if (length % 3 == 0)
+                spacing = 3;
             for (int i = 0; i < length; i++)
             {
                 final += token[i];
-                if ((i + 1) % PasswordsPage.TOTP_SPACING == 0)
+                if ((i + 1) % spacing == 0)
                     final += ' ';
             }
             final = final.Trim(' ');

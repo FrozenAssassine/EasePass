@@ -134,7 +134,7 @@ namespace EasePass.Views
 
         private void Export2FA_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            qrcode.Source = QRCodeScanner.GenerateQRCode(TOTP.EncodeUrl(nameTB.Text, usernameTB.Text, secretTB.Password, TOTP.StringToHashMode((string)algorithmTB.SelectedItem), ConvertHelper.ToInt(digitsTB.Text, 6), ConvertHelper.ToInt(intervalTB.Text, 30)));
+            qrcode.Source = QRCodeScanner.GenerateQRCode(TOTP.EncodeUrl(nameTB.Text, usernameTB.Text, emailTB.Text, secretTB.Password, TOTP.StringToHashMode((string)algorithmTB.SelectedItem), ConvertHelper.ToInt(digitsTB.Text, 6), ConvertHelper.ToInt(intervalTB.Text, 30)));
             qrcode.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
         }
 

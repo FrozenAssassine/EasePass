@@ -21,12 +21,11 @@ using EasePass.Helper;
 using EasePass.Helper.Extension;
 using EasePass.Helper.Logout;
 using EasePass.Helper.Security.Generator;
-using EasePass.Helper.Window;
-using EasePass.Settings;
 using EasePass.Views;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
 using System.IO;
 using Windows.ApplicationModel;
 
@@ -48,6 +47,8 @@ public sealed partial class MainWindow : Window
     public readonly RestoreWindowManager restoreWindowManager;
     public readonly WindowStateManager windowStateManager;
 
+    public EventHandler ExtensionsInitialized;
+
 
     public MainWindow()
     {
@@ -66,7 +67,8 @@ public sealed partial class MainWindow : Window
         Title = Package.Current.DisplayName;
         this.AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets\\AppIcon\\appicon.ico"));
 
-        ExtensionHelper.Init();
+        var extT = ExtensionHelper.Init();
+        extT.ContinueWith(t => ExtensionsInitialized?.Invoke(this, EventArgs.Empty));
         inactivityHelper.InactivityStarted += InactivityHelper_InactivityStarted;
 
         PasswordHelper.Init();

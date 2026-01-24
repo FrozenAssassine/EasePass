@@ -1,0 +1,142 @@
+﻿/*
+MIT License
+
+Copyright (c) 2023 Julius Kirsch
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+*/
+
+using EasePass.Dialogs;
+using EasePass.Helper;
+using EasePassExtensibility;
+using System;
+
+namespace EasePass.Models
+{
+    /// <summary>
+    /// Adds proper error handling to an <see cref="IDatabaseSource"/> implementation. Important for sources that rely on external resources (plugins).
+    /// </summary>
+    internal class DatabaseSourceErrorHandlingWrapper : IDatabaseSource
+    {
+        private IDatabaseSource source;
+
+        public DatabaseSourceErrorHandlingWrapper(IDatabaseSource source)
+        {
+            this.source = source;
+        }
+
+        public string DatabaseName {
+            get
+            {
+                try
+                {
+                    return source.DatabaseName;
+                }
+                catch
+                {
+                    return "Database Name Unavailable";
+                }
+            }
+        }
+
+        public string SourceDescription
+        {
+            get
+            {
+                try
+                {
+                    return source.SourceDescription;
+                }
+                catch
+                {
+                    UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
+                    return "Source Description Unavailable";
+                }
+            }
+        }
+
+        public IDatabaseSource.DatabaseAvailability GetAvailability()
+        {
+            try
+            {
+                return source.GetAvailability();
+            }
+            catch
+            {
+                UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
+                return IDatabaseSource.DatabaseAvailability.UnknownState;
+            }
+        }
+
+        public byte[] GetDatabaseFileBytes()
+        {
+            try
+            {
+                return source.GetDatabaseFileBytes();
+            }
+            catch
+            {
+                UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
+                return null;
+            }
+        }
+
+        public bool SaveDatabaseFileBytes(byte[] databaseFileBytes)
+        {
+            try
+            {
+                return source.SaveDatabaseFileBytes(databaseFileBytes);
+            }
+            catch
+            {
+                UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
+                return false;
+            }
+        }
+
+        public DateTime GetLastTimeModified()
+        {
+            try
+            {
+                return source.GetLastTimeModified();
+            }
+            catch
+            {
+                UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
+                return DateTime.MinValue;
+            }
+        }
+
+        public void Login()
+        {
+            try
+            {
+                source.Login();
+            }
+            catch
+            {
+                UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
+            }
+        }
+
+        public void Logout()
+        {
+            try
+            {
+                source.Logout();
+            }
+            catch
+            {
+                UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
+            }
+        }
+    }
+}

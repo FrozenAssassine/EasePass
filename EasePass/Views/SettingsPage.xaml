@@ -63,6 +63,52 @@
                     </Grid>
                 </Expander.Content>
             </Expander>
+            <Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Height="70">
+                        <TextBlock x:Uid="View_SettingsPage_RemoteDatabaseSettings" FontSize="20" Margin="10" VerticalAlignment="Center" Text="Remote Database Settings" />
+                    </StackPanel>
+                </Expander.Header>
+                <Expander.Content>
+                    <Grid>
+                        <ListView MaxWidth="600" ItemsSource="{x:Bind dbProviders}" HorizontalAlignment="Stretch" SelectionMode="None">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:DBProviderUIWrapper">
+                                    <Expander Margin="0,3,0,0" HorizontalAlignment="Stretch">
+                                        <Expander.Header>
+                                            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                                <Image Margin="20" Width="40" Height="40" Stretch="UniformToFill" Source="{x:Bind SourceIcon}" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                                <TextBlock FontSize="20" Text="{x:Bind Provider.SourceName}" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" />
+                                            </StackPanel>
+                                        </Expander.Header>
+                                        <Expander.Content>
+                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                                <TextBox
+                                                    AcceptsReturn="True" 
+                                                    TextWrapping="NoWrap"
+                                                    Header="JSON Config"
+                                                    PlaceholderText="{x:Bind Provider.GetSampleJsonConfig(), Mode=OneTime}"
+                                                    MinWidth="400"
+                                                    MinHeight="200"
+                                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                                    ScrollViewer.VerticalScrollMode="Enabled"
+                                                    LostFocus="JsonBox_LostFocus"
+                                                    Tag="{x:Bind Provider}"
+                                                    Text="{x:Bind Provider.GetConfigurationJSON(), Mode=OneTime}"/>
+                                                <Button x:Uid="View_SettingsPage_OpenExternalConfigEditor" Click="OpenExternalConfigEditor_Click" Content="Open External Config Editor" Margin="5" Visibility="{x:Bind Provider.ExternalConfigEditingSupport}" Tag="{x:Bind Provider}" />
+                                            </StackPanel>
+                                        </Expander.Content>
+                                    </Expander>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <StackPanel Visibility="Collapsed" x:Name="noProviderPluginsInfo" Orientation="Vertical">
+                            <TextBlock x:Uid="View_SettingsPage_NoPluginsInfo" Margin="5" Text="No plugins installed click below to download"/>
+                            <Button x:Uid="View_SettingsPage_DownloadPlugins" Click="ExtensionManage_Click" Content="Download Plugins" Margin="5"/>
+                        </StackPanel>
+                    </Grid>
+                </Expander.Content>
+            </Expander>
 
             <controls:SettingsItemSeparator Header="Security" x:Uid="View_SettingsPage_HeadlineSecurity"/>
             <controls:SettingsControl Header="Inactivity Logout" x:Uid="View_SettingsPage_InactivityLogout">

@@ -43,7 +43,6 @@ namespace EasePass.Views
     public sealed partial class PasswordsPage : Page, INotifyPropertyChanged
     {
         public delegate int PasswordExists(string password);
-        public const int TOTP_SPACING = 3;
         private PasswordManagerItem _SelectedItem = null;
         private PasswordManagerItem SelectedItem { get => _SelectedItem; set { _SelectedItem = value; RaisePropertyChanged("SelectedItem"); } }
         private TOTPTokenUpdater totpTokenUpdater;

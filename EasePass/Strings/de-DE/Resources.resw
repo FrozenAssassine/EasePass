@@ -1144,4 +1144,40 @@ Wenn Sie Ihr Token vergessen, haben Sie keinen Zugriff mehr auf Ihre Datenbank!<
   <data name="InfoMessages_ExportDBFailed.Text" xml:space="preserve">
     <value>Der Datenbank Export ist fehlgeschlagen.</value>
   </data>
+  <data name="InfoMessages_CantDeleteRemoteDatabase.Headline" xml:space="preserve">
+    <value>Datenbank mit Fernzugriff kann nicht gelöscht werden</value>
+  </data>
+  <data name="InfoMessages_CantDeleteRemoteDatabase.Text" xml:space="preserve">
+    <value>Datenbanken mit Fernzugriff werden von Plugins zur Verfügung gestellt. Um sie zu löschen, müssen die das Plugin entfernen.</value>
+  </data>
+  <data name="InfoMessages_DatabaseLockedByOtherUser.Headline" xml:space="preserve">
+    <value>Datenbank von anderem Nutzer gesperrt</value>
+  </data>
+  <data name="InfoMessages_DatabaseLockedByOtherUser.Text" xml:space="preserve">
+    <value>Die Datenbank kann nicht geöffnet werden, da sie von einem anderen Benutzer oder einem anderen Gerät verwendet wird.</value>
+  </data>
+  <data name="InfoMessages_DatabaseProviderLoadingFailed.Headline" xml:space="preserve">
+    <value>Fernzugriffsdatenbankladefehler</value>
+  </data>
+  <data name="InfoMessages_DatabaseProviderLoadingFailed.Text" xml:space="preserve">
+    <value>Fernzugriff über "{providername}" ist fehlgeschlagen.</value>
+  </data>
+  <data name="InfoMessages_UnknownDatabaseSourceError.Headline" xml:space="preserve">
+    <value>Datenbankquellenfehler</value>
+  </data>
+  <data name="InfoMessages_UnknownDatabaseSourceError.Text" xml:space="preserve">
+    <value>Laden der Quelle "{sourcename}" ist fehlgeschlagen.</value>
+  </data>
+  <data name="View_SettingsPage_RemoteDatabaseSettings" xml:space="preserve">
+    <value>Fernzugriffsdatenbankeinstellungen</value>
+  </data>
+  <data name="View_SettingsPage_OpenExternalConfigEditor" xml:space="preserve">
+    <value>Externen Konfigurationseditor öffnen</value>
+  </data>
+  <data name="InfoMessages_RemoteDBSettingsCouldNotBeSaved" xml:space="preserve">
+    <value>Speichern der Fernzugriffsdatenbankeinstellungen fehlgeschlagen</value>
+  </data>
+  <data name="InfoMessages_OpenExternalRemoteConfigEditorFailed" xml:space="preserve">
+    <value>Öffnen eines externen Konfigurationseditors fehlgeschlagen</value>
+  </data>
 </root>

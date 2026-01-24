@@ -3,7 +3,9 @@ using EasePass.Dialogs;
 using EasePass.Helper.FileSystem;
 using EasePass.Helper.Security;
 using EasePass.Models;
+using EasePassExtensibility;
 using Newtonsoft.Json;
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Security;
@@ -11,17 +13,22 @@ using System.Threading.Tasks;
 
 namespace EasePass.Core.Database.Format.epeb
 {
+    [Obsolete("Just used for backward compatibility.")]
     internal class MainDatabaseLoader : IDatabaseLoader
     {
         public static double Version => 1.0;
+        public static int VersionInt => 1;
 
-        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(string path, SecureString password, bool showWrongPasswordError)
+        /// <param name="preloaded">IMPORTANT: Preload parameter is not supported on epeb Database loader!</param>
+        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError, byte[] preloaded = null)
         {
-            if (!FileHelper.HasExtension(path, ".epeb") || !File.Exists(path))
+            if (source is not NativeDatabaseSource nds)
+                return (PasswordValidationResult.WrongFormat, default);
+            if (!FileHelper.HasExtension(nds.Path, ".epeb") || !File.Exists(nds.Path))
                 return (PasswordValidationResult.DatabaseNotFound, default);
 
             string pw = new System.Net.NetworkCredential(string.Empty, password).Password;
-            EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(path));
+            EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(nds.Path));
             if (!AuthenticationHelper.VerifyPassword(decryptedJson.PasswordHash, pw))
             {
                 if (showWrongPasswordError)

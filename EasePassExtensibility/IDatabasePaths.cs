@@ -14,8 +14,11 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using System;
+
 namespace EasePassExtensibility
 {
+    [Obsolete("It still returns the local database paths, but databases could also be provided using IDatabaseProvider plugin interface. These are not listed.")]
     public interface IDatabasePaths : IExtensionInterface
     {
         public void Init(string[] databasePaths);

@@ -43,7 +43,7 @@
                                 </Grid.ContextFlyout>
 
                                 <TextBlock Grid.Row="1" Text="{x:Bind Name}" FontSize="24"/>
-                                <TextBlock Grid.Row="2" Text="{x:Bind Path}" TextWrapping="Wrap" FontSize="11"/>
+                                <TextBlock Grid.Row="2" Text="{x:Bind DatabaseSource.SourceDescription}" TextWrapping="Wrap" FontSize="11"/>
                             </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>
