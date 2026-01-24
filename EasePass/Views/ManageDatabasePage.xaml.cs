@@ -192,6 +192,7 @@ public sealed partial class ManageDatabasePage : Page
 
     private async void Export_BackupDatabase_Click(object sender, RoutedEventArgs e)
     {
+        //not implemented currently
         var rightClicked = (sender as MenuFlyoutItem).Tag as DatabaseItem;
         if (rightClicked == null)
             return;
@@ -210,6 +211,7 @@ public sealed partial class ManageDatabasePage : Page
 
     private async void LoadBackupDatabase_Click(object sender, RoutedEventArgs e)
     {
+        //not implemented currently
         DatabaseItem rightClicked = (sender as MenuFlyoutItem).Tag as DatabaseItem;
         if (rightClicked == null)
             return;
@@ -224,6 +226,7 @@ public sealed partial class ManageDatabasePage : Page
 
     private async void Delete_BackupDatabase_Click(object sender, RoutedEventArgs e)
     {
+        //not implemented currently
         if ((sender as MenuFlyoutItem).Tag is not DatabaseItem rightClicked)
             return;
 

@@ -4,7 +4,7 @@ using Windows.Storage;
 
 namespace EasePass.Models
 {
-    internal class CacheItem
+    public class CacheItem
     {
         private string Category = "";
         private string Id = "";

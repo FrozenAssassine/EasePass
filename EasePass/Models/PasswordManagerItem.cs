@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Settings;
 using Microsoft.UI.Xaml;
@@ -24,9 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Security.Cryptography;
-using System.Text;
+using System.Threading.Tasks;
 using Windows.UI;
 
 namespace EasePass.Models
@@ -70,74 +69,38 @@ namespace EasePass.Models
         }
         [JsonIgnore]
         private string _Website = "";
+
         public string Website
         {
             get => _Website;
             set
             {
-                const string iconCache = "icons";
-                _Website = value == null ? null : value.Trim();
-                if (!ShowIcon)
+                if (ShowIcon)
                 {
+                    _Website = WebsiteIconHelper.NormalizeWebsite(value);
+                    _ = UpdateWebsiteIconAsync();
+                }
+                else
+                {
+                    _Website = value == null ? null : value.Trim();
                     Icon = null;
-                    NotifyPropertyChanged("Icon");
-                    NotifyPropertyChanged("Website");
-                    return;
                 }
 
-                if (string.IsNullOrEmpty(_Website))
-                {
-                    Icon = null;
-                    NotifyPropertyChanged("Icon");
-                    return;
-                }
-
-                if (!_Website.ToLower().StartsWith("http"))
-                    _Website = "http://" + _Website;
-
-                try
-                {
-                    CacheItem item = CacheItem.FindInCache(iconCache, _Website);
-                    if (item != null)
-                    {
-                        Icon = new BitmapImage(new Uri(item.GetPath()));
-                        Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; NotifyPropertyChanged("Icon"); };
-
-                        NotifyPropertyChanged("Icon");
-                        NotifyPropertyChanged("Website");
-                        return;
-                    }
-
-                    IconDownloadImage(item, iconCache);
-                }
-                catch { /*Invalid URI format*/ }
-
-                NotifyPropertyChanged("Icon");
-                NotifyPropertyChanged("Website");
+                NotifyPropertyChanged(nameof(Website));
+                NotifyPropertyChanged(nameof(Icon));
             }
         }
-
         [JsonIgnore]
         public BitmapImage Icon = null;
         [JsonIgnore]
         public Brush BackColor
         {
-            get
-            {
-                MD5 md5Hasher = MD5.Create();
-                byte[] bytes = md5Hasher.ComputeHash(Encoding.UTF8.GetBytes(DisplayName));
-                return new SolidColorBrush(Color.FromArgb(255, bytes[0], bytes[1], bytes[2]));
-            }
+            get => DisplayName.HashToSolidColorBrush();
         }
         [JsonIgnore]
         public Brush ForeColor
         {
-            get
-            {
-                SolidColorBrush c = BackColor as SolidColorBrush;
-                byte average = (byte)((c.Color.R + c.Color.G + c.Color.B) / 3);
-                return average > 127 ? new SolidColorBrush(Color.FromArgb(255, 255, 255, 255)) : new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
-            }
+            get => (BackColor as SolidColorBrush).MakeFittedTextColor();
         }
         [JsonIgnore]
         public string FirstChar = "";
@@ -162,37 +125,17 @@ namespace EasePass.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private async void IconDownloadImage(CacheItem item, string iconCache)
+        private async Task UpdateWebsiteIconAsync()
         {
-            item = CacheItem.Create(iconCache, _Website);
-            if (item == null)
+            if (!ShowIcon || string.IsNullOrEmpty(_Website))
             {
                 Icon = null;
-
-                NotifyPropertyChanged("Icon");
-                NotifyPropertyChanged("Website");
+                NotifyPropertyChanged(nameof(Icon));
                 return;
             }
 
-            try // It once failed here with InteropServices.COMException. Reason unknown. Try/catch to prevent crash.
-            {
-                if (await RequestsHelper.DownloadFileAsync(_Website + "/favicon.ico", item.GetPath(), 3000))
-                {
-                    Icon = new BitmapImage(new Uri(item.GetPath())); // Error occured here
-                    Icon.ImageFailed += (object sender, ExceptionRoutedEventArgs e) => { Icon = null; NotifyPropertyChanged("Icon"); };
-                }
-                else
-                    Icon = null;
-            }catch(Exception ex)
-            {
-                Icon = null;
-            }
-
-            //check for valid item
-            if (item.GetCacheSize() < 10)
-            {
-                item.Remove();
-            }
+            Icon = await WebsiteIconHelper.GetOrDownloadIconAsync(_Website);
+            NotifyPropertyChanged(nameof(Icon));
         }
 
         /// <summary>
