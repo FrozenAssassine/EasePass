@@ -26,7 +26,21 @@ namespace EasePass.Settings
         public const bool doubleTapToCopy = true;
         public const bool showIcons = true;
         public const bool disableLeakedPasswords = false;
-        public static readonly string databasePaths = System.IO.Path.Combine(ApplicationData.Current.LocalFolder.Path, "easepass.epdb");
+        public static string databasePaths
+        {
+            get
+            {
+                try
+                {
+                    return System.IO.Path.Combine(ApplicationData.Current.LocalFolder.Path, "easepass.epdb");
+                }
+                catch
+                {
+                    //required for testing, since appsettings only work in packaged app
+                    return System.IO.Path.Combine(System.IO.Path.GetTempPath(), "easepass.epdb");
+                }
+            }
+        }
         public static string defaultLanguage = "en-US";
         public const int ClipboardClearTimeoutSec = 15;
         public const int gridSplitterWidth = 240;
