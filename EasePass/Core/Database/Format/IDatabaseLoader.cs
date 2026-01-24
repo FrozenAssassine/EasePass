@@ -22,6 +22,11 @@ namespace EasePass.Core.Database.Format
         /// The Version of the File.
         /// </summary>
         public static abstract double Version { get; }
+        /// <summary>
+        /// Sorry for implementing the version twice, but I need it as integer and also the double version in epeb and epdb v1 is the same !?
+        /// I don't know if this is a feature, but I better don't touch it...
+        /// </summary>
+        public static abstract int VersionInt { get; }
         #endregion
 
         #region DecryptData
@@ -80,7 +85,7 @@ namespace EasePass.Core.Database.Format
         /// <returns>Returns the <see cref="PasswordValidationResult"/> and the <see cref="DatabaseFile"/>.
         /// If the <see cref="PasswordValidationResult"/> is not equal to <see cref="PasswordValidationResult.Success"/> the
         /// <see cref="DatabaseFile"/> is equal to <see cref="default"/></returns>
-        public abstract static Task<(PasswordValidationResult result, DatabaseFile database)> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError);
+        public abstract static Task<(PasswordValidationResult result, DatabaseFile database)> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError, byte[] preloaded = null);
 
         /// <summary>
         /// Loads the given Database in the <paramref name="source"/>
@@ -91,9 +96,9 @@ namespace EasePass.Core.Database.Format
         /// <returns>Returns the <see cref="PasswordValidationResult"/> and the <see cref="DatabaseFile"/>.
         /// If the <see cref="PasswordValidationResult"/> is not equal to <see cref="PasswordValidationResult.Success"/> the
         /// <see cref="DatabaseFile"/> is equal to <see cref="default"/></returns>
-        public static Task<(PasswordValidationResult result, DatabaseFile database)> Load<T>(IDatabaseSource source, SecureString password, bool showWrongPasswordError) where T : IDatabaseLoader
+        public static Task<(PasswordValidationResult result, DatabaseFile database)> Load<T>(IDatabaseSource source, SecureString password, bool showWrongPasswordError, byte[] preloaded = null) where T : IDatabaseLoader
         {
-            return T.Load(source, password, showWrongPasswordError);
+            return T.Load(source, password, showWrongPasswordError, preloaded);
         }
 
         /// <summary>
