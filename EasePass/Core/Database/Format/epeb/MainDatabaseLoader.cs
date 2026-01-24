@@ -20,12 +20,12 @@ namespace EasePass.Core.Database.Format.epeb
         public static int VersionInt => 1;
 
         /// <param name="preloaded">IMPORTANT: Preload parameter is not supported on epeb Database loader!</param>
-        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError, byte[] preloaded = null)
+        public static async Task<DatabaseValidationResult> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError, byte[] preloaded = null)
         {
             if (source is not NativeDatabaseSource nds)
-                return (PasswordValidationResult.WrongFormat, default);
+                return new (PasswordValidationResult.WrongFormat, default);
             if (!FileHelper.HasExtension(nds.Path, ".epeb") || !File.Exists(nds.Path))
-                return (PasswordValidationResult.DatabaseNotFound, default);
+                return new (PasswordValidationResult.DatabaseNotFound, default);
 
             string pw = new System.Net.NetworkCredential(string.Empty, password).Password;
             EncryptedDatabaseItem decryptedJson = JsonConvert.DeserializeObject<EncryptedDatabaseItem>(File.ReadAllText(nds.Path));
@@ -35,15 +35,15 @@ namespace EasePass.Core.Database.Format.epeb
                 {
                     InfoMessages.ImportDBWrongPassword();
                 }
-                return (PasswordValidationResult.WrongPassword, default);
+                return new(PasswordValidationResult.WrongPassword, default);
             }
 
             if (!IDatabaseLoader.DecryptData(decryptedJson.Data, password, showWrongPasswordError, out string data))
-                return (PasswordValidationResult.WrongPassword, default);
+                return new(PasswordValidationResult.WrongPassword, default);
 
             ObservableCollection<PasswordManagerItem> items = PasswordManagerItem.DeserializeItems(data);
             if (items == default)
-                return (PasswordValidationResult.WrongFormat, default);
+                return new(PasswordValidationResult.WrongFormat, default);
 
             DatabaseSettings settings = new DatabaseSettings();
             settings.SecondFactorType = Enums.SecondFactorType.None;
@@ -55,12 +55,12 @@ namespace EasePass.Core.Database.Format.epeb
             database.Items = items;
             database.Settings = settings;
 
-            return (PasswordValidationResult.Success, database);
+            return new(PasswordValidationResult.Success, database);
         }
 
-        public static async Task<(PasswordValidationResult result, DatabaseFile database)> LoadInternal(SecureString password, DatabaseFile database, bool showWrongPasswordError)
+        public static async Task<DatabaseValidationResult> LoadInternal(SecureString password, DatabaseFile database, bool showWrongPasswordError)
         {
-            return (PasswordValidationResult.Success, database);
+            return new(PasswordValidationResult.Success, database);
         }
     }
 }

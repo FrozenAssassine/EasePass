@@ -34,24 +34,24 @@ namespace EasePass.Core.Database.Format.epdb
         #endregion
 
         #region Load
-        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError, byte[] preloaded = null)
+        public static async Task<DatabaseValidationResult> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError, byte[] preloaded = null)
         {
             if (source.GetAvailability() == IDatabaseSource.DatabaseAvailability.LockedByOtherUser)
-                return (PasswordValidationResult.LockedByOtherUser, default);
+                return new(PasswordValidationResult.LockedByOtherUser, default);
 
             byte[] pass = HashHelper.HashPasswordWithArgon2id(password, salt);
 
             byte[] content = preloaded != null ? preloaded : source.GetDatabaseFileBytes();
             if (content == null || content.Length == 0)
-                return (PasswordValidationResult.DatabaseNotFound, default);
+                return new(PasswordValidationResult.DatabaseNotFound, default);
 
             if (!IDatabaseLoader.DecryptData(content, pass, showWrongPasswordError, out string data))
-                return (PasswordValidationResult.WrongPassword, default);
+                return new(PasswordValidationResult.WrongPassword, default);
 
             DatabaseFile database = DatabaseFile.Deserialize(data);
 
             if (database == default)
-                return (PasswordValidationResult.WrongFormat, default);
+                return new(PasswordValidationResult.WrongFormat, default);
 
             if (database.Settings != null && database.Settings.UseSecondFactor)
             {
@@ -70,26 +70,24 @@ namespace EasePass.Core.Database.Format.epdb
             }
 
             if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out data))
-                return (PasswordValidationResult.WrongPassword, default);
+                return new(PasswordValidationResult.WrongPassword, default);
 
             ObservableCollection<PasswordManagerItem> items = PasswordManagerItem.DeserializeItems(data);
             if (items == default)
-                return (PasswordValidationResult.WrongFormat, default);
+                return new(PasswordValidationResult.WrongFormat, default);
 
             database.Items = items;
             database.Data = Array.Empty<byte>();
 
-            //GC.Collect();
-
-            return (PasswordValidationResult.Success, database);
+            return new(PasswordValidationResult.Success, database);
         }
 
-        public static async Task<(PasswordValidationResult result, DatabaseFile database)> LoadInternal(SecureString password, DatabaseFile database, bool showWrongPasswordError)
+        public static async Task<DatabaseValidationResult> LoadInternal(SecureString password, DatabaseFile database, bool showWrongPasswordError)
         {
             byte[] pass;
 
             if (database == default)
-                return (PasswordValidationResult.WrongFormat, default);
+                return new(PasswordValidationResult.WrongFormat, default);
 
             if (database.Settings.UseSecondFactor)
             {
@@ -107,11 +105,11 @@ namespace EasePass.Core.Database.Format.epdb
             }
 
             if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out string data))
-                return (PasswordValidationResult.WrongPassword, default);
+                return new(PasswordValidationResult.WrongPassword, default);
 
             ObservableCollection<PasswordManagerItem> items = PasswordManagerItem.DeserializeItems(data);
             if (items == default)
-                return (PasswordValidationResult.WrongFormat, default);
+                return new(PasswordValidationResult.WrongFormat, default);
 
             database.Items = items;
             database.Data = Array.Empty<byte>();

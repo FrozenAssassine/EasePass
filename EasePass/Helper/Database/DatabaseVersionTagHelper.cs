@@ -4,6 +4,25 @@ using System.Text;
 
 namespace EasePass.Helper.Database
 {
+    enum DatabaseVersionTag
+    {
+        /// <summary>
+        /// No Version Tag found
+        /// </summary>
+        Undefined = -1,
+
+        /// <summary>
+        /// The Core.Database.Format.epdb.v1.DatabaseLoader
+        /// </summary>
+        EpdbV1DbVersion = 2,
+
+        /// <summary>
+        /// The Core.Database.Format.epdb.MainDatabaseLoader class
+        /// </summary>
+        EpdbV2DbVersion = 3,
+        
+    }
+
     internal static class DatabaseVersionTagHelper
     {
         const string ident = "epdbversion";
@@ -22,20 +41,21 @@ namespace EasePass.Helper.Database
             return res;
         }
 
-        public static (byte[] data, int version) GetVersionTag(byte[] dataWithVersiontag)
+        public static (byte[] data, DatabaseVersionTag versionTag) GetVersionTag(byte[] dataWithVersiontag)
         {
             byte[] identbytes = Encoding.UTF8.GetBytes(ident);
             if (dataWithVersiontag.Length < identbytes.Length)
-                return (dataWithVersiontag, -1);
+                return (dataWithVersiontag, DatabaseVersionTag.Undefined);
             for (int i = 0; i < identbytes.Length; i++)
                 if (dataWithVersiontag[i] != identbytes[i])
-                    return (dataWithVersiontag, -1);
+                    return (dataWithVersiontag, DatabaseVersionTag.Undefined);
             int v = BitConverter.ToInt32(dataWithVersiontag, identbytes.Length);
             int vLength = BitConverter.GetBytes(v).Length;
             byte[] data = new byte[dataWithVersiontag.Length - identbytes.Length - vLength];
             for (int i = identbytes.Length + vLength; i < dataWithVersiontag.Length; i++)
                 data[i - identbytes.Length - vLength] = dataWithVersiontag[i];
-            return (data, v);
+
+            return (data, (DatabaseVersionTag)v);
         }
     }
 }

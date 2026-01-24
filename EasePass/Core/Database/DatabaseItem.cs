@@ -113,13 +113,13 @@ namespace EasePass.Core.Database
         #endregion
 
         #region CheckPasswordCorrect
-        public async Task<(PasswordValidationResult result, DatabaseFile database)> CheckPasswordCorrect(SecureString enteredPassword, bool showWrongPasswordError = false)
+        public async Task<DatabaseValidationResult> CheckPasswordCorrect(SecureString enteredPassword, bool showWrongPasswordError = false)
         {
             if (enteredPassword == null)
-                return (PasswordValidationResult.WrongPassword, null);
+                return new(PasswordValidationResult.WrongPassword, null);
 
             if(DatabaseSource.GetAvailability() == IDatabaseSource.DatabaseAvailability.LockedByOtherUser)
-                return (PasswordValidationResult.LockedByOtherUser, null);
+                return new(PasswordValidationResult.LockedByOtherUser, null);
 
             var result = await DatabaseFormatHelper.Load(DatabaseSource, enteredPassword, showWrongPasswordError);
             return result;
