@@ -2,7 +2,6 @@ using EasePass.Core.Database;
 using EasePass.Extensions;
 using EasePass.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -43,7 +42,6 @@ namespace EasePass.Tests.Core
             try
             {
                 // Create and Save
-                Debug.WriteLine(dbPath);
                 DatabaseItem db = Database.CreateNewDatabase(dbPath, password);
                 PasswordManagerItem item = new PasswordManagerItem() { DisplayName = "Google", Password = "123", Username = "user" };
                 db.AddItem(item);
@@ -83,7 +81,6 @@ namespace EasePass.Tests.Core
 
             try
             {
-                Debug.WriteLine(dbPath);
                 DatabaseItem db = Database.CreateNewDatabase(dbPath, oldPass);
                 db.AddItem(new PasswordManagerItem() { DisplayName = "Test" });
                 await db.ForceSaveAsync();

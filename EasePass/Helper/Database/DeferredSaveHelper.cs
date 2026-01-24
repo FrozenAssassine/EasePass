@@ -1,60 +1,65 @@
-﻿using Microsoft.UI.Xaml.Documents;
-using System;
-using System.Diagnostics;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EasePass.Helper.Database;
-
 public class DeferredSaveHelper
 {
-    private readonly TimeSpan _delay;
+    private TimeSpan _delay;
+    public TimeSpan Delay => _delay;
+
     private CancellationTokenSource _cts;
-    private bool _saveScheduled = false;
-    public bool SaveScheduled { get => _saveScheduled; }
-    private readonly object _lock = new object(); //prevents race conditions
+    private readonly object _lock = new object();
+
+    private Task _pendingSave;
+    public bool SaveScheduled { get; private set; } = false;
 
     public DeferredSaveHelper(TimeSpan? delay = null)
     {
         _delay = delay ?? TimeSpan.FromMilliseconds(5000);
     }
+
     public void CancelPending()
     {
         lock (_lock)
         {
             _cts?.Cancel();
-            _saveScheduled = false;
+            SaveScheduled = false;
         }
     }
 
-    public async Task ForceSaveNow(Func<bool> saveFunc)
+    public Task ForceSaveNow(Func<bool> saveFunc)
     {
         CancelPending();
-        await Task.Run(saveFunc);
+        return Task.Run(saveFunc);
     }
-    public async Task<bool> RequestSaveAsync(Func<bool> saveFunc)
+
+    public Task RequestSaveAsync(Func<bool> saveFunc)
     {
         lock (_lock)
         {
-            _saveScheduled = true;
+            SaveScheduled = true;
             _cts?.Cancel();
             _cts?.Dispose();
             _cts = new CancellationTokenSource();
-        }
 
-        var token = _cts.Token;
+            var token = _cts.Token;
 
-        try
-        {
-            await Task.Delay(_delay, token);
-            if (!token.IsCancellationRequested)
+            // Fire-and-forget task
+            _pendingSave = Task.Run(async () =>
             {
-                _saveScheduled = false;
-                return await Task.Run(saveFunc); 
-            }
-        }
-        catch (TaskCanceledException) { /*Expected exception!*/ }
+                try
+                {
+                    await Task.Delay(_delay, token);
+                    if (!token.IsCancellationRequested)
+                    {
+                        SaveScheduled = false;
+                        saveFunc();
+                    }
+                }
+                catch (TaskCanceledException) { }
+            });
 
-        return false;
+            return _pendingSave;
+        }
     }
 }
