@@ -1,6 +1,7 @@
 ﻿using EasePass.Core.Database.Format.epdb;
 using EasePass.Core.Database.Format.Serialization;
 using EasePass.Dialogs;
+using EasePass.Helper.Database;
 using EasePass.Helper.Security;
 using EasePass.Models;
 using EasePassExtensibility;
@@ -23,10 +24,9 @@ namespace EasePass.Core.Database.Format
         /// </summary>
         public static abstract double Version { get; }
         /// <summary>
-        /// Sorry for implementing the version twice, but I need it as integer and also the double version in epeb and epdb v1 is the same !?
-        /// I don't know if this is a feature, but I better don't touch it...
+        /// Stores the version Tag which determines the way the database gets encrypted
         /// </summary>
-        public static abstract int VersionInt { get; }
+        public static abstract DatabaseVersionTag DBVersionTag { get; }
         #endregion
 
         #region DecryptData
@@ -85,7 +85,7 @@ namespace EasePass.Core.Database.Format
         /// <returns>Returns the <see cref="PasswordValidationResult"/> and the <see cref="DatabaseFile"/>.
         /// If the <see cref="PasswordValidationResult"/> is not equal to <see cref="PasswordValidationResult.Success"/> the
         /// <see cref="DatabaseFile"/> is equal to <see cref="default"/></returns>
-        public abstract static Task<(PasswordValidationResult result, DatabaseFile database)> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError, byte[] preloaded = null);
+        public abstract static Task<DatabaseValidationResult> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError, byte[] preloaded = null);
 
         /// <summary>
         /// Loads the given Database in the <paramref name="source"/>
@@ -96,7 +96,7 @@ namespace EasePass.Core.Database.Format
         /// <returns>Returns the <see cref="PasswordValidationResult"/> and the <see cref="DatabaseFile"/>.
         /// If the <see cref="PasswordValidationResult"/> is not equal to <see cref="PasswordValidationResult.Success"/> the
         /// <see cref="DatabaseFile"/> is equal to <see cref="default"/></returns>
-        public static Task<(PasswordValidationResult result, DatabaseFile database)> Load<T>(IDatabaseSource source, SecureString password, bool showWrongPasswordError, byte[] preloaded = null) where T : IDatabaseLoader
+        public static Task<DatabaseValidationResult> Load<T>(IDatabaseSource source, SecureString password, bool showWrongPasswordError, byte[] preloaded = null) where T : IDatabaseLoader
         {
             return T.Load(source, password, showWrongPasswordError, preloaded);
         }
@@ -112,7 +112,7 @@ namespace EasePass.Core.Database.Format
         /// <returns>Returns the <see cref="PasswordValidationResult"/> and the <see cref="DatabaseFile"/>.
         /// If the <see cref="PasswordValidationResult"/> is not equal to <see cref="PasswordValidationResult.Success"/> the
         /// <see cref="DatabaseFile"/> is equal to <see cref="default"/></returns>
-        public abstract static Task<(PasswordValidationResult result, DatabaseFile database)> LoadInternal(SecureString password, DatabaseFile database, bool showWrongPasswordError);
+        public abstract static Task<DatabaseValidationResult> LoadInternal(SecureString password, DatabaseFile database, bool showWrongPasswordError);
         #endregion
 
         #region Save

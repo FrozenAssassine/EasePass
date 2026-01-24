@@ -1,4 +1,5 @@
-﻿using EasePass.Core.Database.Format;
+﻿using EasePass.Core.Database;
+using EasePass.Core.Database.Format;
 using EasePass.Core.Database.Format.Serialization;
 using EasePass.Helper.FileSystem;
 using EasePass.Models;
@@ -16,6 +17,17 @@ namespace EasePass.Helper.Database
     {
         #region Load
 
+        public static DatabaseValidationResult ValidateDatabaseWithLatestFormat(
+            DatabaseValidationResult file,
+            IDatabaseSource source,
+            SecureString password)
+        {
+            // Validate using latest format.
+            if (file.result == PasswordValidationResult.Success)
+                Core.Database.Format.epdb.MainDatabaseLoader.Save(source, password, default, file.database.Settings, file.database.Items);
+            return file;
+        }
+
         /// <summary>
         /// Loads the given Database in the <paramref name="path"/>
         /// </summary>
@@ -25,47 +37,42 @@ namespace EasePass.Helper.Database
         /// <returns>Returns the <see cref="PasswordValidationResult"/> and the <see cref="DatabaseFile"/>.
         /// If the <see cref="PasswordValidationResult"/> is not equal to <see cref="PasswordValidationResult.Success"/> the
         /// <see cref="DatabaseFile"/> is equal to <see cref="default"/></returns>
-        public static async Task<(PasswordValidationResult result, DatabaseFile database)> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError)
+        public static async Task<DatabaseValidationResult> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError)
         {
-            (PasswordValidationResult result, DatabaseFile database) file;
             if (source is NativeDatabaseSource nativeDBSource && FileHelper.HasExtension(nativeDBSource.Path, "epeb"))
             {
-                file = await Core.Database.Format.epeb.MainDatabaseLoader.Load(nativeDBSource, password, showWrongPasswordError);
+                var resFile = await Core.Database.Format.epeb.MainDatabaseLoader.Load(nativeDBSource, password, showWrongPasswordError);
                 nativeDBSource.Path = Path.ChangeExtension(nativeDBSource.Path, "epdb");
+
+                return ValidateDatabaseWithLatestFormat(resFile, source, password);
+            }
+
+            DatabaseValidationResult validationRes;
+            var preloadedDB = DatabaseVersionTagHelper.GetVersionTag(source.GetDatabaseFileBytes());
+            if (preloadedDB.versionTag != DatabaseVersionTag.Undefined)
+            {
+                // Check all versions from versiontag to prevent decrypting twice
+                switch (preloadedDB.versionTag)
+                {
+                    case DatabaseVersionTag.EpdbV1DbVersion:
+                        validationRes = await Core.Database.Format.epdb.v1.DatabaseLoader.Load(source, password, showWrongPasswordError, preloadedDB.data);
+                        break;
+                    case DatabaseVersionTag.EpdbV2DbVersion:
+                        return await Core.Database.Format.epdb.MainDatabaseLoader.Load(source, password, showWrongPasswordError, preloadedDB.data);
+                }
+                validationRes = new(PasswordValidationResult.WrongFormat, default);
             }
             else
-            {
-                var preloaded = DatabaseVersionTagHelper.GetVersionTag(source.GetDatabaseFileBytes());
+            {    // Versiontag missing. Decrypt using every format ("Bruteforce")
 
-                if (preloaded.version > 0)
-                {
-                    // Check all versions from versiontag to prevent decrypting twice
-                    switch (preloaded.version)
-                    {
-                        case 2:
-                            // Do not show an error because we do not know if the Password is for real wrong since it has changed in the new Version
-                            file = await Core.Database.Format.epdb.v1.DatabaseLoader.Load(source, password, false, preloaded.data);
-                            break;
-                        case 3:
-                            return await Core.Database.Format.epdb.MainDatabaseLoader.Load(source, password, showWrongPasswordError, preloaded.data);
-                    }
-                    file = (PasswordValidationResult.WrongFormat, default);
-                }
-                else
-                {
-                    // Versiontag missing. Decrypt using every format.
+                // Do not show an error because we do not know if the Password is for real wrong since it has changed in the new Version
+                validationRes = await Core.Database.Format.epdb.v1.DatabaseLoader.Load(source, password, false, preloadedDB.data);
 
-                    // Do not show an error because we do not know if the Password is for real wrong since it has changed in the new Version
-                    file = await Core.Database.Format.epdb.v1.DatabaseLoader.Load(source, password, false, preloaded.data);
-
-                    if (file.result == PasswordValidationResult.WrongFormat || file.result == PasswordValidationResult.WrongPassword)
-                        return await Core.Database.Format.epdb.MainDatabaseLoader.Load(source, password, showWrongPasswordError, preloaded.data);
-                }
+                if (validationRes.result == PasswordValidationResult.WrongFormat || validationRes.result == PasswordValidationResult.WrongPassword)
+                    return await Core.Database.Format.epdb.MainDatabaseLoader.Load(source, password, showWrongPasswordError, preloadedDB.data);
             }
-            // Validate using latest format.
-            if (file.result == PasswordValidationResult.Success)
-                Core.Database.Format.epdb.MainDatabaseLoader.Save(source, password, default, file.database.Settings, file.database.Items);
-            return file;
+
+            return ValidateDatabaseWithLatestFormat(validationRes, source, password);
         }
         #endregion
 
