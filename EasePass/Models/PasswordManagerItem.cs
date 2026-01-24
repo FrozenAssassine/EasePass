@@ -62,7 +62,7 @@ namespace EasePass.Models
             set
             {
                 _DisplayName = value;
-                FirstChar = value?.Length == 0 ? "" : value.Substring(0, 1);
+                FirstChar = value == null || value?.Length == 0 ? "" : value.Substring(0, 1);
                 NotifyPropertyChanged("DisplayName");
                 NotifyPropertyChanged("Website");
                 NotifyPropertyChanged("FirstChar");
