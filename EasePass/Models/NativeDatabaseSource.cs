@@ -20,7 +20,7 @@ using System.IO;
 
 namespace EasePass.Models
 {
-    internal class NativeDatabaseSource : IDatabaseSource
+    public class NativeDatabaseSource : IDatabaseSource
     {
         public string Path;
 

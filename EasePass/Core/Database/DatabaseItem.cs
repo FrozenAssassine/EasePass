@@ -68,9 +68,11 @@ namespace EasePass.Core.Database
             CallPropertyChanged("MasterPassword");
             CallPropertyChanged("Items");
         }
+        public DatabaseItem(string path) : this(new NativeDatabaseSource(path)) { }
+
         #endregion
 
-        #region AddItem
+            #region AddItem
         public void AddItem(PasswordManagerItem item)
         {
             Items.Add(item);

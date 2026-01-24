@@ -5,6 +5,7 @@ using System.Linq;
 using EasePass.Core.Database;
 using EasePass.Settings;
 using Windows.Storage;
+using EasePass.Models;
 
 namespace EasePass.Tests.Core
 {
@@ -72,7 +73,7 @@ namespace EasePass.Tests.Core
             {
                 var db = Database.CreateNewDatabase(dbPath, password);
                 Assert.IsNotNull(db);
-                Assert.AreEqual(dbPath, db.Path);
+                Assert.AreEqual(dbPath, (db.DatabaseSource as NativeDatabaseSource)?.Path);
                 Assert.IsTrue(File.Exists(dbPath));
             }
             finally
