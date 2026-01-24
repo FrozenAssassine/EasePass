@@ -15,6 +15,7 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.Core.Database;
+using EasePass.Dialogs;
 using EasePass.Helper.FileSystem;
 using EasePass.Models;
 using EasePassExtensibility;
@@ -30,10 +31,11 @@ namespace EasePass.Helper.Extension;
 public static class ExtensionHelper
 {
     public static List<Models.Extension> Extensions = new List<Models.Extension>();
+    public static List<IDatabaseSource> DatabaseSources = new List<IDatabaseSource>();
 
-    public static void Init()
+    public static Task Init()
     {
-        Task.Run(new Action(async () =>
+        return Task.Run(new Action(async () =>
         {
             if (Directory.Exists(ApplicationData.Current.LocalFolder.Path + "\\extensions\\"))
             {
@@ -55,7 +57,9 @@ public static class ExtensionHelper
                 {
                     if (FileHelper.HasExtension(extensionPaths[i], ".dll"))
                     {
-                        Extensions.Add(new Models.Extension(ReflectionHelper.GetAllExternalInstances(extensionPaths[i]), Path.GetFileNameWithoutExtension(extensionPaths[i])));
+                        var interfaces = ReflectionHelper.GetAllExternalInstances(extensionPaths[i]);
+                        if (interfaces.Length > 0)
+                            Extensions.Add(new Models.Extension(interfaces, Path.GetFileNameWithoutExtension(extensionPaths[i])));
                     }
                 }
 
@@ -68,6 +72,22 @@ public static class ExtensionHelper
                         {
                             ((IDatabasePaths)Extensions[i].Interfaces[j]).Init(Core.Database.Database.GetAllDatabasePaths());
                         }
+                    }
+                }
+
+                DatabaseSources.Clear();
+                foreach (IDatabaseProvider dbProv in GetAllClassesWithInterface<IDatabaseProvider>())
+                {
+                    try
+                    {
+                        dbProv.GetDatabases().ToList().ForEach((item) =>
+                        {
+                            DatabaseSources.Add(new DatabaseSourceErrorHandlingWrapper(item));
+                        });
+                    }
+                    catch
+                    {
+                        UIThreadInvoker.Invoke(()=>InfoMessages.DatabaseProviderLoadingFailed(dbProv.SourceName));
                     }
                 }
             }

@@ -727,7 +727,7 @@
     <value>Copiar e-mail</value>
   </data>
   <data name="View_PasswordPage_Flyout_CopyPW.Text" xml:space="preserve">
-    <value>Copiar e-mail</value>
+    <value>Copiar senha</value>
   </data>
   <data name="View_PasswordPage_Flyout_CopyTOTPToken.Text" xml:space="preserve">
     <value>Copiar token TOTP</value>

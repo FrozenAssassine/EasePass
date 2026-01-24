@@ -1,4 +1,5 @@
 ﻿using EasePass.Core.Database;
+using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
@@ -10,7 +11,7 @@ internal class TemporaryDatabaseHelper
 
     private static DatabaseItem CreateTempDatabase(string path)
     {
-        DatabaseItem db = new DatabaseItem(path);
+        DatabaseItem db = new DatabaseItem(new NativeDatabaseSource(path));
         db.IsTemporaryDatabase = true;
         return db;
     }
@@ -31,7 +32,8 @@ internal class TemporaryDatabaseHelper
     public static void LoadImportedDatabase()
     {
         Core.Database.Database.LoadedInstance.IsTemporaryDatabase = false;
-        Core.Database.Database.AddDatabasePath(Core.Database.Database.LoadedInstance.Path);
+        if (Core.Database.Database.LoadedInstance.DatabaseSource is NativeDatabaseSource nds)
+            Core.Database.Database.AddDatabasePath(nds.Path);
     }
 
     public static void ShowTempDBButton(Button button)

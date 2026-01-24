@@ -172,6 +172,36 @@ namespace EasePass.Dialogs
             InfoBarSeverity.Error, 10,
             parent
             );
+        public static void CantDeleteRemoteDatabase() => new InfoBar().Show(
+            "Could not delete remote database".Localized("InfoMessages_CantDeleteRemoteDatabase/Headline"),
+            "Remote databases are provides by plugins. To remove them, remove the plugin.".Localized("InfoMessages_CantDeleteRemoteDatabase/Text"),
+            InfoBarSeverity.Error, 10
+            );
+        public static void DatabaseLockedByOtherUser() => new InfoBar().Show(
+            "Database locked by other user".Localized("InfoMessages_DatabaseLockedByOtherUser/Headline"),
+            "This database could not be opened, because another user/device is using it.".Localized("InfoMessages_DatabaseLockedByOtherUser/Text"),
+            InfoBarSeverity.Error, 10
+            );
+        public static void DatabaseProviderLoadingFailed(string providername) => new InfoBar().Show(
+            "Database provider loading error".Localized("InfoMessages_DatabaseProviderLoadingFailed/Headline"),
+            $"The database provider \"{providername}\" failed on loading databases.".Localized("InfoMessages_DatabaseProviderLoadingFailed/Text").Replace("{providername}", providername),
+            InfoBarSeverity.Error, 10
+            );
+        public static void UnknownDatabaseSourceError(string sourcename) => new InfoBar().Show(
+            "Database source error".Localized("InfoMessages_UnknownDatabaseSourceError/Headline"),
+            $"The database source \"{sourcename}\" failed on internal processes.".Localized("InfoMessages_UnknownDatabaseSourceError/Text").Replace("{sourcename}", sourcename),
+            InfoBarSeverity.Error, 10
+            );
+        public static void RemoteDBSettingsCouldNotBeSaved() => new InfoBar().Show(
+            "Remote Database Settings saving failed".Localized("InfoMessages_RemoteDBSettingsCouldNotBeSaved"),
+            "",
+            InfoBarSeverity.Error, 10
+            );
+        public static void OpenExternalRemoteConfigEditorFailed() => new InfoBar().Show(
+            "Opening External Remote Config Editor failed".Localized("InfoMessages_OpenExternalRemoteConfigEditorFailed"),
+            "",
+            InfoBarSeverity.Error, 10
+            );
 
         public static void UnhandledException(Exception ex) => new InfoBar().Show("Unhandled Exception:".Localized("InfoMessages_UnhandledException/Headline"), ex.Message, InfoBarSeverity.Error);
         public static void NewVersionInfo(string version)

@@ -23,6 +23,7 @@ using EasePass.Helper.Database;
 using EasePass.Helper.Security.Generator;
 using EasePass.Models;
 using EasePass.Settings;
+using EasePassExtensibility;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
@@ -41,6 +42,8 @@ namespace EasePass.Views
 
             passwordBox.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
             App.m_window.ShowBackArrow = false;
+
+            MainWindow.CurrentInstance.ExtensionsInitialized += (x, y) => UIThreadInvoker.Invoke(() => ManageDatabaseHelper.LoadDatabasesToCombobox(databasebox));
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -75,11 +78,16 @@ namespace EasePass.Views
             }
             else if (res.result == PasswordValidationResult.DatabaseNotFound)
             {
-                InfoMessages.DatabaseFileNotFoundAt(selectedDB.Path);
+                InfoMessages.DatabaseFileNotFoundAt(selectedDB.DatabaseSource.SourceDescription);
+                return false;
+            }
+            else if (res.result == PasswordValidationResult.LockedByOtherUser)
+            {
+                InfoMessages.DatabaseLockedByOtherUser();
                 return false;
             }
 
-            selectedDB.Load(pw, res.database);
+                selectedDB.Load(pw, res.database);
             if (selectedDB.Settings == null)
             {
                 //I somehow got it working, that entering a wrong password for a db,

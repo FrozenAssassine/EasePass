@@ -1,3 +1,4 @@
 Browser Password Importer|https://github.com/FrozenAssassine/EasePass/raw/master/Plugins/EasePassBrowserPasswordImporter.dll
 WLAN Password Importer|https://github.com/FrozenAssassine/EasePass/raw/master/Plugins/EasePassWLANPasswordImporter.dll
 File Password Importer|https://github.com/FrozenAssassine/EasePass/raw/master/Plugins/EasePassFilePasswordImporter.dll
+FTP Remote Database|https://github.com/FrozenAssassine/EasePass/raw/master/Plugins/EasePassFTPDatabaseSourcePlugin.dll

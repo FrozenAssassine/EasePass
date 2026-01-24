@@ -15,11 +15,13 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.Core.Database;
+using EasePass.Core.Database.Format.epdb;
 using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Helper.Database;
 using EasePass.Helper.FileSystem;
 using EasePass.Helper.Security;
+using EasePass.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -45,7 +47,10 @@ public sealed partial class ManageDatabasePage : Page
         databases = new ObservableCollection<DatabaseItem>(Database.GetAllUnloadedDatabases());
         for (int i = 0; i < databases.Count; i++)
         {
-            if (databases[i].Path == Database.LoadedInstance.Path)
+            if (databases[i].DatabaseSource == Database.LoadedInstance.DatabaseSource
+                || (databases[i].DatabaseSource is NativeDatabaseSource nds1
+                && Database.LoadedInstance.DatabaseSource is NativeDatabaseSource nds2
+                && nds1.Path == nds2.Path)) // Each DatabaseSource should be only created once, that how the plugins work, except for NativeDatabaseSource
             {
                 databases[i] = Database.LoadedInstance;
             }
@@ -82,7 +87,7 @@ public sealed partial class ManageDatabasePage : Page
         if (!await new ConfirmDeleteDatabaseDialog().ShowAsync(db))
             return;
 
-        if (Database.GetAllDatabasePaths().Length == 1)
+        if (Database.GetAllUnloadedDatabases().Length == 1)
         {
             InfoMessages.CantDeleteDatabase();
             return;
@@ -94,8 +99,14 @@ public sealed partial class ManageDatabasePage : Page
             return;
         }
 
-        File.Delete(db.Path);
-        Database.RemoveDatabasePath(db.Path);
+        if(db.DatabaseSource is not NativeDatabaseSource nds)
+        {
+            InfoMessages.CantDeleteRemoteDatabase();
+            return;
+        }
+
+        File.Delete(nds.Path);
+        Database.RemoveDatabasePath(nds.Path);
         databases.Remove(db);
     }
     
@@ -158,8 +169,8 @@ public sealed partial class ManageDatabasePage : Page
         DatabaseItem db = GetDatabaseItem(sender);
         if (db == null)
             return;
-
-        ClipboardHelper.Copy(db.Path);
+        if (db.DatabaseSource is NativeDatabaseSource nds)
+            ClipboardHelper.Copy(nds.Path);
     }
 
     private async void CreateDatabase_Click(object sender, RoutedEventArgs e)
@@ -189,7 +200,7 @@ public sealed partial class ManageDatabasePage : Page
 
         try
         {
-            File.Copy(rightClicked.Path, file.path);
+            MainDatabaseLoader.Save(new NativeDatabaseSource(file.path), rightClicked.MasterPassword, rightClicked.SecondFactor, rightClicked.Settings, rightClicked.Items);
         }
         catch(Exception ex)
         {

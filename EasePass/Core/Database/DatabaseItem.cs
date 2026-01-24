@@ -3,6 +3,7 @@ using EasePass.Dialogs;
 using EasePass.Helper.Database;
 using EasePass.Models;
 using EasePass.Settings;
+using EasePassExtensibility;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -21,9 +22,9 @@ namespace EasePass.Core.Database
         /// </summary>
         public string Name => MakeDatabaseName();
         /// <summary>
-        /// The Path to the Database
+        /// The database source
         /// </summary>
-        public string Path { get; set; } = "";
+        public IDatabaseSource DatabaseSource { get; set; } = null;
         /// <summary>
         /// The Password of the Database
         /// </summary>
@@ -43,11 +44,7 @@ namespace EasePass.Core.Database
         /// <summary>
         /// The Last <see cref="DateTime"/> the Database was accessed by someone
         /// </summary>
-        public DateTime LastModified => File.GetLastWriteTime(Path);
-        /// <summary>
-        /// The Name of the Database ?
-        /// </summary>
-        public string LastModifiedStr => Name; //LastModified.ToString("D");
+        public DateTime LastModified => DatabaseSource.GetLastTimeModified();
         /// <summary>
         /// Specifies if the Database is a temporary Database
         /// </summary>
@@ -59,14 +56,15 @@ namespace EasePass.Core.Database
         #endregion
 
         #region Constructor
-        public DatabaseItem(string path)
+        public DatabaseItem(IDatabaseSource databaseSource)
         {
-            Path = path;
+            DatabaseSource = databaseSource;
             Items = new ObservableCollection<PasswordManagerItem>();
             Items.CollectionChanged += Items_CollectionChanged;
 
             CallPropertyChanged("Name");
-            CallPropertyChanged("Path");
+            CallPropertyChanged("LastModified");
+            CallPropertyChanged("DatabaseSource");
             CallPropertyChanged("MasterPassword");
             CallPropertyChanged("Items");
         }
@@ -118,10 +116,10 @@ namespace EasePass.Core.Database
             if (enteredPassword == null)
                 return (PasswordValidationResult.WrongPassword, null);
 
-            if (!File.Exists(Path))
-                return (PasswordValidationResult.DatabaseNotFound, null);
+            if(DatabaseSource.GetAvailability() == IDatabaseSource.DatabaseAvailability.LockedByOtherUser)
+                return (PasswordValidationResult.LockedByOtherUser, null);
 
-            var result = await DatabaseFormatHelper.Load(Path, enteredPassword, showWrongPasswordError);
+            var result = await DatabaseFormatHelper.Load(DatabaseSource, enteredPassword, showWrongPasswordError);
             return result;
         }
         #endregion
@@ -170,6 +168,7 @@ namespace EasePass.Core.Database
                 Items = null;
             }
             MasterPassword = null;
+            DatabaseSource.Logout();
             CallPropertyChanged("Items");
             CallPropertyChanged("MasterPassword");
         }
@@ -212,6 +211,8 @@ namespace EasePass.Core.Database
             Settings = database.Settings;
             SecondFactor = database.SecondFactor;
             database.SecondFactor = null;
+
+            DatabaseSource.Login();
 
             ClearOldClicksCache();
 
@@ -265,13 +266,14 @@ namespace EasePass.Core.Database
             var result = await CheckPasswordCorrect(password, showWrongPasswordError);
             if (result.result == PasswordValidationResult.DatabaseNotFound)
             {
-                InfoMessages.DatabaseFileNotFoundAt(Path);
+                InfoMessages.DatabaseFileNotFoundAt(DatabaseSource.SourceDescription);
                 return false;
             }
 
-            return result.result != PasswordValidationResult.WrongPassword
+            return result.result != PasswordValidationResult.WrongPassword // Maybe just use result.result == PasswordValidationResult.Success here ?
                 && result.result != PasswordValidationResult.WrongFormat
                 && result.result != PasswordValidationResult.WrongPassword
+                && result.result != PasswordValidationResult.LockedByOtherUser
                 && LoadInternal(password, result.database);
         }
         #endregion
@@ -281,7 +283,7 @@ namespace EasePass.Core.Database
         {
             if (PropertyChanged != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs("Path"));
+                PropertyChanged(this, new PropertyChangedEventArgs("DatabaseSource"));
                 PropertyChanged(this, new PropertyChangedEventArgs("Name"));
                 PropertyChanged(this, new PropertyChangedEventArgs("MasterPassword"));
             }
@@ -295,7 +297,7 @@ namespace EasePass.Core.Database
         /// <returns>Returns the new created Name for the Database</returns>
         private string MakeDatabaseName()
         {
-            string name = System.IO.Path.GetFileNameWithoutExtension(Path);
+            string name = DatabaseSource.DatabaseName;
             if (IsTemporaryDatabase)
             {
                 name += " (Temp)";
@@ -342,41 +344,38 @@ namespace EasePass.Core.Database
 
         #region Save
         /// <summary>
-        /// Saves the Database to the <paramref name="path"/>
+        /// Saves the Database to the <paramref name="source"/>
         /// </summary>
-        /// <param name="path">The Path of the Database. If the Path is equal to <see langword="null"/> the <see cref="Path"/> will be used</param>
+        /// <param name="source">The Source of the Database. If the Source is equal to <see langword="null"/> the <see cref="DatabaseSource"/> will be used</param>
         /// <returns>Returns <see langword="true"/> if the Database was saved successfully, otherwise <see langword="false"/> will be returned</returns>
-        public async Task<bool> SaveAsync(string path = null)
+        public async Task<bool> SaveAsync(IDatabaseSource source = null)
         {
-            return await deferredSaver.RequestSaveAsync(() => ForceSave(path));
+            return await deferredSaver.RequestSaveAsync(() => ForceSave(source));
         }
 
         /// <summary>
         /// Immediately executes a save and cancels any pending scheduled saves.
         /// Useful for App Shutdown and some more cases
         /// </summary>
-        public async Task<bool> ForceSaveAsync(string path = null)
+        public async Task<bool> ForceSaveAsync(IDatabaseSource source = null)
         {
             deferredSaver.CancelPending();
-            return await Task.Run(() => ForceSave(path));
+            return await Task.Run(() => ForceSave(source));
         }
 
         /// <summary>
         /// Synchronous version of ForceSaveAsync. 
         /// </summary>
-        public bool ForceSave(string path = null)
+        public bool ForceSave(IDatabaseSource source = null)
         {
             deferredSaver.CancelPending();
-            return SaveDatabase(path);
+            return SaveDatabase(source);
         }
 
-        private bool SaveDatabase(string path = null)
+        private bool SaveDatabase(IDatabaseSource source = null)
         {
-            path ??= Path;
-            if (string.IsNullOrWhiteSpace(path))
-                return false;
-
-            return DatabaseFormatHelper.Save(path, MasterPassword, SecondFactor, Settings, Items);
+            source ??= DatabaseSource;
+            return DatabaseFormatHelper.Save(source, MasterPassword, SecondFactor, Settings, Items);
         }
         #endregion
 

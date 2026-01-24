@@ -32,7 +32,7 @@ internal class ExportPasswordsHelper
         if (!res.success)
             return;
 
-        DatabaseItem export = new DatabaseItem(res.path);
+        DatabaseItem export = new DatabaseItem(new NativeDatabaseSource(res.path));
         export.MasterPassword = newPassword ?? db.MasterPassword;
         export.SecondFactor = db.SecondFactor;
         export.Settings = db.Settings;

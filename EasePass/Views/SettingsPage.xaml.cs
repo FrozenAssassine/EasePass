@@ -38,6 +38,7 @@ namespace EasePass.Views
     {
         PasswordsPage passwordsPage = null;
         ObservableCollection<PasswordImporterBase> passwordImporter = null;
+        ObservableCollection<DBProviderUIWrapper> dbProviders = null;
         bool blockEventsOnloadSettings = false;
 
         public SettingsPage()
@@ -89,6 +90,17 @@ namespace EasePass.Views
             if (passwordImporter.Count == 0)
             {
                 noPluginsInfo.Visibility = Visibility.Visible;
+            }
+
+            dbProviders = new ObservableCollection<DBProviderUIWrapper>();
+            foreach (var provider in ExtensionHelper.GetAllClassesWithInterface<IDatabaseProvider>())
+            {
+                dbProviders.Add(new DBProviderUIWrapper(provider));
+            }
+
+            if(dbProviders.Count == 0)
+            {
+                noProviderPluginsInfo.Visibility = Visibility.Visible;
             }
         }
 
@@ -234,6 +246,37 @@ namespace EasePass.Views
         private void clipboardClearTimeout_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             AppSettings.ClipboardClearTimeoutSec = (int)clipboardClearTimeout.Value;
+        }
+
+        private void JsonBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TextBox jsonBox = sender as TextBox;
+                var viewModelContainer = jsonBox.Tag as IDatabaseProvider;
+                string json = jsonBox.Text;
+                if (json.Length > 0)
+                    viewModelContainer.SetConfigurationJSON(json);
+            }
+            catch (Exception)
+            {
+                UIThreadInvoker.Invoke(() => InfoMessages.RemoteDBSettingsCouldNotBeSaved());
+            }
+        }
+
+        private void OpenExternalConfigEditor_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+                var provider = button.Tag as IDatabaseProvider;
+                if (provider.ExternalConfigEditingSupport)
+                    provider.OpenExternalConfigEditor();
+            }
+            catch (Exception)
+            {
+                UIThreadInvoker.Invoke(() => InfoMessages.OpenExternalRemoteConfigEditorFailed());
+            }
         }
     }
 }

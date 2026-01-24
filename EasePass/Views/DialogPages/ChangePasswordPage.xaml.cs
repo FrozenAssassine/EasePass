@@ -46,7 +46,7 @@ public sealed partial class ChangePasswordPage : Page
             return ChangePasswordPageResult.PWTooShort;
         }
 
-        DatabaseItem newDB = new DatabaseItem(Database.LoadedInstance.Path);
+        DatabaseItem newDB = new DatabaseItem(Database.LoadedInstance.DatabaseSource);
         SecureString enteredPW = changePW_currentPw.Password.ConvertToSecureString();
         if ((await newDB.CheckPasswordCorrect(enteredPW)).result != PasswordValidationResult.Success)
             return ChangePasswordPageResult.IncorrectPassword;
