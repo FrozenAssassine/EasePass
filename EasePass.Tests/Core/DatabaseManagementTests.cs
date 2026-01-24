@@ -11,22 +11,17 @@ namespace EasePass.Tests.Core
     [TestClass]
     public class DatabaseManagementTests
     {
-        private string _originalDatabasePaths;
-        private string _originalLoadedDatabaseName;
 
-        
         [TestInitialize]
         public void Setup()
-        {
-            _originalDatabasePaths = "%temp%\\EasePassTests\\testdb.epdb";
-            _originalLoadedDatabaseName = "testdb.epdb";
-
+        { 
+            //setup code if needed
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            //todo
+            //I clear databases directly in the finally branch
         }
 
         [TestMethod]

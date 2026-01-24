@@ -2,10 +2,8 @@ using EasePass.Core.Database;
 using EasePass.Extensions;
 using EasePass.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.VisualStudio.TestTools.UnitTesting.AppContainer;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EasePass.Tests.Core
@@ -39,37 +37,38 @@ namespace EasePass.Tests.Core
         [TestMethod]
         public async Task TestLoadAndSave()
         {
-             string dbPath = DatabaseTestHelper.GetTempDatabasePath();
-             var password = DatabaseTestHelper.ToSecureString("securePass");
+            string dbPath = DatabaseTestHelper.GetTempDatabasePath();
+            var password = DatabaseTestHelper.ToSecureString("securePass");
              
-             try
-             {
-                 // Create and Save
-                 DatabaseItem db = Database.CreateNewDatabase(dbPath, password);
-                 PasswordManagerItem item = new PasswordManagerItem() { DisplayName = "Google", Password = "123", Username = "user" };
-                 db.AddItem(item);
+            try
+            {
+                // Create and Save
+                Debug.WriteLine(dbPath);
+                DatabaseItem db = Database.CreateNewDatabase(dbPath, password);
+                PasswordManagerItem item = new PasswordManagerItem() { DisplayName = "Google", Password = "123", Username = "user" };
+                db.AddItem(item);
+                bool saved = await db.ForceSaveAsync();
+                db.Dispose();
+                Assert.IsTrue(saved, "Save returned false");
+
+                // Reload
+                DatabaseItem dbLoaded = new DatabaseItem(dbPath);
+                var loaded = await dbLoaded.Load(password, false);
                  
-                 bool saved = db.Save();
-                 Assert.IsTrue(saved, "Save returned false");
-                 
-                 // Reload
-                 DatabaseItem dbLoaded = new DatabaseItem(dbPath);
-                 var loaded = await dbLoaded.Load(password);
-                 
-                 Assert.IsTrue(loaded, "Load returned false");
-                 Assert.HasCount(1, dbLoaded.Items);
-                 Assert.AreEqual("Google", dbLoaded.Items[0].DisplayName);
-             }
-             finally
-             {
-                 if(File.Exists(dbPath)) File.Delete(dbPath);
-             }
+                Assert.IsTrue(loaded, "Load returned false");
+                Assert.HasCount(1, dbLoaded.Items);
+                Assert.AreEqual("Google", dbLoaded.Items[0].DisplayName);
+            }
+            finally
+            {
+                if(File.Exists(dbPath)) File.Delete(dbPath);
+            }
         }
         
         [TestMethod]
         public void TestPasswordAlreadyExists()
         {
-             DatabaseItem db = new DatabaseItem("test.db");
+             DatabaseItem db = new DatabaseItem("test.epdb");
              db.AddItem(new PasswordManagerItem() { Password = "abc" });
              Assert.IsTrue(db.PasswordAlreadyExists("abc"));
              Assert.IsFalse(db.PasswordAlreadyExists("def"));
@@ -84,29 +83,22 @@ namespace EasePass.Tests.Core
 
             try
             {
-                // Create and save initial DB
                 Debug.WriteLine(dbPath);
                 DatabaseItem db = Database.CreateNewDatabase(dbPath, oldPass);
                 db.AddItem(new PasswordManagerItem() { DisplayName = "Test" });
-                db.Save();
+                await db.ForceSaveAsync();
 
-                // Emulate app flow: validate & load via a fresh DatabaseItem (this may re-save/normalize the file)
                 DatabaseItem checker = new DatabaseItem(dbPath);
                 var check = await checker.CheckPasswordCorrect(oldPass);
-                Debug.WriteLine(check);
                 Assert.AreEqual(PasswordValidationResult.Success, check.result, "Initial password should be valid");
 
-                // Load into the checker (this will set Database.LoadedInstance = checker)
                 bool loaded = await checker.Load(oldPass);
                 Assert.IsTrue(loaded, "Should load with the initial password");
 
-                // Change password on the loaded instance and save (same as app does)
                 Database.LoadedInstance.MasterPassword = newPass;
-                Database.LoadedInstance.Save();
+                await Database.LoadedInstance.ForceSaveAsync();
 
-                // Dispose loaded instance like app would
                 Database.LoadedInstance.Dispose();
-                Database.LoadedInstance = null;
 
                 // Reload with new password -> must succeed
                 DatabaseItem dbNew = new DatabaseItem(dbPath);
@@ -135,8 +127,6 @@ namespace EasePass.Tests.Core
              
              Assert.IsEmpty(db.Items);
              Assert.IsNull(db.MasterPassword);
-             
-             Database.LoadedInstance = null;
         }
 
         [TestMethod]

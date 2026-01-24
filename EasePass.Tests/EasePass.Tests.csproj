@@ -3,16 +3,16 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <RootNamespace>EasePass.Tests</RootNamespace>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
+	<UseWinUI>true</UseWinUI>
     <Platforms>x86;x64;ARM64</Platforms>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-    <PublishProfile>win-$(Platform).pubxml</PublishProfile>
-    <UseWinUI>true</UseWinUI>
-    <WinUIDSKReferences>false</WinUIDSKReferences>
-    <EnableMsixTooling>false</EnableMsixTooling>
-    <Nullable>enable</Nullable>
-	<GeneratePriFile>false</GeneratePriFile>
+	<EnableMsixTooling>false</EnableMsixTooling>
+	<ApplicationManifest>app.manifest</ApplicationManifest>
+	<Nullable>enable</Nullable>
+    <GeneratePriFile>false</GeneratePriFile>
+    <AppxGeneratePrisForPortableLibrariesEnabled>false</AppxGeneratePrisForPortableLibrariesEnabled>
   </PropertyGroup>
 
   <ItemGroup>
@@ -54,14 +54,15 @@
     <ProjectReference Include="..\EasePass\EasePass.csproj" />
   </ItemGroup>
 
-  <!-- 
-    Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution 
-    Explorer "Package and Publish" context menu entry to be enabled for this project even if 
-    the Windows App SDK Nuget package has not yet been restored.
-  -->
-  <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
-    <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
-  </PropertyGroup>
+	<!--  Allows the Single-project MSIX Packaging Tools extension to be activated for this project even if the Windows App SDK Nuget package has not yet been restored.  -->
+	<ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+		<ProjectCapability Include="Msix" />
+	</ItemGroup>
+	
+	<!--  Allows the Solution Explorer "Package and Publish" context menu entry to be enabled for this project even if the Windows App SDK Nuget package has not yet been restored.  -->
+	<PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+		<HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
+	</PropertyGroup>
 
   <!-- Publish Properties -->
   <PropertyGroup>
