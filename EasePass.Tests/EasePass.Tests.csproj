@@ -13,6 +13,7 @@
 	<Nullable>enable</Nullable>
     <GeneratePriFile>false</GeneratePriFile>
     <AppxGeneratePrisForPortableLibrariesEnabled>false</AppxGeneratePrisForPortableLibrariesEnabled>
+	<ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
   </PropertyGroup>
 
   <ItemGroup>
