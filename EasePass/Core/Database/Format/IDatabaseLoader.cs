@@ -1,6 +1,7 @@
 ﻿using EasePass.Core.Database.Format.epdb;
 using EasePass.Core.Database.Format.Serialization;
 using EasePass.Dialogs;
+using EasePass.Helper.Database;
 using EasePass.Helper.Security;
 using EasePass.Models;
 using EasePassExtensibility;
@@ -23,10 +24,9 @@ namespace EasePass.Core.Database.Format
         /// </summary>
         public static abstract double Version { get; }
         /// <summary>
-        /// Sorry for implementing the version twice, but I need it as integer and also the double version in epeb and epdb v1 is the same !?
-        /// I don't know if this is a feature, but I better don't touch it...
+        /// Stores the version Tag which determines the way the database gets encrypted
         /// </summary>
-        public static abstract int VersionInt { get; }
+        public static abstract DatabaseVersionTag DBVersionTag { get; }
         #endregion
 
         #region DecryptData

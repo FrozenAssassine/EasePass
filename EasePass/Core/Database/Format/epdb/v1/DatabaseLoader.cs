@@ -1,4 +1,5 @@
 ﻿using EasePass.Core.Database.Format.Serialization;
+using EasePass.Helper.Database;
 using EasePass.Models;
 using EasePassExtensibility;
 using System;
@@ -13,7 +14,7 @@ namespace EasePass.Core.Database.Format.epdb.v1
     {
         #region Property
         public static double Version => 1.0;
-        public static int VersionInt => 2;
+        public static DatabaseVersionTag DBVersionTag => DatabaseVersionTag.EpdbV1DbVersion;
         #endregion
 
         #region Load

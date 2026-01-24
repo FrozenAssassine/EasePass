@@ -1,5 +1,6 @@
 ﻿using EasePass.Core.Database.Format.Serialization;
 using EasePass.Dialogs;
+using EasePass.Helper.Database;
 using EasePass.Helper.FileSystem;
 using EasePass.Helper.Security;
 using EasePass.Models;
@@ -17,7 +18,7 @@ namespace EasePass.Core.Database.Format.epeb
     internal class MainDatabaseLoader : IDatabaseLoader
     {
         public static double Version => 1.0;
-        public static int VersionInt => 1;
+        public static DatabaseVersionTag DBVersionTag => DatabaseVersionTag.EPEB;
 
         /// <param name="preloaded">IMPORTANT: Preload parameter is not supported on epeb Database loader!</param>
         public static async Task<DatabaseValidationResult> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError, byte[] preloaded = null)

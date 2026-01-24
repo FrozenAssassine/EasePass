@@ -20,7 +20,7 @@ namespace EasePass.Core.Database.Format.epdb
     {
         #region Properties
         public static double Version => 1.4;
-        public static int VersionInt => 3;
+        public static DatabaseVersionTag DBVersionTag => DatabaseVersionTag.EpdbV2DbVersion;
 
         /// <summary>
         /// The Salt, which will be used for the Argon Hash algorithm
@@ -149,7 +149,7 @@ namespace EasePass.Core.Database.Format.epdb
             pass = HashHelper.HashPasswordWithArgon2id(password, salt);
             data = EncryptDecryptHelper.EncryptStringAES(json, pass);
 
-            return source.SaveDatabaseFileBytes(DatabaseVersionTagHelper.AddVersionTag(data, VersionInt));
+            return source.SaveDatabaseFileBytes(DatabaseVersionTagHelper.AddVersionTag(data, (int)DBVersionTag));
         }
         #endregion
     }
