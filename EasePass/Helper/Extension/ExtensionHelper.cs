@@ -18,6 +18,7 @@ using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Helper.FileSystem;
 using EasePass.Models;
+using EasePass.Settings;
 using EasePassExtensibility;
 using System;
 using System.Collections.Generic;
@@ -37,61 +38,53 @@ public static class ExtensionHelper
     {
         return Task.Run(new Action(async () =>
         {
-            if (Directory.Exists(ApplicationData.Current.LocalFolder.Path + "\\extensions\\"))
+            if (!Directory.Exists(ApplicationData.Current.LocalFolder.Path + "\\extensions\\"))
+                return;
+
+            // Delete extensions that are marked for deletion
+            if (File.Exists(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat"))
             {
-                if (File.Exists(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat"))
+                foreach (string extensionID in File.ReadLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat"))
                 {
-                    foreach (string extensionID in File.ReadLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat"))
+                    if (File.Exists(ApplicationData.Current.LocalFolder.Path + "\\extensions\\" + extensionID + ".dll"))
                     {
-                        if (File.Exists(ApplicationData.Current.LocalFolder.Path + "\\extensions\\" + extensionID + ".dll"))
-                        {
-                            await (await (await ApplicationData.Current.LocalFolder.GetFolderAsync("extensions")).GetFileAsync(extensionID + ".dll")).DeleteAsync();
-                        }
-                    }
-                }
-
-                File.WriteAllText(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", "");
-                string[] extensionPaths = Directory.GetFiles(ApplicationData.Current.LocalFolder.Path + "\\extensions\\");
-                Extensions.Clear();
-                for (int i = 0; i < extensionPaths.Length; i++)
-                {
-                    if (FileHelper.HasExtension(extensionPaths[i], ".dll"))
-                    {
-                        var interfaces = ReflectionHelper.GetAllExternalInstances(extensionPaths[i]);
-                        if (interfaces.Length > 0)
-                            Extensions.Add(new Models.Extension(interfaces, Path.GetFileNameWithoutExtension(extensionPaths[i])));
-                    }
-                }
-
-                for (int i = 0; i < Extensions.Count; i++)
-                {
-                    int length = Extensions[i].Interfaces.Length;
-                    for (int j = 0; j < length; j++)
-                    {
-                        if(Extensions[i].Interfaces[j] is IDatabasePaths)
-                        {
-                            ((IDatabasePaths)Extensions[i].Interfaces[j]).Init(Core.Database.Database.GetAllDatabasePaths());
-                        }
-                    }
-                }
-
-                DatabaseSources.Clear();
-                foreach (IDatabaseProvider dbProv in GetAllClassesWithInterface<IDatabaseProvider>())
-                {
-                    try
-                    {
-                        dbProv.GetDatabases().ToList().ForEach((item) =>
-                        {
-                            DatabaseSources.Add(new DatabaseSourceErrorHandlingWrapper(item));
-                        });
-                    }
-                    catch
-                    {
-                        UIThreadInvoker.Invoke(()=>InfoMessages.DatabaseProviderLoadingFailed(dbProv.SourceName));
+                        await (await (await ApplicationData.Current.LocalFolder.GetFolderAsync("extensions")).GetFileAsync(extensionID + ".dll")).DeleteAsync();
+                        if (AppSettings.RemovePluginSettingsOnUninstall)
+                            PluginStorageHelper.Clean(extensionID);
                     }
                 }
             }
+            File.WriteAllText(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", "");
+
+            Extensions.Clear();
+            DatabaseSources.Clear();
+
+            // Load all extensions
+            string[] extensionPaths = Directory.GetFiles(ApplicationData.Current.LocalFolder.Path + "\\extensions\\");
+            for (int i = 0; i < extensionPaths.Length; i++)
+                if (FileHelper.HasExtension(extensionPaths[i], ".dll"))
+                    LoadExtension(extensionPaths[i]);
         }));
+    }
+
+    public static Models.Extension LoadExtension(string path)
+    {
+        string id = Path.GetFileNameWithoutExtension(path);
+        var interfaces = ReflectionHelper.GetAllExternalInstances(path);
+        if (interfaces.Length == 0)
+            return null;
+
+        // Do not compress into single loop, because injection must be done before initialization
+        foreach (var extInterface in interfaces)
+            Inject(extInterface, id);
+
+        foreach (var extInterface in interfaces)
+            Init(extInterface, id);
+
+        var extension = new Models.Extension(interfaces, id);
+        Extensions.Add(extension);
+
+        return extension;
     }
 
     public static T[] GetAllClassesWithInterface<T>() where T : IExtensionInterface
@@ -126,5 +119,68 @@ public static class ExtensionHelper
             }
         }
         return res;
+    }
+
+    private static void Inject(IExtensionInterface obj, string pluginID)
+    {
+        if (obj is IFilePickerInjectable filePicker)
+        {
+            try
+            {
+                filePicker.FilePicker = FilePicker;
+            }
+            catch { }
+        }
+        if (obj is IStorageInjectable storageInjectable)
+        {
+            try
+            {
+                PluginStorageHelper.Initialize(storageInjectable, pluginID);
+            }
+            catch { }
+        }
+    }
+
+    private static void Init(IExtensionInterface obj, string pluginID)
+    {
+        if (obj is IInitializer initializer)
+        {
+            try
+            {
+                initializer.Init();
+            }
+            catch { }
+        }
+        if (obj is IDatabasePaths p)
+        {
+            try
+            {
+                p.Init(Core.Database.Database.GetAllDatabasePaths());
+            }
+            catch { }
+        }
+        if(obj is IDatabaseProvider dbProv)
+        {
+            try
+            {
+                dbProv.GetDatabases().ToList().ForEach((item) =>
+                {
+                    DatabaseSources.Add(new DatabaseSourceErrorHandlingWrapper(item));
+                });
+            }
+            catch
+            {
+                UIThreadInvoker.Invoke(() => InfoMessages.DatabaseProviderLoadingFailed(dbProv.SourceName));
+            }
+        }
+    }
+
+    // For IFilePickerInjectable
+    private static string FilePicker(string[] extensions)
+    {
+        var res = Task.Run(async () => await FilePickerHelper.PickOpenFile(extensions)).Result;
+        if (res.success)
+            return res.path;
+        return "";
     }
 }

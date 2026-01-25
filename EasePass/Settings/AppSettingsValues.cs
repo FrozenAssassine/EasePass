@@ -18,6 +18,7 @@ namespace EasePass.Settings
 {
     internal static class AppSettingsValues
     {
+        // IMPORTANT: The prefix "pluginstorage_" is reserved for plugin settings and must not be used here!
         public const string language = "language";
         public const string pSalt = "pSalt";
         public const string windowWidth = "windowWidth";
@@ -36,5 +37,6 @@ namespace EasePass.Settings
         public const string databasePaths = "databasePaths";
         public const string loadedDatabaseName = "loadedDatabaseName";
         public const string clipboardClearTimeoutSec = "clipboardClearTimeoutSec";
+        public const string removePluginSettingsOnUninstall = "removePluginSettingsOnUninstall";
     }
 }

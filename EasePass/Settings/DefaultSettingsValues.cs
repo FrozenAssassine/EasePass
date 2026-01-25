@@ -51,5 +51,7 @@ namespace EasePass.Settings
         public const int windowTop = 0;
 
         public const int databaseDeferredSaveTime_Sec = 5;
+
+        public const bool removePluginSettingsOnUninstall = true;
     }
 }

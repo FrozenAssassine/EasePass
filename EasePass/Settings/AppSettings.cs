@@ -106,4 +106,10 @@ public class AppSettings
         get => SettingsManager.GetSettingsAsInt(AppSettingsValues.clipboardClearTimeoutSec, DefaultSettingsValues.ClipboardClearTimeoutSec);
         set => SettingsManager.SaveSettings(AppSettingsValues.clipboardClearTimeoutSec, value);
     }
+
+    public static bool RemovePluginSettingsOnUninstall
+    {
+        get => SettingsManager.GetSettingsAsBool(AppSettingsValues.removePluginSettingsOnUninstall, DefaultSettingsValues.removePluginSettingsOnUninstall);
+        set => SettingsManager.SaveSettings(AppSettingsValues.removePluginSettingsOnUninstall, value);
+    }
 }

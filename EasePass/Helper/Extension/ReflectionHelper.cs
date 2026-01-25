@@ -14,11 +14,13 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Helper.FileSystem;
 using EasePassExtensibility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace EasePass.Helper.Extension
 {
@@ -36,14 +38,6 @@ namespace EasePass.Helper.Extension
                     if (t.GetInterfaces().Contains(typeof(IExtensionInterface)))
                     {
                         IExtensionInterface obj = (IExtensionInterface)GetInstanceOf(t);
-                        if(obj is IInitializer initializer)
-                        {
-                            try
-                            {
-                                initializer.Init();
-                            }
-                            catch { }
-                        }
                         if (obj != null) res.Add(obj);
                     }
                 }

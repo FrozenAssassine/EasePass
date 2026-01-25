@@ -221,8 +221,8 @@ public sealed partial class ExtensionPage : Page
     }
     private async void InstallExtensionFromFile(string p)
     {
-        Extension extension = new Extension(ReflectionHelper.GetAllExternalInstances(p), System.IO.Path.GetFileNameWithoutExtension(p));
-        if (extension.Interfaces.Length == 0
+        Extension extension = ExtensionHelper.LoadExtension(p);
+        if (extension == null
             || (extension.Interfaces.Where((ext) => { return ext is IWarning; }).Count() > 0
             && !(await new SensitiveDataDialog().Dialog(extension))))
         {
@@ -231,7 +231,6 @@ public sealed partial class ExtensionPage : Page
                 InfoMessages.FileIsNotAnExtensions();
             return;
         }
-        ExtensionHelper.Extensions.Add(extension);
         extensionView.Items.Add(ExtensionHelper.Extensions[ExtensionHelper.Extensions.Count - 1]);
 
         FetchAndLoadExtensions();

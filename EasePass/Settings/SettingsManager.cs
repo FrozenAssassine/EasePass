@@ -73,6 +73,47 @@ namespace EasePass.Settings
 
             return val as string ?? defaultValue;
         }
+        public static bool DeleteSettings(string value)
+        {
+            bool result = false;
+            if (IsAppPackaged)
+                result = ApplicationData.Current.LocalSettings.Values.Remove(value);
+            else
+                result = localSettingsCache.Remove(value);
+            if (events.TryGetValue(value, out EventHandler<string> eventHandler) && eventHandler != null) eventHandler(null, value);
+            return result;
+        }
+        public static bool DeleteSettingsStartsWith(string prefix)
+        {
+            List<string> keysToDelete = new List<string>();
+            if (IsAppPackaged)
+            {
+                foreach (var key in ApplicationData.Current.LocalSettings.Values.Keys)
+                {
+                    if (key.StartsWith(prefix))
+                        keysToDelete.Add(key);
+                }
+                foreach (var key in keysToDelete)
+                {
+                    ApplicationData.Current.LocalSettings.Values.Remove(key);
+                    if (events.TryGetValue(key, out EventHandler<string> eventHandler) && eventHandler != null) eventHandler(null, key);
+                }
+            }
+            else
+            {
+                foreach (var key in localSettingsCache.Keys)
+                {
+                    if (key.StartsWith(prefix))
+                        keysToDelete.Add(key);
+                }
+                foreach (var key in keysToDelete)
+                {
+                    localSettingsCache.Remove(key);
+                    if (events.TryGetValue(key, out EventHandler<string> eventHandler) && eventHandler != null) eventHandler(null, key);
+                }
+            }
+            return keysToDelete.Count > 0;
+        }
         public static int GetSettingsAsInt(string value, int defaultValue = 0)
         {
             return ConvertHelper.ToInt(GetSettings(value, null), defaultValue);

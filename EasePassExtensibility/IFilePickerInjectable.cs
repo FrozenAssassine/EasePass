@@ -8,7 +8,7 @@ namespace EasePassExtensibility
 {
     public delegate string FilePicker(string[] extensions);
 
-    public interface IFilePickerInjectable
+    public interface IFilePickerInjectable : IExtensionInterface
     {
         FilePicker FilePicker { get; set; }
     }

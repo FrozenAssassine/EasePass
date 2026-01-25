@@ -34,8 +34,6 @@ namespace EasePass.Helper.Security
 
             var loadingTask = Task.Run(() =>
             {
-                if (importer is IFilePickerInjectable fpi)
-                    fpi.FilePicker = FilePicker;
                 var items = importer.ImportPasswords();
                 return items.Select(x => ToPMI(x)).ToArray();
             });
@@ -46,14 +44,6 @@ namespace EasePass.Helper.Security
             dlg.SetPagePasswords(passwordItems);
 
             return await showDialogTask;
-        }
-
-        private static string FilePicker(string[] extensions)
-        {
-            var res = Task.Run(async () => await FilePickerHelper.PickOpenFile(extensions)).Result;
-            if (res.success)
-                return res.path;
-            return "";
         }
 
         private static PasswordManagerItem ToPMI(PasswordItem item)

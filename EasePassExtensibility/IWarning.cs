@@ -16,6 +16,10 @@ copies or substantial portions of the Software.
 
 namespace EasePassExtensibility
 {
+    /// <summary>
+    /// This interface is not implemented by plugins.
+    /// Other extension interfaces can inherit from this interface to force a sensitive data retriaval warning during installation. (Dialogs/SensitiveDataDialog.cs)
+    /// </summary>
     public interface IWarning
     {
 
