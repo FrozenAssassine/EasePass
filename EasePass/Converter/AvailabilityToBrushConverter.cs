@@ -24,6 +24,8 @@ namespace EasePass.Converter
                     return new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 255, 0));
                 case EasePassExtensibility.IDatabaseSource.DatabaseAvailability.LockedByOtherUser:
                     return new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 0, 0));
+                case EasePassExtensibility.IDatabaseSource.DatabaseAvailability.Unavailable:
+                    return new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 0, 0));
             }
 
             return null;

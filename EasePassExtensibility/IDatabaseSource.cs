@@ -71,7 +71,8 @@ namespace EasePassExtensibility
         {
             Available,
             LockedByOtherUser,
-            UnknownState
+            UnknownState,
+            Unavailable
         }
     }
 }
