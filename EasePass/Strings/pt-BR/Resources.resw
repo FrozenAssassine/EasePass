@@ -687,31 +687,31 @@
   <data name="View_PasswordPage_CMDBar_About.ToolTipService.ToolTip" xml:space="preserve">
     <value>Abra a página Sobre</value>
   </data>
-  <data name="View_PasswordPage_CMDBar_Add2FA.Label" xml:space="preserve">
-    <value>Adicionar 2FA</value>
+  <data name="View_PasswordPage_CMDBar_Add2FA_Text.Text" xml:space="preserve">
+    <value>2FA</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Add2FA.ToolTipService.ToolTip" xml:space="preserve">
     <value>Enable Two-Factor Authentication</value>
   </data>
-  <data name="View_PasswordPage_CMDBar_Delete.Label" xml:space="preserve">
+  <data name="old.View_PasswordPage_CMDBar_Delete.Label" xml:space="preserve">
     <value>Apagar</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Delete.ToolTipService.ToolTip" xml:space="preserve">
     <value>Apagar registro</value>
   </data>
-  <data name="View_PasswordPage_CMDBar_Edit.Label" xml:space="preserve">
+  <data name="old.View_PasswordPage_CMDBar_Edit.Label" xml:space="preserve">
     <value>Editar</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Edit.ToolTipService.ToolTip" xml:space="preserve">
     <value>Edit registro</value>
   </data>
-  <data name="View_PasswordPage_CMDBar_GeneratePW.Label" xml:space="preserve">
+  <data name="View_PasswordPage_CMDBar_GeneratePW_Text.Text" xml:space="preserve">
     <value>Gerador de senhas</value>
   </data>
   <data name="View_PasswordPage_CMDBar_GeneratePW.ToolTipService.ToolTip" xml:space="preserve">
     <value>Gerar senha</value>
   </data>
-  <data name="View_PasswordPage_CMDBar_New.Label" xml:space="preserve">
+  <data name="old.View_PasswordPage_CMDBar_New.Label" xml:space="preserve">
     <value>Novo</value>
   </data>
   <data name="View_PasswordPage_CMDBar_New.ToolTipService.ToolTip" xml:space="preserve">
@@ -777,22 +777,19 @@
   <data name="View_PasswordPage_SwitchAscendingDescending.Text" xml:space="preserve">
     <value>Alternar entre crescente/decrescente </value>
   </data>
-  <data name="View_PasswordPage_ViewEmail.Text" xml:space="preserve">
+  <data name="View_PasswordPage_ViewEmail.Header" xml:space="preserve">
     <value>E-mail</value>
   </data>
-  <data name="View_PasswordPage_ViewNotes.Text" xml:space="preserve">
+  <data name="View_PasswordPage_ViewNotes.Header" xml:space="preserve">
     <value>Observações</value>
   </data>
-  <data name="View_PasswordPage_ViewPassword.Text" xml:space="preserve">
+  <data name="View_PasswordPage_ViewPassword.Header" xml:space="preserve">
     <value>Senha</value>
   </data>
-  <data name="View_PasswordPage_ViewTOTP.Text" xml:space="preserve">
-    <value>TOTP</value>
-  </data>
-  <data name="View_PasswordPage_ViewUsername.Text" xml:space="preserve">
+  <data name="View_PasswordPage_ViewUsername.Header" xml:space="preserve">
     <value>Usuário</value>
   </data>
-  <data name="View_PasswordPage_ViewWebsite.Text" xml:space="preserve">
+  <data name="View_PasswordPage_ViewWebsite.Header" xml:space="preserve">
     <value>Site</value>
   </data>
   <data name="View_RegisterPage_ChoosePasswordInfo.Text" xml:space="preserve">
@@ -1069,7 +1066,7 @@
     <value>Bem-vindo ao Easy Pass!</value>
   </data>
   <data name="View_PasswordPage_OOBE_Info1.Text" xml:space="preserve">
-    <value>Adicione suas senhas</value>
+    <value>Use o botão + no canto superior esquerdo para criar sua primeira entrada!</value>
   </data>
   <data name="View_PasswordPage_OOBE_Info2.Text" xml:space="preserve">
     <value>ou importe um banco de dados existente acessando:</value>
@@ -1095,5 +1092,11 @@
   </data>
   <data name="View_ExtensionPage_OpenWebsite" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
+  </data>
+  <data name="View_PasswordPage_CMDBar_Logout.Label" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="View_PasswordPage_ViewTOTP.Text" xml:space="preserve">
+    <value>TOTP</value>
   </data>
 </root>
