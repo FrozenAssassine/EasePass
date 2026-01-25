@@ -27,88 +27,6 @@
             <controls:SettingsControl Header="Database" x:Uid="View_SettingsPage_HeadlineDatabase">
                 <Button Style="{ThemeResource AccentButtonStyle}" x:Uid="View_SettingsPage_Manage" Content="Manage" Width="100" Click="ManageDatabases_Click" />
             </controls:SettingsControl>
-            <controls:SettingsItemSeparator Header="Plugins" x:Uid="View_SettingsPage_HeadlinePlugins"/>
-            <controls:SettingsControl Header="Plugins" x:Uid="View_SettingsPage_HeadlinePlugins">
-                <Button Style="{ThemeResource AccentButtonStyle}" x:Uid="View_SettingsPage_Manage" Content="Manage" Width="100" Click="ExtensionManage_Click" />
-            </controls:SettingsControl>
-            <Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
-                <Expander.Header>
-                    <StackPanel Orientation="Horizontal" Height="70">
-                        <TextBlock x:Uid="View_SettingsPage_ImportPasswords" FontSize="20" Margin="10" VerticalAlignment="Center" Text="Import passwords" />
-                    </StackPanel>
-                </Expander.Header>
-                <Expander.Content>
-                    <Grid>
-                        <ListView MaxWidth="600" ItemsSource="{x:Bind passwordImporter}" HorizontalAlignment="Stretch">
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="models:PasswordImporterBase">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                            <Image Margin="20" Width="40" Height="40" Stretch="UniformToFill" Source="{x:Bind IconSource}" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                                            <TextBlock FontSize="20" Text="{x:Bind SourceName}" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" />
-                                        </StackPanel>
-                                        <Button x:Uid="View_SettingsPage_Import" Grid.Column="1" Content="Import" Margin="100,0,20,0" Tag="{x:Bind}" IsEnabled="{x:Bind PasswordsAvailable()}" Click="ImportPassword_Click" Width="100" VerticalAlignment="Center" HorizontalAlignment="Right" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                        <StackPanel Visibility="Collapsed" x:Name="noPluginsInfo" Orientation="Vertical">
-                            <TextBlock x:Uid="View_SettingsPage_NoPluginsInfo" Margin="5" Text="No plugins installed click below to download"/>
-                            <Button x:Uid="View_SettingsPage_DownloadPlugins" Click="ExtensionManage_Click" Content="Download Plugins" Margin="5"/>
-                        </StackPanel>
-                    </Grid>
-                </Expander.Content>
-            </Expander>
-            <Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
-                <Expander.Header>
-                    <StackPanel Orientation="Horizontal" Height="70">
-                        <TextBlock x:Uid="View_SettingsPage_RemoteDatabaseSettings" FontSize="20" Margin="10" VerticalAlignment="Center" Text="Remote Database Settings" />
-                    </StackPanel>
-                </Expander.Header>
-                <Expander.Content>
-                    <Grid>
-                        <ListView MaxWidth="600" ItemsSource="{x:Bind dbProviders}" HorizontalAlignment="Stretch" SelectionMode="None">
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="models:DBProviderUIWrapper">
-                                    <Expander Margin="0,3,0,0" HorizontalAlignment="Stretch">
-                                        <Expander.Header>
-                                            <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                                <Image Margin="20" Width="40" Height="40" Stretch="UniformToFill" Source="{x:Bind SourceIcon}" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                                                <TextBlock FontSize="20" Text="{x:Bind Provider.SourceName}" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" />
-                                            </StackPanel>
-                                        </Expander.Header>
-                                        <Expander.Content>
-                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                                                <TextBox
-                                                    AcceptsReturn="True" 
-                                                    TextWrapping="NoWrap"
-                                                    Header="JSON Config"
-                                                    PlaceholderText="{x:Bind Provider.GetSampleJsonConfig(), Mode=OneTime}"
-                                                    MinWidth="400"
-                                                    MinHeight="200"
-                                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                                    ScrollViewer.VerticalScrollMode="Enabled"
-                                                    LostFocus="JsonBox_LostFocus"
-                                                    Tag="{x:Bind Provider}"
-                                                    Text="{x:Bind Provider.GetConfigurationJSON(), Mode=OneTime}"/>
-                                                <Button x:Uid="View_SettingsPage_OpenExternalConfigEditor" Click="OpenExternalConfigEditor_Click" Content="Open External Config Editor" Margin="5" Visibility="{x:Bind Provider.ExternalConfigEditingSupport}" Tag="{x:Bind Provider}" />
-                                            </StackPanel>
-                                        </Expander.Content>
-                                    </Expander>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                        <StackPanel Visibility="Collapsed" x:Name="noProviderPluginsInfo" Orientation="Vertical">
-                            <TextBlock x:Uid="View_SettingsPage_NoPluginsInfo" Margin="5" Text="No plugins installed click below to download"/>
-                            <Button x:Uid="View_SettingsPage_DownloadPlugins" Click="ExtensionManage_Click" Content="Download Plugins" Margin="5"/>
-                        </StackPanel>
-                    </Grid>
-                </Expander.Content>
-            </Expander>
 
             <controls:SettingsItemSeparator Header="Security" x:Uid="View_SettingsPage_HeadlineSecurity"/>
             <controls:SettingsControl Header="Inactivity Logout" x:Uid="View_SettingsPage_InactivityLogout">
@@ -149,6 +67,93 @@
             <controls:SettingsControl Header="Password popularity counter" x:Uid="View_SettingsPage_PWPopularityCounter">
                 <Button x:Uid="View_SettingsPage_ResetPopularityCounter" Style="{ThemeResource AccentButtonStyle}" Content="Reset" Width="100" Click="ResetPopularity_Click" ToolTipService.ToolTip="Resets the counter that counts the clicks to sort by popularity." />
             </controls:SettingsControl>
+
+            <controls:SettingsItemSeparator Header="Plugins" x:Uid="View_SettingsPage_HeadlinePlugins"/>
+            <controls:SettingsControl Header="Plugins" x:Uid="View_SettingsPage_HeadlinePlugins">
+                <Button Style="{ThemeResource AccentButtonStyle}" x:Uid="View_SettingsPage_Manage" Content="Manage" Width="100" Click="ExtensionManage_Click" />
+            </controls:SettingsControl>
+            <Expander Margin="0,5,0,0" HorizontalAlignment="Stretch">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Height="70">
+                        <TextBlock x:Uid="View_SettingsPage_ImportPasswords" FontSize="20" Margin="10" VerticalAlignment="Center" Text="Import passwords" />
+                    </StackPanel>
+                </Expander.Header>
+                <Expander.Content>
+                    <Grid>
+                        <ListView MaxWidth="600" ItemsSource="{x:Bind passwordImporter}" HorizontalAlignment="Stretch">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:PasswordImporterBase">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                            <Image Margin="20" Width="40" Height="40" Stretch="UniformToFill" Source="{x:Bind IconSource}" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                            <TextBlock FontSize="20" Text="{x:Bind SourceName}" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" />
+                                        </StackPanel>
+                                        <Button x:Uid="View_SettingsPage_Import" Grid.Column="1" Content="Import" Margin="100,0,20,0" Tag="{x:Bind}" IsEnabled="{x:Bind PasswordsAvailable()}" Click="ImportPassword_Click" Width="100" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <StackPanel Visibility="Collapsed" x:Name="noPluginsInfo" Orientation="Vertical">
+                            <TextBlock x:Uid="View_SettingsPage_NoPluginsInfo" Margin="5" Text="No plugins installed click below to download"/>
+                            <Button x:Uid="View_SettingsPage_DownloadPlugins" Click="ExtensionManage_Click" Content="Download Plugins" Margin="5"/>
+                        </StackPanel>
+                    </Grid>
+                </Expander.Content>
+            </Expander>
+            <Expander Margin="0,5,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Height="70">
+                        <TextBlock x:Uid="View_SettingsPage_RemoteDatabaseSettings" FontSize="20" Margin="10" VerticalAlignment="Center" Text="Remote Database Settings" />
+                    </StackPanel>
+                </Expander.Header>
+                <Expander.Content>
+                    <Grid HorizontalAlignment="Stretch">
+                        <ListView MaxWidth="600" ItemsSource="{x:Bind dbProviders}" HorizontalAlignment="Stretch" SelectionMode="None">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:DBProviderUIWrapper">
+                                    <Expander Margin="0,3,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                        <Expander.Header>
+                                            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                                <Image Margin="20" Width="40" Height="40" Stretch="UniformToFill" Source="{x:Bind SourceIcon}" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                                <TextBlock FontSize="20" Text="{x:Bind Provider.SourceName}" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left" />
+                                            </StackPanel>
+                                        </Expander.Header>
+                                        <Expander.Content>
+                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                                <TextBox
+                                                    AcceptsReturn="True" 
+                                                    TextWrapping="NoWrap"
+                                                    Header="JSON Config"
+                                                    PlaceholderText="{x:Bind Provider.GetSampleJsonConfig(), Mode=OneTime}"
+                                                    MinWidth="400"
+                                                    MinHeight="200"
+                                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                                    ScrollViewer.VerticalScrollMode="Enabled"
+                                                    LostFocus="JsonBox_LostFocus"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Stretch"
+                                                    Tag="{x:Bind Provider}"
+                                                    Text="{x:Bind Provider.GetConfigurationJSON(), Mode=OneTime}"/>
+                                                <Button x:Uid="View_SettingsPage_OpenExternalConfigEditor" Click="OpenExternalConfigEditor_Click" Content="Open External Config Editor" Margin="5" Visibility="{x:Bind Provider.ExternalConfigEditingSupport}" Tag="{x:Bind Provider}" />
+                                            </StackPanel>
+                                        </Expander.Content>
+                                    </Expander>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <StackPanel Visibility="Collapsed" x:Name="noProviderPluginsInfo" Orientation="Vertical">
+                            <TextBlock x:Uid="View_SettingsPage_NoPluginsInfo" Margin="5" Text="No plugins installed click below to download"/>
+                            <Button x:Uid="View_SettingsPage_DownloadPlugins" Click="ExtensionManage_Click" Content="Download Plugins" Margin="5"/>
+                        </StackPanel>
+                    </Grid>
+                </Expander.Content>
+            </Expander>
+
+
         </StackPanel>
     </ScrollViewer>
 </Page>

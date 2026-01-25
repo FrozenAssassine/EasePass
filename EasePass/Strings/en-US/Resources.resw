@@ -1165,16 +1165,16 @@ If you Forget your Token you will have no Access to your Database!</value>
   <data name="InfoMessages_UnknownDatabaseSourceError.Text" xml:space="preserve">
     <value>The database source "{sourcename}" failed on internal processes.</value>
   </data>
-  <data name="View_SettingsPage_RemoteDatabaseSettings" xml:space="preserve">
+  <data name="View_SettingsPage_RemoteDatabaseSettings.Text" xml:space="preserve">
     <value>Remote Database Settings</value>
   </data>
   <data name="View_SettingsPage_OpenExternalConfigEditor" xml:space="preserve">
     <value>Open External Config Editor</value>
   </data>
-  <data name="InfoMessages_RemoteDBSettingsCouldNotBeSaved" xml:space="preserve">
+  <data name="InfoMessages_RemoteDBSettingsCouldNotBeSaved.Header" xml:space="preserve">
     <value>Failed to save remote database settings</value>
   </data>
-  <data name="InfoMessages_OpenExternalRemoteConfigEditorFailed" xml:space="preserve">
+  <data name="InfoMessages_OpenExternalRemoteConfigEditorFailed.Header" xml:space="preserve">
     <value>Opening External Remote Config Editor failed</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Logout.Label" xml:space="preserve">

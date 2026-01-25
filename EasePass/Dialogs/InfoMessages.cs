@@ -193,13 +193,11 @@ namespace EasePass.Dialogs
             InfoBarSeverity.Error, 10
             );
         public static void RemoteDBSettingsCouldNotBeSaved() => new InfoBar().Show(
-            "Remote Database Settings saving failed".Localized("InfoMessages_RemoteDBSettingsCouldNotBeSaved"),
-            "",
+            "InfoMessages_RemoteDBSettingsCouldNotBeSaved",
             InfoBarSeverity.Error, 10
             );
         public static void OpenExternalRemoteConfigEditorFailed() => new InfoBar().Show(
-            "Opening External Remote Config Editor failed".Localized("InfoMessages_OpenExternalRemoteConfigEditorFailed"),
-            "",
+            "InfoMessages_OpenExternalRemoteConfigEditorFailed",
             InfoBarSeverity.Error, 10
             );
 

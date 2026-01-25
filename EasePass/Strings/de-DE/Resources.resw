@@ -1156,7 +1156,7 @@ Wenn Sie Ihr Token vergessen, haben Sie keinen Zugriff mehr auf Ihre Datenbank!<
     <value>Die Datenbank kann nicht geöffnet werden, da sie von einem anderen Benutzer oder einem anderen Gerät verwendet wird.</value>
   </data>
   <data name="InfoMessages_DatabaseProviderLoadingFailed.Headline" xml:space="preserve">
-    <value>Fernzugriffsdatenbankladefehler</value>
+    <value>Fehler beim Laden der Fernzugriffsdatenbank</value>
   </data>
   <data name="InfoMessages_DatabaseProviderLoadingFailed.Text" xml:space="preserve">
     <value>Fernzugriff über "{providername}" ist fehlgeschlagen.</value>
@@ -1167,16 +1167,16 @@ Wenn Sie Ihr Token vergessen, haben Sie keinen Zugriff mehr auf Ihre Datenbank!<
   <data name="InfoMessages_UnknownDatabaseSourceError.Text" xml:space="preserve">
     <value>Laden der Quelle "{sourcename}" ist fehlgeschlagen.</value>
   </data>
-  <data name="View_SettingsPage_RemoteDatabaseSettings" xml:space="preserve">
-    <value>Fernzugriffsdatenbankeinstellungen</value>
+  <data name="View_SettingsPage_RemoteDatabaseSettings.Text" xml:space="preserve">
+    <value>Fernzugriffsdatenbank Einstellungen</value>
   </data>
   <data name="View_SettingsPage_OpenExternalConfigEditor" xml:space="preserve">
     <value>Externen Konfigurationseditor öffnen</value>
   </data>
-  <data name="InfoMessages_RemoteDBSettingsCouldNotBeSaved" xml:space="preserve">
+  <data name="InfoMessages_RemoteDBSettingsCouldNotBeSaved.Header" xml:space="preserve">
     <value>Speichern der Fernzugriffsdatenbankeinstellungen fehlgeschlagen</value>
   </data>
-  <data name="InfoMessages_OpenExternalRemoteConfigEditorFailed" xml:space="preserve">
+  <data name="InfoMessages_OpenExternalRemoteConfigEditorFailed.Header" xml:space="preserve">
     <value>Öffnen eines externen Konfigurationseditors fehlgeschlagen</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Logout.Label" xml:space="preserve">
