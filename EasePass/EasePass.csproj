@@ -88,6 +88,7 @@
     <None Remove="Controls\EditPasswordBox.xaml" />
     <None Remove="Controls\IconButton.xaml" />
     <None Remove="Controls\PasswordSafetyChart.xaml" />
+    <None Remove="Controls\SearchPasswordsBox.xaml" />
     <None Remove="Controls\TagRenderControl.xaml" />
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\AddItemPage.xaml" />
@@ -176,6 +177,11 @@
     <Content Update="Assets\AppIcon\appicon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\SearchPasswordsBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\TagRenderControl.xaml">

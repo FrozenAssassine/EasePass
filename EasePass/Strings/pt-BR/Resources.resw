@@ -745,7 +745,7 @@
     <value>Exportar</value>
   </data>
   <data name="View_PasswordPage_Searchbox.PlaceholderText" xml:space="preserve">
-    <value>Procurar</value>
+    <value>Procurar ('/' )</value>
   </data>
   <data name="View_PasswordPage_SortName.Text" xml:space="preserve">
     <value>Nome</value>

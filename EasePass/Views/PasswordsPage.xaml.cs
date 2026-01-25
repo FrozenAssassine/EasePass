@@ -29,14 +29,10 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.Storage;
 
 namespace EasePass.Views
 {
@@ -46,7 +42,7 @@ namespace EasePass.Views
         private PasswordManagerItem _SelectedItem = null;
         private PasswordManagerItem SelectedItem { get => _SelectedItem; set { _SelectedItem = value; RaisePropertyChanged("SelectedItem"); } }
         private TOTPTokenUpdater totpTokenUpdater;
-
+        private SearchPasswordsManager searchPwManager = new SearchPasswordsManager();
         public PasswordsPage()
         {
             this.InitializeComponent();
@@ -66,6 +62,7 @@ namespace EasePass.Views
         {
             App.m_window.ShowBackArrow = false;
             UpdateOOBEGrid();
+            searchPwManager.tagSearchManager.UniqueTagList?.Clear();
 
             if (e.NavigationMode == NavigationMode.New)
             {
@@ -167,7 +164,7 @@ namespace EasePass.Views
                 return;
 
             Database.LoadedInstance.AddItem(newItem);
-            Searchbox_TextChanged(searchbox, null);
+            Searchbox_TextChanged(searchbox.InternalSuggestBox, true, null);
             await Database.LoadedInstance.SaveAsync();
         }
         private void Update2FATimer()
@@ -269,6 +266,10 @@ namespace EasePass.Views
                 passwordEntryTitle.Visibility = passwordShowArea.Visibility = Visibility.Collapsed;
             }
 
+            //directly select the item for the user
+            if(passwordItemListView.SelectedItems.Count == 1)
+                passwordItemListView.SelectedItem = passwordItemListView.SelectedItems[0];
+
             if (passwordItemListView.SelectedItem == null)
             {
                 SelectedItem = null;
@@ -289,49 +290,12 @@ namespace EasePass.Views
                 await Database.LoadedInstance.SaveAsync();
         }
 
-        private void Searchbox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (searchbox.Text.Length == 0)
-            {
-                passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
-                searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
-                return;
-            }
-
-            //Tag search with /TAG
-            if (searchbox.Text.StartsWith("/"))
-            {
-                var searchText = searchbox.Text.Replace("/", "");
-                if (searchText.Length == 0)
-                    return;
-
-                var tagSearchRes = Database.LoadedInstance.FindItemsByTag(searchText);
-                passwordItemListView.ItemsSource = tagSearchRes;
-                searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
-
-                return;
-            }
-
-
-            var search_res = Database.LoadedInstance.FindItemsByName(searchbox.Text);
-            passwordItemListView.ItemsSource = search_res;
-            searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
-        }
-        private void Searchbox_PreviewKeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.Down)
-            {
-                passwordItemListView.Focus(FocusState.Programmatic);
-                passwordItemListView.SelectedIndex = -1;
-            }
-        }
-
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
             searchbox.Focus(FocusState.Programmatic);
 
-            Searchbox_TextChanged(searchbox, null);
+            Searchbox_TextChanged(searchbox.InternalSuggestBox, true, null);
         }
         private void Page_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
@@ -392,14 +356,14 @@ namespace EasePass.Views
             Reload();
             await Database.LoadedInstance.SaveAsync();
             SetVis(icon);
-            Searchbox_TextChanged(this, null);
+            Searchbox_TextChanged(searchbox.InternalSuggestBox, true, null);
         }
         private async void SwitchOrder_Click(object sender, RoutedEventArgs e)
         {
             Database.LoadedInstance.SetNewPasswords(Database.LoadedInstance.Items.ReverseSelf());
             Reload();
             await Database.LoadedInstance.SaveAsync();
-            Searchbox_TextChanged(this, null);
+            Searchbox_TextChanged(searchbox.InternalSuggestBox, true, null);
         }
 
         private void RightclickedItem_CopyUsername_Click(object sender, RoutedEventArgs e) => ClipboardHelper.Copy(((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem)?.Username);
@@ -473,6 +437,49 @@ namespace EasePass.Views
         private void LogOut_Click(object sender, RoutedEventArgs e)
         {
             LogoutHelper.Logout();
+        }
+
+        private void Searchbox_TextChanged(AutoSuggestBox sender, bool isUserTextChange, string text)
+        {
+            var searchRes = searchPwManager.SearchPasswords(searchbox, sender, Database.LoadedInstance, isUserTextChange, text);
+            if (searchRes == null)
+                return;
+
+            passwordItemListView.ItemsSource = searchRes;
+            if(searchRes.Count == 1)
+            {
+                passwordItemListView.SelectedItem = searchRes[0];
+            }
+        }
+
+        private void Searchbox_PreviewKeyDown(bool isTagSearch, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (searchbox.InternalSuggestBox.IsSuggestionListOpen && isTagSearch)
+                return;
+
+            if (e.Key == Windows.System.VirtualKey.Down)
+            {
+                e.Handled = true;
+                passwordItemListView.Focus(FocusState.Programmatic);
+                if(passwordItemListView.SelectedIndex == -1)
+                {
+                    passwordItemListView.SelectedIndex = 0;
+                }
+            }
+        }
+
+        private void Searchbox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+
+        }
+
+        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            //index tags for search box
+            if (Database.LoadedInstance == null)
+                return;
+
+            searchPwManager.tagSearchManager.UpdateTagList(Database.LoadedInstance);
         }
     }
 }
