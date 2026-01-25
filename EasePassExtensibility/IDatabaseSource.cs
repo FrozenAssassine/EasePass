@@ -28,7 +28,7 @@ namespace EasePassExtensibility
         /// </summary>
         string DatabaseName { get; }
         /// <summary>
-        /// Returns a description of the database source, e.g. the path of the file.
+        /// Returns a unique description of the database source, e.g. the path of the file or a URL.
         /// </summary>
         /// <returns>Database source description</returns>
         string SourceDescription { get; }
@@ -71,7 +71,8 @@ namespace EasePassExtensibility
         {
             Available,
             LockedByOtherUser,
-            UnknownState
+            UnknownState,
+            Unavailable
         }
     }
 }

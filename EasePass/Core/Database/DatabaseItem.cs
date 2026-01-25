@@ -22,6 +22,10 @@ namespace EasePass.Core.Database
         /// </summary>
         public string Name => MakeDatabaseName();
         /// <summary>
+        /// Gets the current availability status of the database source.
+        /// </summary>
+        public IDatabaseSource.DatabaseAvailability Availability => DatabaseSource.GetAvailability();
+        /// <summary>
         /// The database source
         /// </summary>
         public IDatabaseSource DatabaseSource { get; set; } = null;
@@ -65,6 +69,7 @@ namespace EasePass.Core.Database
             CallPropertyChanged("Name");
             CallPropertyChanged("LastModified");
             CallPropertyChanged("DatabaseSource");
+            CallPropertyChanged("Availability");
             CallPropertyChanged("MasterPassword");
             CallPropertyChanged("Items");
         }
@@ -118,8 +123,11 @@ namespace EasePass.Core.Database
             if (enteredPassword == null)
                 return new(PasswordValidationResult.WrongPassword, null);
 
-            if(DatabaseSource.GetAvailability() == IDatabaseSource.DatabaseAvailability.LockedByOtherUser)
+            var availability = DatabaseSource.GetAvailability();
+            if (availability == IDatabaseSource.DatabaseAvailability.LockedByOtherUser)
                 return new(PasswordValidationResult.LockedByOtherUser, null);
+            if (availability == IDatabaseSource.DatabaseAvailability.Unavailable) // Maybe own PasswordValidationResult and InfoMessage for this case ?
+                return new(PasswordValidationResult.DatabaseNotFound, null);
 
             var result = await DatabaseFormatHelper.Load(DatabaseSource, enteredPassword, showWrongPasswordError);
             return result;

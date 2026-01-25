@@ -5,8 +5,12 @@
     xmlns:local="using:EasePass.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:EasePass.Core.Database"
+    xmlns:Converter="using:EasePass.Converter"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
+    <Page.Resources>
+        <Converter:AvailabilityToBrushConverter x:Key="AvailabilityToBrushConverter"/>
+    </Page.Resources>
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
@@ -32,7 +36,7 @@
                 <ComboBox x:Uid="View_LoginPage_ChooseDB" SelectionChanged="databasebox_SelectionChanged" Grid.Column="0" x:Name="databasebox" Header="Choose database:" HorizontalAlignment="Stretch">
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="models:DatabaseItem">
-                            <TextBlock Text="{x:Bind Name}"/>
+                            <TextBlock Text="{x:Bind Name}" Grid.Column="1" Grid.Row="1" Foreground="{x:Bind Availability, Mode=OneWay, Converter={StaticResource AvailabilityToBrushConverter}}" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
