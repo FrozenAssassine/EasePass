@@ -33,6 +33,8 @@ namespace EasePass.Models
 
         public string SourceDescription => Path;
 
+        public bool isReadonly => false;
+
         public IDatabaseSource.DatabaseAvailability GetAvailability()
         {
             if (string.IsNullOrEmpty(Path))

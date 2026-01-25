@@ -33,6 +33,10 @@ namespace EasePassExtensibility
         /// <returns>Database source description</returns>
         string SourceDescription { get; }
         /// <summary>
+        /// Gets a value indicating whether the database is read-only.
+        /// </summary>
+        bool isReadonly { get; }
+        /// <summary>
         /// Availability of the database.
         /// </summary>
         /// <returns><see cref="DatabaseAvailability"/> of the database.</returns>
