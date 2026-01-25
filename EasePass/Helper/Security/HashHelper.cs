@@ -95,7 +95,6 @@ namespace EasePass.Helper.Security
                 }
                 hash = Argon2id.GetBytes(hashLength);
             }
-            GC.Collect(GC.MaxGeneration, GCCollectionMode.Aggressive);
             return hash;
         }
 
