@@ -687,32 +687,34 @@
   <data name="View_PasswordPage_CMDBar_About.ToolTipService.ToolTip" xml:space="preserve">
     <value>Öffne Über Seite</value>
   </data>
-  <data name="View_PasswordPage_CMDBar_Add2FA.Label" xml:space="preserve">
-    <value>2FA Hinzufügen</value>
+  <data name="View_PasswordPage_CMDBar_Add2FA_Text.Text" xml:space="preserve">
+    <value>2FA</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Add2FA.ToolTipService.ToolTip" xml:space="preserve">
     <value>Zwei-Faktor-Authentifizierung aktivieren</value>
   </data>
-  <data name="View_PasswordPage_CMDBar_Delete.Label" xml:space="preserve">
+  <data name="old.View_PasswordPage_CMDBar_Delete.Label" xml:space="preserve">
     <value>Entfernen</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Delete.ToolTipService.ToolTip" xml:space="preserve">
     <value>Eintrag entfernen</value>
   </data>
-  <data name="View_PasswordPage_CMDBar_Edit.Label" xml:space="preserve">
+  <data name="old.View_PasswordPage_CMDBar_Edit.Label" xml:space="preserve">
     <value>Bearbeiten</value>
+    <comment>Currently unused</comment>
   </data>
   <data name="View_PasswordPage_CMDBar_Edit.ToolTipService.ToolTip" xml:space="preserve">
     <value>Eintrag bearbeiten</value>
   </data>
-  <data name="View_PasswordPage_CMDBar_GeneratePW.Label" xml:space="preserve">
+  <data name="View_PasswordPage_CMDBar_GeneratePW_Text.Text" xml:space="preserve">
     <value>Generieren</value>
   </data>
   <data name="View_PasswordPage_CMDBar_GeneratePW.ToolTipService.ToolTip" xml:space="preserve">
     <value>Passwort generieren</value>
   </data>
-  <data name="View_PasswordPage_CMDBar_New.Label" xml:space="preserve">
+  <data name="old.View_PasswordPage_CMDBar_New.Label" xml:space="preserve">
     <value>Neu</value>
+    <comment>Currently unused </comment>
   </data>
   <data name="View_PasswordPage_CMDBar_New.ToolTipService.ToolTip" xml:space="preserve">
     <value>Neuen Eintrag</value>
@@ -777,22 +779,19 @@
   <data name="View_PasswordPage_SwitchAscendingDescending.Text" xml:space="preserve">
     <value>Umschalten aufsteigend/absteigend</value>
   </data>
-  <data name="View_PasswordPage_ViewEmail.Text" xml:space="preserve">
+  <data name="View_PasswordPage_ViewEmail.Header" xml:space="preserve">
     <value>E-Mail</value>
   </data>
-  <data name="View_PasswordPage_ViewNotes.Text" xml:space="preserve">
+  <data name="View_PasswordPage_ViewNotes.Header" xml:space="preserve">
     <value>Notizen</value>
   </data>
-  <data name="View_PasswordPage_ViewPassword.Text" xml:space="preserve">
+  <data name="View_PasswordPage_ViewPassword.Header" xml:space="preserve">
     <value>Passwort</value>
   </data>
-  <data name="View_PasswordPage_ViewTOTP.Text" xml:space="preserve">
-    <value>TOTP</value>
-  </data>
-  <data name="View_PasswordPage_ViewUsername.Text" xml:space="preserve">
+  <data name="View_PasswordPage_ViewUsername.Header" xml:space="preserve">
     <value>Benutzername</value>
   </data>
-  <data name="View_PasswordPage_ViewWebsite.Text" xml:space="preserve">
+  <data name="View_PasswordPage_ViewWebsite.Header" xml:space="preserve">
     <value>Webseite</value>
   </data>
   <data name="View_RegisterPage_ChoosePasswordInfo.Text" xml:space="preserve">
@@ -1069,7 +1068,7 @@
     <value>Willkommen bei Ease Pass</value>
   </data>
   <data name="View_PasswordPage_OOBE_Info1.Text" xml:space="preserve">
-    <value>Nutzen Sie die oberen Buttons um einen Eintrag anzulegen!</value>
+    <value>Verwende den + Button oben links, um deinen ersten Eintrag zu erstellen!</value>
   </data>
   <data name="View_PasswordPage_OOBE_Info2.Text" xml:space="preserve">
     <value>Sie können aber auch eine Datenbank importieren, gehen Sie dafür auf:</value>
@@ -1179,5 +1178,11 @@ Wenn Sie Ihr Token vergessen, haben Sie keinen Zugriff mehr auf Ihre Datenbank!<
   </data>
   <data name="InfoMessages_OpenExternalRemoteConfigEditorFailed" xml:space="preserve">
     <value>Öffnen eines externen Konfigurationseditors fehlgeschlagen</value>
+  </data>
+  <data name="View_PasswordPage_CMDBar_Logout.Label" xml:space="preserve">
+    <value>Abmelden</value>
+  </data>
+  <data name="View_PasswordPage_ViewTOTP.Text" xml:space="preserve">
+    <value>TOTP</value>
   </data>
 </root>

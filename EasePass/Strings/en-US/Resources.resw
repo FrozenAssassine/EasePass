@@ -687,31 +687,31 @@
   <data name="View_PasswordPage_CMDBar_About.ToolTipService.ToolTip" xml:space="preserve">
     <value>Open About page</value>
   </data>
-  <data name="View_PasswordPage_CMDBar_Add2FA.Label" xml:space="preserve">
-    <value>Add 2FA</value>
+  <data name="View_PasswordPage_CMDBar_Add2FA_Text.Text" xml:space="preserve">
+    <value>2FA</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Add2FA.ToolTipService.ToolTip" xml:space="preserve">
     <value>Enable Two-Factor Authentication</value>
   </data>
-  <data name="View_PasswordPage_CMDBar_Delete.Label" xml:space="preserve">
+  <data name="old.View_PasswordPage_CMDBar_Delete.Label" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Delete.ToolTipService.ToolTip" xml:space="preserve">
     <value>Delete Entry</value>
   </data>
-  <data name="View_PasswordPage_CMDBar_Edit.Label" xml:space="preserve">
+  <data name="old.View_PasswordPage_CMDBar_Edit.Label" xml:space="preserve">
     <value>Edit</value>
   </data>
   <data name="View_PasswordPage_CMDBar_Edit.ToolTipService.ToolTip" xml:space="preserve">
     <value>Edit Entry</value>
   </data>
-  <data name="View_PasswordPage_CMDBar_GeneratePW.Label" xml:space="preserve">
+  <data name="View_PasswordPage_CMDBar_GeneratePW_Text.Text" xml:space="preserve">
     <value>Generate</value>
   </data>
   <data name="View_PasswordPage_CMDBar_GeneratePW.ToolTipService.ToolTip" xml:space="preserve">
     <value>Generate Password</value>
   </data>
-  <data name="View_PasswordPage_CMDBar_New.Label" xml:space="preserve">
+  <data name="old.View_PasswordPage_CMDBar_New.Label" xml:space="preserve">
     <value>New</value>
   </data>
   <data name="View_PasswordPage_CMDBar_New.ToolTipService.ToolTip" xml:space="preserve">
@@ -777,22 +777,19 @@
   <data name="View_PasswordPage_SwitchAscendingDescending.Text" xml:space="preserve">
     <value>Switch ascending/descending</value>
   </data>
-  <data name="View_PasswordPage_ViewEmail.Text" xml:space="preserve">
+  <data name="View_PasswordPage_ViewEmail.Header" xml:space="preserve">
     <value>Email</value>
   </data>
-  <data name="View_PasswordPage_ViewNotes.Text" xml:space="preserve">
+  <data name="View_PasswordPage_ViewNotes.Header" xml:space="preserve">
     <value>Notes</value>
   </data>
-  <data name="View_PasswordPage_ViewPassword.Text" xml:space="preserve">
+  <data name="View_PasswordPage_ViewPassword.Header" xml:space="preserve">
     <value>Password</value>
   </data>
-  <data name="View_PasswordPage_ViewTOTP.Text" xml:space="preserve">
-    <value>TOTP</value>
-  </data>
-  <data name="View_PasswordPage_ViewUsername.Text" xml:space="preserve">
+  <data name="View_PasswordPage_ViewUsername.Header" xml:space="preserve">
     <value>Username</value>
   </data>
-  <data name="View_PasswordPage_ViewWebsite.Text" xml:space="preserve">
+  <data name="View_PasswordPage_ViewWebsite.Header" xml:space="preserve">
     <value>Website</value>
   </data>
   <data name="View_RegisterPage_ChoosePasswordInfo.Text" xml:space="preserve">
@@ -1069,7 +1066,7 @@
     <value>Welcome to Ease Pass.</value>
   </data>
   <data name="View_PasswordPage_OOBE_Info1.Text" xml:space="preserve">
-    <value>Use the buttons in the top to create a new entry!</value>
+    <value>Use the + Button on the top left create your first entry!</value>
   </data>
   <data name="View_PasswordPage_OOBE_Info2.Text" xml:space="preserve">
     <value>Additionally you can import an existing database by going into:</value>
@@ -1179,5 +1176,11 @@ If you Forget your Token you will have no Access to your Database!</value>
   </data>
   <data name="InfoMessages_OpenExternalRemoteConfigEditorFailed" xml:space="preserve">
     <value>Opening External Remote Config Editor failed</value>
+  </data>
+  <data name="View_PasswordPage_CMDBar_Logout.Label" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="View_PasswordPage_ViewTOTP.Text" xml:space="preserve">
+    <value>TOTP</value>
   </data>
 </root>

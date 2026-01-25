@@ -78,7 +78,6 @@ namespace EasePass.Views
             if (Database.LoadedInstance != null)
             {
                 passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
-
                 TemporaryDatabaseHelper.ShowTempDBButton(loadTempDBButton);
             }
 
@@ -109,7 +108,7 @@ namespace EasePass.Views
                 if (passwordItemListView.Items.Count >= 1)
                     passwordItemListView.SelectedIndex = index - 1 > 0 ? index - 1 : index + 1 < passwordItemListView.Items.Count ? index + 1 : 0;
                 else
-                    passwordShowArea.Visibility = Visibility.Collapsed;
+                    passwordEntryTitle.Visibility = passwordShowArea.Visibility = Visibility.Collapsed;
 
                 //update searchbox:
                 if (searchbox.Text.Length > 0)
@@ -136,7 +135,9 @@ namespace EasePass.Views
                 if (passwordItemListView.Items.Count >= 1)
                     passwordItemListView.SelectedIndex = 0;
                 else
-                    passwordShowArea.Visibility = Visibility.Collapsed;
+                {
+                    passwordEntryTitle.Visibility = passwordShowArea.Visibility = Visibility.Collapsed;  
+                }
 
                 //update searchbox:
                 if (searchbox.Text.Length > 0)
@@ -265,7 +266,7 @@ namespace EasePass.Views
             UpdateOOBEGrid();
             if (passwordItemListView.Items.Count == 0)
             {
-                passwordShowArea.Visibility = Visibility.Collapsed;
+                passwordEntryTitle.Visibility = passwordShowArea.Visibility = Visibility.Collapsed;
             }
 
             if (passwordItemListView.SelectedItem == null)
@@ -280,11 +281,6 @@ namespace EasePass.Views
                 SelectedItem.Clicks.Add(DateTime.Now.ToString("d").Replace("/", "."));
                 pwTB.ShowPassword = false;
                 Update2FATimer();
-
-                if(pwItem.Secret == null)
-                {
-
-                }
             }
         }
         private async void PasswordItemListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
