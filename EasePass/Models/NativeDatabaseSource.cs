@@ -35,7 +35,10 @@ namespace EasePass.Models
 
         public IDatabaseSource.DatabaseAvailability GetAvailability()
         {
-            // Files on local file systems are always available
+            if (string.IsNullOrEmpty(Path))
+                return IDatabaseSource.DatabaseAvailability.UnknownState;
+            if(!File.Exists(Path))
+                return IDatabaseSource.DatabaseAvailability.Unavailable;
             return IDatabaseSource.DatabaseAvailability.Available;
         }
 
