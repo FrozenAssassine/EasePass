@@ -63,6 +63,22 @@ namespace EasePass.Models
             }
         }
 
+        public bool isReadonly
+        {
+            get
+            {
+                try
+                {
+                    return source.isReadonly;
+                }
+                catch
+                {
+                    UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
+                    return true;
+                }
+            }
+        }
+
         public IDatabaseSource.DatabaseAvailability GetAvailability()
         {
             try
