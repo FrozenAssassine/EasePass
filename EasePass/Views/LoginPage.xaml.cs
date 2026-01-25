@@ -26,6 +26,7 @@ using EasePass.Settings;
 using EasePassExtensibility;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Security;
 using System.Threading.Tasks;

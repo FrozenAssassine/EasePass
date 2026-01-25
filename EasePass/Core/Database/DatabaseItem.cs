@@ -22,6 +22,10 @@ namespace EasePass.Core.Database
         /// </summary>
         public string Name => MakeDatabaseName();
         /// <summary>
+        /// Gets the current availability status of the database source.
+        /// </summary>
+        public IDatabaseSource.DatabaseAvailability Availability => DatabaseSource.GetAvailability();
+        /// <summary>
         /// The database source
         /// </summary>
         public IDatabaseSource DatabaseSource { get; set; } = null;
@@ -65,6 +69,7 @@ namespace EasePass.Core.Database
             CallPropertyChanged("Name");
             CallPropertyChanged("LastModified");
             CallPropertyChanged("DatabaseSource");
+            CallPropertyChanged("Availability");
             CallPropertyChanged("MasterPassword");
             CallPropertyChanged("Items");
         }
