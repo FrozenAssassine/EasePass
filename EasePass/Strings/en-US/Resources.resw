@@ -745,7 +745,7 @@
     <value>Export</value>
   </data>
   <data name="View_PasswordPage_Searchbox.PlaceholderText" xml:space="preserve">
-    <value>Search</value>
+    <value>Search ('/' for Tags)</value>
   </data>
   <data name="View_PasswordPage_SortName.Text" xml:space="preserve">
     <value>Name</value>
@@ -1182,5 +1182,8 @@ If you Forget your Token you will have no Access to your Database!</value>
   </data>
   <data name="View_PasswordPage_ViewTOTP.Text" xml:space="preserve">
     <value>TOTP</value>
+  </data>
+  <data name="Dialog_AddItem_TagsInfo.Text" xml:space="preserve">
+    <value>Tags (Separated by Space)</value>
   </data>
 </root>
