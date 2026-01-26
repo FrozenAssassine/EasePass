@@ -27,7 +27,7 @@ public enum DatabaseVersionTag
     
 }
 
-internal static class DatabaseVersionTagHelper
+public static class DatabaseVersionTagHelper
 {
     const string ident = "epdbversion";
 

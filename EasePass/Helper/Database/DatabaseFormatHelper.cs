@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace EasePass.Helper.Database
 {
-    internal static class DatabaseFormatHelper
+    public static class DatabaseFormatHelper
     {
         #region Load
 
