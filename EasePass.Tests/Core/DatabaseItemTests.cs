@@ -3,6 +3,7 @@ using EasePass.Extensions;
 using EasePass.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -207,6 +208,97 @@ namespace EasePass.Tests.Core
             DatabaseItem finalDb = new DatabaseItem(dbPath);
             await finalDb.Load(pw, false);
             Assert.HasCount(20, finalDb.Items);
+        }
+
+        [TestMethod]
+        public async Task DatabaseReadonlyTests()
+        {
+            string dbPath = DatabaseTestHelper.GetTempDatabasePath();
+            var pw = "mysuperlongpassword!".ConvertToSecureString();
+
+            DatabaseItem db = new DatabaseItem(dbPath, isReadOnly: false);
+            db.MasterPassword = pw;
+
+            //create a database with some data
+            for (int i = 0; i < 20; i++)
+            {
+                db.AddItem(new PasswordManagerItem()
+                {
+                    DisplayName = "Item1" + i * i,
+                    Email = "emailAddress@emailprovider.com",
+                    Password = "mycoolpassword" + i * i,
+                    Notes = "These are some notes\nLine2\nLine3",
+                    Username = "myusername" + i,
+                    Website = "https://mywebsite" + i + ".com",
+                    Tags = ["tag1", "tag2"],
+                });
+            }
+            Assert.HasCount(20, db.Items);
+            await db.ForceSaveAsync();
+            var saveTime = File.GetLastWriteTime(dbPath);
+
+            //now the readonly database
+            DatabaseItem readOnlyDB = new DatabaseItem(dbPath, isReadOnly: true);
+            await readOnlyDB.Load(pw, false);
+
+            Debug.WriteLine(readOnlyDB.DatabaseSource.isReadonly);
+            Debug.WriteLine(readOnlyDB.IsReadonlyDatabase);
+
+            //now try to edit. Should not work!
+            for (int i = 0; i < 10; i++)
+            {
+                readOnlyDB.DeleteItem(readOnlyDB.Items[i]);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                readOnlyDB.AddItem(new PasswordManagerItem()
+                {
+                    DisplayName = "Item1" + i * i,
+                    Email = "emailAddress@emailprovider.com",
+                    Username = "myusername" + i,
+                    Password = "mycoolpassword" + i * i,
+                });
+            }
+
+            readOnlyDB.AddRange(new PasswordManagerItem[] { new PasswordManagerItem()
+            {
+                DisplayName = "Item1",
+                Email = "emailAddress@emailprovider.com",
+                Username = "myusername",
+                Password = "mycoolpassword",
+            }});
+
+            readOnlyDB.AddRange(new ObservableCollection<PasswordManagerItem> { new PasswordManagerItem()
+            {
+                DisplayName = "Item1",
+                Email = "emailAddress@emailprovider.com",
+                Username = "myusername",
+                Password = "mycoolpassword",
+            }});
+
+            readOnlyDB.SetNewPasswords(new ObservableCollection<PasswordManagerItem> { new PasswordManagerItem()
+            {
+                DisplayName = "Item1",
+                Email = "emailAddress@emailprovider.com",
+                Username = "myusername",
+                Password = "mycoolpassword",
+            }});
+
+            readOnlyDB.SetNewPasswords(new PasswordManagerItem[] { new PasswordManagerItem()
+            {
+                DisplayName = "Item1",
+                Email = "emailAddress@emailprovider.com",
+                Username = "myusername",
+                Password = "mycoolpassword",
+            }});
+
+            await readOnlyDB.ForceSaveAsync();
+            var readonlyDBSaveTime = File.GetLastWriteTime(dbPath);
+
+            //no edits should have happened
+            Assert.AreEqual(saveTime.ToFileTime(), readonlyDBSaveTime.ToFileTime());
+            Assert.HasCount(20, readOnlyDB.Items);
         }
     }
 }

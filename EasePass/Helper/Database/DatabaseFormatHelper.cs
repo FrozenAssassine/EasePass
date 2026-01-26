@@ -22,6 +22,10 @@ namespace EasePass.Helper.Database
             IDatabaseSource source,
             SecureString password)
         {
+            //readonly database does not get saved!
+            if (source.isReadonly)
+                return file;
+
             // Validate using latest format.
             if (file.result == PasswordValidationResult.Success)
                 Core.Database.Format.epdb.MainDatabaseLoader.Save(source, password, default, file.database.Settings, file.database.Items);

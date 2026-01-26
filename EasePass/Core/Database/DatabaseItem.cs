@@ -53,6 +53,10 @@ namespace EasePass.Core.Database
         /// Specifies if the Database is a temporary Database
         /// </summary>
         public bool IsTemporaryDatabase { get; set; } = false;
+        /// <summary>
+        /// Specifies if the Database is opened as Readonly Database and can not be edited
+        /// </summary>
+        public bool IsReadonlyDatabase => DatabaseSource.isReadonly;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -73,13 +77,17 @@ namespace EasePass.Core.Database
             CallPropertyChanged("MasterPassword");
             CallPropertyChanged("Items");
         }
-        public DatabaseItem(string path) : this(new NativeDatabaseSource(path)) { }
+
+        public DatabaseItem(string path, bool isReadOnly = false) : this(new NativeDatabaseSource(path, isReadOnly)) {  }
 
         #endregion
 
-            #region AddItem
+        #region AddItem
         public void AddItem(PasswordManagerItem item)
         {
+            if (IsReadonlyDatabase)
+                return;
+
             Items.Add(item);
             CallPropertyChanged("Items");
         }
@@ -88,6 +96,9 @@ namespace EasePass.Core.Database
         #region AddRange
         public void AddRange(PasswordManagerItem[] items)
         {
+            if (IsReadonlyDatabase)
+                return;
+
             foreach (PasswordManagerItem item in items)
             {
                 Items.Add(item);
@@ -98,6 +109,9 @@ namespace EasePass.Core.Database
 
         public void AddRange(ObservableCollection<PasswordManagerItem> items)
         {
+            if (IsReadonlyDatabase)
+                return;
+
             foreach (PasswordManagerItem item in items)
             {
                 Items.Add(item);
@@ -140,6 +154,9 @@ namespace EasePass.Core.Database
             if (Items == null)
                 return;
 
+            if (IsReadonlyDatabase)
+                return;
+
             for (int i = 0; i < Items.Count; i++)
             {
                 for (int j = 0; j < Items[i].Clicks.Count; j++)
@@ -161,6 +178,9 @@ namespace EasePass.Core.Database
         #region DeleteItem
         public void DeleteItem(PasswordManagerItem item)
         {
+            if (IsReadonlyDatabase)
+                return;
+
             Items.Remove(item);
             CallPropertyChanged("Items");
         }
@@ -309,9 +329,9 @@ namespace EasePass.Core.Database
         {
             string name = DatabaseSource.DatabaseName;
             if (IsTemporaryDatabase)
-            {
                 name += " (Temp)";
-            }
+            if (IsReadonlyDatabase)
+                name += "(ReadOnly)";
             return name;
         }
         #endregion
@@ -375,6 +395,9 @@ namespace EasePass.Core.Database
 
         private async Task<bool> SaveDatabase(IDatabaseSource source = null)
         {
+            if (this.IsReadonlyDatabase)
+                return false;
+
             source ??= DatabaseSource;
             return await DatabaseFormatHelper.Save(source, MasterPassword, SecondFactor, Settings, Items);
         }
@@ -388,6 +411,9 @@ namespace EasePass.Core.Database
         public void SetNewPasswords(ObservableCollection<PasswordManagerItem> items)
         {
             if (items == null)
+                return;
+
+            if (IsReadonlyDatabase)
                 return;
 
             Items.Clear();
@@ -409,6 +435,9 @@ namespace EasePass.Core.Database
         public void SetNewPasswords(PasswordManagerItem[] items)
         {
             if (items == null)
+                return;
+
+            if (IsReadonlyDatabase)
                 return;
 
             Items.Clear();

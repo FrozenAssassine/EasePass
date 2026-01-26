@@ -25,16 +25,17 @@ namespace EasePass.Models
     {
         public string Path;
 
-        public NativeDatabaseSource(string databaseFilePath)
+        public NativeDatabaseSource(string databaseFilePath, bool isReadOnly = false)
         {
             Path = databaseFilePath;
+            this.isReadonly = isReadOnly;
         }
 
         public string DatabaseName => System.IO.Path.GetFileNameWithoutExtension(Path);
 
         public string SourceDescription => Path;
 
-        public bool IsReadOnly => false;
+        public bool IsReadOnly => { get; set; }
 
         public IDatabaseSource.DatabaseAvailability GetAvailability()
         {
