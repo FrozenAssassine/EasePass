@@ -380,7 +380,7 @@ namespace EasePass.Core.Database
         /// <returns>Returns <see langword="true"/> if the Database was saved successfully, otherwise <see langword="false"/> will be returned</returns>
         public async Task SaveAsync(IDatabaseSource source = null)
         {
-            await deferredSaver.RequestSaveAsync(() => ForceSaveAsync(source));
+            await deferredSaver.RequestSaveAsync(() => SaveDatabase(source));
         }
 
         /// <summary>
@@ -390,6 +390,15 @@ namespace EasePass.Core.Database
         public async Task<bool> ForceSaveAsync(IDatabaseSource source = null)
         {
             deferredSaver.CancelPending();
+            if (deferredSaver.SaveScheduled)
+            {
+                var task = deferredSaver.CurrentSaveTask;
+                if (task != null)
+                {
+                    await task;
+                    return true;
+                }
+            }
             return await SaveDatabase(source);
         }
 

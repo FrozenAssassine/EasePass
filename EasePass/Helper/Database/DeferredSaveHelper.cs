@@ -11,7 +11,18 @@ public class DeferredSaveHelper
     private readonly object _lock = new object();
 
     private Task _pendingSave;
-    public bool SaveScheduled { get; private set; } = false;
+    private bool _saveScheduled;
+    private bool _isSaving;
+    public bool SaveScheduled
+    {
+        get { lock (_lock) return _saveScheduled || _isSaving; }
+        private set { lock (_lock) _saveScheduled = value; }
+    }
+
+    public Task CurrentSaveTask
+    {
+        get { lock (_lock) return _pendingSave; }
+    }
 
     public DeferredSaveHelper(TimeSpan? delay = null)
     {
@@ -23,7 +34,7 @@ public class DeferredSaveHelper
         lock (_lock)
         {
             _cts?.Cancel();
-            SaveScheduled = false;
+            _saveScheduled = false;
         }
     }
 
@@ -52,8 +63,20 @@ public class DeferredSaveHelper
                     await Task.Delay(_delay, token);
                     if (!token.IsCancellationRequested)
                     {
-                        SaveScheduled = false;
-                        await saveFunc();
+                        lock (_lock)
+                        {
+                            if (token.IsCancellationRequested) return;
+                            _saveScheduled = false;
+                            _isSaving = true;
+                        }
+                        try
+                        {
+                            await saveFunc();
+                        }
+                        finally
+                        {
+                            lock (_lock) _isSaving = false;
+                        }
                     }
                 }
                 catch (TaskCanceledException) { }
