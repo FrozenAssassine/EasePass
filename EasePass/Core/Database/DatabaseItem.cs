@@ -56,7 +56,7 @@ namespace EasePass.Core.Database
         /// <summary>
         /// Specifies if the Database is opened as Readonly Database and can not be edited
         /// </summary>
-        public bool IsReadonlyDatabase => DatabaseSource.isReadonly;
+        public bool IsReadonlyDatabase => DatabaseSource.IsReadOnly;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

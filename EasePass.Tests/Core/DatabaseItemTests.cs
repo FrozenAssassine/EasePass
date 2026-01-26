@@ -45,7 +45,7 @@ namespace EasePass.Tests.Core
             try
             {
                 // Create and Save
-                DatabaseItem db = Database.CreateNewDatabase(dbPath, password);
+                DatabaseItem db = await Database.CreateNewDatabase(dbPath, password);
                 PasswordManagerItem item = new PasswordManagerItem() { DisplayName = "Google", Password = "123", Username = "user" };
                 db.AddItem(item);
                 bool saved = await db.ForceSaveAsync();
@@ -84,7 +84,7 @@ namespace EasePass.Tests.Core
 
             try
             {
-                DatabaseItem db = Database.CreateNewDatabase(dbPath, oldPass);
+                DatabaseItem db = await Database.CreateNewDatabase(dbPath, oldPass);
                 db.AddItem(new PasswordManagerItem() { DisplayName = "Test" });
                 await db.ForceSaveAsync();
 
@@ -164,7 +164,7 @@ namespace EasePass.Tests.Core
                     Website = "https://mywebsite" + i + ".com",
                     Tags = ["tag1", "tag2"],
                 });
-                db.ForceSave();
+                await db.ForceSaveAsync();
                 db.Dispose();
                 await Task.Delay(new Random().Next(10, 200));
             }
@@ -241,7 +241,7 @@ namespace EasePass.Tests.Core
             DatabaseItem readOnlyDB = new DatabaseItem(dbPath, isReadOnly: true);
             await readOnlyDB.Load(pw, false);
 
-            Debug.WriteLine(readOnlyDB.DatabaseSource.isReadonly);
+            Debug.WriteLine(readOnlyDB.DatabaseSource.IsReadOnly);
             Debug.WriteLine(readOnlyDB.IsReadonlyDatabase);
 
             //now try to edit. Should not work!

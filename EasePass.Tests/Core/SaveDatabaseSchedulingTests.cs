@@ -19,7 +19,7 @@ public class SaveDatabaseSchedulingTests
         var task = deferred.RequestSaveAsync(() =>
         {
             saved = true;
-            return true;
+            return Task.FromResult(true);
         });
 
         Assert.IsTrue(deferred.SaveScheduled);

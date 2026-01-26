@@ -5,6 +5,7 @@ using System.Linq;
 using EasePass.Core.Database;
 using EasePass.Settings;
 using EasePass.Models;
+using System.Threading.Tasks;
 
 namespace EasePass.Tests.Core
 {
@@ -63,14 +64,14 @@ namespace EasePass.Tests.Core
         }
         
         [TestMethod]
-        public void TestCreateNewDatabase()
+        public async Task TestCreateNewDatabase()
         {
             string dbPath = DatabaseTestHelper.GetTempDatabasePath();
             var password = DatabaseTestHelper.ToSecureString("password123");
             
             try
             {
-                var db = Database.CreateNewDatabase(dbPath, password);
+                var db = await Database.CreateNewDatabase(dbPath, password);
                 Assert.IsNotNull(db);
                 Assert.AreEqual(dbPath, (db.DatabaseSource as NativeDatabaseSource)?.Path);
                 Assert.IsTrue(File.Exists(dbPath));

@@ -71,7 +71,7 @@ namespace EasePass.Tests.Core.DatabaseMigrationTests
                 Assert.AreEqual(v1Item.Secret, v2Item.Secret);
             }
 
-            var versionTagRes = DatabaseVersionTagHelper.GetVersionTag(migratedDB.DatabaseSource.GetDatabaseFileBytes());
+            var versionTagRes = DatabaseVersionTagHelper.GetVersionTag(await migratedDB.DatabaseSource.GetDatabaseFileBytes());
             Assert.AreEqual(DatabaseVersionTag.EpdbV2DbVersion, versionTagRes.versionTag);
         }
     }

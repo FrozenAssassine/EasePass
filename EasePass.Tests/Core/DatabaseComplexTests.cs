@@ -23,7 +23,7 @@ namespace EasePass.Tests.Core
 
             try
             {
-                DatabaseItem db = Database.CreateNewDatabase(dbPath, password);
+                DatabaseItem db = await Database.CreateNewDatabase(dbPath, password);
                 PasswordManagerItem item = new PasswordManagerItem()
                 {
                     DisplayName = "Detailed service",
@@ -119,7 +119,7 @@ namespace EasePass.Tests.Core
 
             try
             {
-                DatabaseItem db = Database.CreateNewDatabase(dbPath, password);
+                DatabaseItem db = await Database.CreateNewDatabase(dbPath, password);
                 db.AddItem(new PasswordManagerItem() { DisplayName = "Item1" });
                 db.AddItem(new PasswordManagerItem() { DisplayName = "Item2" });
                 await db.ForceSaveAsync();
@@ -144,7 +144,7 @@ namespace EasePass.Tests.Core
 
             try
             {
-                DatabaseItem db = Database.CreateNewDatabase(dbPath, password);
+                DatabaseItem db = await Database.CreateNewDatabase(dbPath, password);
                 db.Items.Add(new PasswordManagerItem() { Email = "test1", DisplayName = "display name1" });
                 db.Items.Add(new PasswordManagerItem() { Email = "test2", DisplayName = "display name2" });
                 db.Items.Add(new PasswordManagerItem() { Email = "test3", DisplayName = "display name3" });
@@ -175,7 +175,7 @@ namespace EasePass.Tests.Core
 
             try
             {
-                DatabaseItem db = Database.CreateNewDatabase(dbPath, password);
+                DatabaseItem db = await Database.CreateNewDatabase(dbPath, password);
                 // Modify settings
                 db.Settings.UseSecondFactor = false; // Default is false, let's keep it false as we can't easily test interactions
                                                      // But we can check if other settings persist if added in future.

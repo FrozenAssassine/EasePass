@@ -23,7 +23,7 @@ namespace EasePass.Helper.Database
             SecureString password)
         {
             //readonly database does not get saved!
-            if (source.isReadonly)
+            if (source.IsReadOnly)
                 return file;
 
             // Validate using latest format.
