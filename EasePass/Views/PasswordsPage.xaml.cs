@@ -80,14 +80,26 @@ namespace EasePass.Views
                 passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
                 TemporaryDatabaseHelper.ShowTempDBButton(loadTempDBButton);
 
-                passwordItemListView.CanReorderItems = !LoadedDB.IsReadonlyDatabase;            
+                passwordItemListView.CanReorderItems = !LoadedDB.IsReadonlyDatabase;
+                LoadedDB.PropertyChanged += LoadedDB_PropertyChanged;
             }
 
             base.OnNavigatedTo(e);
         }
+
+        private void LoadedDB_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "IsReadonlyDatabase")
+            {
+                RaisePropertyChanged(nameof(LoadedDB));
+            }
+        }
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
+            LoadedDB.PropertyChanged -= LoadedDB_PropertyChanged;
+
             StoreGridSplitterValue();
         }
 
