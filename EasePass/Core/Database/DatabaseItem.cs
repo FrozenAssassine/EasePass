@@ -68,10 +68,14 @@ namespace EasePass.Core.Database
 
             DatabaseSource.OnPropertyChanged = () =>
             {
-                CallPropertyChanged("Name");
-                CallPropertyChanged("LastModified");
-                CallPropertyChanged("Availability");
-                CallPropertyChanged("IsReadonlyDatabase");
+                var dispatcher = MainWindow.CurrentInstance.DispatcherQueue;
+                dispatcher.TryEnqueue(() =>
+                {
+                    CallPropertyChanged("Name");
+                    CallPropertyChanged("LastModified");
+                    CallPropertyChanged("Availability");
+                    CallPropertyChanged("IsReadonlyDatabase");
+                });
             };
 
             CallPropertyChanged("Name");
