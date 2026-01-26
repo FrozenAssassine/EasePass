@@ -45,5 +45,10 @@ namespace EasePass.Views
         {
             safetyChart.EvaluatePassword(passwordTB.Password);
         }
+
+        private void passwordTB_TextChanged(string password)
+        {
+
+        }
     }
 }

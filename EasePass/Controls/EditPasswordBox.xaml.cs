@@ -20,11 +20,13 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace EasePass.Controls
 {
-    public sealed partial class EditPasswordBox : TextBox
+    public sealed partial class EditPasswordBox : UserControl
     {
         public EditPasswordBox()
         {
             this.InitializeComponent();
+            this.passwordBox.PasswordRevealMode = PasswordRevealMode.Peek;
+            this.passwordBox.IsPasswordRevealButtonEnabled = true;
         }
 
         public delegate void PasswordChangedEvent(string password);
@@ -32,13 +34,8 @@ namespace EasePass.Controls
 
         public string Password
         {
-            get => base.Text;
-            set => base.Text = value;
-        }
-
-        private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            PasswordChanged?.Invoke(Password);
+            get => passwordBox.Password;
+            set => passwordBox.Password = value;
         }
 
         private void CopyText() => ClipboardHelper.Copy(this.Password, true);
@@ -54,15 +51,28 @@ namespace EasePass.Controls
             if (KeyHelper.IsKeyPressed(Windows.System.VirtualKey.Control) && !KeyHelper.IsKeyPressed(Windows.System.VirtualKey.Menu))
             {
                 if (e.Key == Windows.System.VirtualKey.A)
-                    this.SelectAll();
+                    this.passwordBox.SelectAll();
                 else if (e.Key == Windows.System.VirtualKey.C)
                     CopyText();
                 else if (e.Key == Windows.System.VirtualKey.V)
-                    this.PasteFromClipboard();
+                    this.passwordBox.PasteFromClipboard();
 
                 e.Handled = true;
                 return;
             }
+        }
+
+        private void RevealButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            if (this.passwordBox.PasswordRevealMode == PasswordRevealMode.Visible)
+                this.passwordBox.PasswordRevealMode = PasswordRevealMode.Hidden;
+            else
+                this.passwordBox.PasswordRevealMode = PasswordRevealMode.Visible;
+        }
+
+        private void passwordBox_PasswordChanged(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            PasswordChanged?.Invoke(passwordBox.Password);
         }
     }
 }
