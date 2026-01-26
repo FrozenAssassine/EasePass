@@ -20,9 +20,9 @@ using Microsoft.Windows.ApplicationModel.Resources;
 using System.Collections.Generic;
 using Windows.System.UserProfile;
 
-namespace EasePass.Helper;
+namespace EasePass.Manager;
 
-public class LocalizationHelper
+public class LocalizationManager
 {
     private ResourceManager resourceManager = new();
     public ResourceContext resourceContext;
@@ -30,7 +30,7 @@ public class LocalizationHelper
 
     public List<LanguageItem> languages = new();
 
-    public LocalizationHelper()
+    public LocalizationManager()
     {
         resourceContext = resourceManager.CreateResourceContext();
         resourceMap = new ResourceManager().MainResourceMap;

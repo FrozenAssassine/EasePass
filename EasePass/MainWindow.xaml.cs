@@ -17,10 +17,10 @@ copies or substantial portions of the Software.
 using EasePass.Core;
 using EasePass.Core.Database;
 using EasePass.Dialogs;
-using EasePass.Helper;
 using EasePass.Helper.Extension;
 using EasePass.Helper.Logout;
 using EasePass.Helper.Security.Generator;
+using EasePass.Manager;
 using EasePass.Views;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
@@ -34,7 +34,7 @@ namespace EasePass;
 
 public sealed partial class MainWindow : Window
 {
-    public InactivityHelper inactivityHelper = new InactivityHelper();
+    public InactivityManager inactivityHelper = new InactivityManager();
     public static StackPanel InfoMessagesPanel;
     public Frame MainFrame => navigationFrame;
     public bool ShowBackArrow { get => navigateBackButton.Visibility == Visibility.Visible; set => navigateBackButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
@@ -43,7 +43,7 @@ public sealed partial class MainWindow : Window
 
     public static DispatcherQueue UIDispatcherQueue = null;
     public static XamlRoot XamlRoot = null;
-    public static LocalizationHelper localizationHelper = new LocalizationHelper();
+    public static LocalizationManager localizationHelper = new LocalizationManager();
 
     public readonly RestoreWindowManager restoreWindowManager;
     public readonly WindowStateManager windowStateManager;

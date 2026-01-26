@@ -18,14 +18,14 @@ using EasePass.Settings;
 using Microsoft.UI.Xaml;
 using System;
 
-namespace EasePass.Helper.Logout
+namespace EasePass.Manager
 {
-    public class InactivityHelper
+    public class InactivityManager
     {
         DispatcherTimer inactivityTimer = new DispatcherTimer();
         public bool PreventAutologout { get; set; } = false;
 
-        public InactivityHelper()
+        public InactivityManager()
         {
             inactivityTimer.Tick += InactivityTimer_Tick;
         }

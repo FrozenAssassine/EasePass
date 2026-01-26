@@ -23,6 +23,7 @@ using EasePass.Helper.Database;
 using EasePass.Helper.Logout;
 using EasePass.Helper.Security;
 using EasePass.Helper.Security.Generator;
+using EasePass.Manager;
 using EasePass.Models;
 using EasePass.Settings;
 using Microsoft.UI.Xaml;

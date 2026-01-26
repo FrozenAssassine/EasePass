@@ -14,6 +14,9 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Helper;
+using EasePass.Helper.Security;
+using EasePass.Helper.Security.Generator;
 using EasePass.Models;
 using EasePass.Views;
 using Microsoft.UI.Xaml;
@@ -21,7 +24,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
 
-namespace EasePass.Helper.Security.Generator
+namespace EasePass.Manager
 {
     internal class TOTPTokenUpdater
     {
