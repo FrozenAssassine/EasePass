@@ -41,7 +41,7 @@ namespace EasePass.Core.Database.Format.epdb
 
             byte[] pass = HashHelper.HashPasswordWithArgon2id(password, salt);
 
-            byte[] content = preloaded != null ? preloaded : source.GetDatabaseFileBytes();
+            byte[] content = preloaded != null ? preloaded : await source.GetDatabaseFileBytes();
             if (content == null || content.Length == 0)
                 return new(PasswordValidationResult.DatabaseNotFound, default);
 
@@ -119,7 +119,7 @@ namespace EasePass.Core.Database.Format.epdb
         #endregion
 
         #region Save
-        public static bool Save(IDatabaseSource source, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
+        public static async Task<bool> Save(IDatabaseSource source, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
         {
             byte[] data;
             string json = PasswordManagerItem.SerializeItems(items);
@@ -149,7 +149,7 @@ namespace EasePass.Core.Database.Format.epdb
             pass = HashHelper.HashPasswordWithArgon2id(password, salt);
             data = EncryptDecryptHelper.EncryptStringAES(json, pass);
 
-            return source.SaveDatabaseFileBytes(DatabaseVersionTagHelper.AddVersionTag(data, (int)DBVersionTag));
+            return await source.SaveDatabaseFileBytes(DatabaseVersionTagHelper.AddVersionTag(data, (int)DBVersionTag));
         }
         #endregion
     }

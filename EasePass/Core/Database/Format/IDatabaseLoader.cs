@@ -125,9 +125,9 @@ namespace EasePass.Core.Database.Format
         /// <param name="settings">The Settings of the Database</param>
         /// <param name="items">The PasswordItems of the Database</param>
         /// <returns>Returns the <see langword="true"/> if the Database was saved successfully</returns>
-        public static bool Save(IDatabaseSource source, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
+        public static async Task<bool> Save(IDatabaseSource source, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
         {
-            return MainDatabaseLoader.Save(source, password, secondFactor, settings, items);
+            return await MainDatabaseLoader.Save(source, password, secondFactor, settings, items);
         }
         #endregion
     }

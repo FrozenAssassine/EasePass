@@ -33,7 +33,7 @@ public class DeferredSaveHelper
         return Task.Run(saveFunc);
     }
 
-    public Task RequestSaveAsync(Func<bool> saveFunc)
+    public Task RequestSaveAsync(Func<Task<bool>> saveFunc)
     {
         lock (_lock)
         {
@@ -53,7 +53,7 @@ public class DeferredSaveHelper
                     if (!token.IsCancellationRequested)
                     {
                         SaveScheduled = false;
-                        saveFunc();
+                        await saveFunc();
                     }
                 }
                 catch (TaskCanceledException) { }

@@ -23,7 +23,7 @@ namespace EasePass.Core.Database.Format.epdb.v1
             if (source.GetAvailability() == IDatabaseSource.DatabaseAvailability.LockedByOtherUser)
                 return new(PasswordValidationResult.LockedByOtherUser, default);
 
-            byte[] content = preloaded != null ? preloaded : source.GetDatabaseFileBytes();
+            byte[] content = preloaded != null ? preloaded : await source.GetDatabaseFileBytes();
             if (content == null || content.Length == 0)
                 return new(PasswordValidationResult.DatabaseNotFound, default);
             if (!IDatabaseLoader.DecryptData(content, password, showWrongPasswordError, out string data))

@@ -17,6 +17,7 @@ copies or substantial portions of the Software.
 using EasePassExtensibility;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace EasePass.Models
 {
@@ -33,7 +34,7 @@ namespace EasePass.Models
 
         public string SourceDescription => Path;
 
-        public bool isReadonly => false;
+        public bool IsReadOnly => false;
 
         public IDatabaseSource.DatabaseAvailability GetAvailability()
         {
@@ -44,11 +45,11 @@ namespace EasePass.Models
             return IDatabaseSource.DatabaseAvailability.Available;
         }
 
-        public byte[] GetDatabaseFileBytes()
+        public Task<byte[]> GetDatabaseFileBytes()
         {
             if (!File.Exists(Path))
                 return null;
-            return File.ReadAllBytes(Path);
+            return Task.FromResult(File.ReadAllBytes(Path));
         }
 
         public DateTime GetLastTimeModified()
@@ -60,16 +61,16 @@ namespace EasePass.Models
 
         public void Logout() { }
 
-        public bool SaveDatabaseFileBytes(byte[] databaseFileBytes)
+        public Task<bool> SaveDatabaseFileBytes(byte[] databaseFileBytes)
         {
             try
             {
                 File.WriteAllBytes(Path, databaseFileBytes);
-                return true;
+                return Task.FromResult(true);
             }
             catch
             {
-                return false;
+                return Task.FromResult(false);
             }
         }
     }

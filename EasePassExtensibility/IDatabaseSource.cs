@@ -15,6 +15,7 @@ copies or substantial portions of the Software.
 */
 
 using System;
+using System.Threading.Tasks;
 
 namespace EasePassExtensibility
 {
@@ -35,7 +36,7 @@ namespace EasePassExtensibility
         /// <summary>
         /// Gets a value indicating whether the database is read-only.
         /// </summary>
-        bool isReadonly { get; }
+        bool IsReadOnly { get; }
         /// <summary>
         /// Availability of the database.
         /// </summary>
@@ -45,13 +46,13 @@ namespace EasePassExtensibility
         /// Retrieves the contents of the database file as a byte array.
         /// </summary>
         /// <returns>A byte array containing the full contents of the database file. The array is empty or null if the database file does not exist or is empty.</returns>
-        byte[] GetDatabaseFileBytes();
+        Task<byte[]> GetDatabaseFileBytes();
         /// <summary>
         /// Saves the specified database file as a byte array to persistent storage.
         /// </summary>
         /// <param name="databaseFileBytes">The byte array containing the contents of the database file to save. Cannot be null.</param>
         /// <returns>true if the file was saved successfully; otherwise, false.</returns>
-        bool SaveDatabaseFileBytes(byte[] databaseFileBytes);
+        Task<bool> SaveDatabaseFileBytes(byte[] databaseFileBytes);
         /// <summary>
         /// Gets the date and time when the object was last modified.
         /// </summary>

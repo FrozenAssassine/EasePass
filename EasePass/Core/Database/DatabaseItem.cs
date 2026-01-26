@@ -360,7 +360,7 @@ namespace EasePass.Core.Database
         /// <returns>Returns <see langword="true"/> if the Database was saved successfully, otherwise <see langword="false"/> will be returned</returns>
         public async Task SaveAsync(IDatabaseSource source = null)
         {
-            await deferredSaver.RequestSaveAsync(() => ForceSave(source));
+            await deferredSaver.RequestSaveAsync(() => ForceSaveAsync(source));
         }
 
         /// <summary>
@@ -370,22 +370,13 @@ namespace EasePass.Core.Database
         public async Task<bool> ForceSaveAsync(IDatabaseSource source = null)
         {
             deferredSaver.CancelPending();
-            return await Task.Run(() => ForceSave(source));
+            return await SaveDatabase(source);
         }
 
-        /// <summary>
-        /// Synchronous version of ForceSaveAsync. 
-        /// </summary>
-        public bool ForceSave(IDatabaseSource source = null)
-        {
-            deferredSaver.CancelPending();
-            return SaveDatabase(source);
-        }
-
-        private bool SaveDatabase(IDatabaseSource source = null)
+        private async Task<bool> SaveDatabase(IDatabaseSource source = null)
         {
             source ??= DatabaseSource;
-            return DatabaseFormatHelper.Save(source, MasterPassword, SecondFactor, Settings, Items);
+            return await DatabaseFormatHelper.Save(source, MasterPassword, SecondFactor, Settings, Items);
         }
         #endregion
 

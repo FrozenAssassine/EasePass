@@ -34,7 +34,7 @@ namespace EasePass.Views
             App.m_window.ShowBackArrow = false;
         }
 
-        private void Register_Click(object sender, RoutedEventArgs e)
+        private async void Register_Click(object sender, RoutedEventArgs e)
         {
             if (passwordBox.Password.Length < 4)
             {
@@ -55,7 +55,7 @@ namespace EasePass.Views
             }
 
             var dbPath = DefaultSettingsValues.databasePaths;
-            Database.LoadedInstance = Database.CreateNewDatabase(dbPath, pw);
+            Database.LoadedInstance = await Database.CreateNewDatabase(dbPath, pw);
             Database.AddDatabasePath(dbPath);
 
             NavigationHelper.ToPasswords(pw);

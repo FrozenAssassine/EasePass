@@ -18,6 +18,7 @@ using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePassExtensibility;
 using System;
+using System.Threading.Tasks;
 
 namespace EasePass.Models
 {
@@ -63,13 +64,13 @@ namespace EasePass.Models
             }
         }
 
-        public bool isReadonly
+        public bool IsReadOnly
         {
             get
             {
                 try
                 {
-                    return source.isReadonly;
+                    return source.IsReadOnly;
                 }
                 catch
                 {
@@ -92,7 +93,7 @@ namespace EasePass.Models
             }
         }
 
-        public byte[] GetDatabaseFileBytes()
+        public Task<byte[]> GetDatabaseFileBytes()
         {
             try
             {
@@ -105,7 +106,7 @@ namespace EasePass.Models
             }
         }
 
-        public bool SaveDatabaseFileBytes(byte[] databaseFileBytes)
+        public Task<bool> SaveDatabaseFileBytes(byte[] databaseFileBytes)
         {
             try
             {
@@ -114,7 +115,7 @@ namespace EasePass.Models
             catch
             {
                 UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
-                return false;
+                return Task.FromResult(false);
             }
         }
 

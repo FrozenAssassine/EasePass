@@ -58,14 +58,14 @@ public class Database
     #endregion
 
     #region CreateNewDatabase
-    public static DatabaseItem CreateNewDatabase(string path, SecureString password)
+    public static async Task<DatabaseItem> CreateNewDatabase(string path, SecureString password)
     {
         DatabaseItem db = new DatabaseItem(new NativeDatabaseSource(path));
         db.MasterPassword = password;
         db.Settings = new Format.Serialization.DatabaseSettings();
         db.Settings.UseSecondFactor = false;
         db.Settings.SecondFactorType = Enums.SecondFactorType.None;
-        db.ForceSave();
+        await db.ForceSaveAsync();
         return db;
     }
     #endregion

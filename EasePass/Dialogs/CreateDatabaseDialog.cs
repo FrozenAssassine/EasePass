@@ -44,7 +44,7 @@ namespace EasePass.Dialogs
             if (res == ContentDialogResult.Primary)
             {
                 var eval = page.Evaluate();
-                return Database.CreateNewDatabase(eval.path, eval.masterPassword);
+                return await Database.CreateNewDatabase(eval.path, eval.masterPassword);
             }
             return null;
         }

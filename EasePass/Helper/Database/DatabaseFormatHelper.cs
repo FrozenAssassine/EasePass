@@ -48,7 +48,7 @@ namespace EasePass.Helper.Database
             }
 
             DatabaseValidationResult validationRes;
-            var preloadedDB = DatabaseVersionTagHelper.GetVersionTag(source.GetDatabaseFileBytes());
+            var preloadedDB = DatabaseVersionTagHelper.GetVersionTag(await source.GetDatabaseFileBytes());
             if (preloadedDB.versionTag != DatabaseVersionTag.Undefined)
             {
                 // Check all versions from versiontag to prevent decrypting twice
@@ -86,9 +86,9 @@ namespace EasePass.Helper.Database
         /// <param name="settings">The Settings of the Database</param>
         /// <param name="items">The PasswordItems of the Database</param>
         /// <returns>Returns the <see langword="true"/> if the Database was saved successfully</returns>
-        public static bool Save(IDatabaseSource source, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
+        public static async Task<bool> Save(IDatabaseSource source, SecureString password, SecureString secondFactor, DatabaseSettings settings, ObservableCollection<PasswordManagerItem> items)
         {
-            return IDatabaseLoader.Save(source, password, secondFactor, settings, items);
+            return await IDatabaseLoader.Save(source, password, secondFactor, settings, items);
         }
         #endregion
 
