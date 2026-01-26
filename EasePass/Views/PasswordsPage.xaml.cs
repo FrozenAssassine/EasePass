@@ -43,6 +43,8 @@ namespace EasePass.Views
         private PasswordManagerItem SelectedItem { get => _SelectedItem; set { _SelectedItem = value; RaisePropertyChanged("SelectedItem"); } }
         private TOTPTokenUpdater totpTokenUpdater;
         private SearchPasswordsManager searchPwManager = new SearchPasswordsManager();
+        public DatabaseItem LoadedDB => Database.LoadedInstance;
+
         public PasswordsPage()
         {
             this.InitializeComponent();
@@ -76,6 +78,8 @@ namespace EasePass.Views
             {
                 passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
                 TemporaryDatabaseHelper.ShowTempDBButton(loadTempDBButton);
+
+                passwordItemListView.CanReorderItems = !LoadedDB.IsReadonlyDatabase;            
             }
 
             base.OnNavigatedTo(e);
@@ -371,7 +375,10 @@ namespace EasePass.Views
         private void RightclickedItem_CopyPassword_Click(object sender, RoutedEventArgs e) => ClipboardHelper.Copy(((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem)?.Password, true);
         private async void RightclickedItem_Delete_Click(object sender, RoutedEventArgs e)
         {
-            if (passwordItemListView.SelectedItems.Count > 1)
+            if (LoadedDB == null || LoadedDB.IsReadonlyDatabase)
+                return;
+
+                if (passwordItemListView.SelectedItems.Count > 1)
             {
                 await DeletePasswordItems(passwordItemListView.SelectedItems.Select(x => x as PasswordManagerItem).ToArray());
                 return;
@@ -380,7 +387,11 @@ namespace EasePass.Views
             //single item was right clicked, does not have to be the selected item:
             await DeletePasswordItem((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem);
         }
-        private async void RightclickedItem_Edit_Click(object sender, RoutedEventArgs e) => await EditPasswordItem((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem);
+        private async void RightclickedItem_Edit_Click(object sender, RoutedEventArgs e)
+        {
+            if(LoadedDB != null && !LoadedDB.IsReadonlyDatabase)
+                await EditPasswordItem((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem);
+        }
         private async void RightclickedItem_CopyTOTPToken_Click(object sender, RoutedEventArgs e)
         {
             await CopyTOTPToken((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem);
