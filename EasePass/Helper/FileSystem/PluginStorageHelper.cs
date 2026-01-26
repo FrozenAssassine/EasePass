@@ -1,19 +1,24 @@
-﻿using System;
+﻿using EasePass.Settings;
+using EasePassExtensibility;
+using System;
 using System.IO;
 using System.Text;
-using EasePass.Settings;
-using EasePassExtensibility;
 using Windows.Storage;
 
 namespace EasePass.Helper.FileSystem
 {
-    internal static class PluginStorageHelper
+    public static class PluginStorageHelper
     {
         const string AppsettingsPrefix = "pluginstorage_";
-        private static readonly string path = ApplicationData.Current.LocalFolder.Path + "\\extensions\\";
 
-        public static void Initialize(IStorageInjectable storageInjectable, string pluginID)
+        private static string path;
+
+
+        public static void Initialize(IStorageInjectable storageInjectable, string pluginID, string path = null)
         {
+            if (path == null)
+                path = ApplicationData.Current.LocalFolder.Path + "\\extensions\\";
+
             storageInjectable.SaveString = (key, value) => _SaveString(pluginID, key, value);
             storageInjectable.LoadString = (key) => _LoadString(pluginID, key);
             storageInjectable.SaveFile = (filename, data) => _SaveFile(pluginID, filename, data);
@@ -53,7 +58,7 @@ namespace EasePass.Helper.FileSystem
         {
             if(Directory.Exists(path + pluginID))
                 Directory.Delete(path + pluginID, true);
-            SettingsManager.DeleteSettings(AppsettingsPrefix + pluginID + "_");
+            SettingsManager.DeleteSettingsStartsWith(AppsettingsPrefix + pluginID + "_");
         }
     }
 }

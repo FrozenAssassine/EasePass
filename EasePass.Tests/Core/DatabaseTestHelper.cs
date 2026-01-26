@@ -34,7 +34,16 @@ namespace EasePass.Tests.Core
         
         public static string GetTempDatabasePath()
         {
-            return Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".epdb");
+            return GetTempPathFile(".epdb");
+        }
+
+        public static string GetTempPathFile(string ext = "")
+        {
+            return Path.Combine(GetTempPath(), Guid.NewGuid().ToString() + ext);
+        }
+        public static string GetTempPath()
+        {
+            return Path.GetTempPath();
         }
     }
 }
