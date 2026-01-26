@@ -18,6 +18,7 @@ using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePassExtensibility;
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace EasePass.Models
@@ -25,13 +26,23 @@ namespace EasePass.Models
     /// <summary>
     /// Adds proper error handling to an <see cref="IDatabaseSource"/> implementation. Important for sources that rely on external resources (plugins).
     /// </summary>
-    internal class DatabaseSourceErrorHandlingWrapper : IDatabaseSource
+    internal class DatabaseSourceErrorHandlingWrapper : IDatabaseSource, INotifyPropertyChanged
     {
         private IDatabaseSource source;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public DatabaseSourceErrorHandlingWrapper(IDatabaseSource source)
         {
             this.source = source;
+            this.source.OnPropertyChanged += () =>
+            {
+                OnPropertyChanged?.Invoke();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DatabaseName"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SourceDescription"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsReadOnly"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Availability"));
+            };
         }
 
         public string DatabaseName {
@@ -43,7 +54,7 @@ namespace EasePass.Models
                 }
                 catch
                 {
-                    return "Database Name Unavailable";
+                    return "unknown";
                 }
             }
         }
@@ -80,16 +91,37 @@ namespace EasePass.Models
             }
         }
 
-        public IDatabaseSource.DatabaseAvailability GetAvailability()
+        public Action OnPropertyChanged { get; set; }
+
+        public IDatabaseSource.DatabaseAvailability Availability
         {
-            try
+            get
             {
-                return source.GetAvailability();
+                try
+                {
+                    return source.Availability;
+                }
+                catch
+                {
+                    UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
+                    return IDatabaseSource.DatabaseAvailability.UnknownState;
+                }
             }
-            catch
+        }
+
+        public DateTime LastTimeModified
+        {
+            get
             {
-                UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
-                return IDatabaseSource.DatabaseAvailability.UnknownState;
+                try
+                {
+                    return source.LastTimeModified;
+                }
+                catch
+                {
+                    UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
+                    return DateTime.MinValue;
+                }
             }
         }
 
@@ -116,19 +148,6 @@ namespace EasePass.Models
             {
                 UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
                 return Task.FromResult(false);
-            }
-        }
-
-        public DateTime GetLastTimeModified()
-        {
-            try
-            {
-                return source.GetLastTimeModified();
-            }
-            catch
-            {
-                UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
-                return DateTime.MinValue;
             }
         }
 

@@ -36,7 +36,7 @@ namespace EasePass.Core.Database.Format.epdb
         #region Load
         public static async Task<DatabaseValidationResult> Load(IDatabaseSource source, SecureString password, bool showWrongPasswordError, byte[] preloaded = null)
         {
-            if (source.GetAvailability() == IDatabaseSource.DatabaseAvailability.LockedByOtherUser)
+            if (source.Availability == IDatabaseSource.DatabaseAvailability.LockedByOtherUser)
                 return new(PasswordValidationResult.LockedByOtherUser, default);
 
             byte[] pass = HashHelper.HashPasswordWithArgon2id(password, salt);

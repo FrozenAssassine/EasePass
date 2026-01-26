@@ -16,8 +16,8 @@ namespace EasePass.Helper.FileSystem
 
         public static void Initialize(IStorageInjectable storageInjectable, string pluginID, string path = null)
         {
-            if (path == null)
-                path = ApplicationData.Current.LocalFolder.Path + "\\extensions\\";
+            if (string.IsNullOrEmpty(path))
+                PluginStorageHelper.path = ApplicationData.Current.LocalFolder.Path + "\\extensions\\";
 
             storageInjectable.SaveString = (key, value) => _SaveString(pluginID, key, value);
             storageInjectable.LoadString = (key) => _LoadString(pluginID, key);
