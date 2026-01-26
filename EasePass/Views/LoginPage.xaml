@@ -36,7 +36,7 @@
                 <ComboBox x:Uid="View_LoginPage_ChooseDB" SelectionChanged="databasebox_SelectionChanged" Grid.Column="0" x:Name="databasebox" Header="Choose database:" HorizontalAlignment="Stretch">
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="models:DatabaseItem">
-                            <TextBlock Text="{x:Bind Name}" Grid.Column="1" Grid.Row="1" Foreground="{x:Bind Availability, Mode=OneWay, Converter={StaticResource AvailabilityToBrushConverter}}" />
+                            <TextBlock Text="{x:Bind Name}" Grid.Column="1" Grid.Row="1" Foreground="{x:Bind DatabaseSource.Availability, Mode=OneWay, Converter={StaticResource AvailabilityToBrushConverter}}" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>

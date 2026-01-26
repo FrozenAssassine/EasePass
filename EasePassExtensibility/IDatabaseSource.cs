@@ -38,10 +38,13 @@ namespace EasePassExtensibility
         /// </summary>
         bool IsReadOnly { get; }
         /// <summary>
+        /// The plugin calls this action when a property of the database source has changed.
+        /// </summary>
+        Action OnPropertyChanged { get; set; }
+        /// <summary>
         /// Availability of the database.
         /// </summary>
-        /// <returns><see cref="DatabaseAvailability"/> of the database.</returns>
-        DatabaseAvailability GetAvailability();
+        DatabaseAvailability Availability { get; }
         /// <summary>
         /// Retrieves the contents of the database file as a byte array.
         /// </summary>
@@ -56,8 +59,7 @@ namespace EasePassExtensibility
         /// <summary>
         /// Gets the date and time when the object was last modified.
         /// </summary>
-        /// <returns>A <see cref="DateTime"/> value representing the last modification timestamp of the object.</returns>
-        DateTime GetLastTimeModified();
+        DateTime LastTimeModified { get; }
         /// <summary>
         /// Is called when the user logs in to the database. (Use to update DatabaseAvailability)
         /// </summary>

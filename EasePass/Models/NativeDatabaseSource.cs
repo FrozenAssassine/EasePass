@@ -36,14 +36,26 @@ namespace EasePass.Models
         public string SourceDescription => Path;
 
         public bool IsReadOnly { get; set; }
+        public Action OnPropertyChanged { get; set; }
 
-        public IDatabaseSource.DatabaseAvailability GetAvailability()
+        public IDatabaseSource.DatabaseAvailability Availability
         {
-            if (string.IsNullOrEmpty(Path))
-                return IDatabaseSource.DatabaseAvailability.UnknownState;
-            if(!File.Exists(Path))
-                return IDatabaseSource.DatabaseAvailability.Unavailable;
-            return IDatabaseSource.DatabaseAvailability.Available;
+            get
+            {
+                if (string.IsNullOrEmpty(Path))
+                    return IDatabaseSource.DatabaseAvailability.UnknownState;
+                if (!File.Exists(Path))
+                    return IDatabaseSource.DatabaseAvailability.Unavailable;
+                return IDatabaseSource.DatabaseAvailability.Available;
+            }
+        }
+
+        public DateTime LastTimeModified
+        {
+            get
+            {
+                return File.GetLastWriteTime(Path);
+            }
         }
 
         public Task<byte[]> GetDatabaseFileBytes()
@@ -51,11 +63,6 @@ namespace EasePass.Models
             if (!File.Exists(Path))
                 return null;
             return Task.FromResult(File.ReadAllBytes(Path));
-        }
-
-        public DateTime GetLastTimeModified()
-        {
-            return File.GetLastWriteTime(Path);
         }
 
         public void Login() { }

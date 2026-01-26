@@ -22,10 +22,6 @@ namespace EasePass.Core.Database
         /// </summary>
         public string Name => MakeDatabaseName();
         /// <summary>
-        /// Gets the current availability status of the database source.
-        /// </summary>
-        public IDatabaseSource.DatabaseAvailability Availability => DatabaseSource.GetAvailability();
-        /// <summary>
         /// The database source
         /// </summary>
         public IDatabaseSource DatabaseSource { get; set; } = null;
@@ -48,7 +44,7 @@ namespace EasePass.Core.Database
         /// <summary>
         /// The Last <see cref="DateTime"/> the Database was accessed by someone
         /// </summary>
-        public DateTime LastModified => DatabaseSource.GetLastTimeModified();
+        public DateTime LastModified => DatabaseSource.LastTimeModified;
         /// <summary>
         /// Specifies if the Database is a temporary Database
         /// </summary>
@@ -69,6 +65,14 @@ namespace EasePass.Core.Database
             DatabaseSource = databaseSource;
             Items = new ObservableCollection<PasswordManagerItem>();
             Items.CollectionChanged += Items_CollectionChanged;
+
+            DatabaseSource.OnPropertyChanged = () =>
+            {
+                CallPropertyChanged("Name");
+                CallPropertyChanged("LastModified");
+                CallPropertyChanged("Availability");
+                CallPropertyChanged("IsReadonlyDatabase");
+            };
 
             CallPropertyChanged("Name");
             CallPropertyChanged("LastModified");
@@ -137,7 +141,7 @@ namespace EasePass.Core.Database
             if (enteredPassword == null)
                 return new(PasswordValidationResult.WrongPassword, null);
 
-            var availability = DatabaseSource.GetAvailability();
+            var availability = DatabaseSource.Availability;
             if (availability == IDatabaseSource.DatabaseAvailability.LockedByOtherUser)
                 return new(PasswordValidationResult.LockedByOtherUser, null);
             if (availability == IDatabaseSource.DatabaseAvailability.Unavailable) // Maybe own PasswordValidationResult and InfoMessage for this case ?
@@ -331,7 +335,7 @@ namespace EasePass.Core.Database
             if (IsTemporaryDatabase)
                 name += " (Temp)";
             if (IsReadonlyDatabase)
-                name += "(ReadOnly)";
+                name += " (ReadOnly)";
             return name;
         }
         #endregion
