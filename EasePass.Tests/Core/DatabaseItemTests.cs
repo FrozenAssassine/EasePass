@@ -2,6 +2,8 @@ using EasePass.Core.Database;
 using EasePass.Extensions;
 using EasePass.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -14,7 +16,7 @@ namespace EasePass.Tests.Core
         [TestMethod]
         public void TestAddItem()
         {
-             DatabaseItem db = new DatabaseItem("test.db");
+             DatabaseItem db = new DatabaseItem("test.epdb");
              PasswordManagerItem item = new PasswordManagerItem() { DisplayName = "Test Item" };
              db.AddItem(item);
 
@@ -25,7 +27,7 @@ namespace EasePass.Tests.Core
         [TestMethod]
         public void TestDeleteItem()
         {
-             DatabaseItem db = new DatabaseItem("test.db");
+             DatabaseItem db = new DatabaseItem("test.epdb");
              PasswordManagerItem item = new PasswordManagerItem() { DisplayName = "Test Item" };
              db.AddItem(item);
              db.DeleteItem(item);
@@ -116,7 +118,7 @@ namespace EasePass.Tests.Core
         [TestMethod]
         public void TestUnloadDispose()
         {
-             DatabaseItem db = new DatabaseItem("t.db");
+             DatabaseItem db = new DatabaseItem("t.epdb");
              db.AddItem(new PasswordManagerItem());
              
              Database.LoadedInstance = db;
@@ -129,7 +131,7 @@ namespace EasePass.Tests.Core
         [TestMethod]
         public void TestFindItems()
         {
-            DatabaseItem db = new DatabaseItem("t.db");
+            DatabaseItem db = new DatabaseItem("t.epdb");
             db.AddItem(new PasswordManagerItem() { DisplayName = "Alpha" });
             db.AddItem(new PasswordManagerItem() { DisplayName = "Beta" });
 
@@ -137,6 +139,74 @@ namespace EasePass.Tests.Core
             
             Assert.HasCount(1, result);
             Assert.AreEqual("Alpha", result[0].DisplayName);
+        }
+
+        [TestMethod]
+        public async Task SaveDatabase()
+        {
+            string dbPath = DatabaseTestHelper.GetTempDatabasePath();
+            var pw = "mysuperlongpassword!".ConvertToSecureString();
+
+            for (int i = 0; i < 20; i++)
+            {
+                DatabaseItem db = new DatabaseItem(dbPath);
+                if(i == 0)
+                    db.MasterPassword = pw;
+                else
+                    await db.Load(pw);
+                db.AddItem(new PasswordManagerItem() { 
+                    DisplayName = "Item1" + i * i,
+                    Email = "emailAddress@emailprovider.com", 
+                    Password = "mycoolpassword" + i *i,
+                    Notes = "These are some notes\nLine2\nLine3",
+                    Username = "myusername" + i,
+                    Website = "https://mywebsite" + i + ".com",
+                    Tags = ["tag1", "tag2"],
+                });
+                db.ForceSave();
+                db.Dispose();
+                await Task.Delay(new Random().Next(10, 200));
+            }
+
+            Assert.IsTrue(File.Exists(dbPath), "Database file was not created.");
+            DatabaseItem finalDb = new DatabaseItem(dbPath);
+            await finalDb.Load(pw, false);
+            Assert.HasCount(20, finalDb.Items);
+        }
+
+        [TestMethod]
+        public async Task SaveDatabaseScheduled()
+        {
+            string dbPath = DatabaseTestHelper.GetTempDatabasePath();
+            var pw = "mysuperlongpassword!".ConvertToSecureString();
+
+            DatabaseItem db = new DatabaseItem(dbPath);
+            db.MasterPassword = pw;;
+            
+            for (int i = 0; i < 20; i++)
+            {
+                db.AddItem(new PasswordManagerItem()
+                {
+                    DisplayName = "Item1" + i * i,
+                    Email = "emailAddress@emailprovider.com",
+                    Password = "mycoolpassword" + i * i,
+                    Notes = "These are some notes\nLine2\nLine3",
+                    Username = "myusername" + i,
+                    Website = "https://mywebsite" + i + ".com",
+                    Tags = ["tag1", "tag2"],
+                });
+                await db.SaveAsync();
+                await Task.Delay(new Random().Next(100, 2000));
+            }
+
+            //simulate app close
+            if (db.deferredSaver.SaveScheduled)
+                await db.ForceSaveAsync();
+
+            Assert.IsTrue(File.Exists(dbPath), "Database file was not created.");
+            DatabaseItem finalDb = new DatabaseItem(dbPath);
+            await finalDb.Load(pw, false);
+            Assert.HasCount(20, finalDb.Items);
         }
     }
 }

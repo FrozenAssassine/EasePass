@@ -30,6 +30,10 @@ namespace EasePass.Tests.Core.DatabaseMigrationTests
                     Password = "Password" + i * i,
                     Username = "Username" + i + 5,
                     Website = "https://website" + i + ".com",
+                    Algorithm = "SHA256",
+                    Interval = "30",
+                    Digits = "6",
+                    Secret = "asdasd",
                 });
             }
             v1DB.Save();
@@ -48,6 +52,7 @@ namespace EasePass.Tests.Core.DatabaseMigrationTests
             migratedDB = new DatabaseItem(new NativeDatabaseSource(v1DB.Path));
             await migratedDB.Load(pw, false);
 
+            Assert.IsTrue(await migratedDB.Unlock(pw));
             Assert.HasCount(v1DB.Items.Count, migratedDB.Items);
             Assert.AreEqual(v1DB.Name, migratedDB.Name);
             for (int i = 0; i < v1DB.Items.Count; i++)
@@ -60,6 +65,10 @@ namespace EasePass.Tests.Core.DatabaseMigrationTests
                 Assert.AreEqual(v1Item.Password, v2Item.Password);
                 Assert.AreEqual(v1Item.Username, v2Item.Username);
                 Assert.AreEqual(v1Item.Website, v2Item.Website);
+                Assert.AreEqual(v1Item.Algorithm, v2Item.Algorithm);
+                Assert.AreEqual(v1Item.Interval, v2Item.Interval);
+                Assert.AreEqual(v1Item.Digits, v2Item.Digits);
+                Assert.AreEqual(v1Item.Secret, v2Item.Secret);
             }
 
             var versionTagRes = DatabaseVersionTagHelper.GetVersionTag(migratedDB.DatabaseSource.GetDatabaseFileBytes());
