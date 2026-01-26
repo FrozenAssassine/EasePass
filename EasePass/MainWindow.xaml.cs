@@ -27,6 +27,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 
 namespace EasePass;
@@ -83,6 +84,15 @@ public sealed partial class MainWindow : Window
 
     private bool _isClosingForcefully = false;
 
+    public async Task DoMasterSaveWithProgress()
+    {
+        databaseSavingProgressRing.Visibility = Visibility.Visible;
+
+        await Database.LoadedInstance.ForceSaveAsync();
+
+        databaseSavingProgressRing.Visibility = Visibility.Collapsed;
+    }
+
     private async void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
     {
         if (_isClosingForcefully) return;
@@ -91,11 +101,7 @@ public sealed partial class MainWindow : Window
         {
             args.Cancel = true;
 
-            databaseSavingProgressRing.Visibility = Visibility.Visible;
-
-            await Database.LoadedInstance.ForceSaveAsync();
-
-            databaseSavingProgressRing.Visibility = Visibility.Collapsed;
+            await DoMasterSaveWithProgress();
 
             _isClosingForcefully = true;
             this.Close();

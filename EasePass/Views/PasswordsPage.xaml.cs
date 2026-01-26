@@ -445,8 +445,10 @@ namespace EasePass.Views
             loadTempDBButton.Visibility = Visibility.Collapsed;
         }
 
-        private void LogOut_Click(object sender, RoutedEventArgs e)
+        private async void LogOut_Click(object sender, RoutedEventArgs e)
         {
+            //first save the database, then logout
+            await MainWindow.CurrentInstance.DoMasterSaveWithProgress();
             LogoutHelper.Logout();
         }
 
