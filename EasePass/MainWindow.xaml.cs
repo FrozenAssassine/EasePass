@@ -47,9 +47,7 @@ public sealed partial class MainWindow : Window
 
     public readonly RestoreWindowManager restoreWindowManager;
     public readonly WindowStateManager windowStateManager;
-
-    public EventHandler ExtensionsInitialized;
-
+    public readonly ExtensionManager extensionManager;
 
     public MainWindow()
     {
@@ -60,6 +58,8 @@ public sealed partial class MainWindow : Window
 
         windowStateManager = new WindowStateManager(this);
         restoreWindowManager = new RestoreWindowManager(this, windowStateManager);
+        extensionManager = new ExtensionManager();
+        extensionManager.Init();
 
         restoreWindowManager.RestoreSettings();
 
@@ -68,8 +68,6 @@ public sealed partial class MainWindow : Window
         Title = Package.Current.DisplayName;
         this.AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets\\AppIcon\\appicon.ico"));
 
-        var extT = ExtensionHelper.Init();
-        extT.ContinueWith(t => ExtensionsInitialized?.Invoke(this, EventArgs.Empty));
         inactivityHelper.InactivityStarted += InactivityHelper_InactivityStarted;
 
         PasswordHelper.Init();

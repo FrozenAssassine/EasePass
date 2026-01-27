@@ -103,7 +103,7 @@ public class Database
     {
         return GetAllDatabasePaths()
             .Select(x => new DatabaseItem(new NativeDatabaseSource(x)))
-            .Concat(ExtensionHelper.DatabaseSources.Select(x => new DatabaseItem(x)))
+            .Concat(MainWindow.CurrentInstance.extensionManager.DatabaseSources.Select(x => new DatabaseItem(x)))
             .ToArray();
     }
     #endregion

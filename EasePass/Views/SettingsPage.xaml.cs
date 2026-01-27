@@ -20,6 +20,7 @@ using EasePass.Helper;
 using EasePass.Helper.App;
 using EasePass.Helper.Extension;
 using EasePass.Helper.Security;
+using EasePass.Manager;
 using EasePass.Models;
 using EasePass.Settings;
 using EasePassExtensibility;
@@ -40,6 +41,7 @@ namespace EasePass.Views
         ObservableCollection<PasswordImporterBase> passwordImporter = null;
         ObservableCollection<DBProviderUIWrapper> dbProviders = null;
         bool blockEventsOnloadSettings = false;
+        ExtensionManager extManager = MainWindow.CurrentInstance.extensionManager;
 
         public SettingsPage()
         {
@@ -82,7 +84,7 @@ namespace EasePass.Views
             passwordsPage = navParam.PasswordPage;
 
             passwordImporter = new ObservableCollection<PasswordImporterBase>();
-            foreach (IPasswordImporter importer in ExtensionHelper.GetAllClassesWithInterface<IPasswordImporter>())
+            foreach (IPasswordImporter importer in extManager.GetAllClassesWithInterface<IPasswordImporter>())
             {
                 passwordImporter.Add(new PasswordImporterBase(importer));
             }
@@ -93,7 +95,7 @@ namespace EasePass.Views
             }
 
             dbProviders = new ObservableCollection<DBProviderUIWrapper>();
-            foreach (var provider in ExtensionHelper.GetAllClassesWithInterface<IDatabaseProvider>())
+            foreach (var provider in extManager.GetAllClassesWithInterface<IDatabaseProvider>())
             {
                 dbProviders.Add(new DBProviderUIWrapper(provider));
             }
