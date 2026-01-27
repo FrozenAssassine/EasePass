@@ -87,7 +87,7 @@ namespace EasePass.Tests.Core
         {
              // Ensure clean state
              AppSettings.DatabasePaths = "";
-             AppSettings.LoadedDatabaseName = null;
+             AppSettings.LoadedDatabaseSource = null;
              Assert.IsFalse(Database.HasDatabasePath());
 
              string newPath = DatabaseTestHelper.GetTempDatabasePath();
@@ -96,7 +96,7 @@ namespace EasePass.Tests.Core
              {
                  Database.AddDatabasePath(newPath);
                  // Need to mimic loaded database behavior
-                 AppSettings.LoadedDatabaseName = "dummy";
+                 AppSettings.LoadedDatabaseSource = "dummy";
                  Assert.IsTrue(Database.HasDatabasePath());
              }
              finally
@@ -116,7 +116,7 @@ namespace EasePass.Tests.Core
                  DatabaseItem db = new DatabaseItem(dbPath);
                  Database.LoadedInstance = db;
 
-                Assert.AreEqual(db.Name, AppSettings.LoadedDatabaseName);
+                Assert.AreEqual(db.Name, AppSettings.LoadedDatabaseSource);
              }
              finally
              {

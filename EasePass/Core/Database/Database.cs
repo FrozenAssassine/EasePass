@@ -41,7 +41,7 @@ public class Database
             loadedInstance = value;
             if (loadedInstance != null)
             {
-                AppSettings.LoadedDatabaseName = loadedInstance.Name;
+                AppSettings.LoadedDatabaseSource = loadedInstance.DatabaseSource.SourceDescription;
             }
 
             loadedInstance.LoadedInstanceChanged();
@@ -123,7 +123,7 @@ public class Database
     public static bool HasDatabasePath()
     {
         string dbPath = AppSettings.DatabasePaths;
-        string loadedDb = AppSettings.LoadedDatabaseName;
+        string loadedDb = AppSettings.LoadedDatabaseSource;
 
         //app first start
         if (dbPath.Length == 0 && loadedDb == null)

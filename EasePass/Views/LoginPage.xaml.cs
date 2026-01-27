@@ -150,7 +150,7 @@ namespace EasePass.Views
             if (databasebox.SelectedItem == null)
                 return;
 
-            AppSettings.LoadedDatabaseName = (databasebox.SelectedItem as DatabaseItem).Name;
+            AppSettings.LoadedDatabaseSource = (databasebox.SelectedItem as DatabaseItem).DatabaseSource.SourceDescription;
         }
 
         private async void ImportDatabase_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
