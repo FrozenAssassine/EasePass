@@ -1,6 +1,7 @@
 ﻿using EasePass.Settings;
 using EasePassExtensibility;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Windows.Storage;
@@ -14,10 +15,9 @@ namespace EasePass.Helper.FileSystem
         private static string path;
 
 
-        public static void Initialize(IStorageInjectable storageInjectable, string pluginID, string path = null)
+        public static void Initialize(IStorageInjectable storageInjectable, string pluginID, string pathOverride = null)
         {
-            if (string.IsNullOrEmpty(path))
-                PluginStorageHelper.path = ApplicationData.Current.LocalFolder.Path + "\\extensions\\";
+            path = string.IsNullOrEmpty(pathOverride) ? ApplicationData.Current.LocalFolder.Path + "\\extensions\\" : pathOverride;
 
             storageInjectable.SaveString = (key, value) => _SaveString(pluginID, key, value);
             storageInjectable.LoadString = (key) => _LoadString(pluginID, key);
