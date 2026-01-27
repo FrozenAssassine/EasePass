@@ -42,9 +42,18 @@ namespace EasePass.Views
             passwordBox.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
             App.m_window.ShowBackArrow = false;
 
-            MainWindow.CurrentInstance.ExtensionsInitialized += (x, y) =>
-                UIThreadInvoker.Invoke(() =>
-                ManageDatabaseHelper.LoadDatabasesToCombobox(databasebox));
+            //todo refactor and handle loading better. Do not forget temp dbs
+            var extManager = MainWindow.CurrentInstance.extensionManager;
+            if (!extManager.ExtensionsLoaded)
+            {
+                extManager.ExtensionsInitialized += () =>
+                    UIThreadInvoker.Invoke(() =>
+                    {
+                        ManageDatabaseHelper.LoadDatabasesToCombobox(databasebox);
+                    });
+            }
+            else
+                ManageDatabaseHelper.LoadDatabasesToCombobox(databasebox);
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)

@@ -16,9 +16,9 @@ copies or substantial portions of the Software.
 
 using EasePass.Dialogs;
 using EasePass.Helper;
-using EasePass.Helper.Extension;
 using EasePass.Helper.FileSystem;
 using EasePass.Helper.Security;
+using EasePass.Manager;
 using EasePass.Models;
 using EasePassExtensibility;
 using Microsoft.UI.Xaml;
@@ -37,6 +37,8 @@ namespace EasePass.Views;
 
 public sealed partial class ExtensionPage : Page
 {
+    private ExtensionManager extManager = MainWindow.CurrentInstance.extensionManager;
+
     public ExtensionPage()
     {
         this.InitializeComponent();
@@ -57,12 +59,12 @@ public sealed partial class ExtensionPage : Page
         FetchAndLoadExtensions();
 
         extensionView.Items.Clear();
-        for (int i = 0; i < ExtensionHelper.Extensions.Count; i++)
-            extensionView.Items.Add(ExtensionHelper.Extensions[i]);
+        for (int i = 0; i < extManager.Extensions.Count; i++)
+            extensionView.Items.Add(extManager.Extensions[i]);
     }
     public void FetchAndLoadExtensions()
     {
-        var result = ExtensionHelper.GetExtensionsFromSources();
+        var result = extManager.GetExtensionsFromSources();
 
         if (result == null || result.Count == 0)
         {
@@ -83,7 +85,7 @@ public sealed partial class ExtensionPage : Page
         DeleteExtensionConfirmationDialog dialog = new DeleteExtensionConfirmationDialog();
         if (await dialog.ShowAsync(extension))
         {
-            ExtensionHelper.Extensions.Remove(extension);
+            extManager.Extensions.Remove(extension);
             extensionView.Items.Remove(extension);
             File.AppendAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", new string[] { extension.ID });
 
@@ -221,7 +223,7 @@ public sealed partial class ExtensionPage : Page
     }
     private async void InstallExtensionFromFile(string p)
     {
-        Extension extension = ExtensionHelper.LoadExtension(p);
+        Extension extension = extManager.LoadExtension(p);
         if (extension == null
             || (extension.Interfaces.Where((ext) => { return ext is IWarning; }).Count() > 0
             && !(await new SensitiveDataDialog().Dialog(extension))))
@@ -231,7 +233,7 @@ public sealed partial class ExtensionPage : Page
                 InfoMessages.FileIsNotAnExtensions();
             return;
         }
-        extensionView.Items.Add(ExtensionHelper.Extensions[ExtensionHelper.Extensions.Count - 1]);
+        extensionView.Items.Add(extManager.Extensions[extManager.Extensions.Count - 1]);
 
         FetchAndLoadExtensions();
     }
