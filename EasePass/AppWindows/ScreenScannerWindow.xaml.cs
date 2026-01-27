@@ -42,7 +42,7 @@ namespace EasePass.AppWindows
             this.SetTopmost();
             this.ExtendsContentIntoTitleBar = true;
             this.SetTitleBar(panel);
-            this.AppWindow.Resize(new Windows.Graphics.SizeInt32(400, 70));
+            this.AppWindow.Resize(new Windows.Graphics.SizeInt32(800, 130));
             this.AppWindow.Closing += AppWindow_Closing;
             InteropHelper.SetWindowLongPtr(InteropHelper.GetWindowHandle(this), InteropHelper.GWLP_HWNDPARENT, InteropHelper.GetWindowHandle(MainWindow.CurrentInstance));
             (this.AppWindow.Presenter as OverlappedPresenter).IsModal = true;

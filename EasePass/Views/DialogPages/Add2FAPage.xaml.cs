@@ -15,6 +15,7 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.AppWindows;
+using EasePass.Helper;
 using EasePass.Helper.Security.Generator;
 using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
@@ -96,6 +97,7 @@ namespace EasePass.Views
         {
             if (!string.IsNullOrEmpty(((IScannerWindow)sender).Result))
                 LoadFromUrl(((IScannerWindow)sender).Result);
+            InteropHelper.SetForegroundWindow(InteropHelper.GetWindowHandle(MainWindow.CurrentInstance));
         }
 
         private void LoadFromUrl(string url)
