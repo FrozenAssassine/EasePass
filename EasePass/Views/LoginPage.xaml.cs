@@ -23,10 +23,8 @@ using EasePass.Helper.Database;
 using EasePass.Helper.Security.Generator;
 using EasePass.Models;
 using EasePass.Settings;
-using EasePassExtensibility;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Media;
 using System;
 using System.Security;
 using System.Threading.Tasks;
@@ -44,16 +42,16 @@ namespace EasePass.Views
             passwordBox.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
             App.m_window.ShowBackArrow = false;
 
-            MainWindow.CurrentInstance.ExtensionsInitialized += (x, y) => UIThreadInvoker.Invoke(() => ManageDatabaseHelper.LoadDatabasesToCombobox(databasebox));
+            MainWindow.CurrentInstance.ExtensionsInitialized += (x, y) =>
+                UIThreadInvoker.Invoke(() =>
+                ManageDatabaseHelper.LoadDatabasesToCombobox(databasebox));
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            ManageDatabaseHelper.LoadDatabasesToCombobox(databasebox);
             TemporaryDatabaseHelper.HandleImportTempDatabase(e, databasebox);
-
             await DailyTipHelper.ShowDailyTip(dailyTipTextBlock, dailyTipGrid);
         }
 

@@ -51,14 +51,9 @@ namespace EasePass
             m_frame = m_window.MainFrame;
             m_frame.NavigationFailed += OnNavigationFailed;
 
-            AppActivationArguments appActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
-
-            if (appActivationArguments.Kind is ExtendedActivationKind.File &&
-                appActivationArguments.Data is IFileActivatedEventArgs fileActivatedEventArgs &&
-                fileActivatedEventArgs.Files.FirstOrDefault() is IStorageFile storageFile)
+            if (e.Arguments != null && e.Arguments.Length > 0 && File.Exists(e.Arguments))
             {
-                NavigationHelper.ToLoginPage(storageFile.Path);
-
+                NavigationHelper.ToLoginPage(e.Arguments);
                 m_window.Activate();
                 return;
             }
@@ -70,7 +65,6 @@ namespace EasePass
 
             m_window.Activate();
         }
-
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             _singleInstanceApp.Launch(args.Arguments);
