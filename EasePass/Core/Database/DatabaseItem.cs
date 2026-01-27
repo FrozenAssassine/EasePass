@@ -142,7 +142,7 @@ namespace EasePass.Core.Database
         #region CheckPasswordCorrect
         public async Task<DatabaseValidationResult> CheckPasswordCorrect(SecureString enteredPassword, bool showWrongPasswordError = false)
         {
-            if (enteredPassword == null)
+            if (enteredPassword == null || enteredPassword.Length == 0)
                 return new(PasswordValidationResult.WrongPassword, null);
 
             var availability = DatabaseSource.Availability;

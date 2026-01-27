@@ -123,5 +123,32 @@ namespace EasePass.Tests.Core
                  if(File.Exists(dbPath)) File.Delete(dbPath);
              }
         }
+
+        [TestMethod]
+        public async Task TestNullAndEmptyPasswordForDB()
+        {
+            string dbPath = DatabaseTestHelper.GetTempDatabasePath();
+            var password = DatabaseTestHelper.ToSecureString("password123");
+            var emptyPW = DatabaseTestHelper.ToSecureString("");
+
+            try
+            {
+                var db = await Database.CreateNewDatabase(dbPath, password);
+                Assert.IsNotNull(db);
+                Assert.AreEqual(dbPath, (db.DatabaseSource as NativeDatabaseSource)?.Path);
+
+                var sameDB = new DatabaseItem(dbPath);
+                var resEmpty = await sameDB.CheckPasswordCorrect(emptyPW, false);
+                var resNull = await sameDB.CheckPasswordCorrect(null, false);
+            
+                Assert.AreEqual(PasswordValidationResult.WrongPassword, resEmpty.result,  "Empty password should not validate.");
+                Assert.AreEqual(PasswordValidationResult.WrongPassword, resNull.result, "Null password should not validate.");
+            }
+            finally
+            {
+                if (File.Exists(dbPath)) File.Delete(dbPath);
+            }
+        }
+
     }
 }
