@@ -167,58 +167,46 @@ public sealed partial class ExtensionPage : Page
 
             var downloadInfoBar = InfoMessages.DownloadingPluginInfo();
 
-            await Task.Run(async () =>
+            var res = await RequestsHelper.DownloadFileAsync(fetchedExtension.URL, p, 5000, (msg) => InfoMessages.CouldNotGetExtensions(msg));
+            if (!res) //error while downloading plugin to file.
             {
-                var res = await RequestsHelper.DownloadFileAsync(fetchedExtension.URL, p, 5000, (msg)=> InfoMessages.CouldNotGetExtensions(msg));
-                if (!res) //error while downloading plugin to file.
+                downloadInfoBar.IsOpen = false;
+                return;
+            }
+
+            string hashCode = HashHelper.HashFile(p);
+            string hashfilename = System.IO.Path.GetDirectoryName(p) + "\\" + hashCode + ".dll";
+            if (File.Exists(hashfilename))
+            {
+                List<string> deleteExtensions = new List<string>();
+                deleteExtensions.AddRange(File.ReadAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat"));
+                int index = deleteExtensions.IndexOf(hashCode);
+                if (index >= 0)
                 {
+                    deleteExtensions.RemoveAt(index);
+                    File.WriteAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", deleteExtensions);
                     DispatcherQueue.TryEnqueue(() =>
                     {
+                        InstallExtensionFromFile(hashfilename);
                         downloadInfoBar.IsOpen = false;
                     });
+
+                    File.Delete(p);
                     return;
                 }
-
-                string hashCode = HashHelper.HashFile(p);
-                string hashfilename = System.IO.Path.GetDirectoryName(p) + "\\" + hashCode + ".dll";
-                if (File.Exists(hashfilename))
+                else
                 {
-                    List<string> deleteExtensions = new List<string>();
-                    deleteExtensions.AddRange(File.ReadAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat"));
-                    int index = deleteExtensions.IndexOf(hashCode);
-                    if (index >= 0)
-                    {
-                        deleteExtensions.RemoveAt(index);
-                        File.WriteAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", deleteExtensions);
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            InstallExtensionFromFile(hashfilename);
-                            downloadInfoBar.IsOpen = false;
-                        });
-
-                        File.Delete(p);
-                        return;
-                    }
-                    else
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            InfoMessages.ExtensionAlreadyInstalled();
-                            downloadInfoBar.IsOpen = false;
-                        });
-
-                        File.Delete(p);
-                        return;
-                    }
-                }
-                File.Move(p, hashfilename);
-
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    InstallExtensionFromFile(hashfilename);
+                    InfoMessages.ExtensionAlreadyInstalled();
                     downloadInfoBar.IsOpen = false;
-                });
-            });
+
+                    File.Delete(p);
+                    return;
+                }
+            }
+            File.Move(p, hashfilename);
+
+            InstallExtensionFromFile(hashfilename);
+            downloadInfoBar.IsOpen = false;
         }
     }
     private async void InstallExtensionFromFile(string p)
