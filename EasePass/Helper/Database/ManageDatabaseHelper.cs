@@ -98,7 +98,6 @@ internal class ManageDatabaseHelper
     {
         DatabaseItem[] databases = Core.Database.Database.GetAllUnloadedDatabases();
         string comboboxIndexDBName = AppSettings.LoadedDatabaseName ?? (databases.Length > 0 ? databases[0].Name : "");
-        databaseBox.Items.Clear();
         foreach (DatabaseItem item in databases)
         {
             databaseBox.Items.Add(item);
