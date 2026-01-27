@@ -280,5 +280,10 @@ namespace EasePass.Views
                 UIThreadInvoker.Invoke(() => InfoMessages.OpenExternalRemoteConfigEditorFailed());
             }
         }
+
+        private void ResetPossibleCharactersInPassword(object sender, RoutedEventArgs e)
+        {
+            pswd_chars.Text = DefaultSettingsValues.passwordChars;
+        }
     }
 }
