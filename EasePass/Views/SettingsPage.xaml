@@ -49,8 +49,14 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-
-                        <TextBox x:Uid="View_SettingsPage_PossiblePWCharacters" Margin="5" Grid.Row="0" Header="Possible characters in password" x:Name="pswd_chars" PlaceholderText="Some letters, digits and punctuation..." TextChanged="pswd_chars_TextChanged"/>
+                        <Grid Grid.Row="0" Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" x:Uid="View_SettingsPage_PossiblePWCharacters" Header="Possible characters in password" x:Name="pswd_chars" PlaceholderText="Some letters, digits and punctuation..." TextChanged="pswd_chars_TextChanged"/>
+                            <Button Margin="10,27,0,0" Style="{ThemeResource AccentButtonStyle}" Grid.Column="1" Click="ResetPossibleCharactersInPassword" Content="Reset" x:Uid="View_SettingsPage_ResetPopularityCounter"/>
+                        </Grid>
                         <TextBox x:Uid="View_SettingsPage_PasswordLength" Margin="5" Grid.Row="1" Header="Password length (min: 8)" x:Name="pswd_length" PlaceholderText="Length of the password..." TextChanging="pswd_length_TextChanging" TextChanged="pswd_length_TextChanged"/>
                         <ToggleSwitch x:Uid="View_SettingsPage_VerifyPWLeaked" Margin="5" Grid.Row="2" Header="Verify that the password was not leaked" x:Name="disableLeakedPasswords" Toggled="disableLeakedPasswords_Toggled"/>
                     </Grid>
