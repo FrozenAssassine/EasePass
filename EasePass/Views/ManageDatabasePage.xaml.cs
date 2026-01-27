@@ -132,8 +132,13 @@ public sealed partial class ManageDatabasePage : Page
     {
         if (selectedDatabase == null)
             return;
+        if (selectedDatabase == Database.LoadedInstance)
+            return;
+
+        Database.LoadedInstance.Dispose();
 
         Database.LoadedInstance = selectedDatabase;
+        Database.LoadedInstance.DatabaseSource.Login();
         InfoMessages.DatabaseLoaded();
     }
 
@@ -253,7 +258,7 @@ public sealed partial class ManageDatabasePage : Page
                 return;
             }
             
-            var res = await db.Unlock(password, true);
+            var res = await db.Unlock(password, true, false);
             if(res == false)
             {
                 databaseDisplay.SelectedItem = null;

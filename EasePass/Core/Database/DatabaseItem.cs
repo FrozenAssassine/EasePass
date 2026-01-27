@@ -239,7 +239,7 @@ namespace EasePass.Core.Database
         /// <param name="password">The Password of the Database</param>
         /// <param name="database">The Database, which contains the Settings and the Passwords</param>
         /// <returns>Returns <see langword="true"/> if the <paramref name="database"/> could be loaded</returns>
-        private bool LoadInternal(SecureString password, DatabaseFile database)
+        private bool LoadInternal(SecureString password, DatabaseFile database, bool startLoggedInSession = true)
         {
             if (database == null || password == null)
                 return false;
@@ -250,7 +250,8 @@ namespace EasePass.Core.Database
             SecondFactor = database.SecondFactor;
             database.SecondFactor = null;
 
-            DatabaseSource.Login();
+            if (startLoggedInSession)
+                DatabaseSource.Login();
 
             ClearOldClicksCache();
 
@@ -299,7 +300,7 @@ namespace EasePass.Core.Database
         /// <param name="password">The Password of the Database</param>
         /// <param name="showWrongPasswordError">Specifies if a Info Messae should be shown if the <paramref name="password"/> is wrong</param>
         /// <returns>Returns <see langword="true"/> if the Database could be unlocked, otherwise <see langword="false"/>.</returns>
-        public async Task<bool> Unlock(SecureString password, bool showWrongPasswordError = true)
+        public async Task<bool> Unlock(SecureString password, bool showWrongPasswordError = true, bool startLoggedInSession = true)
         {
             var result = await CheckPasswordCorrect(password, showWrongPasswordError);
             if (result.result == PasswordValidationResult.DatabaseNotFound)
@@ -312,7 +313,7 @@ namespace EasePass.Core.Database
                 && result.result != PasswordValidationResult.WrongFormat
                 && result.result != PasswordValidationResult.WrongPassword
                 && result.result != PasswordValidationResult.LockedByOtherUser
-                && LoadInternal(password, result.database);
+                && LoadInternal(password, result.database, startLoggedInSession);
         }
         #endregion
 
