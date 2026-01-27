@@ -116,7 +116,7 @@ namespace EasePass.Tests.Core
                  DatabaseItem db = new DatabaseItem(dbPath);
                  Database.LoadedInstance = db;
 
-                Assert.AreEqual(db.Name, AppSettings.LoadedDatabaseSource);
+                Assert.AreEqual(db.DatabaseSource.SourceDescription, AppSettings.LoadedDatabaseSource);
              }
              finally
              {
