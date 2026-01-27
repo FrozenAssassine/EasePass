@@ -43,7 +43,7 @@ namespace EasePass.Settings
         }
         public static string defaultLanguage = "en-US";
         public const int ClipboardClearTimeoutSec = 15;
-        public const int gridSplitterWidth = 240;
+        public const int gridSplitterWidth = 270;
 
         public const int windowWidth = 1100;
         public const int windowHeight = 700;
