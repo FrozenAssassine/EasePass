@@ -17,6 +17,7 @@ copies or substantial portions of the Software.
 using EasePass.Core;
 using EasePass.Core.Database;
 using EasePass.Dialogs;
+using EasePass.Helper;
 using EasePass.Helper.Extension;
 using EasePass.Helper.Logout;
 using EasePass.Helper.Security.Generator;
@@ -86,7 +87,7 @@ public sealed partial class MainWindow : Window
     {
         databaseSavingProgressRing.Visibility = Visibility.Visible;
 
-        await Database.LoadedInstance.ForceSaveAsync();
+        await Task.Run(async () => await Database.LoadedInstance.ForceSaveAsync());
 
         databaseSavingProgressRing.Visibility = Visibility.Collapsed;
     }
