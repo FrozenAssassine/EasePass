@@ -15,7 +15,7 @@ namespace EasePass.Dialogs
             {
                 Title = "The new SecondFactor Token for the Database".Localized("Dialogs_ShowSF_Title/Text"),
                 PrimaryButtonText = "Done".Localized("Dialog_Button_Done/Text"),
-                CloseButtonText = "Done".Localized("Dialog_Button_Done/Text"),
+                CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
                 XamlRoot = App.m_window.Content.XamlRoot,
                 Content = showSecondFactorPage
             };
