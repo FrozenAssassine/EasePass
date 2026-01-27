@@ -56,7 +56,10 @@ namespace EasePass.Helper.FileSystem
 
         public static void Clean(string pluginID)
         {
-            if(Directory.Exists(path + pluginID))
+            if (string.IsNullOrEmpty(path))
+                path = ApplicationData.Current.LocalFolder.Path + "\\extensions\\";
+
+            if (Directory.Exists(path + pluginID))
                 Directory.Delete(path + pluginID, true);
             SettingsManager.DeleteSettingsStartsWith(AppsettingsPrefix + pluginID + "_");
         }
