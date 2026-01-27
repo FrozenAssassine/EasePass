@@ -45,12 +45,8 @@ public class ExtensionManager
 
         string[] extensionPaths = Directory.GetFiles(ExtensionsFolderPath);
         for (int i = 0; i < extensionPaths.Length; i++)
-        {
             if (FileHelper.HasExtension(extensionPaths[i], ".dll"))
-            {
-                var extension = LoadExtension(extensionPaths[i]);
-            }
-        }
+                LoadExtension(extensionPaths[i]);
 
         HandleExtensionsLoaded();
     }
