@@ -104,6 +104,8 @@ public sealed partial class MainWindow : Window
             _isClosingForcefully = true;
             this.Close();
         }
+
+        Database.LoadedInstance?.Dispose();
     }
 
     private void InactivityHelper_InactivityStarted()

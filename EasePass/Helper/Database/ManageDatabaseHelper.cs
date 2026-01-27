@@ -97,11 +97,11 @@ internal class ManageDatabaseHelper
     public static void LoadDatabasesToCombobox(ComboBox databaseBox)
     {
         DatabaseItem[] databases = Core.Database.Database.GetAllUnloadedDatabases();
-        string comboboxIndexDBName = AppSettings.LoadedDatabaseName ?? (databases.Length > 0 ? databases[0].Name : "");
+        string comboboxIndexDBSource = AppSettings.LoadedDatabaseSource ?? (databases.Length > 0 ? databases[0].DatabaseSource.SourceDescription : "");
         foreach (DatabaseItem item in databases)
         {
             databaseBox.Items.Add(item);
-            if (comboboxIndexDBName.Equals(item.Name, System.StringComparison.OrdinalIgnoreCase))
+            if (comboboxIndexDBSource.Equals(item.DatabaseSource.SourceDescription))
             {
                 databaseBox.SelectedItem = item;
             }
