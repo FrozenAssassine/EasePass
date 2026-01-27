@@ -262,7 +262,7 @@ namespace EasePass.Views
             }
             catch (Exception)
             {
-                UIThreadInvoker.Invoke(() => InfoMessages.RemoteDBSettingsCouldNotBeSaved());
+                InfoMessages.RemoteDBSettingsCouldNotBeSaved();
             }
         }
 
@@ -277,7 +277,7 @@ namespace EasePass.Views
             }
             catch (Exception)
             {
-                UIThreadInvoker.Invoke(() => InfoMessages.OpenExternalRemoteConfigEditorFailed());
+                InfoMessages.OpenExternalRemoteConfigEditorFailed();
             }
         }
     }
