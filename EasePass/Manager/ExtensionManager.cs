@@ -21,7 +21,7 @@ public class ExtensionManager
     public event ExtensionsInitializedEvent ExtensionsInitialized;
     public bool ExtensionsLoaded { get; private set; } = false;
     public List<Extension> Extensions { get; } = new ();
-    public  List<IDatabaseSource> DatabaseSources { get; } = new();
+    public List<IDatabaseSource> DatabaseSources { get; } = new();
 
     //todo @finn use them everywhere
     public const string ExtensionsFolderName = "extensions"; 
@@ -45,8 +45,12 @@ public class ExtensionManager
 
         string[] extensionPaths = Directory.GetFiles(ExtensionsFolderPath);
         for (int i = 0; i < extensionPaths.Length; i++)
+        {
             if (FileHelper.HasExtension(extensionPaths[i], ".dll"))
-                Extensions.Add(LoadExtension(extensionPaths[i]));
+            {
+                var extension = LoadExtension(extensionPaths[i]);
+            }
+        }
 
         HandleExtensionsLoaded();
     }
@@ -60,22 +64,21 @@ public class ExtensionManager
     private void DeleteMarkedExtensions()
     {
         // Delete extensions that are marked for deletion
-        if (File.Exists(ToDeletedExtensionPath))
+        if (!File.Exists(ToDeletedExtensionPath))
+            return;
+        foreach (string extensionID in File.ReadLines(ToDeletedExtensionPath))
         {
-            foreach (string extensionID in File.ReadLines(ToDeletedExtensionPath))
-            {
-                string extensionFile = Path.Combine(ExtensionsFolderPath, extensionID + ".dll");
-                if (File.Exists(extensionFile))
-                {
-                    File.Delete(extensionFile);
+            string extensionFile = Path.Combine(ExtensionsFolderPath, extensionID + ".dll");
+            if (!File.Exists(extensionFile))
+                continue;
 
-                    if (AppSettings.RemovePluginSettingsOnUninstall)
-                        PluginStorageHelper.Clean(extensionID);
-                }
-            }
-            //moved this into the if branch, because why write nothing to the file if it does not even exist?
-            File.WriteAllText(ToDeletedExtensionPath, "");
+            File.Delete(extensionFile);
+
+            if (AppSettings.RemovePluginSettingsOnUninstall)
+                PluginStorageHelper.Clean(extensionID);
         }
+        
+        File.WriteAllText(ToDeletedExtensionPath, "");
     }
 
 
@@ -83,37 +86,23 @@ public class ExtensionManager
     {
         List<T> result = new List<T>();
         for (int i = 0; i < Extensions.Count; i++)
-        {
-            int length = Extensions[i].Interfaces.Length;
-            for (int j = 0; j < length; j++)
-            {
+            for (int j = 0; j < Extensions[i].Interfaces.Length; j++)
                 if (Extensions[i].Interfaces[j] is T t)
-                {
                     result.Add(t);
-                }
-            }
-        }
         return result.ToArray();
     }
     public List<FetchedExtension> GetExtensionsFromSources()
     {
         List<FetchedExtension> res = new List<FetchedExtension>();
         for (int i = 0; i < Extensions.Count; i++)
-        {
-            int length = Extensions[i].Interfaces.Length;
-            for (int j = 0; j < length; j++)
-            {
+            for (int j = 0; j < Extensions[i].Interfaces.Length; j++)
                 if (Extensions[i].Interfaces[j] is IExtensionSource source)
-                {
                     res.AddRange(source.GetExtensionSources().Select((item) => { return new FetchedExtension(item.Source, item.Name, source.SourceName); }));
-                }
-            }
-        }
         return res;
     }
 
 
-    public Models.Extension LoadExtension(string path)
+    public Extension LoadExtension(string path)
     {
         string id = Path.GetFileNameWithoutExtension(path);
         var interfaces = ReflectionHelper.GetAllExternalInstances(path);
@@ -122,12 +111,16 @@ public class ExtensionManager
 
         // Do not compress into single loop, because injection must be done before initialization
         foreach (var extInterface in interfaces)
-            ExtensionHelper.Inject(extInterface, id);
+            Inject(extInterface, id);
 
         foreach (var extInterface in interfaces)
             InitExtension(extInterface, id);
 
-        return new Models.Extension(interfaces, id);
+        Extension e = new Extension(interfaces, id);
+        if(e != null)
+            Extensions.Add(e);
+
+        return e;
     }
 
     private void InitExtension(IExtensionInterface obj, string pluginID)
@@ -164,5 +157,31 @@ public class ExtensionManager
         }
     }
 
+    private void Inject(IExtensionInterface obj, string pluginID)
+    {
+        if (obj is IFilePickerInjectable filePicker)
+        {
+            try
+            {
+                filePicker.FilePicker = FilePicker;
+            }
+            catch { }
+        }
+        if (obj is IStorageInjectable storageInjectable)
+        {
+            try
+            {
+                PluginStorageHelper.Initialize(storageInjectable, pluginID);
+            }
+            catch { }
+        }
 
+        string FilePicker(string[] extensions)
+        {
+            var res = Task.Run(async () => await FilePickerHelper.PickOpenFile(extensions)).Result;
+            if (res.success)
+                return res.path;
+            return "";
+        }
+    }
 }
