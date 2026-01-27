@@ -181,7 +181,7 @@ namespace EasePass.Views
                 return;
 
             Database.LoadedInstance.AddItem(newItem);
-            Searchbox_TextChanged(searchbox.InternalSuggestBox, true, null);
+            UpdateSearchbox();
             await Database.LoadedInstance.SaveAsync();
         }
         private void Update2FATimer()
@@ -254,6 +254,10 @@ namespace EasePass.Views
             ClipboardHelper.Copy(generated.Replace(" ", ""));
         }
 
+        private void UpdateSearchbox()
+        {
+            Searchbox_TextChanged(searchbox.InternalSuggestBox, true, searchbox.Text);
+        }
 
         private async void DeletePasswordItem_Click(object sender, RoutedEventArgs e)
         {
@@ -312,7 +316,7 @@ namespace EasePass.Views
             searchbox.InfoLabel = passwordItemListView.Items.Count.ToString();
             searchbox.Focus(FocusState.Programmatic);
 
-            Searchbox_TextChanged(searchbox.InternalSuggestBox, true, null);
+            UpdateSearchbox();
         }
         private void Page_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
@@ -373,14 +377,13 @@ namespace EasePass.Views
             Reload();
             await Database.LoadedInstance.SaveAsync();
             SetVis(icon);
-            Searchbox_TextChanged(searchbox.InternalSuggestBox, true, null);
         }
         private async void SwitchOrder_Click(object sender, RoutedEventArgs e)
         {
             Database.LoadedInstance.SetNewPasswords(Database.LoadedInstance.Items.ReverseSelf());
             Reload();
             await Database.LoadedInstance.SaveAsync();
-            Searchbox_TextChanged(searchbox.InternalSuggestBox, true, null);
+            UpdateSearchbox();
         }
 
         private void RightclickedItem_CopyUsername_Click(object sender, RoutedEventArgs e) => ClipboardHelper.Copy(((sender as MenuFlyoutItem)?.Tag as PasswordManagerItem)?.Username);

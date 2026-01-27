@@ -36,7 +36,7 @@ namespace EasePass.Controls
 
         public string Text
         {
-            get => _innerTextBox.Text;
+            get => _innerTextBox == null? "" : _innerTextBox.Text;
             set
             {
                 _isUserTextChange = false;
