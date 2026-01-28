@@ -15,7 +15,7 @@ namespace EasePass.Models.Logger
             
         }
 
-        public void Init(string framework, string runtimeVersion, string processArch, string osArch, string osDescription, string osVersion, bool is64BitOS, int cpuCount, bool is64BitProcess, long totalMemory, long heapSize, string culture, string uiCulture, string timezone, bool isAdministrator, bool isContainer, string dotNetRoot)
+        public void Init(string easepassVersion, string framework, string runtimeVersion, string processArch, string osArch, string osDescription, string osVersion, bool is64BitOS, int cpuCount, bool is64BitProcess, long totalMemory, long heapSize, string culture, string uiCulture, string timezone, bool isAdministrator, bool isContainer, string dotNetRoot)
         {
             
         }

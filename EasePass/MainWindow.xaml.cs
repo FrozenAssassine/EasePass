@@ -52,7 +52,7 @@ public sealed partial class MainWindow : Window
     {
         this.InitializeComponent();
 
-        LoggingManager.Logger = new DebugLineLogger(); // To disable, use "new NoLogger()"
+        LoggingManager.Logger = new FileLogger(); // new DebugLineLogger(); // To disable, use "new NoLogger()"
         LoggingManager.InitializeCurrentLogger();
 
         CurrentInstance = this;
@@ -110,6 +110,8 @@ public sealed partial class MainWindow : Window
         }
 
         Database.LoadedInstance?.Dispose();
+
+        LoggingManager.Logger.Flush();
     }
 
     private void InactivityHelper_InactivityStarted()

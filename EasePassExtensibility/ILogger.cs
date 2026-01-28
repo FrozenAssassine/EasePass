@@ -12,7 +12,7 @@ namespace EasePassExtensibility
         /// <summary>
         /// This function provides initial environment information to the logger. This function is not necessarily called. All values that cannot be provided are null or empty.
         /// </summary>
-        void Init(string framework, string runtimeVersion, string processArch, string osArch, string osDescription, string osVersion, bool is64BitOS, int cpuCount, bool is64BitProcess, long totalMemory, long heapSize, string culture, string uiCulture, string timezone, bool isAdministrator, bool isContainer, string dotNetRoot);
+        void Init(string easepassVersion, string framework, string runtimeVersion, string processArch, string osArch, string osDescription, string osVersion, bool is64BitOS, int cpuCount, bool is64BitProcess, long totalMemory, long heapSize, string culture, string uiCulture, string timezone, bool isAdministrator, bool isContainer, string dotNetRoot);
         /// <summary>
         /// Logs something, e.g. for debugging purposes or whatever...
         /// </summary>
