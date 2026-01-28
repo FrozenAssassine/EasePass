@@ -1,5 +1,6 @@
 using EasePass.Core.Database.Format.Serialization;
 using EasePass.Dialogs;
+using EasePass.Helper;
 using EasePass.Helper.Database;
 using EasePass.Models;
 using EasePass.Settings;
@@ -417,7 +418,15 @@ namespace EasePass.Core.Database
                 return false;
 
             source ??= DatabaseSource;
-            return await DatabaseFormatHelper.Save(source, MasterPassword, SecondFactor, Settings, Items);
+            bool saveRes =  await DatabaseFormatHelper.Save(source, MasterPassword, SecondFactor, Settings, Items);
+            if (!saveRes)
+            {
+                UIThreadInvoker.Invoke(() =>
+                {
+                    InfoMessages.DatabaseSaveToFileError(source.SourceDescription);
+                });
+            }
+            return saveRes;
         }
         #endregion
 

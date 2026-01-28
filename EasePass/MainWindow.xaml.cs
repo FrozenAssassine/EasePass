@@ -90,10 +90,6 @@ public sealed partial class MainWindow : Window
         bool saveRes = await Task.Run(async () => await Database.LoadedInstance.ForceSaveAsync());
 
         databaseSavingProgressRing.Visibility = Visibility.Collapsed;
-
-        if (!saveRes)
-            InfoMessages.DatabaseSaveToFileError(Database.LoadedInstance.DatabaseSource.SourceDescription);
-
         return saveRes;
     }
 
