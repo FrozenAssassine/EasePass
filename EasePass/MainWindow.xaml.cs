@@ -17,16 +17,14 @@ copies or substantial portions of the Software.
 using EasePass.Core;
 using EasePass.Core.Database;
 using EasePass.Dialogs;
-using EasePass.Helper;
-using EasePass.Helper.Extension;
 using EasePass.Helper.Logout;
 using EasePass.Helper.Security.Generator;
 using EasePass.Manager;
+using EasePass.Models.Logger;
 using EasePass.Views;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -53,6 +51,9 @@ public sealed partial class MainWindow : Window
     public MainWindow()
     {
         this.InitializeComponent();
+
+        LoggingManager.Logger = new DebugLineLogger(); // To disable, use "new NoLogger()"
+        LoggingManager.InitializeCurrentLogger();
 
         CurrentInstance = this;
         UIDispatcherQueue = DispatcherQueue.GetForCurrentThread();

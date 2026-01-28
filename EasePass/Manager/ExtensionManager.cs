@@ -127,7 +127,7 @@ public class ExtensionManager
             {
                 initializer.Init();
             }
-            catch { }
+            catch (Exception e) { LoggingManager.Logger.LogError(e.ToString()); }
         }
         if (obj is IDatabasePaths p)
         {
@@ -135,7 +135,7 @@ public class ExtensionManager
             {
                 p.Init(Core.Database.Database.GetAllDatabasePaths());
             }
-            catch { }
+            catch (Exception e) { LoggingManager.Logger.LogError(e.ToString()); }
         }
         if (obj is IDatabaseProvider dbProv)
         {
@@ -146,9 +146,10 @@ public class ExtensionManager
                     DatabaseSources.Add(new DatabaseSourceErrorHandlingWrapper(item));
                 });
             }
-            catch
+            catch (Exception e)
             {
                 UIThreadInvoker.Invoke(() => InfoMessages.DatabaseProviderLoadingFailed(dbProv.SourceName));
+                LoggingManager.Logger.LogError(e.ToString());
             }
         }
     }
@@ -161,7 +162,7 @@ public class ExtensionManager
             {
                 filePicker.FilePicker = FilePicker;
             }
-            catch { }
+            catch (Exception e) { LoggingManager.Logger.LogError(e.ToString()); }
         }
         if (obj is IStorageInjectable storageInjectable)
         {
@@ -169,7 +170,15 @@ public class ExtensionManager
             {
                 PluginStorageHelper.Initialize(storageInjectable, pluginID);
             }
-            catch { }
+            catch (Exception e) { LoggingManager.Logger.LogError(e.ToString()); }
+        }
+        if (obj is ILoggerInjectable loggerInjectable)
+        {
+            try
+            {
+                loggerInjectable.Logger = LoggingManager.Logger;
+            }
+            catch (Exception e) { LoggingManager.Logger.LogError(e.ToString()); }
         }
 
         string FilePicker(string[] extensions)

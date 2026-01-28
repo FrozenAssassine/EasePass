@@ -16,6 +16,7 @@ copies or substantial portions of the Software.
 
 using EasePass.Dialogs;
 using EasePass.Helper;
+using EasePass.Manager;
 using EasePassExtensibility;
 using System;
 using System.ComponentModel;
@@ -45,6 +46,11 @@ namespace EasePass.Models
             };
         }
 
+        private void Log(string method, Exception e)
+        {
+            LoggingManager.Logger.LogError("[external_datasource] [" + method + "] " + e.ToString());
+        }
+
         public string DatabaseName {
             get
             {
@@ -52,8 +58,9 @@ namespace EasePass.Models
                 {
                     return source.DatabaseName;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Log("DatabaseName", ex);
                     return "unknown";
                 }
             }
@@ -67,8 +74,9 @@ namespace EasePass.Models
                 {
                     return source.SourceDescription;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Log("SourceDescription", ex);
                     UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
                     return "Source Description Unavailable";
                 }
@@ -83,8 +91,9 @@ namespace EasePass.Models
                 {
                     return source.IsReadOnly;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Log("IsReadOnly", ex);
                     UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
                     return true;
                 }
@@ -101,8 +110,9 @@ namespace EasePass.Models
                 {
                     return source.Availability;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Log("Availability", ex);
                     UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
                     return IDatabaseSource.DatabaseAvailability.UnknownState;
                 }
@@ -117,8 +127,9 @@ namespace EasePass.Models
                 {
                     return source.LastTimeModified;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Log("LastTimeModified", ex);
                     UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
                     return DateTime.MinValue;
                 }
@@ -131,8 +142,9 @@ namespace EasePass.Models
             {
                 return source.GetDatabaseFileBytes();
             }
-            catch
+            catch (Exception ex)
             {
+                Log("GetDatabaseFileBytes", ex);
                 UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
                 return null;
             }
@@ -144,8 +156,9 @@ namespace EasePass.Models
             {
                 return source.SaveDatabaseFileBytes(databaseFileBytes);
             }
-            catch
+            catch (Exception ex)
             {
+                Log("SaveDatabaseFileBytes", ex);
                 UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
                 return Task.FromResult(false);
             }
@@ -157,8 +170,9 @@ namespace EasePass.Models
             {
                 source.Login();
             }
-            catch
+            catch (Exception ex)
             {
+                Log("Login", ex);
                 UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
             }
         }
@@ -169,8 +183,9 @@ namespace EasePass.Models
             {
                 source.Logout();
             }
-            catch
+            catch (Exception ex)
             {
+                Log("Logout", ex);
                 UIThreadInvoker.Invoke(() => InfoMessages.UnknownDatabaseSourceError(DatabaseName));
             }
         }
