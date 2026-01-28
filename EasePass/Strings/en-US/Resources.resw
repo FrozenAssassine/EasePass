@@ -1186,4 +1186,7 @@ If you Forget your Token you will have no Access to your Database!</value>
   <data name="Dialog_AddItem_TagsInfo.Text" xml:space="preserve">
     <value>Tags (Separated by Space)</value>
   </data>
+  <data name="View_PasswordPage_SortFirstTag.Text" xml:space="preserve">
+    <value>First Tag</value>
+  </data>
 </root>

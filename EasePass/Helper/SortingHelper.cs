@@ -103,5 +103,20 @@ namespace EasePass.Helper
             }
             return -pmi1_res.CompareTo(pmi2_res);
         }
+
+        public static int ByFirstTag(PasswordManagerItem pmi1, PasswordManagerItem pmi2)
+        {
+            var t1 = pmi1?.Tags;
+            var t2 = pmi2?.Tags;
+
+            bool has1 = t1 != null && t1.Length > 0;
+            bool has2 = t2 != null && t2.Length > 0;
+
+            if (!has1 && !has2) return 0;
+            if (!has1) return 1; 
+            if (!has2) return -1;
+
+            return SortBy(t1[0], t2[0]);
+        }
     }
 }
