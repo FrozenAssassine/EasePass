@@ -1188,4 +1188,7 @@ Wenn Sie Ihr Token vergessen, haben Sie keinen Zugriff mehr auf Ihre Datenbank!<
   <data name="Dialog_AddItem_TagsInfo.Text" xml:space="preserve">
     <value>Tags (Getrennt mit Leerzeichen)</value>
   </data>
+  <data name="View_PasswordPage_SortFirstTag.Text" xml:space="preserve">
+    <value>Erstem Tag</value>
+  </data>
 </root>

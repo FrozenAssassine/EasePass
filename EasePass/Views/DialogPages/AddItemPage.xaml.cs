@@ -14,12 +14,15 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Helper.Security.Generator;
+using EasePass.Manager;
 using EasePass.Models;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using System.Linq;
 using Windows.UI;
 
 namespace EasePass.Views
@@ -27,6 +30,7 @@ namespace EasePass.Views
     public sealed partial class AddItemPage : Page
     {
         PasswordManagerItem input = null;
+        EmailAddressIndexer emailIndexer = new EmailAddressIndexer();
 
         PasswordsPage.PasswordExists pe;
 
@@ -37,6 +41,8 @@ namespace EasePass.Views
             this.InitializeComponent();
             this.pe = pe;
             Hide2FA();
+
+            InitEmailIndexer();
         }
 
         public AddItemPage(PasswordsPage.PasswordExists pe, PasswordManagerItem input = null)
@@ -70,6 +76,14 @@ namespace EasePass.Views
 
             if (scroll.VerticalScrollBarVisibility == ScrollBarVisibility.Visible)
                 scroll.Padding = new Microsoft.UI.Xaml.Thickness(0, 0, 13, 0);
+
+            InitEmailIndexer();
+        }
+
+        private void InitEmailIndexer()
+        {
+            emailIndexer.IndexUniqueEmail(Database.LoadedInstance);
+            emailTB.SuggestionItems = emailIndexer.UniqueEmailAddresses.ToArray();
         }
 
         public PasswordManagerItem GetValue()

@@ -365,6 +365,8 @@ namespace EasePass.Views
         private void SortPopularAll_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByPopularAllTime, sender); // "popular all time" is equal to "popular last year" to save storage space
         private void SortPopular30_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByPopularLast30Days, sender);
         private void SortPasswordStrength(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByPasswordStrength, sender);
+        private void SortTags_Click(object sender, RoutedEventArgs e) => SortClickAction(SortingHelper.ByFirstTag, sender);
+
         private async void SortClickAction(Comparison<PasswordManagerItem> comparison, object sender)
         {
             //always check the current sorting method
@@ -473,7 +475,10 @@ namespace EasePass.Views
         {
             var searchRes = searchPwManager.SearchPasswords(searchbox, sender, Database.LoadedInstance, isUserTextChange, text);
             if (searchRes == null)
+            {
+                passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
                 return;
+            }
 
             passwordItemListView.ItemsSource = searchRes;
             if(searchRes.Count == 1)
