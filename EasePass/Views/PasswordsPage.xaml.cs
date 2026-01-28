@@ -473,7 +473,10 @@ namespace EasePass.Views
         {
             var searchRes = searchPwManager.SearchPasswords(searchbox, sender, Database.LoadedInstance, isUserTextChange, text);
             if (searchRes == null)
+            {
+                passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
                 return;
+            }
 
             passwordItemListView.ItemsSource = searchRes;
             if(searchRes.Count == 1)
