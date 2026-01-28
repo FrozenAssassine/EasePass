@@ -83,13 +83,18 @@ public sealed partial class MainWindow : Window
 
     private bool _isClosingForcefully = false;
 
-    public async Task DoMasterSaveWithProgress()
+    public async Task<bool> DoMasterSaveWithProgress()
     {
         databaseSavingProgressRing.Visibility = Visibility.Visible;
 
-        await Task.Run(async () => await Database.LoadedInstance.ForceSaveAsync());
+        bool saveRes = await Task.Run(async () => await Database.LoadedInstance.ForceSaveAsync());
 
         databaseSavingProgressRing.Visibility = Visibility.Collapsed;
+
+        if (!saveRes)
+            InfoMessages.DatabaseSaveToFileError(Database.LoadedInstance.DatabaseSource.SourceDescription);
+
+        return saveRes;
     }
 
     private async void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
@@ -100,7 +105,8 @@ public sealed partial class MainWindow : Window
         {
             args.Cancel = true;
 
-            await DoMasterSaveWithProgress();
+            if (!await DoMasterSaveWithProgress())
+                return;
 
             _isClosingForcefully = true;
             this.Close();
