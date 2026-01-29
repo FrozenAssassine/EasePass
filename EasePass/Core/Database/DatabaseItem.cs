@@ -70,6 +70,8 @@ namespace EasePass.Core.Database
             DatabaseSource.OnPropertyChanged = () =>
             {
                 var dispatcher = MainWindow.CurrentInstance.DispatcherQueue;
+                if (dispatcher == null) // special case on app close
+                    return;
                 dispatcher.TryEnqueue(() =>
                 {
                     CallPropertyChanged("Name");
