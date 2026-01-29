@@ -52,7 +52,7 @@ public sealed partial class MainWindow : Window
     {
         this.InitializeComponent();
 
-        LoggingManager.Logger = new FileLogger(); // new DebugLineLogger(); // To disable, use "new NoLogger()"
+        LoggingManager.Logger = new MultiLogger(new FileLogger(), new DebugLineLogger()); // To disable, use "new NoLogger()"
         LoggingManager.InitializeCurrentLogger();
 
         CurrentInstance = this;
