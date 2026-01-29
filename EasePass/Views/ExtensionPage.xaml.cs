@@ -25,6 +25,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -212,12 +213,13 @@ public sealed partial class ExtensionPage : Page
     private async void InstallExtensionFromFile(string p)
     {
         Extension extension = extManager.LoadExtension(p);
+        string id = System.IO.Path.GetFileNameWithoutExtension(p);
         if (extension == null
             || (extension.Interfaces.Where((ext) => { return ext is IWarning; }).Count() > 0
             && !(await new SensitiveDataDialog().Dialog(extension))))
         {
-            File.AppendAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", new string[] { extension.ID });
-            if (extension.Interfaces.Length == 0)
+            File.AppendAllLines(ApplicationData.Current.LocalFolder.Path + "\\delete_extensions.dat", new string[] { id });
+            if (extension == null || extension.Interfaces.Length == 0)
                 InfoMessages.FileIsNotAnExtensions();
             return;
         }
