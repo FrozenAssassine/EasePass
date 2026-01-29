@@ -473,13 +473,17 @@ namespace EasePass.Views
 
         private void Searchbox_TextChanged(AutoSuggestBox sender, bool isUserTextChange, string text)
         {
-            var searchRes = searchPwManager.SearchPasswords(searchbox, sender, Database.LoadedInstance, isUserTextChange, text);
-            if (searchRes == null)
+            if (string.IsNullOrEmpty(text))
             {
                 passwordItemListView.ItemsSource = Database.LoadedInstance.Items;
+                searchbox.InfoLabel = Database.LoadedInstance.Items.Count.ToString();
                 return;
             }
 
+            var searchRes = searchPwManager.SearchPasswords(searchbox, sender, Database.LoadedInstance, isUserTextChange, text);
+            if (searchRes == null)
+                return;
+            
             passwordItemListView.ItemsSource = searchRes;
             if(searchRes.Count == 1)
             {
