@@ -1,4 +1,23 @@
-﻿#Version 1.3.0 [06.01.2025]
+﻿#Version 1.4.0 [30.01.2026]
+	• Added Argon2 encryption for the database
+	• Smoother login experience with progress indicators
+	• Support for remote and external encrypted databases
+	• Faster & Safer Database Handling
+	• Added tagging support for password entries
+	• Async loading and saving for smoother performance
+	• Added full 2FA support with improved dialogs and export handling
+	• Passwords are hidden by default when adding or editing entries
+	• Improved plugin handling and settings storage
+	• Improved search with tag suggestions
+	• Better layout, responsiveness, and scrollbar behavior
+	• Databases can now be opened in readonly mode with clear visual indicators
+	• Improved reliability when closing or logging out
+	• Clearer error messages on export failures
+	• General Stability
+	• Many bug fixes and crash prevention improvements
+
+
+#Version 1.3.0 [06.01.2025]
 	• Introduced the option to export selected passwords via the right-click menu in the password list.
 	• Added a button on the registration page for direct database import.
 	• Updated the font for improved readability, particularly for characters like "I, l, |".

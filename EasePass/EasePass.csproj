@@ -13,7 +13,7 @@
     <Copyright>Copyright © 2023-2026</Copyright>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>9528B8A89B3432F61C4F321BE3088D9488AE2140</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>F0F662243AEEC5542F8CEADF3CF12D029168EDE4</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
@@ -21,7 +21,6 @@
     <AppxBundle>Always</AppxBundle>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
-    <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
     <RepositoryUrl>https://github.com/FrozenAssassine/EasePass.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://easepass.frozenassassine.de/</PackageProjectUrl>
@@ -90,6 +89,7 @@
     <None Remove="Controls\PasswordSafetyChart.xaml" />
     <None Remove="Controls\SearchPasswordsBox.xaml" />
     <None Remove="Controls\TagRenderControl.xaml" />
+    <None Remove="Controls\TextWithSuggestionBox.xaml" />
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\AddItemPage.xaml" />
     <None Remove="Views\DialogPages\ChangePasswordPage.xaml" />
@@ -177,6 +177,11 @@
     <Content Update="Assets\AppIcon\appicon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\TextWithSuggestionBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\SearchPasswordsBox.xaml">
