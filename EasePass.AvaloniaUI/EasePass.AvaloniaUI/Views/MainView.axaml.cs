@@ -5,6 +5,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using EasePass.AvaloniaUI.Core;
+using EasePass.AvaloniaUI.ViewModels;
 using System.Diagnostics;
 using System.Linq;
 using System.Security;
@@ -55,6 +56,10 @@ namespace EasePass.AvaloniaUI.Views
             {
                 db.Load(pw, res.database);
                 Debug.WriteLine("Found: " + db.Items.Count);
+                if (DataContext is MainViewModel vm)
+                {
+                    vm.PasswordItems = db.Items;
+                }
             }
 
 

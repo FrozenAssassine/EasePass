@@ -5,6 +5,7 @@
              xmlns:vm="using:EasePass.AvaloniaUI.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="EasePass.AvaloniaUI.Views.MainView"
+             x:Name="Root"
              x:DataType="vm:MainViewModel">
   <Design.DataContext>
     <!-- This only sets the DataContext for the previewer in an IDE,
@@ -26,5 +27,23 @@
 			   Padding="20,6"
 			   Click="Login_Click"/>
 		<TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+    <ListBox ItemsSource="{Binding PasswordItems}" Margin="0,20,0,0" Height="300">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Vertical" Background="Transparent">
+            <StackPanel.ContextMenu>
+              <ContextMenu>
+                <MenuItem Header="Copy Password"
+                          Command="{Binding #Root.DataContext.CopyPasswordCommand}"
+                          CommandParameter="{Binding Password}"/>
+              </ContextMenu>
+            </StackPanel.ContextMenu>
+            <TextBlock Text="{Binding DisplayName}" FontWeight="Bold"/>
+            <TextBlock Text="{Binding Username}" FontSize="12" Foreground="Gray"/>
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
 	</StackPanel>
 </UserControl>
