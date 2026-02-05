@@ -23,7 +23,9 @@ internal class MainDatabaseLoader : IDatabaseLoader
     /// <summary>
     /// The Associated Data, which will be used for the Argon Hash algorithm
     /// </summary>
-    private readonly static byte[] associatedData = Encoding.UTF8.GetBytes("Database_Version_" + Version);
+    private readonly static byte[] associatedData = Encoding.UTF8.GetBytes("Database_Version_" + ("" + Version).Replace(',', '.'));
+    [Obsolete]
+    private readonly static byte[] associatedDataOld = Encoding.UTF8.GetBytes("Database_Version_" + ("" + Version).Replace('.', ','));
     #endregion
 
     #region Load
@@ -53,6 +55,14 @@ internal class MainDatabaseLoader : IDatabaseLoader
 
             //database.SecondFactor = secondFactorDialog.Token;
             //pass = HashHelper.HashPasswordWithArgon2id(secondFactorDialog.Token, salt, associatedData);
+
+            //if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out data))
+            //{
+            //    // check backwards compatibility for old associated data, which was not culture invariant, so it could cause decryption to fail on locale change.
+            //    pass = HashHelper.HashPasswordWithArgon2id(secondFactorDialog.Token, salt, associatedDataOld);
+            //    if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out data))
+            //        return new(PasswordValidationResult.WrongPassword, default);
+            //}
         }
         else
         {
@@ -60,10 +70,18 @@ internal class MainDatabaseLoader : IDatabaseLoader
             Array.Reverse(base64);
             pass = HashHelper.HashPasswordWithArgon2id(base64, salt, associatedData);
             base64.ZeroOut();
-        }
 
-        if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out data))
-            return new(PasswordValidationResult.WrongPassword, default);
+            if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out data))
+            {
+                // check backwards compatibility for old associated data, which was not culture invariant, so it could cause decryption to fail on locale change.
+                base64 = password.ToBytes().ToBase64();
+                Array.Reverse(base64);
+                pass = HashHelper.HashPasswordWithArgon2id(base64, salt, associatedDataOld);
+                base64.ZeroOut();
+                if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out data))
+                    return new(PasswordValidationResult.WrongPassword, default);
+            }
+        }
 
         ObservableCollection<PasswordManagerItem> items = PasswordManagerItem.DeserializeItems(data);
         if (items == default)
@@ -82,6 +100,8 @@ internal class MainDatabaseLoader : IDatabaseLoader
         if (database == default)
             return new(PasswordValidationResult.WrongFormat, default);
 
+        string data = "";
+
         if (database.Settings.UseSecondFactor)
         {
             //EnterSecondFactorDialog secondFactorDialog = new EnterSecondFactorDialog();
@@ -89,16 +109,25 @@ internal class MainDatabaseLoader : IDatabaseLoader
 
             //database.SecondFactor = secondFactorDialog.Token;
             //pass = HashHelper.HashPasswordWithArgon2id(secondFactorDialog.Token, salt, associatedData);
+            //if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out data))
+            //{
+            //    pass = HashHelper.HashPasswordWithArgon2id(secondFactorDialog.Token, salt, associatedDataOld);
+            //    if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out data))
+            //        return new(PasswordValidationResult.WrongPassword, default);
+            //}
         }
         else
         {
             char[] base64 = password.ToBytes().ToBase64();
             Array.Reverse(base64);
             pass = HashHelper.HashPasswordWithArgon2id(base64, salt, associatedData);
+            if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out data))
+            {
+                pass = HashHelper.HashPasswordWithArgon2id(base64, salt, associatedDataOld);
+                if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out data))
+                    return new(PasswordValidationResult.WrongPassword, default);
+            }
         }
-
-        if (!IDatabaseLoader.DecryptData(database.Data, pass, showWrongPasswordError, out string data))
-            return new(PasswordValidationResult.WrongPassword, default);
 
         ObservableCollection<PasswordManagerItem> items = PasswordManagerItem.DeserializeItems(data);
         if (items == default)
