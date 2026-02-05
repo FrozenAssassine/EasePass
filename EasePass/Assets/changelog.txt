@@ -1,4 +1,4 @@
-﻿#Version 1.4.0 [30.01.2026]
+﻿#Version 1.4.0 [05.02.2026]
 	• Added Argon2 encryption for the database
 	• Smoother login experience with progress indicators
 	• Support for remote and external encrypted databases
