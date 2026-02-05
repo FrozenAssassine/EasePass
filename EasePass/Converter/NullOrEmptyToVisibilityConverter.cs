@@ -20,7 +20,7 @@ using System;
 
 namespace EasePass.Converter;
 
-public class NullOrEmptyToVisibilityConverter : IValueConverter
+public sealed partial class NullOrEmptyToVisibilityConverter : IValueConverter
 {
     public object Convert(object value, Type targetType,
         object parameter, string language)
