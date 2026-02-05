@@ -17,7 +17,7 @@ namespace EasePass.Helper.Database
     {
         #region Load
 
-        public static DatabaseValidationResult ValidateDatabaseWithLatestFormat(
+        public static async Task<DatabaseValidationResult> ValidateDatabaseWithLatestFormat(
             DatabaseValidationResult file,
             IDatabaseSource source,
             SecureString password)
@@ -28,7 +28,7 @@ namespace EasePass.Helper.Database
 
             // Validate using latest format.
             if (file.result == PasswordValidationResult.Success)
-                Core.Database.Format.epdb.MainDatabaseLoader.Save(source, password, default, file.database.Settings, file.database.Items);
+                await Core.Database.Format.epdb.MainDatabaseLoader.Save(source, password, default, file.database.Settings, file.database.Items);
             return file;
         }
 
@@ -48,7 +48,7 @@ namespace EasePass.Helper.Database
                 var resFile = await Core.Database.Format.epeb.MainDatabaseLoader.Load(nativeDBSource, password, showWrongPasswordError);
                 nativeDBSource.Path = Path.ChangeExtension(nativeDBSource.Path, "epdb");
 
-                return ValidateDatabaseWithLatestFormat(resFile, source, password);
+                return await ValidateDatabaseWithLatestFormat(resFile, source, password);
             }
 
             DatabaseValidationResult validationRes;
@@ -76,7 +76,7 @@ namespace EasePass.Helper.Database
                     return await Core.Database.Format.epdb.MainDatabaseLoader.Load(source, password, showWrongPasswordError, preloadedDB.data);
             }
 
-            return ValidateDatabaseWithLatestFormat(validationRes, source, password);
+            return await ValidateDatabaseWithLatestFormat(validationRes, source, password);
         }
         #endregion
 
