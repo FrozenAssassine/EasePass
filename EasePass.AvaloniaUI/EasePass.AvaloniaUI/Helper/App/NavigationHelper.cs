@@ -1,4 +1,4 @@
-﻿using EasePass.AvaloniaUI.Views;
+﻿using EasePass.Views;
 using EasePass.Models;
 using EasePass.ViewModels;
 using System;

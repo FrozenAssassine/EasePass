@@ -15,7 +15,7 @@ copies or substantial portions of the Software.
 */
 
 
-using EasePass.AvaloniaUI.Views;
+using EasePass.Views;
 
 namespace EasePass.Models;
 

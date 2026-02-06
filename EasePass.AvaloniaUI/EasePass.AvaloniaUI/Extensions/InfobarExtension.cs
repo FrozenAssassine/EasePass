@@ -16,7 +16,7 @@ copies or substantial portions of the Software.
 
 using Avalonia.Controls;
 using Avalonia.Threading;
-using EasePass.AvaloniaUI.Views;
+using EasePass.Views;
 using EasePass.Controls;
 using EasePass.Helper;
 using System;

@@ -15,7 +15,6 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.Core.Database;
-using EasePass.Database;
 using EasePass.Dialogs;
 using EasePass.Helper.FileSystem;
 using EasePass.Models;

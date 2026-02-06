@@ -1,4 +1,4 @@
-using EasePass.AvaloniaUI.Views;
+using EasePass.Views;
 using EasePass.Core.Database.Format.Serialization;
 using EasePass.Dialogs;
 using EasePass.Helper;

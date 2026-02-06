@@ -16,7 +16,7 @@ namespace EasePass.Views
 {
     public partial class MainWindow : Window
     {
-        public static Window current;
+        public static MainWindow current;
 
         public static StackPanel InfoMessagesPanel;
 

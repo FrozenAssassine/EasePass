@@ -15,8 +15,6 @@ copies or substantial portions of the Software.
 */
 
 using EasePassExtensibility;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Imaging;
 using System.Collections.Generic;
 using System.Text;
 

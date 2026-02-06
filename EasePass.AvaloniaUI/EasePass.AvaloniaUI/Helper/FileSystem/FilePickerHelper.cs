@@ -16,10 +16,11 @@ copies or substantial portions of the Software.
 
 
 using Avalonia.Platform.Storage;
-using EasePass.AvaloniaUI.Views;
+using EasePass.Views;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EasePass.Views;
 
 namespace EasePass.Helper.FileSystem;
 
