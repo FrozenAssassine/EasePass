@@ -7,7 +7,7 @@ namespace EasePass.Extensions
     /// <summary>
     /// Includes every Extension for the <see cref="SecureString"/>
     /// </summary>
-    internal static class SecureStringExtension
+    public static class SecureStringExtension
     {
         #region Convert
         /// <summary>

@@ -24,7 +24,7 @@ using System.Text;
 
 namespace EasePass.Helper.Security
 {
-    internal class HashHelper
+    public class HashHelper
     {
         /// <summary>
         /// Hashes the given <paramref name="password"/> with the Argon2id Algorithm

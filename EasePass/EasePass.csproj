@@ -37,7 +37,8 @@
 	<WindowsAppSdkSelfContained>true</WindowsAppSdkSelfContained>
 	<SelfContained>true</SelfContained>
 	<WindowsPackageType>MSIX</WindowsPackageType>
-	<AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
+	<AppxBundlePlatforms>x64</AppxBundlePlatforms>
+	<AppxPackageDir>W:\EasePassDump\1.4.1</AppxPackageDir>
 	</PropertyGroup>
   <ItemGroup>
     <None Remove="AppWindows\ScreenScannerWindow.xaml" />

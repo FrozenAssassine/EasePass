@@ -24,7 +24,7 @@ using System.Text;
 
 namespace EasePass.Helper.Security
 {
-    internal class EncryptDecryptHelper
+    public class EncryptDecryptHelper
     {
         #region DecryptStringAES
         public static (string decryptedString, bool correctPassword) DecryptStringAES(byte[] cipherText, string password, string salt)

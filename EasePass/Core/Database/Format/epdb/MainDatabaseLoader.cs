@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace EasePass.Core.Database.Format.epdb
 {
-    internal class MainDatabaseLoader : IDatabaseLoader
+    public class MainDatabaseLoader : IDatabaseLoader
     {
         #region Properties
         public static double Version => 1.4;

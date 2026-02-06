@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EasePass.Extensions
 {
-    internal static class ByteArrayExtension
+    public static class ByteArrayExtension
     {
         private readonly static char[] base64ByteTo = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".ToCharArray();
 
