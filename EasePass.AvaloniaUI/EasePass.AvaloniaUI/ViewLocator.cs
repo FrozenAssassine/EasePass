@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using EasePass.AvaloniaUI.ViewModels;
+using EasePass.ViewModels;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
