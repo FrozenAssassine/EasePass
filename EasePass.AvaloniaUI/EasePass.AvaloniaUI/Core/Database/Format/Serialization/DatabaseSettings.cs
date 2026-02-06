@@ -1,7 +1,8 @@
-﻿using System;
+﻿using EasePass.Core.Database.Enums;
+using System;
 
-namespace EasePass.AvaloniaUI.Core;
-
+namespace EasePass.Core.Database.Format.Serialization
+{
     /// <summary>
     /// Includes all Settings of the Database
     /// This Class will be used for the Serialization/Deserialization
@@ -66,3 +67,4 @@ namespace EasePass.AvaloniaUI.Core;
         }
         #endregion
     }
+}

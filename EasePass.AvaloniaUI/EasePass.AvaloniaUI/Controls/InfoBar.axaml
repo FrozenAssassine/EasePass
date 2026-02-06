@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="EasePass.Controls.InfoBarTemplate"
+			 xmlns:local="clr-namespace:EasePass.Controls">
+	<UserControl.Resources>
+		<!-- Severity brushes -->
+		<SolidColorBrush x:Key="InfoBarInfoBrush" Color="#0078D4"/>
+		<SolidColorBrush x:Key="InfoBarSuccessBrush" Color="#107C10"/>
+		<SolidColorBrush x:Key="InfoBarWarningBrush" Color="#FFAA00"/>
+		<SolidColorBrush x:Key="InfoBarErrorBrush" Color="#D13438"/>
+
+		<local:SeverityToBrushConverter x:Key="SeverityToBrushConverter"/>
+		<local:SeverityToIconConverter x:Key="SeverityToIconConverter"/>
+	</UserControl.Resources>
+
+	<Border CornerRadius="4"
+            Padding="10"
+            Background="{Binding Severity, Converter={StaticResource SeverityToBrushConverter}}"
+            IsVisible="{Binding IsOpen}">
+		<StackPanel Orientation="Horizontal" Spacing="10">
+			<!-- Optional Icon -->
+			<TextBlock Text="{Binding Severity, Converter={StaticResource SeverityToIconConverter}}"
+                       FontSize="18"
+                       VerticalAlignment="Top"/>
+
+			<!-- Text content -->
+			<StackPanel>
+				<TextBlock Text="{Binding Title}" FontWeight="Bold"/>
+				<TextBlock Text="{Binding Message}" TextWrapping="Wrap"/>
+			</StackPanel>
+
+			<!-- Optional Action button -->
+			<ContentControl Content="{Binding ActionContent}" VerticalAlignment="Center"/>
+		</StackPanel>
+	</Border>
+</UserControl>

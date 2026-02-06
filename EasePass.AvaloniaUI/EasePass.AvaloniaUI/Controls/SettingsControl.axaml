@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="100"
+             x:Class="EasePass.AvaloniaUI.Controls.SettingsControl">
+             
+    <Grid x:Name="mainGrid"
+          Margin="0,5,0,0"
+          VerticalAlignment="Stretch" 
+          HorizontalAlignment="Stretch"
+          MinWidth="200"
+          Background="{DynamicResource ExpanderHeaderBackground}" 
+          Padding="16"
+          PointerPressed="mainGrid_PointerPressed">
+        
+        <Grid.Styles>
+             <Style Selector="Grid#mainGrid[Tag=True]:pointerover">
+                 <Setter Property="Opacity" Value="0.7"/>
+             </Style>
+             <!-- Using Tag as 'Clickable' proxy for CSS selector if simple binding doesn't work in selector -->
+        </Grid.Styles>
+        
+        <Grid.Transitions>
+            <Transitions>
+                <DoubleTransition Property="Opacity" Duration="0:0:0.1"/>
+            </Transitions>
+        </Grid.Transitions>
+
+        <StackPanel Height="70" Spacing="10" Orientation="Horizontal" x:Name="headerContent">
+            <TextBlock Text="{Binding Glyph, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                       IsVisible="{Binding Glyph, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                       FontFamily="{DynamicResource SymbolThemeFontFamily}" 
+                       FontSize="20" 
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Left"/>
+                       
+            <TextBlock Text="{Binding Header, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                       FontSize="20" 
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Left"/>
+        </StackPanel>
+        
+        <ContentPresenter Margin="0,0,20,0" 
+                          HorizontalAlignment="Right" 
+                          VerticalAlignment="Center" 
+                          Content="{Binding SettingsContent, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        
+        <Border CornerRadius="5" 
+                BorderThickness="1" 
+                BorderBrush="{DynamicResource ExpanderHeaderBorderBrush}"
+                IsHitTestVisible="False"/>
+    </Grid>
+</UserControl>

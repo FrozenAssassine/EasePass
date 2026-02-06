@@ -1,8 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using EasePass.AvaloniaUI.Core;
+using EasePass.Core;
 using System.Collections.ObjectModel;
 using Avalonia;
+using EasePass.Models;
 
 namespace EasePass.AvaloniaUI.ViewModels
 {

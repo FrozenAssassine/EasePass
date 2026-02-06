@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EasePass.AvaloniaUI.Controls.CopyTextbox">
+    <StackPanel Spacing="4">
+        <TextBlock Text="{Binding Header, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                   IsVisible="{Binding Header, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" 
+                   Classes="header" 
+                   FontWeight="Normal"
+                   FontSize="14"
+                   Foreground="{DynamicResource TextControlHeaderForeground}"/>
+        
+        <TextBox Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"
+                 IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                 Watermark="{Binding Watermark, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                 AcceptsReturn="{Binding AcceptsReturn, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                 UseFloatingWatermark="False"
+                 Classes="revealPasswordButton">
+            <TextBox.InnerRightContent>
+                <Button Click="CopyText_Click"
+                        Theme="{DynamicResource TransparentButton}"
+                        Padding="8,0"
+                        ToolTip.Tip="Copy"
+                        Cursor="Hand">
+                    <PathIcon Data="{StaticResource copy_regular}" />
+                </Button>
+            </TextBox.InnerRightContent>
+        </TextBox>
+    </StackPanel>
+</UserControl>

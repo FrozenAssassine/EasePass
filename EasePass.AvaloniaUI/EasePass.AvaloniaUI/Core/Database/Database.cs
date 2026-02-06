@@ -14,6 +14,12 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.AvaloniaUI.Views;
+using EasePass.Database;
+using EasePass.Helper.Database;
+using EasePass.Helper.Extension;
+using EasePass.Models;
+using EasePass.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,7 +29,7 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EasePass.AvaloniaUI.Core;
+namespace EasePass.Core.Database;
 
 public class Database
 {
@@ -37,7 +43,7 @@ public class Database
             loadedInstance = value;
             if (loadedInstance != null)
             {
-                //AppSettings.LoadedDatabaseSource = loadedInstance.DatabaseSource.SourceDescription;
+                AppSettings.LoadedDatabaseSource = loadedInstance.DatabaseSource.SourceDescription;
             }
 
             loadedInstance.LoadedInstanceChanged();
@@ -58,9 +64,9 @@ public class Database
     {
         DatabaseItem db = new DatabaseItem(new NativeDatabaseSource(path));
         db.MasterPassword = password;
-        db.Settings = new DatabaseSettings();
+        db.Settings = new Format.Serialization.DatabaseSettings();
         db.Settings.UseSecondFactor = false;
-        db.Settings.SecondFactorType = SecondFactorType.None;
+        db.Settings.SecondFactorType = Enums.SecondFactorType.None;
         await db.ForceSaveAsync();
         return db;
     }
@@ -69,7 +75,7 @@ public class Database
     #region GetAllDatabasePaths
     public static string[] GetAllDatabasePaths()
     {
-        string paths = ""; //AppSettings.DatabasePaths;
+        string paths = AppSettings.DatabasePaths;
         ReadOnlySpan<char> chars = paths.AsSpan();
 
         int length = chars.Count('|') + 1;
@@ -97,11 +103,10 @@ public class Database
     #region GetAllUnloadedDatabases
     public static DatabaseItem[] GetAllUnloadedDatabases()
     {
-        //return GetAllDatabasePaths()
-        //    .Select(x => new DatabaseItem(new NativeDatabaseSource(x)))
-        //    .Concat(MainWindow.CurrentInstance.extensionManager.DatabaseSources.Select(x => new DatabaseItem(x)))
-        //    .ToArray();
-        return null;
+        return GetAllDatabasePaths()
+            .Select(x => new DatabaseItem(new NativeDatabaseSource(x)))
+            .Concat(MainWindow.current.extensionManager.DatabaseSources.Select(x => new DatabaseItem(x)))
+            .ToArray();
     }
     #endregion
 
@@ -116,32 +121,32 @@ public class Database
     }
     #endregion
 
-    //#region HasDatabasePath
-    //public static bool HasDatabasePath()
-    //{
-    //    string dbPath = ""; // AppSettings.DatabasePaths;
-    //    string loadedDb = ""; // AppSettings.LoadedDatabaseSource;
+    #region HasDatabasePath
+    public static bool HasDatabasePath()
+    {
+        string dbPath = AppSettings.DatabasePaths;
+        string loadedDb = AppSettings.LoadedDatabaseSource;
 
-    //    //app first start
-    //    if (dbPath.Length == 0 && loadedDb == null)
-    //        return false;
+        //app first start
+        if (dbPath.Length == 0 && loadedDb == null)
+            return false;
 
-    //    if (dbPath.Length > 0 && loadedDb.Length > 0)
-    //        return true;
+        if (dbPath.Length > 0 && loadedDb.Length > 0)
+            return true;
 
-    //    //fallback -> old version never saved the database to the settings, 
-    //    //when there was only the default database loaded.
-    //    if (dbPath.Length == 0 && loadedDb.Length > 0)
-    //    {
-    //        if (File.Exists(DefaultSettingsValues.databasePaths))
-    //        {
-    //            AppSettings.DatabasePaths = DefaultSettingsValues.databasePaths;
-    //            return true;
-    //        }
-    //    }
-    //    return false;
-    //}
-    //#endregion
+        //fallback -> old version never saved the database to the settings, 
+        //when there was only the default database loaded.
+        if (dbPath.Length == 0 && loadedDb.Length > 0)
+        {
+            if (File.Exists(DefaultSettingsValues.databasePaths))
+            {
+                AppSettings.DatabasePaths = DefaultSettingsValues.databasePaths;
+                return true;
+            }
+        }
+        return false;
+    }
+    #endregion
 
     #region RemoveDatabasePath
     public static void RemoveDatabasePath(string path)
@@ -176,7 +181,7 @@ public class Database
     #region SetAllDatabasePaths
     public static void SetAllDatabasePaths(string paths)
     {
-        //AppSettings.DatabasePaths = paths;
+        AppSettings.DatabasePaths = paths;
     }
     #endregion
 }

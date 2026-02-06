@@ -4,12 +4,15 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
-using EasePass.AvaloniaUI.Core;
+using EasePass.Core;
 using EasePass.AvaloniaUI.ViewModels;
 using System.Diagnostics;
 using System.Linq;
 using System.Security;
 using System.Threading.Tasks;
+using EasePass.Extensions;
+using EasePass.Database;
+using EasePass.Models;
 
 namespace EasePass.AvaloniaUI.Views
 {

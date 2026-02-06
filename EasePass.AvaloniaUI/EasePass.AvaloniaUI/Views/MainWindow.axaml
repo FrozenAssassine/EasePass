@@ -6,7 +6,12 @@
         xmlns:views="using:EasePass.AvaloniaUI.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="EasePass.AvaloniaUI.Views.MainWindow"
+        xmlns:fluentAvalonia="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
         Icon="/Assets/avalonia-logo.ico"
-        Title="EasePass.AvaloniaUI">
-        <views:MainView />
+        Title="EasePass.AvaloniaUI" >
+	<Grid>
+		<StackPanel x:Name="infoMessagesPanel"/>
+	    <!--There is no frame lol mvvm handles this like react component swapping I guess-->
+        <Frame x:Name="MainFrame" />
+	</Grid>
 </Window>

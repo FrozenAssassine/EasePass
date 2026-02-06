@@ -1,8 +1,8 @@
-﻿namespace EasePass.AvaloniaUI.Core;
-
-public enum DatabaseFileType
+﻿namespace EasePass.Core.Database.Enums
 {
-    epdb,
-    epeb
+    public enum DatabaseFileType
+    {
+        epdb,
+        epeb
+    }
 }
-
