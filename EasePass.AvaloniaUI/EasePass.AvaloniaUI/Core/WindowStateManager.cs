@@ -1,7 +1,5 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using EasePass.Helper;
-using EasePass.Helper.Window;
 
 namespace EasePass.Core;
 

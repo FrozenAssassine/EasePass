@@ -1,5 +1,5 @@
-﻿using EasePass.Models;
-using Microsoft.UI.Xaml.Controls;
+﻿using Avalonia.Controls;
+using EasePass.Models;
 using System;
 
 namespace EasePass.Helper;

@@ -1,5 +1,5 @@
 ﻿using Avalonia.Controls;
-using EasePass.Database;
+using EasePass.Core.Database;
 using EasePass.Models;
 
 namespace EasePass.Helper.Database;

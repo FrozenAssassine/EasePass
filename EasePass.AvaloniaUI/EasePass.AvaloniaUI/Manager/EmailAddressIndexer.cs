@@ -1,6 +1,5 @@
 ﻿
 using EasePass.Core.Database;
-using EasePass.Database;
 using System;
 using System.Collections.Generic;
 

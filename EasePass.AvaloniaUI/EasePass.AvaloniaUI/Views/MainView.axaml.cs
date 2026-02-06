@@ -11,8 +11,8 @@ using System.Linq;
 using System.Security;
 using System.Threading.Tasks;
 using EasePass.Extensions;
-using EasePass.Database;
 using EasePass.Models;
+using EasePass.Core.Database;
 
 namespace EasePass.AvaloniaUI.Views
 {

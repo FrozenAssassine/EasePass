@@ -14,7 +14,8 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-using EasePass.Views;
+
+using EasePass.AvaloniaUI.Views;
 
 namespace EasePass.Models;
 

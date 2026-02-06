@@ -1,5 +1,4 @@
-﻿using EasePass.AvaloniaUI.Settings;
-using EasePass.Core.Database;
+﻿using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Helper;
 using EasePass.Helper.Extension;

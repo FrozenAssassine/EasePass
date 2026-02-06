@@ -1,7 +1,7 @@
 ﻿using EasePass.Models;
 using System.Collections.ObjectModel;
-using EasePass.Database;
-using EasePass.AvaloniaUI;
+using EasePass.AvaloniaUI.Controls;
+using EasePass.Core.Database;
 
 namespace EasePass.Helper
 {

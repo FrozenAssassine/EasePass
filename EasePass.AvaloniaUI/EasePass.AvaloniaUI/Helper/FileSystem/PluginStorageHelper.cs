@@ -1,5 +1,5 @@
-﻿using EasePass.AvaloniaUI.Settings;
-using EasePass.Settings;
+﻿using EasePass.Settings;
+using EasePassExtensibility;
 using System;
 using System.IO;
 using System.Text;

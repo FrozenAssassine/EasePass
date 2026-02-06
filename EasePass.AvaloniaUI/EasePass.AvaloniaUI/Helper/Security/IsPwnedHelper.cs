@@ -1,4 +1,4 @@
-﻿using EasePass.AvaloniaUI.Settings;
+﻿using EasePass.Settings;
 using System;
 using System.IO;
 

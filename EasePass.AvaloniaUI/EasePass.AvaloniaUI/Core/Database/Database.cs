@@ -15,7 +15,6 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.AvaloniaUI.Views;
-using EasePass.Database;
 using EasePass.Helper.Database;
 using EasePass.Helper.Extension;
 using EasePass.Models;

@@ -1,5 +1,4 @@
 ﻿using Avalonia.Controls;
-using EasePass.Helper.Window;
 using EasePass.Settings;
 
 namespace EasePass.Core;
@@ -36,17 +35,19 @@ public class RestoreWindowManager
         window.Position = new Avalonia.PixelPoint(left, top);
         window.Width = width;
         window.Height = height;
-        WindowStateHelper.SetWindowState(window, AppSettings.WindowState);
+
+        //todo: set window state here
     }
 
     private void SaveSettings()
     {
         var windowPosSize = windowStateManager.GetWindowSizePosStateIndependent();
 
-        AppSettings.WindowWidth = windowPosSize.size.Width;
-        AppSettings.WindowHeight = windowPosSize.size.Height;
-        AppSettings.WindowLeft = windowPosSize.position.X;
-        AppSettings.WindowTop = windowPosSize.position.Y;
-        AppSettings.WindowState = windowPosSize.state;
+        //todo do not convert to int here
+        AppSettings.WindowWidth = (int)windowPosSize.Size.Width;
+        AppSettings.WindowHeight = (int)windowPosSize.Size.Height;
+        AppSettings.WindowLeft = windowPosSize.Position.X;
+        AppSettings.WindowTop = windowPosSize.Position.Y;
+        AppSettings.WindowState = windowPosSize.State;
     }
 }
