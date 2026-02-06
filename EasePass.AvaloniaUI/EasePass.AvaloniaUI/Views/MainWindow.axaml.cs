@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Chrome;
 using Avalonia.Interactivity;
-using EasePass.AvaloniaUI.Settings;
+using EasePass.Settings;
 using EasePass.Core;
 using EasePass.Core.Database;
 using EasePass.Dialogs;
@@ -11,7 +11,7 @@ using EasePass.Manager;
 using EasePass.Models.Logger;
 using System.Threading.Tasks;
 
-namespace EasePass.AvaloniaUI.Views
+namespace EasePass.Views
 {
     public partial class MainWindow : Window
     {
@@ -20,7 +20,7 @@ namespace EasePass.AvaloniaUI.Views
         public static StackPanel InfoMessagesPanel;
 
         public InactivityManager inactivityHelper = new InactivityManager();
-        public Frame Frame MainFrame => navigationFrame;
+        public Frame MainFrame => navigationFrame;
         public bool ShowBackArrow { get => navigateBackButton.Visibility == Visibility.Visible; set => navigateBackButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
 
         public static MainWindow CurrentInstance = null;

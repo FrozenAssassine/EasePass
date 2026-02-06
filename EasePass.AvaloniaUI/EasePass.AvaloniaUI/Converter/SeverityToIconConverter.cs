@@ -3,7 +3,7 @@ using EasePass.Controls;
 using System;
 using System.Globalization;
 
-namespace EasePass.AvaloniaUI.Converter
+namespace EasePass.Converter
 {
     internal class SeverityToIconConverter : IValueConverter
     {

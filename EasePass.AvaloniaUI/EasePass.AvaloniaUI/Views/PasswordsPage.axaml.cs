@@ -5,16 +5,10 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using EasePass.Core.Database;
 using EasePass.Extensions;
-using EasePass.Dialogs; 
 using EasePass.Helper;
 using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
-
-// Adjusting namespaces for missing types or moved types
-using EasePass.AvaloniaUI.Dialogs;
 using EasePass.Models;
 using EasePass.Manager;
 using EasePass.Helper.App;
@@ -22,10 +16,9 @@ using EasePass.Settings;
 using EasePass.Helper.Database;
 using EasePass.Helper.Logout;
 using EasePass.AvaloniaUI.Controls;
-// EasePass.Dialogs might not be correct namespace for new project
-// EasePass.Helper might be EasePass.AvaloniaUI.Helper
+using EasePass.AvaloniaUI.Views;
 
-namespace EasePass.AvaloniaUI.Views
+namespace EasePass.Views
 {
     public partial class PasswordsPage : UserControl, INotifyPropertyChanged
     {

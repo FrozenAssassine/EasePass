@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace EasePass.AvaloniaUI.ViewModels
+namespace EasePass.ViewModels
 {
-    public abstract class ViewModelBase : ObservableObject
+    public partial class ViewModelBase : ObservableObject
     {
     }
 }

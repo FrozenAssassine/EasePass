@@ -5,30 +5,27 @@ using System.Collections.ObjectModel;
 using Avalonia;
 using EasePass.Models;
 
-namespace EasePass.AvaloniaUI.ViewModels
+namespace EasePass.ViewModels;
+
+public partial class ViewModelBase : ObservableObject { }
+
+public partial class LoginViewModel : ViewModelBase { }
+public partial class HomeViewModel : ViewModelBase { }
+public partial class SettingsViewModel : ViewModelBase { }
+
+public partial class MainViewModel : ViewModelBase
 {
-    public partial class MainViewModel : ViewModelBase
+    [ObservableProperty]
+    private ViewModelBase _currentPage;
+
+    public MainViewModel()
     {
-        [ObservableProperty]
-        private string _greeting = "Welcome to Avalonia!";
-
-        [ObservableProperty]
-        private ObservableCollection<PasswordManagerItem> _passwordItems = new ObservableCollection<PasswordManagerItem>();
-
-        [RelayCommand]
-        public void CopyPassword(string password)
-        {
-            if (Application.Current?.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                desktop.MainWindow?.Clipboard?.SetTextAsync(password);
-            }
-            else if (Application.Current?.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.ISingleViewApplicationLifetime singleView)
-            {
-                // Access clipboard on mobile/browser if possible, or handle differently
-                // For now, focusing on desktop behavior or general avalanche clipboard abstraction
-                 var topLevel = Avalonia.Controls.TopLevel.GetTopLevel(singleView.MainView);
-                 topLevel?.Clipboard?.SetTextAsync(password);
-            }
-        }
+        // Start at Login
+        _currentPage = new LoginViewModel();
     }
+
+    public void NavigateToHome() => CurrentPage = new HomeViewModel();
+    public void NavigateToSettings() => CurrentPage = new SettingsViewModel();
+    public void NavigateToLogin() => CurrentPage = new LoginViewModel();
+
 }

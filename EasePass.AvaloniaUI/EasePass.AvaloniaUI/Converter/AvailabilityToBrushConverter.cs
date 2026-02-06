@@ -4,7 +4,7 @@ using EasePassExtensibility;
 using System;
 using System.Globalization;
 
-namespace EasePass.AvaloniaUI.Converter
+namespace EasePass.Converter
 {
     public class AvailabilityToBrushConverter : IValueConverter
     {
