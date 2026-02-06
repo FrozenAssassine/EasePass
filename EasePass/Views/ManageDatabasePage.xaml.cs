@@ -206,7 +206,7 @@ public sealed partial class ManageDatabasePage : Page
 
         try
         {
-            MainDatabaseLoader.Save(new NativeDatabaseSource(file.path), rightClicked.MasterPassword, rightClicked.SecondFactor, rightClicked.Settings, rightClicked.Items);
+            await MainDatabaseLoader.Save(new NativeDatabaseSource(file.path), rightClicked.MasterPassword, rightClicked.SecondFactor, rightClicked.Settings, rightClicked.Items);
         }
         catch(Exception ex)
         {

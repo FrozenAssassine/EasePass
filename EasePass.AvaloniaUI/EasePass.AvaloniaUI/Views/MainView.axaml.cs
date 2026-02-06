@@ -74,5 +74,30 @@ namespace EasePass.AvaloniaUI.Views
                 Login_Click(null, null);
         }
 
+        private async void CopyPasswordClick(object? sender, RoutedEventArgs e)
+        {
+            if (sender == null)
+                return;
+            if (sender is not MenuItem item)
+                return;
+            string password = item.Tag as string;
+            if (string.IsNullOrEmpty(password))
+                return;
+            await GetMainWindow().Clipboard.SetTextAsync(password);
+        }
+
+        private void CopyTOTPClick(object? sender, RoutedEventArgs e)
+        {
+            /*if (sender == null)
+                return;
+            if (sender is not MenuItem item)
+                return;
+            PasswordManagerItem totp = item.Tag as PasswordManagerItem;
+            if (totp == null)
+                return;
+            TOTPGenerator totpGen = new TOTPGenerator(totp);
+            string code = totpGen.GenerateTOTP();
+            GetMainWindow().Clipboard.SetTextAsync(code);*/
+        }
     }
 }

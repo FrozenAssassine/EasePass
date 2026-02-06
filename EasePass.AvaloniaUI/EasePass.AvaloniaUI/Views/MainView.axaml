@@ -34,9 +34,8 @@
           <StackPanel Orientation="Vertical" Background="Transparent">
             <StackPanel.ContextMenu>
               <ContextMenu>
-                <MenuItem Header="Copy Password"
-                          Command="{Binding #Root.DataContext.CopyPasswordCommand}"
-                          CommandParameter="{Binding Password}"/>
+                <MenuItem Header="Copy Password" Click="CopyPasswordClick" Tag="{Binding Password}"/>
+                <MenuItem Header="Copy TOTP" Click="CopyTOTPClick" Tag="{Binding}"/>
               </ContextMenu>
             </StackPanel.ContextMenu>
             <TextBlock Text="{Binding DisplayName}" FontWeight="Bold"/>

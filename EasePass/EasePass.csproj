@@ -6,7 +6,10 @@
     <RootNamespace>EasePass</RootNamespace>
     <Platforms>x86;x64;ARM64</Platforms>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-    <PublishProfile>win-$(Platform).pubxml</PublishProfile>
+	<RuntimeIdentifier Condition="'$(Platform)'=='x86'">win-x86</RuntimeIdentifier>
+	<RuntimeIdentifier Condition="'$(Platform)'=='x64'">win-x64</RuntimeIdentifier>
+	<RuntimeIdentifier Condition="'$(Platform)'=='ARM64'">win-arm64</RuntimeIdentifier>
+	<PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
     <Authors>Julius Kirsch, Finn Freitag</Authors>
@@ -34,6 +37,7 @@
 	<WindowsAppSdkSelfContained>true</WindowsAppSdkSelfContained>
 	<SelfContained>true</SelfContained>
 	<WindowsPackageType>MSIX</WindowsPackageType>
+	<AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
 	</PropertyGroup>
   <ItemGroup>
     <None Remove="AppWindows\ScreenScannerWindow.xaml" />

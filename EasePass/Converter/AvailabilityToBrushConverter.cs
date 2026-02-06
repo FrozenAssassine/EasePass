@@ -10,7 +10,7 @@ using DatabaseAvailability = EasePassExtensibility.IDatabaseSource.DatabaseAvail
 
 namespace EasePass.Converter;
 
-internal sealed class AvailabilityToBrushConverter : IValueConverter
+internal sealed partial class AvailabilityToBrushConverter : IValueConverter
 {
     private static readonly Color LightAvailableColor = Color.FromArgb(255, 0, 0, 0);
     private static readonly Color LightUnknownColor = Color.FromArgb(255, 255, 200, 0);
