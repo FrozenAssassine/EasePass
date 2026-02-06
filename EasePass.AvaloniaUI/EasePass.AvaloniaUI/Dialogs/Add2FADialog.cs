@@ -14,42 +14,39 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-using EasePass.AvaloniaUI;
-using EasePass.AvaloniaUI.Views;
-using EasePass.Extensions;
-using EasePass.Helper;
+using Avalonia.Controls;
 using EasePass.Models;
-using System;
+using EasePass.Views;
 using System.Threading.Tasks;
 
-namespace EasePass.Dialogs
+namespace EasePass.Dialogs;
+
+internal class Add2FADialog
 {
-    internal class Add2FADialog
+    public async Task<bool> ShowAsync(PasswordManagerItem item)
     {
-        public async Task<bool> ShowAsync(PasswordManagerItem item)
+        UserControl page = null; //todo: new Add2FAPage(item);
+
+        var dialog = new BaseDialog
         {
-            var page = new Add2FAPage(item);
+            Title = $"Add 2FA to {item.DisplayName}",
+            PrimaryButtonText = "Add",
+            CloseButtonText = "Cancel",
+            Content = page
+        };
 
-            var dialog = new BaseDialog
-            {
-                Title = $"Add 2FA to {item.DisplayName}",
-                PrimaryButtonText = "Add",
-                CloseButtonText = "Cancel",
-                Content = page
-            };
+        MainWindow.current.inactivityHelper.PreventAutologout = true;
 
-            MainWindow.current.inactivityHelper.PreventAutologout = true;
+        var result = await dialog.ShowDialogAsync(MainWindow.current);
 
-            var result = await dialog.ShowDialogAsync(MainWindow.current);
+        MainWindow.current.inactivityHelper.PreventAutologout = false;
 
-            MainWindow.current.inactivityHelper.PreventAutologout = false;
-
-            if (result == DialogResult.Primary)
-            {
-                page.UpdateValue();
-                return true;
-            }
-
-            return false;
+        if (result == DialogResult.Primary)
+        {
+            //todo: page.UpdateValue();
+            return true;
         }
+
+        return false;
     }
+}
