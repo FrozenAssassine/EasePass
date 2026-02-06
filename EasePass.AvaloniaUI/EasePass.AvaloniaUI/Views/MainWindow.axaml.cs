@@ -10,6 +10,7 @@ using EasePass.Helper.Security.Generator;
 using EasePass.Manager;
 using EasePass.Models.Logger;
 using System.Threading.Tasks;
+using EasePass.Helper.App;
 
 namespace EasePass.Views
 {
@@ -20,13 +21,10 @@ namespace EasePass.Views
         public static StackPanel InfoMessagesPanel;
 
         public InactivityManager inactivityHelper = new InactivityManager();
-        public Frame MainFrame => navigationFrame;
-        public bool ShowBackArrow { get => navigateBackButton.Visibility == Visibility.Visible; set => navigateBackButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
+        public bool ShowBackArrow { get; set; } //todo implement { get => navigateBackButton.Visibility == Visibility.Visible; set => navigateBackButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
 
         public static MainWindow CurrentInstance = null;
 
-        public static DispatcherQueue UIDispatcherQueue = null;
-        public static XamlRoot XamlRoot = null;
         public static LocalizationManager localizationHelper = new LocalizationManager();
 
         public readonly RestoreWindowManager restoreWindowManager;
@@ -35,24 +33,17 @@ namespace EasePass.Views
 
         public MainWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
+
             current = this;
             InfoMessagesPanel = infoMessagesPanel;
 
             ApplicationData.Initialize();
-        }
-
-
-
-        public MainWindow()
-        {
-            this.InitializeComponent();
 
             LoggingManager.Logger = new MultiLogger(new FileLogger(), new DebugLineLogger()); // To disable, use "new NoLogger()"
             LoggingManager.InitializeCurrentLogger();
 
             CurrentInstance = this;
-            UIDispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
             windowStateManager = new WindowStateManager(this);
             restoreWindowManager = new RestoreWindowManager(this, windowStateManager);
@@ -63,40 +54,40 @@ namespace EasePass.Views
 
             localizationHelper.Initialize();
 
-            Title = Package.Current.DisplayName;
-            this.AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, "Assets\\AppIcon\\appicon.ico"));
+            Title = "Ease Pass";
 
             inactivityHelper.InactivityStarted += InactivityHelper_InactivityStarted;
 
             PasswordHelper.Init();
 
             InfoMessagesPanel = infoMessagesPanel;
-            ExtendsContentIntoTitleBar = true;
-            SetTitleBar(titleBar);
             ShowBackArrow = false;
 
-            this.AppWindow.Closing += AppWindow_Closing;
+            this.Closing += MainWindow_Closing;
+
+            //start wiht login page todo: show register page if needed
+            NavigationHelper.ToLoginPage();
         }
 
         private bool _isClosingForcefully = false;
 
         public async Task<bool> DoMasterSaveWithProgress()
         {
-            databaseSavingProgressRing.Visibility = Visibility.Visible;
+            //databaseSavingProgressRing.Visibility = Visibility.Visible;
 
             bool saveRes = await Task.Run(async () => await Database.LoadedInstance.ForceSaveAsync());
 
-            databaseSavingProgressRing.Visibility = Visibility.Collapsed;
+            //databaseSavingProgressRing.Visibility = Visibility.Collapsed;
             return saveRes;
         }
 
-        private async void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
+        private async void MainWindow_Closing(object? sender, WindowClosingEventArgs e)
         {
             if (_isClosingForcefully) return;
 
             if (Database.LoadedInstance != null && Database.LoadedInstance.deferredSaver.SaveScheduled)
             {
-                args.Cancel = true;
+                e.Cancel = true;
 
                 if (!await DoMasterSaveWithProgress())
                     return;
@@ -112,30 +103,32 @@ namespace EasePass.Views
 
         private void InactivityHelper_InactivityStarted()
         {
-            if (this.navigationFrame.CurrentSourcePageType != typeof(LoginPage) &&
-                this.navigationFrame.CurrentSourcePageType != typeof(RegisterPage))
-            {
-                //do not trigger auto logout, when there is an important dialog open e.g. edit or add item dialog
-                if (!AutoLogoutContentDialog.InactivityStarted())
-                    return;
+            //todo inactivity
+            //if (this.navigationFrame.CurrentSourcePageType != typeof(LoginPage) &&
+            //    this.navigationFrame.CurrentSourcePageType != typeof(RegisterPage))
+            //{
+            //    //do not trigger auto logout, when there is an important dialog open e.g. edit or add item dialog
+            //    if (!AutoLogoutContentDialog.InactivityStarted())
+            //        return;
 
-                LogoutHelper.Logout();
-                InfoMessages.AutomaticallyLoggedOut();
-                Database.LoadedInstance.Dispose();
-            }
+            //    LogoutHelper.Logout();
+            //    InfoMessages.AutomaticallyLoggedOut();
+            //    Database.LoadedInstance.Dispose();
+            //}
         }
 
         private void NavigateBack_Click(object sender, RoutedEventArgs e)
         {
-            navigationFrame.GoBack();
+            //navigationFrame.GoBack();
         }
 
-        private void Window_Activated(object sender, WindowActivatedEventArgs args)
-        {
-            if (args.WindowActivationState == WindowActivationState.Deactivated)
-                inactivityHelper.WindowDeactivated();
-            else
-                inactivityHelper.WindowActivated();
-        }
+        //private void Window_Activated(object sender, WindowActivatedEventArgs args)
+        //{
+        //    if (args.WindowActivationState == WindowActivationState.Deactivated)
+        //        inactivityHelper.WindowDeactivated();
+        //    else
+        //        inactivityHelper.WindowActivated();
+        //}
     }
+}
 

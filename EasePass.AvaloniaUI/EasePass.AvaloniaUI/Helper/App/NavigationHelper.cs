@@ -1,47 +1,42 @@
 ﻿using EasePass.AvaloniaUI.Views;
 using EasePass.Models;
+using EasePass.ViewModels;
 using System;
 
 namespace EasePass.Helper.App;
 
 public class NavigationHelper
 {
-    private static void Navigate(System.Type page, object param = null)
+    public static MainViewModel? MainVM { get; set; }
+    private static void Navigate(ViewModelBase viewModel)
     {
-        var frame = MainWindow.mainFrame;
-        frame.Navigate(Activator.CreateInstance(page, param));
-    }
-    public static void ToPasswords(object param = null)
-    {
-        Navigate(typeof(PasswordsPage), param);
-    }
-    public static void ToSettings(PasswordsPage pwPage)
-    {
-        Navigate(typeof(SettingsPage), new SettingsNavigationParameters
+        if (MainVM != null)
         {
-            PasswordPage = pwPage
-        });
+            MainVM.CurrentPage = viewModel;
+        }
+    }
+    public static void ToPasswords() => Navigate(new PasswordsViewModel());
+    public static void ToSettings()
+    {
+        Navigate(new SettingsViewModel());
     }
     public static void ToManageDB(object param = null)
     {
-        Navigate(typeof(ManageDatabasePage), param);
+        //Navigate(typeof(ManageDatabasePage), param);
     }
     public static void ToExtensions(object param = null)
     {
 
-        Navigate(typeof(ExtensionPage), param);
+        //Navigate(typeof(ExtensionPage), param);
     }
     public static void ToRegisterPage(object param = null)
     {
-        Navigate(typeof(RegisterPage), param);
+        //Navigate(typeof(RegisterPage), param);
     }
-    public static void ToLoginPage(object param = null)
-    {
-        Navigate(typeof(LoginPage), param);
-    }
+    public static void ToLoginPage() => Navigate(new LoginViewModel());
     public static void ToAboutPage(object param = null)
     {
-        Navigate(typeof(AboutPage), param);
+        //Navigate(typeof(AboutPage), param);
     }
 
 }

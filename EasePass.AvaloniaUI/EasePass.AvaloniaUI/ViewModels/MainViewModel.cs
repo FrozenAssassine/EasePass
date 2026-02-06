@@ -1,9 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using EasePass.Core;
-using System.Collections.ObjectModel;
-using Avalonia;
-using EasePass.Models;
 
 namespace EasePass.ViewModels;
 
@@ -13,7 +8,7 @@ public partial class LoginViewModel : ViewModelBase { }
 public partial class HomeViewModel : ViewModelBase { }
 public partial class SettingsViewModel : ViewModelBase { }
 
-public partial class MainViewModel : ViewModelBase
+public partial class MainViewModel : ObservableObject
 {
     [ObservableProperty]
     private ViewModelBase _currentPage;

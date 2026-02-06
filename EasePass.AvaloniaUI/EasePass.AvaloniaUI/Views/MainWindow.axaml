@@ -10,8 +10,9 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="EasePass" >
 	<Grid>
-		<StackPanel x:Name="infoMessagesPanel"/>
-	    <!--There is no frame lol mvvm handles this like react component swapping I guess-->
-        <Frame x:Name="MainFrame" />
+        <StackPanel x:Name="infoMessagesPanel" 
+                            VerticalAlignment="Top" 
+                            HorizontalAlignment="Center"/>
+        <ContentControl Content="{Binding CurrentPage}" />
 	</Grid>
 </Window>

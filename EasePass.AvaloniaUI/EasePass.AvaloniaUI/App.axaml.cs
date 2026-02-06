@@ -5,6 +5,9 @@ using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using EasePass.AvaloniaUI.ViewModels;
 using EasePass.AvaloniaUI.Views;
+using EasePass.Helper.App;
+using EasePass.ViewModels;
+using EasePass.Views;
 using System.Linq;
 
 namespace EasePass.AvaloniaUI
@@ -20,19 +23,13 @@ namespace EasePass.AvaloniaUI
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
-                // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
-                DisableAvaloniaDataAnnotationValidation();
+                var mainVM = new MainViewModel();
+
+                NavigationHelper.MainVM = mainVM;
+
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainViewModel()
-                };
-            }
-            else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
-            {
-                singleViewPlatform.MainView = new MainView
-                {
-                    DataContext = new MainViewModel()
+                    DataContext = mainVM
                 };
             }
 
