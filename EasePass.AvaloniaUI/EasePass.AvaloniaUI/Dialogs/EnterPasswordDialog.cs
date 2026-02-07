@@ -14,11 +14,9 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using Avalonia.Input;
 using EasePass.Extensions;
-using EasePass.Helper;
-using EasePass.Views.DialogPages;
-using Microsoft.UI.Xaml.Controls;
-using System;
+using EasePass.Views;
 using System.Security;
 using System.Threading.Tasks;
 
@@ -26,39 +24,38 @@ namespace EasePass.Dialogs
 {
     internal class EnterPasswordDialog
     {
-        private ContentDialog dialog;
+        private BaseDialog dialog;
         public SecureString Password { get; private set; }
-        private EnterPasswordPage page;
+        //private EnterPasswordPage page;
 
         public async Task<EnterPasswordDialog> ShowAsync()
         {
-            page = new EnterPasswordPage();
+            //page = new EnterPasswordPage();
             dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Enter password of the database".Localized("Dialogs_EnterPW_Title/Text"),
                 PrimaryButtonText = "Done".Localized("Dialog_Button_Done/Text"),
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
-                XamlRoot = App.m_window.Content.XamlRoot,
-                Content = page
+                Content = null //page
             };
-            dialog.KeyDown += Dialog_KeyDown;
-            dialog.Closing += Dialog_Closing;
+            dialog.KeyDown += Dialog_KeyDown1;
+            dialog.Closing += Dialog_Closing1;
 
-            await dialog.ShowAsync();
+            await dialog.ShowDialogAsync(MainWindow.current);
             return this;
         }
 
-        private void Dialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
+        private void Dialog_Closing1(object? sender, Avalonia.Controls.WindowClosingEventArgs e)
         {
-            if(Password == null)
-                Password = args.Result == ContentDialogResult.Primary ? page.GetPassword().ConvertToSecureString() : null;
+            //if (Password == null)
+                //Password = args.Result == DialogResult.Primary ? page.GetPassword().ConvertToSecureString() : null;
         }
 
-        private void Dialog_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+        private void Dialog_KeyDown1(object? sender, Avalonia.Input.KeyEventArgs e)
         {
-            if (e.Key == Windows.System.VirtualKey.Enter)
+            if (e.Key == Key.Enter)
             {
-                Password = page.GetPassword().ConvertToSecureString();
+                //Password = page.GetPassword().ConvertToSecureString();
                 dialog.Hide();
             }
         }

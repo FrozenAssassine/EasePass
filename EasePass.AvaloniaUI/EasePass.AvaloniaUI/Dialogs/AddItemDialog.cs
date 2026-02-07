@@ -14,12 +14,12 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using Avalonia.Controls;
+using EasePass.AvaloniaUI;
 using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Models;
 using EasePass.Views;
-using Microsoft.UI.Xaml.Controls;
-using System;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs
@@ -28,22 +28,21 @@ namespace EasePass.Dialogs
     {
         public async Task<PasswordManagerItem> ShowAsync(PasswordsPage.PasswordExists pe)
         {
-            var page = new AddItemPage(pe);
+            UserControl page = null; //todo: new AddItemPage(pe);
             var dialog = new Helper.Logout.AutoLogoutContentDialog(true)
             {
                 Title = "Add Password".Localized("Dialog_AddItem_Headline/Text"),
                 PrimaryButtonText = "Add".Localized("Dialog_Button_Add/Text"),
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
-                XamlRoot = App.m_window.Content.XamlRoot,
                 Content = page
             };
 
             MainWindow.CurrentInstance.inactivityHelper.PreventAutologout = true;
-            var dialogRes = await dialog.ShowAsync();
+            var dialogRes = await dialog.ShowDialogAsync(MainWindow.current);
             MainWindow.CurrentInstance.inactivityHelper.PreventAutologout = false;
-            if (dialogRes == ContentDialogResult.Primary)
+            if (dialogRes == DialogResult.Primary)
             {
-                return page.GetValue();
+                return null; //todo: page.GetValue();
             }
             return null;
         }

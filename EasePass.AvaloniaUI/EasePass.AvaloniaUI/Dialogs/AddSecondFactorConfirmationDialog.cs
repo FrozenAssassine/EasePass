@@ -1,7 +1,6 @@
 ﻿using EasePass.Extensions;
 using EasePass.Helper.Logout;
-using Microsoft.UI.Xaml.Controls;
-using System;
+using EasePass.Views;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs
@@ -20,11 +19,10 @@ namespace EasePass.Dialogs
                 Title = "Confirm enabling SecondFactor".Localized("Dialog_ConfirmAddSecondFactor_Headline/Text"),
                 PrimaryButtonText = "Confirm".Localized("Dialog_Button_Add/Text"),
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
-                XamlRoot = App.m_window.Content.XamlRoot,
                 Content = "Are you sure you want to enable a SecondFactor for the Database \"@@@Name@@@\"?\nIf you Forget your Password you will have no Access to your Database!".Localized("Dialog_ConfirmAddSecondFactor_Item/Text").Replace("@@@Name@@@", databaseName),
             };
 
-            return await dialog.ShowAsync() == ContentDialogResult.Primary;
+            return await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Primary;
         }
     }
 }

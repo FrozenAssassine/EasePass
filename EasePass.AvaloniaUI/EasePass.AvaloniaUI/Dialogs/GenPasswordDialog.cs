@@ -15,39 +15,35 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.Extensions;
-using EasePass.Helper;
 using EasePass.Views;
-using Microsoft.UI.Xaml.Controls;
-using System;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs;
 
 internal class GenPasswordDialog
 {
-    private GenPasswordPage page = new GenPasswordPage();
+    //private GenPasswordPage page = new GenPasswordPage();
     
     public async Task<bool> ShowAsync()
     {
-        page.GeneratePassword();
+        //page.GeneratePassword();
         var dialog = new Helper.Logout.AutoLogoutContentDialog
         {
             Title = "Password generator".Localized("Dialog_PWGenerator_New/Text"),
             PrimaryButtonText = "New".Localized("Dialog_Button_New/Text"),
             CloseButtonText = "Done".Localized("Dialog_Button_Done/Text"),
-            XamlRoot = App.m_window.Content.XamlRoot,
-            Content = page
+            Content = null//page
         };
         dialog.Closing += Dialog_Closing;
-        return await dialog.ShowAsync() == ContentDialogResult.Secondary;
+        return await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Secondary;
     }
 
-    private void Dialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
+    private void Dialog_Closing(object? sender, Avalonia.Controls.WindowClosingEventArgs e)
     {
-        if(args.Result == ContentDialogResult.Primary)
-        {
-            page.GeneratePassword();
-            args.Cancel = true;
-        }
+        //if(args.Result == DialogResult.Primary)
+        //{
+        //    page.GeneratePassword();
+        //    args.Cancel = true;
+        //}
     }
 }

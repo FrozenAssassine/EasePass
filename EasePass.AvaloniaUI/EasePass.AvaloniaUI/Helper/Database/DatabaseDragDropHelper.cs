@@ -1,5 +1,6 @@
 ﻿using Avalonia.Input;
 using Avalonia.Platform.Storage;
+using EasePass.Dialogs;
 using System;
 using System.IO;
 using System.Linq;

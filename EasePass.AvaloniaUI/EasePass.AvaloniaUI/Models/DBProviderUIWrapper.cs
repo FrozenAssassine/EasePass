@@ -15,6 +15,7 @@ copies or substantial portions of the Software.
 */
 
 using EasePassExtensibility;
+using System.Drawing;
 
 namespace EasePass.Models
 {
@@ -22,7 +23,7 @@ namespace EasePass.Models
     {
         public IDatabaseProvider Provider { get; private set; }
 
-        public ImageSource SourceIcon => new BitmapImage(Provider.SourceIcon);
+        public Bitmap SourceIcon => new Bitmap(Provider.SourceIcon.AbsolutePath);
 
         public DBProviderUIWrapper(IDatabaseProvider provider)
         {

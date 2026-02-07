@@ -15,11 +15,8 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.Extensions;
-using EasePass.Helper;
 using EasePass.Models;
-using EasePass.Views.DialogPages;
-using Microsoft.UI.Xaml.Controls;
-using System;
+using EasePass.Views;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -29,18 +26,17 @@ namespace EasePass.Dialogs
     {
         public async Task<PasswordManagerItem[]> ShowAsync(ObservableCollection<PasswordManagerItem> items)
         {
-            var page = new SelectExportPasswordsDialogPage(items);
+            //var page = new SelectExportPasswordsDialogPage(items);
             var dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Select items to export".Localized("Dialog_Export_Headline/Text"),
                 PrimaryButtonText = "Export".Localized("Dialog_Button_Export/Text"),
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
-                XamlRoot = App.m_window.Content.XamlRoot,
-                Content = page
+                //Content = page
             };
 
-            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
-                return page.GetSelectedPasswords();
+            if (await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Primary)
+                return null;//return page.GetSelectedPasswords();
             return null;
         }
     }

@@ -15,10 +15,8 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.Extensions;
-using EasePass.Helper;
 using EasePass.Models;
-using Microsoft.UI.Xaml.Controls;
-using System;
+using EasePass.Views;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,11 +31,10 @@ namespace EasePass.Dialogs
                 Title = "Confirm Deletion".Localized("Dialog_ConfirmDelete_Headline/Text"),
                 PrimaryButtonText = "Delete".Localized("Dialog_Button_Delete/Text"),
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
-                XamlRoot = App.m_window.Content.XamlRoot,
                 Content = text,
             };
 
-            return await dialog.ShowAsync() == ContentDialogResult.Primary;
+            return await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Primary;
         }
 
         public async Task<bool> ShowAsync(PasswordManagerItem deleteItem)

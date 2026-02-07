@@ -14,14 +14,10 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using Avalonia.Media;
 using EasePass.Extensions;
-using EasePass.Helper;
 using EasePass.Models;
 using EasePass.Views;
-using Microsoft.UI;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
-using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -29,11 +25,11 @@ namespace EasePass.Dialogs
 {
     public class ImportPasswordsDialog
     {
-        private readonly ImportPasswordsDialogPage importPage;
+        //private readonly ImportPasswordsDialogPage importPage;
 
         public ImportPasswordsDialog()
         {
-            importPage = new ImportPasswordsDialogPage();
+            //importPage = new ImportPasswordsDialogPage();
         }
 
         public async Task<(PasswordManagerItem[] Items, bool Override)> ShowAsync(bool showProgressbar)
@@ -44,25 +40,25 @@ namespace EasePass.Dialogs
                 PrimaryButtonText = "Add".Localized("Dialog_Button_Add/Text"),
                 SecondaryButtonText = "Override".Localized("Dialog_Button_Override/Text"),
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
-                XamlRoot = App.m_window.Content.XamlRoot,
-                Content = importPage
+                //Content = importPage
             };
 
             //to add confirmation on overwrite passwords:
-            dialog.Closing += Dialog_Closing;
+            dialog.Closing += Dialog_Closing1;
 
-            var res = await dialog.ShowAsync();
-            PasswordManagerItem[] items = importPage.GetSelectedPasswords();
+            var res = await dialog.ShowDialogAsync(MainWindow.current);
+            //PasswordManagerItem[] items = importPage.GetSelectedPasswords();
 
-            if (res == ContentDialogResult.Primary)
-                return (items, false);
-            if (res == ContentDialogResult.Secondary)
-                return (items, true);
+            //if (res == DialogResult.Primary)
+            //    return (items, false);
+            //if (res == DialogResult.Secondary)
+            //    return (items, true);
             return (null, false);
         }
 
-        private void Dialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
+        private void Dialog_Closing1(object? sender, Avalonia.Controls.WindowClosingEventArgs e)
         {
+            /*
             //ensure overwrite button was pressed:
             if (args.Result != ContentDialogResult.Secondary)
                 return;
@@ -75,21 +71,21 @@ namespace EasePass.Dialogs
                 return;
 
             overwriteState.confirmOverwriteCheckbox.BorderBrush = new SolidColorBrush(Colors.Red);
-            args.Cancel = true;
+            args.Cancel = true;*/
         }
 
         public void SetPagePasswords(PasswordManagerItem[] items)
         {
-            importPage.SetPasswords(items);
+            //importPage.SetPasswords(items);
         }
         public void SetPagePasswords(ObservableCollection<PasswordManagerItem> items)
         {
-            importPage.SetPasswords(items);
+            //importPage.SetPasswords(items);
         }
 
         public void ShowProgressBar()
         {
-            importPage.ShowProgressBar();
+            //importPage.ShowProgressBar();
         }
     }
 }

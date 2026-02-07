@@ -14,9 +14,8 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-using EasePass.Helper;
 using EasePass.Models;
-using Microsoft.UI.Xaml.Controls;
+using EasePass.Views;
 using System;
 using System.Threading.Tasks;
 
@@ -31,11 +30,10 @@ namespace EasePass.Dialogs
                 Title = "Warning!",
                 PrimaryButtonText = "Allow",
                 CloseButtonText = "Cancel",
-                XamlRoot = App.m_window.Content.XamlRoot,
                 Content = "This plugin tries to get access to sensitive information:" + Environment.NewLine + extension.ToString(false),
             };
 
-            return await dialog.ShowAsync() == ContentDialogResult.Primary;
+            return await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Primary;
         }
     }
 }

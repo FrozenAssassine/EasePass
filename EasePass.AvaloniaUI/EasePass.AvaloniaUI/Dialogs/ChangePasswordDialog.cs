@@ -16,37 +16,34 @@ copies or substantial portions of the Software.
 
 using EasePass.Core.Database;
 using EasePass.Extensions;
-using EasePass.Helper;
-using EasePass.Views.DialogPages;
-using Microsoft.UI.Xaml.Controls;
-using System;
+using EasePass.Views;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs
 {
     internal class ChangePasswordDialog
     {
-        private ContentDialog dialog;
-        private ChangePasswordPage page;
+        private BaseDialog dialog;
+        //private ChangePasswordPage page;
 
         public async Task ShowAsync(DatabaseItem db)
         {
-            page = new ChangePasswordPage();
+            //page = new ChangePasswordPage();
             dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Change Password for".Localized("Dialog_ChangePassword_Title/Text") + " " + db.Name,
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
                 PrimaryButtonText = "Change".Localized("Dialog_Button_Change/Text"),
-                XamlRoot = App.m_window.Content.XamlRoot,
-                Content = page
+                Content = null //page;
             };
             dialog.Closing += Dialog_Closing;
-            await dialog.ShowAsync();
+            await dialog.ShowDialogAsync(MainWindow.current);
         }
 
-        private async void Dialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
+        private void Dialog_Closing(object? sender, Avalonia.Controls.WindowClosingEventArgs e)
         {
-            if (args.Result != ContentDialogResult.Primary)
+            /*
+            if (e.Result != ContentDialogResult.Primary)
                 return;
 
             ChangePasswordPageResult changePWResult = await page.ChangePassword();
@@ -68,7 +65,7 @@ namespace EasePass.Dialogs
             {
                 InfoMessages.PasswordTooShort(page.InfoMessageParent);
             }
-            args.Cancel = true;
+            args.Cancel = true;*/
         }
     }
 }

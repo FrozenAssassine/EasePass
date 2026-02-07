@@ -15,6 +15,7 @@ using EasePass.Helper.App;
 using EasePass.Settings;
 using EasePass.Helper.Database;
 using EasePass.Helper.Logout;
+using EasePass.Controls;
 
 namespace EasePass.Views
 {
@@ -75,15 +76,14 @@ namespace EasePass.Views
             
             AppVersionHelper.CheckNewVersion();
 
-            // gridSplitterLoadSize.Width = ... 
-            // In Avalonia modifying ColumnDefinition Width from code behind:
             var grid = this.FindControl<Grid>("MainGrid"); // Assuming root grid has name? No name in xaml.
-            // But we have named ColumnDefinition
-            var colDef = this.FindControl<ColumnDefinition>("gridSplitterLoadSize");
-            if (colDef != null)
-            {
-                 colDef.Width = new GridLength(AppSettings.GridSplitterWidth, GridUnitType.Pixel);
-            }
+            
+            //todo
+            //var colDef = this.FindControl<ColumnDefinition>("gridSplitterLoadSize");
+            //if (colDef != null)
+            //{
+            //     colDef.Width = new GridLength(AppSettings.GridSplitterWidth, GridUnitType.Pixel);
+            //}
 
             if (Database.LoadedInstance != null)
             {
@@ -158,9 +158,9 @@ namespace EasePass.Views
         
         private void StoreGridSplitterValue()
         {
-             var colDef = this.FindControl<ColumnDefinition>("gridSplitterLoadSize");
-             if (colDef != null)
-                AppSettings.GridSplitterWidth = (int)colDef.Width.Value;
+             //todo var colDef = this.FindControl<ColumnDefinition>("gridSplitterLoadSize");
+             //if (colDef != null)
+                //AppSettings.GridSplitterWidth = (int)colDef.Width.Value;
         }
         
         private void UpdateOOBEGrid()
@@ -174,12 +174,9 @@ namespace EasePass.Views
         {
             StoreGridSplitterValue();
         }
-        
-        // ... Click handlers
-        
+                
         private async void AddPasswordItem_Click(object sender, RoutedEventArgs e) 
         {
-            // await AddPasswordItem(); 
         }
 
         private void Page_KeyDown(object sender, KeyEventArgs e)
@@ -274,7 +271,7 @@ namespace EasePass.Views
         public void OOBE_HyperlinkManageDB(object sender, RoutedEventArgs e) { NavigationHelper.ToManageDB(); }
         public void LoadTemporaryDatabase_Click(object sender, RoutedEventArgs e) { }
         public void LogOut_Click(object sender, RoutedEventArgs e) { LogoutHelper.Logout(); }
-        public void Settings_Click(object sender, RoutedEventArgs e) { NavigationHelper.ToSettings(this); }
+        public void Settings_Click(object sender, RoutedEventArgs e) { NavigationHelper.ToSettings(); }
         public void AboutPage_Click(object sender, RoutedEventArgs e) { NavigationHelper.ToAboutPage(); }
         
         public void RightclickedItem_CopyPassword_Click(object sender, RoutedEventArgs e) { }

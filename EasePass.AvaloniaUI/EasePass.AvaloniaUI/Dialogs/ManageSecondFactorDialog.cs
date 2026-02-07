@@ -17,10 +17,7 @@ copies or substantial portions of the Software.
 using EasePass.Core.Database.Format.Serialization;
 using EasePass.Extensions;
 using EasePass.Helper.Logout;
-using EasePass.Models;
 using EasePass.Views;
-using Microsoft.UI.Xaml.Controls;
-using System;
 using System.Security;
 using System.Threading.Tasks;
 
@@ -39,30 +36,30 @@ namespace EasePass.Dialogs
         /// Otherwise the old Settings and the old Token will be returned.</returns>
         public async Task<(bool Result, DatabaseSettings Settings, SecureString Token)> ShowAsync(string databaseName, DatabaseSettings settings, SecureString token = null)
         {
-            ManageSecondFactorPage page = new ManageSecondFactorPage(settings, token);
+            //ManageSecondFactorPage page = new ManageSecondFactorPage(settings, token);
             AutoLogoutContentDialog dialog = new AutoLogoutContentDialog
             {
                 Title = "Manage SecondFactor for".Localized("Dialog_ManageSecondFactor_Headline/Text") + " " + databaseName,
                 PrimaryButtonText = "Change".Localized("Dialog_Button_Change/Text"),
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
-                XamlRoot = App.m_window.Content.XamlRoot,
-                Content = page
+                //Content = page
             };
 
             MainWindow.CurrentInstance.inactivityHelper.PreventAutologout = true;
-            bool result = await dialog.ShowAsync() == ContentDialogResult.Primary;
+            bool result = await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Primary;
             MainWindow.CurrentInstance.inactivityHelper.PreventAutologout = false;
 
             if (!result)
                 return (result, settings, token);
 
-            if (!page.Settings.UseSecondFactor)
-            {
-                // we need to set the Token to null to avoid errors on the other side
-                // For example if the Token will be set always and at some point the Setting will not be checked
-                page.Token = null;
-            }
-            return (result, page.Settings, page.Token);
+            //if (!page.Settings.UseSecondFactor)
+            //{
+            //    // we need to set the Token to null to avoid errors on the other side
+            //    // For example if the Token will be set always and at some point the Setting will not be checked
+            //    page.Token = null;
+            //}
+            //return (result, page.Settings, page.Token);
+            return (false, null, null);
         }
     }
 }

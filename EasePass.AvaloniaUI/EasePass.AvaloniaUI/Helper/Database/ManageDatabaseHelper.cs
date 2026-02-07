@@ -16,6 +16,7 @@ copies or substantial portions of the Software.
 
 using Avalonia.Controls;
 using EasePass.Core.Database;
+using EasePass.Dialogs;
 using EasePass.Helper.FileSystem;
 using EasePass.Models;
 using EasePass.Settings;

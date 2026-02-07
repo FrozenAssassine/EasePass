@@ -1,7 +1,6 @@
 ﻿using EasePass.Extensions;
 using EasePass.Helper.Logout;
-using EasePass.Views.DialogPages;
-using System;
+using EasePass.Views;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs
@@ -10,16 +9,15 @@ namespace EasePass.Dialogs
     {
         public async Task<bool> ShowAsync(string token)
         {
-            ShowSecondFactorPage showSecondFactorPage = new ShowSecondFactorPage(token);
+            //ShowSecondFactorPage showSecondFactorPage = new ShowSecondFactorPage(token);
             AutoLogoutContentDialog dialog = new AutoLogoutContentDialog
             {
                 Title = "The new SecondFactor Token for the Database".Localized("Dialogs_ShowSF_Title/Text"),
                 PrimaryButtonText = "Done".Localized("Dialog_Button_Done/Text"),
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
-                XamlRoot = App.m_window.Content.XamlRoot,
-                Content = showSecondFactorPage
+                //Content = showSecondFactorPage
             };
-            await dialog.ShowAsync();
+            await dialog.ShowDialogAsync(MainWindow.current);
             return true;
         }
     }

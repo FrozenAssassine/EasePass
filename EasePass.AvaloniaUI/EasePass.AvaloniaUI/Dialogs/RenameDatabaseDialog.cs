@@ -14,10 +14,9 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using Avalonia.Controls;
 using EasePass.Extensions;
-using EasePass.Helper;
-using Microsoft.UI.Xaml.Controls;
-using System;
+using EasePass.Views;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs;
@@ -28,7 +27,7 @@ internal class RenameDatabaseDialog
     {
         TextBox dbName = new TextBox
         {
-            PlaceholderText = "Database name".Localized("Dialog_RenameDB_Name/Text"),
+            Watermark = "Database name".Localized("Dialog_RenameDB_Name/Text"),
             Text = "", //databaseItem.Name
         };
 
@@ -37,10 +36,9 @@ internal class RenameDatabaseDialog
             Title = "Rename Database".Localized("Dialog_RenameDB_Headline/Text"),
             PrimaryButtonText = "Rename".Localized("Dialog_Button_Rename/Text"),
             CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
-            XamlRoot = App.m_window.Content.XamlRoot,
             Content = dbName
         };
 
-        return (await dialog.ShowAsync() == ContentDialogResult.Primary && dbName.Text.Length > 0);
+        return (await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Primary && dbName.Text.Length > 0);
     }
 }

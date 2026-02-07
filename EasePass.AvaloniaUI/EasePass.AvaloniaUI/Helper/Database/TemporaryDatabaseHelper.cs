@@ -15,8 +15,9 @@ internal class TemporaryDatabaseHelper
         return db;
     }
 
-    public static void HandleImportTempDatabase(NavigationEventArgs e, ComboBox databasebox)
+    public static void HandleImportTempDatabase(ComboBox databasebox)
     {
+        /*todo
         if (e.Parameter is string path)
         {
             if (path == null || path.Length == 0)
@@ -25,7 +26,7 @@ internal class TemporaryDatabaseHelper
             var tempDB = CreateTempDatabase(path);
             databasebox.Items.Add(tempDB);
             databasebox.SelectedItem = tempDB;
-        }
+        }*/
     }
 
     public static void LoadImportedDatabase()

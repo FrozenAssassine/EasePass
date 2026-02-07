@@ -220,10 +220,10 @@ namespace EasePass.Dialogs
 
         public static InfoBar DownloadingPluginInfo()
         {
-            //var progressbar = new ProgressBar { ShowPaused = false, ShowError = false, IsIndeterminate = true };
+            var progressbar = new ProgressBar { IsIndeterminate = true };
 
             var infobar = new InfoBar();
-            infobar.ShowInfobar("Downloading plugin in progress".Localized("InfoMessages_DownloadPluginProgress/Headline"), "", InfoBarSeverity.Info);
+            infobar.ShowInfobar("Downloading plugin in progress".Localized("InfoMessages_DownloadPluginProgress/Headline"), "", progressbar, InfoBarSeverity.Info);
             return infobar;
         }
 

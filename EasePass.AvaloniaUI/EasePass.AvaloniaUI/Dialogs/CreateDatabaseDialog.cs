@@ -17,15 +17,13 @@ copies or substantial portions of the Software.
 using EasePass.Core.Database;
 using EasePass.Extensions;
 using EasePass.Views;
-using Microsoft.UI.Xaml.Controls;
-using System;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs
 {
     internal class CreateDatabaseDialog
     {
-        private CreateDatabaseDialogPage page;
+        //private CreateDatabaseDialogPage page;
         public async Task<DatabaseItem> ShowAsync()
         {
             var dialog = new Helper.Logout.AutoLogoutContentDialog
@@ -33,25 +31,24 @@ namespace EasePass.Dialogs
                 Title = "Create Database".Localized("Dialog_CreateDB_Headline/Text"),
                 PrimaryButtonText = "Create".Localized("Dialog_Button_Create/Text"),
                 CloseButtonText = "Close".Localized("Dialog_Button_Close/Text"),
-                XamlRoot = App.m_window.Content.XamlRoot,
             };
-            page = new CreateDatabaseDialogPage();
-            
-            dialog.Content = page;
+            //page = new CreateDatabaseDialogPage();
+
+            //dialog.Content = page;
             dialog.Closing += Dialog_Closing;
 
-            var res = await dialog.ShowAsync();
-            if (res == ContentDialogResult.Primary)
+            var res = await dialog.ShowDialogAsync(MainWindow.current);
+            if (res == DialogResult.Primary)
             {
-                var eval = page.Evaluate();
-                return await Database.CreateNewDatabase(eval.path, eval.masterPassword);
+                //var eval = page.Evaluate();
+                //return await Database.CreateNewDatabase(eval.path, eval.masterPassword);
             }
             return null;
         }
 
-        private void Dialog_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
+        private void Dialog_Closing(object? sender, Avalonia.Controls.WindowClosingEventArgs e)
         {
-            if (page == null || args.Result != ContentDialogResult.Primary)
+            /*if (page == null || args.Result != ContentDialogResult.Primary)
                 return;
 
 
@@ -81,7 +78,7 @@ namespace EasePass.Dialogs
                 InfoMessages.DatabaseWithThatNameAlreadyExists(page.InfoMessageParent);
                 args.Cancel = true;
                 return;
-            }
+            }*/
         }
     }
 }
