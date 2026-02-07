@@ -17,6 +17,7 @@ copies or substantial portions of the Software.
 using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Models;
+using EasePass.Services;
 using EasePass.Views;
 using System.Threading.Tasks;
 
@@ -34,6 +35,6 @@ internal class DeleteExtensionConfirmationDialog
             Content = "Are you sure you want to delete the extension:".Localized("Dialog_ConfirmDelete_Extension/Text") + "" + deleteItem.AboutPlugin.PluginName + "?"
         };
 
-        return await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Primary;
+        return await dialog.ShowOnMainWindow() == DialogResult.Primary;
     }
 }

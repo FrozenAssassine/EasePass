@@ -16,6 +16,7 @@ copies or substantial portions of the Software.
 
 using Avalonia.Input;
 using EasePass.Extensions;
+using EasePass.Services;
 using EasePass.Views;
 using EasePass.Views.DialogViews;
 using System.Security;
@@ -42,7 +43,7 @@ namespace EasePass.Dialogs
             dialog.KeyDown += Dialog_KeyDown;
             dialog.Closing += Dialog_Closing;
 
-            await dialog.ShowDialogAsync(MainWindow.current);
+            await dialog.ShowOnMainWindow();
             return this;
         }
 

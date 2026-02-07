@@ -16,6 +16,7 @@ copies or substantial portions of the Software.
 
 using EasePass.Extensions;
 using EasePass.Helper;
+using EasePass.Services;
 using EasePass.Views;
 using System;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace EasePass.Dialogs
                 Content = null //page
             };
 
-            await dialog.ShowDialogAsync(MainWindow.current);
+            await dialog.ShowOnMainWindow();
         }
     }
 }

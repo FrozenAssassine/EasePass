@@ -15,7 +15,7 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.Models;
-using EasePass.Views;
+using EasePass.Services;
 using System;
 using System.Threading.Tasks;
 
@@ -33,7 +33,7 @@ namespace EasePass.Dialogs
                 Content = "This plugin tries to get access to sensitive information:" + Environment.NewLine + extension.ToString(false),
             };
 
-            return await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Primary;
+            return await dialog.ShowOnMainWindow() == DialogResult.Primary;
         }
     }
 }

@@ -19,6 +19,7 @@ using EasePass.AvaloniaUI;
 using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Models;
+using EasePass.Services;
 using EasePass.Views;
 using System.Threading.Tasks;
 
@@ -37,10 +38,8 @@ namespace EasePass.Dialogs
                 Content = page
             };
 
-            MainWindow.current.inactivityHelper.PreventAutologout = true;
-            var dialogRes = await dialog.ShowDialogAsync(MainWindow.current);
-            MainWindow.current.inactivityHelper.PreventAutologout = false;
-            if (dialogRes == DialogResult.Primary)
+            var result = await dialog.ShowAsyncWithPreventAutoLogout();
+            if (result == DialogResult.Primary)
             {
                 return null; //todo: page.GetValue();
             }

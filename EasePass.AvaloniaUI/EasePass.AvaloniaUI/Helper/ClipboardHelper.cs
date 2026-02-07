@@ -14,12 +14,7 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-using Avalonia;
-using Avalonia.Threading;
 using EasePass.Views;
-using EasePass.Settings;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EasePass.Helper
@@ -33,10 +28,9 @@ namespace EasePass.Helper
             if (string.IsNullOrEmpty(text))
                 return;
 
-            var clipboard = MainWindow.current.Clipboard;
-            if (clipboard != null)
+            if (MainWindow.clipboardInst!= null)
             {
-                await clipboard.SetTextAsync(text);
+                await MainWindow.clipboardInst.SetTextAsync(text);
             }
 
             if (removeFromClipboard)

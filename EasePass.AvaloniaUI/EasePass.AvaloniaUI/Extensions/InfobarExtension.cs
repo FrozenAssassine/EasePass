@@ -14,95 +14,94 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-using Avalonia.Controls;
 using Avalonia.Threading;
-using EasePass.Views;
+using EasePass.AvaloniaUI;
 using EasePass.Controls;
-using EasePass.Helper;
+using EasePass.ViewModels;
 using System;
+using System.Diagnostics;
 
-namespace EasePass.Extensions
+namespace EasePass.Extensions;
+
+public enum InfobarClearCondition
 {
+    Timer,
+    Login,
+    Manual,
+}
 
-    internal static class InfobarExtension
+
+public enum InfoBarSeverity
+{
+    Informational,
+    Warning,
+    Success,
+    Error,
+}
+
+public class InfobarExtension
+{
+    public static void ShowUntilLogin(string localizationKey, InfoBarSeverity severity)
     {
-        public static void ShowUntilLogin(this InfoBar infobar, string localizationKey, InfoBarSeverity severity)
-        {
-            ShowInfobar(infobar, "".Localized(localizationKey + "/Headline"), "".Localized(localizationKey + "/Text"), null, severity, InfobarClearCondition.Login);
-        }
-        public static void ShowUntilLogin(this InfoBar infobar, string title, string message, InfoBarSeverity severity)
-        {
-            ShowInfobar(infobar, title, message, null, severity, InfobarClearCondition.Login);
-        }
-        public static void Show(this InfoBar infobar, string localizationKey, InfoBarSeverity severity, int showSeconds = 8, Panel parent = null)
-        {
-            Show(infobar, "".Localized(localizationKey + "/Headline"), "".Localized(localizationKey + "/Text"), null, severity, InfobarClearCondition.Timer, showSeconds, parent);
-        }
-        public static void Show(this InfoBar infobar, string title, string message, InfoBarSeverity severity, int showSeconds = 8, Panel parent = null)
-        {
-            Show(infobar, title, message, null, severity, InfobarClearCondition.Timer, showSeconds, parent);
-        }
+        //todo: CreateAndShow("".Localized(localizationKey + "/Headline"), "".Localized(localizationKey + "/Text"), null, severity, InfobarClearCondition.Login);
+        CreateAndShow(localizationKey + "/Headline", localizationKey + "/Text", null, severity, InfobarClearCondition.Login);
 
-        private static void AddInfobar(Panel parent, InfoBar infobar)
-        {
-            if (parent == null)
-                MainWindow.InfoMessagesPanel.Children.Add(infobar);
-            else
-                parent.Children.Add(infobar);
-        }
-        public static void Show(this InfoBar infobar, string title, string message, Button actionButton, InfoBarSeverity severity, InfobarClearCondition clearCondition = InfobarClearCondition.Timer, int showSeconds = 5, Panel parent = null)
-        {
-            ShowInfobar(infobar, title, message, actionButton, severity, clearCondition, parent);
+    }
 
-            DispatcherTimer autoCloseTimer = new DispatcherTimer();
-            autoCloseTimer.Interval = new TimeSpan(0, 0, showSeconds);
-            autoCloseTimer.Start();
-            autoCloseTimer.Tick += delegate
+    public static void ShowUntilLogin(string title, string message, InfoBarSeverity severity)
+    {
+        CreateAndShow(title, message, null, severity, InfobarClearCondition.Login);
+    }
+
+    public static void Show(string localizationKey, InfoBarSeverity severity, int showSeconds = 8)
+    {
+        //todo localization
+        CreateAndShow(localizationKey + "/Headline", localizationKey + "/Text", null, severity, InfobarClearCondition.Timer, showSeconds);
+    }
+
+    public static void Show(string title, string message, InfoBarSeverity severity, int showSeconds = 8)
+    {
+        CreateAndShow(title, message, null, severity, InfobarClearCondition.Timer, showSeconds);
+    }
+
+    public static void Show(string title, string message, object content, InfoBarSeverity severity, int showSeconds = 8)
+    {
+        CreateAndShow(title, message, content, severity, InfobarClearCondition.Timer, showSeconds);
+    }
+
+
+    private static void CreateAndShow(string title, string message, object actionContent, InfoBarSeverity severity, InfobarClearCondition clearCondition, int seconds = 8)
+    {
+        var note = new NotificationViewModel
+        {
+            Title = title,
+            Message = message,
+            ActionContent = actionContent,
+            Severity = severity,
+            ClearCondition = clearCondition
+        };
+
+        App.MainVM.Notifications.Add(note);
+
+        if (clearCondition == InfobarClearCondition.Timer)
+        {
+            DispatcherTimer.RunOnce(() =>
             {
-                infobar.IsOpen = false;
-                autoCloseTimer.Stop();
-            };
+                note.IsOpen = false;
+                App.MainVM.Notifications.Remove(note);
+            }, TimeSpan.FromSeconds(seconds));
         }
+    }
 
-        private static void ShowInfobar(this InfoBar infobar, string title, string message, Button actionButton, InfoBarSeverity severity, InfobarClearCondition clearCondition, Panel parent = null)
+    public static void ClearAfterLogin()
+    {
+        for (int i = App.MainVM.Notifications.Count - 1; i >= 0; i--)
         {
-            infobar.Title = title;
-            infobar.Message = message;
-            infobar.ActionContent = actionButton;
-            infobar.Severity = severity;
-            infobar.Tag = clearCondition;
-            infobar.IsOpen = true;
-            //infobar.Background = Application.Current.Resources["SolidBackgroundFillColorBaseAltBrush"] as Brush;
-
-            AddInfobar(parent, infobar);
-        }
-        public static void ShowInfobar(this InfoBar infobar, string title, string message, Control content, InfoBarSeverity severity, Panel parent = null)
-        {
-            infobar.Title = title;
-            infobar.Message = message;
-            infobar.Severity = severity;
-            infobar.ActionContent = content;
-            infobar.Tag = InfobarClearCondition.Manual;
-            infobar.IsOpen = true;
-            //infobar.Background = Application.Current.Resources["SolidBackgroundFillColorBaseAltBrush"] as Brush;
-
-            AddInfobar(parent, infobar);
-        }
-
-        public static void ClearInfobarsAfterLogin(StackPanel infobarDisplay)
-        {
-            foreach (InfoBar infobar in infobarDisplay.Children)
+            var note = App.MainVM.Notifications[i];
+            if (note.ClearCondition == InfobarClearCondition.Login)
             {
-                if (infobar == null || ConvertHelper.ToEnum(infobar.Tag, InfobarClearCondition.Timer) == InfobarClearCondition.Timer)
-                    continue;
-
-                DispatcherTimer timer = new DispatcherTimer();
-                timer.Interval += new TimeSpan(0, 0, 4);
-                timer.Start();
-                timer.Tick += (e, i) =>
-                {
-                    infobarDisplay.Children.Remove(infobar);
-                };
+                note.IsOpen = false;
+                App.MainVM.Notifications.RemoveAt(i);
             }
         }
     }

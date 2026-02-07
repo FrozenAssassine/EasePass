@@ -16,6 +16,7 @@ copies or substantial portions of the Software.
 
 using EasePass.Extensions;
 using EasePass.Models;
+using EasePass.Services;
 using EasePass.Views;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace EasePass.Dialogs
                 Content = text,
             };
 
-            return await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Primary;
+            return await dialog.ShowOnMainWindow() == DialogResult.Primary;
         }
 
         public async Task<bool> ShowAsync(PasswordManagerItem deleteItem)

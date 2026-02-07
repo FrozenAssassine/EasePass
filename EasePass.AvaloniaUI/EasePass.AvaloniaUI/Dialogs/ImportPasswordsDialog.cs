@@ -17,6 +17,7 @@ copies or substantial portions of the Software.
 using Avalonia.Media;
 using EasePass.Extensions;
 using EasePass.Models;
+using EasePass.Services;
 using EasePass.Views;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -46,7 +47,7 @@ namespace EasePass.Dialogs
             //to add confirmation on overwrite passwords:
             dialog.Closing += Dialog_Closing;
 
-            var res = await dialog.ShowDialogAsync(MainWindow.current);
+            var res = await dialog.ShowOnMainWindow();
             //PasswordManagerItem[] items = importPage.GetSelectedPasswords();
 
             //if (res == DialogResult.Primary)

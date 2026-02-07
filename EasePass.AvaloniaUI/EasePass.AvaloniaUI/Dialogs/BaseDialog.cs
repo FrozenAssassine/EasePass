@@ -2,6 +2,8 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Layout;
+using EasePass.AvaloniaUI;
+using EasePass.Views;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs;

@@ -12,6 +12,7 @@ namespace EasePass.AvaloniaUI
 {
     public partial class App : Application
     {
+        public static MainViewModel MainVM;
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
@@ -24,6 +25,7 @@ namespace EasePass.AvaloniaUI
                 ApplicationData.Initialize();
 
                 var mainVM = new MainViewModel();
+                MainVM = mainVM;
 
                 NavigationHelper.MainVM = mainVM;
 

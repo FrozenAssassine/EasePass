@@ -17,9 +17,9 @@
             <views:PasswordsPage />
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+<!--        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
             <views:SettingsPage />
-        </DataTemplate>
+        </DataTemplate>-->
     </Application.DataTemplates>
 
     <Application.Styles>

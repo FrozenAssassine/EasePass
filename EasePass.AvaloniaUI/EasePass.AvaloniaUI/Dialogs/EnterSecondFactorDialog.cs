@@ -1,5 +1,6 @@
 ﻿using EasePass.Dialogs;
 using EasePass.Extensions;
+using EasePass.Services;
 using EasePass.Views;
 using System.Security;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ internal class EnterSecondFactorDialog
             Height = 200
         };
 
-        var result = await dialog.ShowDialogAsync(MainWindow.current);
+        var result = await dialog.ShowOnMainWindow();
 
         if (result == DialogResult.Primary && Token == null)
         {

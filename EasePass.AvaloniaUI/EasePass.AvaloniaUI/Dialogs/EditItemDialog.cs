@@ -16,6 +16,7 @@ copies or substantial portions of the Software.
 
 using EasePass.Extensions;
 using EasePass.Models;
+using EasePass.Services;
 using EasePass.Views;
 using System.Threading.Tasks;
 
@@ -33,10 +34,7 @@ namespace EasePass.Dialogs
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
                 Content = null//page;
             };
-            MainWindow.current.inactivityHelper.PreventAutologout = true;
-            var dialogResult = await dialog.ShowDialogAsync(MainWindow.current);
-            MainWindow.current.inactivityHelper.PreventAutologout = false;
-            
+            var dialogResult = await dialog.ShowAsyncWithPreventAutoLogout();
             if (dialogResult == DialogResult.Primary)
                 //return page.GetValue();
                 return null;

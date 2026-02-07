@@ -18,7 +18,7 @@ public class NavigationHelper
     public static void ToPasswords() => Navigate(new PasswordsViewModel());
     public static void ToSettings()
     {
-        Navigate(new SettingsViewModel());
+        //Navigate(new SettingsViewModel());
     }
     public static void ToManageDB(object param = null)
     {

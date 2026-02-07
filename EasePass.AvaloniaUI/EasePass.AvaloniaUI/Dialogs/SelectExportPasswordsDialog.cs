@@ -16,6 +16,7 @@ copies or substantial portions of the Software.
 
 using EasePass.Extensions;
 using EasePass.Models;
+using EasePass.Services;
 using EasePass.Views;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace EasePass.Dialogs
                 //Content = page
             };
 
-            if (await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Primary)
+            if (await dialog.ShowOnMainWindow() == DialogResult.Primary)
                 return null;//return page.GetSelectedPasswords();
             return null;
         }

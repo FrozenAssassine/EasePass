@@ -17,6 +17,7 @@ copies or substantial portions of the Software.
 using EasePass.Core.Database.Format.Serialization;
 using EasePass.Extensions;
 using EasePass.Helper.Logout;
+using EasePass.Services;
 using EasePass.Views;
 using System.Security;
 using System.Threading.Tasks;
@@ -45,10 +46,7 @@ namespace EasePass.Dialogs
                 //Content = page
             };
 
-            MainWindow.current.inactivityHelper.PreventAutologout = true;
-            bool result = await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Primary;
-            MainWindow.current.inactivityHelper.PreventAutologout = false;
-
+            bool result = await dialog.ShowAsyncWithPreventAutoLogout() == DialogResult.Primary;
             if (!result)
                 return (result, settings, token);
 

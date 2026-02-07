@@ -35,7 +35,7 @@ public class FilePickerHelper
             FileTypeFilter = extensions.Select(f => new FilePickerFileType(f)).ToList()
         };
 
-        var files = await MainWindow.current.StorageProvider.OpenFilePickerAsync(options);
+        var files = await MainWindow.storageProvider.OpenFilePickerAsync(options);
         var file = files.FirstOrDefault();
         return file != null ? (file.Path.LocalPath, true) : (null, false);
     }
@@ -55,7 +55,7 @@ public class FilePickerHelper
         }
         };
 
-        var file = await MainWindow.current.StorageProvider.SaveFilePickerAsync(options);
+        var file = await MainWindow.storageProvider.SaveFilePickerAsync(options);
         return file != null ? (file.Path.LocalPath, true) : (null, false);
     }
 
@@ -66,7 +66,7 @@ public class FilePickerHelper
             Title = "Select folder"
         };
 
-        var folders = await MainWindow.current.StorageProvider.OpenFolderPickerAsync(options);
+        var folders = await MainWindow.storageProvider.OpenFolderPickerAsync(options);
         var folder = folders.FirstOrDefault();
         return folder != null ? (folder.Path.LocalPath, true) : (null, false);
     }

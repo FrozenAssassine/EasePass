@@ -36,8 +36,4 @@ internal class TemporaryDatabaseHelper
             Core.Database.Database.AddDatabasePath(nds.Path);
     }
 
-    public static void ShowTempDBButton(Button button)
-    {
-        button.IsVisible = Core.Database.Database.LoadedInstance.IsTemporaryDatabase;
-    }
 }

@@ -1,5 +1,7 @@
-﻿using EasePass.Extensions;
+﻿using EasePass.AvaloniaUI;
+using EasePass.Extensions;
 using EasePass.Helper.Logout;
+using EasePass.Services;
 using EasePass.Views;
 using System.Threading.Tasks;
 
@@ -17,7 +19,7 @@ namespace EasePass.Dialogs
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
                 //Content = showSecondFactorPage
             };
-            await dialog.ShowDialogAsync(MainWindow.current);
+            await dialog.ShowOnMainWindow();
             return true;
         }
     }

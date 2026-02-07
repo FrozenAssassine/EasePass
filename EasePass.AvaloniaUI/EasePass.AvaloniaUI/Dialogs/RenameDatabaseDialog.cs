@@ -16,6 +16,7 @@ copies or substantial portions of the Software.
 
 using Avalonia.Controls;
 using EasePass.Extensions;
+using EasePass.Services;
 using EasePass.Views;
 using System.Threading.Tasks;
 
@@ -39,6 +40,6 @@ internal class RenameDatabaseDialog
             Content = dbName
         };
 
-        return (await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Primary && dbName.Text.Length > 0);
+        return (await dialog.ShowOnMainWindow() == DialogResult.Primary && dbName.Text.Length > 0);
     }
 }

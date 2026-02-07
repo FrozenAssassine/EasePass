@@ -19,6 +19,8 @@ using EasePass.Models;
 using EasePass.Views;
 using System.Threading.Tasks;
 using EasePass.Helper.Logout;
+using EasePass.AvaloniaUI;
+using EasePass.Services;
 
 namespace EasePass.Dialogs;
 
@@ -36,12 +38,7 @@ internal class Add2FADialog
             Content = page
         };
 
-        MainWindow.current.inactivityHelper.PreventAutologout = true;
-
-        var result = await dialog.ShowDialogAsync(MainWindow.current);
-
-        MainWindow.current.inactivityHelper.PreventAutologout = false;
-
+        var result = await dialog.ShowAsyncWithPreventAutoLogout();
         if (result == DialogResult.Primary)
         {
             //todo: page.UpdateValue();

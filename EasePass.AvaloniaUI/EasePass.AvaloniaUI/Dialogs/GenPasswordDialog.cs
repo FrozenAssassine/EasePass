@@ -15,6 +15,7 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.Extensions;
+using EasePass.Services;
 using EasePass.Views;
 using System.Threading.Tasks;
 
@@ -35,7 +36,7 @@ internal class GenPasswordDialog
             Content = null//page
         };
         dialog.Closing += Dialog_Closing;
-        return await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Secondary;
+        return await dialog.ShowOnMainWindow() == DialogResult.Secondary;
     }
 
     private void Dialog_Closing(object? sender, BaseDialogClosingArgs args)

@@ -17,6 +17,7 @@ copies or substantial portions of the Software.
 using EasePass.Core.Database;
 using EasePass.Extensions;
 using EasePass.Models;
+using EasePass.Services;
 using EasePass.Views;
 using System.Threading.Tasks;
 
@@ -33,7 +34,7 @@ namespace EasePass.Dialogs
                 CloseButtonText = "Close".Localized("Dialog_Button_Close/Text"),
                 Content = "Confirm to delete Database:".Localized("Dialog_ConfirmDeleteDatabase_Content/Text") + "\n" + database.Name + (database.DatabaseSource is NativeDatabaseSource nds ? "\n" + nds.Path : ""),
             };
-            return await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Primary;
+            return await dialog.ShowOnMainWindow() == DialogResult.Primary;
         }
     }
 }
