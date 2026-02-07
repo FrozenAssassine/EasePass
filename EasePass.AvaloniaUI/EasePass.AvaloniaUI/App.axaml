@@ -1,9 +1,11 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:EasePass"
+             xmlns:materialIcons="using:Material.Icons.Avalonia"
              xmlns:vm="using:EasePass.ViewModels"
              xmlns:views="using:EasePass.Views"
              x:Class="EasePass.AvaloniaUI.App"
+             xmlns:semi="https://irihi.tech/semi"
              RequestedThemeVariant="Default">
 
     <Application.DataTemplates>
@@ -21,6 +23,8 @@
     </Application.DataTemplates>
 
     <Application.Styles>
-        <FluentTheme />
+                <semi:SemiTheme Locale="en-US" />
+            <materialIcons:MaterialIconStyles />
+
     </Application.Styles>
 </Application>

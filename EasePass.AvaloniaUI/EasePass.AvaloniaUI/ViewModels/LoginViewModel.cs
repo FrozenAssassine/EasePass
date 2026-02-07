@@ -9,6 +9,7 @@ using EasePass.Helper.Security.Generator;
 using EasePass.Models;
 using EasePass.Settings;
 using System.Collections.ObjectModel;
+using System.Security;
 using System.Threading.Tasks;
 
 namespace EasePass.ViewModels
@@ -77,48 +78,59 @@ namespace EasePass.ViewModels
         [RelayCommand]
         private async Task Login(string password)
         {
+            IsLoginInProgress = true;
+
+            bool loginRes = await Task.Run(async () => await TryLogin(password));
+
+            if (loginRes)
+            {
+                IsLoginInProgress = false;
+                NavigationHelper.ToPasswords();
+            }
+            else
+            {
+                IsLoginInProgress = false;
+            }
+        }
+        private async Task<bool> TryLogin(string password)
+        {
             if (_wrongCount > 2)
             {
                 InfoMessages.TooManyPasswordAttempts();
-                return;
+                return false;
             }
 
-            if (SelectedDatabase == null || string.IsNullOrEmpty(password))
-                return;
+            SecureString securePw = password.ConvertToSecureString();
+            if (SelectedDatabase == null)
+                return false;
 
-            IsLoginInProgress = true;
-            await Task.Delay(50); // UI update
-
-            var securePw = password.ConvertToSecureString();
             var res = await SelectedDatabase.CheckPasswordCorrect(securePw);
-
             if (res.result == PasswordValidationResult.WrongPassword)
             {
                 _wrongCount++;
                 InfoMessages.EnteredWrongPassword(_wrongCount);
-                IsLoginInProgress = false;
-                return;
+                return false;
             }
             else if (res.result == PasswordValidationResult.DatabaseNotFound)
             {
                 InfoMessages.DatabaseFileNotFoundAt(SelectedDatabase.DatabaseSource.SourceDescription);
-                IsLoginInProgress = false;
-                return;
+                return false;
             }
             else if (res.result == PasswordValidationResult.LockedByOtherUser)
             {
                 InfoMessages.DatabaseLockedByOtherUser();
-                IsLoginInProgress = false;
-                return;
+                return false;
             }
 
             SelectedDatabase.Load(securePw, res.database);
             if (SelectedDatabase.Settings == null)
             {
+                //I somehow got it working, that entering a wrong password for a db,
+                //did not trigger the WrongPassword branch above, but went here with Settings being null.
+                //so this for savety.
                 _wrongCount++;
                 InfoMessages.EnteredWrongPassword(_wrongCount);
-                IsLoginInProgress = false;
-                return;
+                return false;
             }
             _wrongCount = 0;
 
@@ -130,9 +142,7 @@ namespace EasePass.ViewModels
                 token = null;
                 await SelectedDatabase.SaveAsync();
             }
-
-            NavigationHelper.ToPasswords();
-            IsLoginInProgress = false;
+            return true;
         }
 
         [RelayCommand]
