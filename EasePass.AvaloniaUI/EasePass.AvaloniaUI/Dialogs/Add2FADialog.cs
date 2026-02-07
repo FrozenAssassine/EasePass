@@ -18,6 +18,7 @@ using Avalonia.Controls;
 using EasePass.Models;
 using EasePass.Views;
 using System.Threading.Tasks;
+using EasePass.Helper.Logout;
 
 namespace EasePass.Dialogs;
 
@@ -27,7 +28,7 @@ internal class Add2FADialog
     {
         UserControl page = null; //todo: new Add2FAPage(item);
 
-        var dialog = new BaseDialog
+        var dialog = new AutoLogoutContentDialog()
         {
             Title = $"Add 2FA to {item.DisplayName}",
             PrimaryButtonText = "Add",
