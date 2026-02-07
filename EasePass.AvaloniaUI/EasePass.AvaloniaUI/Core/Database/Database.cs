@@ -109,7 +109,7 @@ public class Database
 
         return dbPath.
             Select(x => new DatabaseItem(new NativeDatabaseSource(x)))
-            .Concat(MainWindow.current.extensionManager.DatabaseSources.Select(x => new DatabaseItem(x)))
+            //todo .Concat(MainWindow.current.extensionManager.DatabaseSources.Select(x => new DatabaseItem(x)))
             .ToArray();
     }
     #endregion

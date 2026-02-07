@@ -33,9 +33,9 @@ namespace EasePass.Dialogs
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
                 Content = null//page;
             };
-            MainWindow.CurrentInstance.inactivityHelper.PreventAutologout = true;
+            MainWindow.current.inactivityHelper.PreventAutologout = true;
             var dialogResult = await dialog.ShowDialogAsync(MainWindow.current);
-            MainWindow.CurrentInstance.inactivityHelper.PreventAutologout = false;
+            MainWindow.current.inactivityHelper.PreventAutologout = false;
             
             if (dialogResult == DialogResult.Primary)
                 //return page.GetValue();

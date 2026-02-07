@@ -25,8 +25,6 @@ namespace EasePass.Views
         public InactivityManager inactivityHelper = new InactivityManager();
         public bool ShowBackArrow { get; set; } //todo implement { get => navigateBackButton.Visibility == Visibility.Visible; set => navigateBackButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
 
-        public static MainWindow CurrentInstance = null;
-
         public static LocalizationManager localizationHelper = new LocalizationManager();
 
         public readonly RestoreWindowManager restoreWindowManager;
@@ -42,8 +40,6 @@ namespace EasePass.Views
 
             LoggingManager.Logger = new MultiLogger(new FileLogger(), new DebugLineLogger()); // To disable, use "new NoLogger()"
             LoggingManager.InitializeCurrentLogger();
-
-            CurrentInstance = this;
 
             windowStateManager = new WindowStateManager(this);
             restoreWindowManager = new RestoreWindowManager(this, windowStateManager);

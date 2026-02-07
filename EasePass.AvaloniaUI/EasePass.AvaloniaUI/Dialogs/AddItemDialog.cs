@@ -37,9 +37,9 @@ namespace EasePass.Dialogs
                 Content = page
             };
 
-            MainWindow.CurrentInstance.inactivityHelper.PreventAutologout = true;
+            MainWindow.current.inactivityHelper.PreventAutologout = true;
             var dialogRes = await dialog.ShowDialogAsync(MainWindow.current);
-            MainWindow.CurrentInstance.inactivityHelper.PreventAutologout = false;
+            MainWindow.current.inactivityHelper.PreventAutologout = false;
             if (dialogRes == DialogResult.Primary)
             {
                 return null; //todo: page.GetValue();

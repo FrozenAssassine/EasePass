@@ -26,8 +26,8 @@ namespace EasePass.Controls
         public delegate void SuggestionChosenEvent(object sender, SelectionChangedEventArgs args);
         public event SuggestionChosenEvent SuggestionChosen;
 
-        public new delegate void PreviewKeyDownEvent(bool isTagSearch, KeyEventArgs e);
-        public new event PreviewKeyDownEvent PreviewKeyDown;
+        public delegate void PreviewKeyDownEvent(bool isTagSearch, KeyEventArgs e);
+        public event PreviewKeyDownEvent PreviewKeyDown;
 
         public static readonly StyledProperty<string> PlaceholderTextProperty =
             AvaloniaProperty.Register<SearchPasswordsBox, string>(nameof(PlaceholderText));
@@ -64,13 +64,13 @@ namespace EasePass.Controls
         public AutoCompleteBox InternalSuggestBox => this.FindControl<AutoCompleteBox>("suggestbox");
         public object SelectedItem { get; private set; }
 
-        private void Box_TextChanged(object sender, EventArgs e)
+        private void Box_TextChanged(object? sender, TextChangedEventArgs e)
         {
             var box = sender as AutoCompleteBox;
-            
+
             // Assume user text change if not explicitly suppressed
             if (!_isUserTextChange)
-                 _isUserTextChange = true; 
+                _isUserTextChange = true;
 
             var text = box?.Text;
             TextChanged?.Invoke(box, _isUserTextChange, text);
@@ -88,13 +88,14 @@ namespace EasePass.Controls
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-             // Avalonia KeyDown event bubble/tunnel.
-             // We can use PreviewKeyDown equivalent which is AddHandler(KeyDownEvent, RoutingStrategies.Tunnel)
-             // But here we expose an event. 
-             bool isTagSearch = Text?.StartsWith("/") == true;
-             PreviewKeyDown?.Invoke(isTagSearch, e);
-             
-             base.OnKeyDown(e);
+            // Avalonia KeyDown event bubble/tunnel.
+            // We can use PreviewKeyDown equivalent which is AddHandler(KeyDownEvent, RoutingStrategies.Tunnel)
+            // But here we expose an event. 
+            bool isTagSearch = Text?.StartsWith("/") == true;
+            PreviewKeyDown?.Invoke(isTagSearch, e);
+
+            base.OnKeyDown(e);
         }
+
     }
 }

@@ -91,12 +91,12 @@ namespace EasePass.Models
         [JsonIgnore]
         public Bitmap Icon = null;
         [JsonIgnore]
-        public Brush BackColor
+        public SolidColorBrush BackColor
         {
             get => DisplayName.HashToSolidColorBrush();
         }
         [JsonIgnore]
-        public Brush ForeColor
+        public SolidColorBrush ForeColor
         {
             get => (BackColor as SolidColorBrush).MakeFittedTextColor();
         }

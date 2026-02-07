@@ -12,7 +12,6 @@ namespace EasePass.Helper
 
         public ObservableCollection<PasswordManagerItem> SearchPasswords(
             SearchPasswordsBox searchbox, 
-            //AutoSuggestBox sender, 
             DatabaseItem loadedDB, 
             bool isUserTextChange, 
             string text)

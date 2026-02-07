@@ -45,9 +45,9 @@ namespace EasePass.Dialogs
                 //Content = page
             };
 
-            MainWindow.CurrentInstance.inactivityHelper.PreventAutologout = true;
+            MainWindow.current.inactivityHelper.PreventAutologout = true;
             bool result = await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Primary;
-            MainWindow.CurrentInstance.inactivityHelper.PreventAutologout = false;
+            MainWindow.current.inactivityHelper.PreventAutologout = false;
 
             if (!result)
                 return (result, settings, token);
