@@ -2,20 +2,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:EasePass.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="EasePass.AvaloniaUI.Controls.CopyTextbox">
+             x:Class="EasePass.Controls.CopyTextbox"
+             x:Name="Root"
+             x:DataType="controls:CopyTextbox"> 
     <StackPanel Spacing="4">
-        <TextBlock Text="{Binding Header, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                   IsVisible="{Binding Header, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" 
+        <TextBlock Text="{Binding Header, ElementName=Root}" 
+                   IsVisible="{Binding Header, ElementName=Root, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" 
                    Classes="header" 
                    FontWeight="Normal"
                    FontSize="14"
                    Foreground="{DynamicResource TextControlHeaderForeground}"/>
         
-        <TextBox Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"
-                 IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                 Watermark="{Binding Watermark, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                 AcceptsReturn="{Binding AcceptsReturn, RelativeSource={RelativeSource AncestorType=UserControl}}"
+        <TextBox Text="{Binding Text, ElementName=Root, Mode=TwoWay}"
+                 IsReadOnly="{Binding IsReadOnly, ElementName=Root}"
+                 Watermark="{Binding Watermark, ElementName=Root}"
+                 AcceptsReturn="{Binding AcceptsReturn, ElementName=Root}"
                  UseFloatingWatermark="False"
                  Classes="revealPasswordButton">
             <TextBox.InnerRightContent>

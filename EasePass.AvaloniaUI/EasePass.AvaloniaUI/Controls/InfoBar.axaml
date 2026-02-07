@@ -1,7 +1,10 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converter="using:EasePass.Converter"
              x:Class="EasePass.Controls.InfoBarTemplate"
-			 xmlns:local="clr-namespace:EasePass.Controls">
+			 xmlns:local="clr-namespace:EasePass.Controls"
+			 xmlns:controls="using:EasePass.Controls"
+			 x:DataType="controls:InfoBar">
 	<UserControl.Resources>
 		<!-- Severity brushes -->
 		<SolidColorBrush x:Key="InfoBarInfoBrush" Color="#0078D4"/>
@@ -9,8 +12,8 @@
 		<SolidColorBrush x:Key="InfoBarWarningBrush" Color="#FFAA00"/>
 		<SolidColorBrush x:Key="InfoBarErrorBrush" Color="#D13438"/>
 
-		<local:SeverityToBrushConverter x:Key="SeverityToBrushConverter"/>
-		<local:SeverityToIconConverter x:Key="SeverityToIconConverter"/>
+		<converter:SeverityToBrushConverter x:Key="SeverityToBrushConverter"/>
+		<converter:SeverityToIconConverter x:Key="SeverityToIconConverter"/>
 	</UserControl.Resources>
 
 	<Border CornerRadius="4"

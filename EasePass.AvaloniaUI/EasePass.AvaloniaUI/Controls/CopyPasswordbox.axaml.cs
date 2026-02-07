@@ -4,7 +4,7 @@ using Avalonia.Interactivity;
 using EasePass.Helper;
 using System;
 
-namespace EasePass.AvaloniaUI.Controls
+namespace EasePass.Controls
 {
     public partial class CopyPasswordbox : UserControl
     {

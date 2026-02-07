@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using Avalonia.Media.Imaging;
 using EasePassExtensibility;
 using System.Collections.Generic;
 using System.Text;
@@ -26,11 +27,11 @@ namespace EasePass.Models
 
         public IAboutPlugin AboutPlugin = null;
 
-        public ImageSource IconSource
+        public Bitmap IconSource
         {
             get
             {
-                if (AboutPlugin != null) return new BitmapImage(AboutPlugin.PluginIcon);
+                if (AboutPlugin != null) return new Bitmap(AboutPlugin.PluginIcon.AbsolutePath);
                 return null;
             }
         }

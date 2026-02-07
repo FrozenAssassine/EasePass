@@ -101,7 +101,7 @@ namespace EasePass.Models
             get => (BackColor as SolidColorBrush).MakeFittedTextColor();
         }
         [JsonIgnore]
-        public string FirstChar = "";
+        public string FirstChar { get; private set; }
         [JsonIgnore]
         public bool ShowIcon =>  AppSettings.ShowIcons;
 

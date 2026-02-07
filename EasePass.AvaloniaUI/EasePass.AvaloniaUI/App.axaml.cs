@@ -1,10 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using EasePass.AvaloniaUI.ViewModels;
-using EasePass.AvaloniaUI.Views;
 using EasePass.Helper.App;
 using EasePass.ViewModels;
 using EasePass.Views;

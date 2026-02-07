@@ -37,7 +37,7 @@
                 </Grid.ColumnDefinitions>
                 <ComboBox Grid.Column="0" ItemsSource="{Binding Databases}" SelectedItem="{Binding SelectedDatabase}" HorizontalAlignment="Stretch" PlaceholderText="Choose database:">
                     <ComboBox.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="models:DatabaseItem">
                             <TextBlock Text="{Binding Name}" Foreground="{Binding DatabaseSource.Availability, Converter={StaticResource AvailabilityToBrushConverter}}"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>

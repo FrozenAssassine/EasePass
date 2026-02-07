@@ -15,8 +15,6 @@ using EasePass.Helper.App;
 using EasePass.Settings;
 using EasePass.Helper.Database;
 using EasePass.Helper.Logout;
-using EasePass.AvaloniaUI.Controls;
-using EasePass.AvaloniaUI.Views;
 
 namespace EasePass.Views
 {

@@ -3,18 +3,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="EasePass.AvaloniaUI.Controls.CopyTokenBox">
+             x:Class="EasePass.Controls.CopyTokenBox"
+             x:Name="Root" 
+             xmlns:controls="using:EasePass.Controls"
+             x:DataType="controls:CopyTokenBox">
              
     <StackPanel Spacing="4">
-        <TextBlock Text="{Binding Header, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                   IsVisible="{Binding Header, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" 
+        <TextBlock Text="{Binding Header, ElementName=Root}" 
+                   IsVisible="{Binding Header, ElementName=Root, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" 
                    Classes="header"
                    FontSize="14"
                    Foreground="{DynamicResource TextControlHeaderForeground}"/>
 
         <TextBox x:Name="textBox"
                  IsReadOnly="True"
-                 Watermark="{Binding Watermark, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                 Watermark="{Binding Watermark, ElementName=Root}"
                  UseFloatingWatermark="False"
                  Classes="revealPasswordButton">
             <TextBox.InnerRightContent>
@@ -26,7 +29,7 @@
                         Cursor="Hand">
                          <PathIcon Data="{StaticResource copy_regular}" />
                     </Button>
-                    <ToggleButton IsChecked="{Binding ShowToken, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"
+                    <ToggleButton IsChecked="{Binding ShowToken, ElementName=Root, Mode=TwoWay}"
                                   Theme="{DynamicResource TransparentButton}"
                                   Padding="8,0"
                                   ToolTip.Tip="Show Token"
