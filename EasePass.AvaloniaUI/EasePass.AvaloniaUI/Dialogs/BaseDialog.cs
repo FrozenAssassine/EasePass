@@ -13,6 +13,11 @@ public enum DialogResult
     Secondary,
     Cancel
 }
+public class BaseDialogClosingArgs
+{
+    public DialogResult Result { get; set; }
+    public bool Cancel { get; set; }
+}
 
 public class BaseDialog : Window
 {
@@ -20,9 +25,12 @@ public class BaseDialog : Window
     private readonly StackPanel _buttonPanel;
     private readonly ContentControl _contentContainer;
 
+    // Use a unique name to avoid hiding the base Window.Closing event incorrectly
+    public delegate void DialogClosingEvent(object? sender, BaseDialogClosingArgs args);
+    public event DialogClosingEvent? Closing;
+
     public DialogResult Result { get; private set; } = DialogResult.None;
 
-    // Button Text Properties
     public string? PrimaryButtonText { get; set; }
     public string? SecondaryButtonText { get; set; }
     public string? CloseButtonText { get; set; }
@@ -34,7 +42,7 @@ public class BaseDialog : Window
         SizeToContent = SizeToContent.Height;
         WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
-        // Setup the UI Wrapper
+        // Visual Wrapper
         _buttonPanel = new StackPanel
         {
             Orientation = Orientation.Horizontal,
@@ -50,17 +58,33 @@ public class BaseDialog : Window
         rootLayout.Children.Add(_buttonPanel);
         rootLayout.Children.Add(_contentContainer);
 
-        this.Content = rootLayout;
+        base.Content = rootLayout;
 
         KeyDown += OnKeyDown;
-        Closing += (_, __) => _tcs?.TrySetResult(Result);
     }
 
-    // Shadowing the original Content property to place it in our container
+    // Shadowing the original Content property
     public new object? Content
     {
         get => _contentContainer.Content;
         set => _contentContainer.Content = value;
+    }
+
+    protected override void OnClosing(WindowClosingEventArgs e)
+    {
+        var args = new BaseDialogClosingArgs { Result = this.Result };
+
+        // Trigger our custom event
+        Closing?.Invoke(this, args);
+
+        if (args.Cancel)
+        {
+            e.Cancel = true;
+            return;
+        }
+
+        base.OnClosing(e);
+        _tcs?.TrySetResult(this.Result);
     }
 
     private void CreateButtons()
@@ -90,8 +114,8 @@ public class BaseDialog : Window
 
         if (isDefault)
         {
-            // Enter key triggers this
             btn.HotKey = new KeyGesture(Key.Enter);
+            btn.Classes.Add("accent");
         }
 
         _buttonPanel.Children.Add(btn);
@@ -101,8 +125,10 @@ public class BaseDialog : Window
     {
         _tcs = new TaskCompletionSource<DialogResult>();
         CreateButtons();
+
         await ShowDialog(owner);
-        return _tcs.Task.IsCompleted ? await _tcs.Task : Result;
+
+        return await _tcs.Task;
     }
 
     private void OnKeyDown(object? sender, KeyEventArgs e)

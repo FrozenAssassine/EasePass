@@ -44,7 +44,7 @@ namespace EasePass.Dialogs
             };
 
             //to add confirmation on overwrite passwords:
-            dialog.Closing += Dialog_Closing1;
+            dialog.Closing += Dialog_Closing;
 
             var res = await dialog.ShowDialogAsync(MainWindow.current);
             //PasswordManagerItem[] items = importPage.GetSelectedPasswords();
@@ -56,7 +56,7 @@ namespace EasePass.Dialogs
             return (null, false);
         }
 
-        private void Dialog_Closing1(object? sender, Avalonia.Controls.WindowClosingEventArgs e)
+        private void Dialog_Closing(object? sender, BaseDialogClosingArgs args)
         {
             /*
             //ensure overwrite button was pressed:

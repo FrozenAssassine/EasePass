@@ -1,16 +1,18 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Chrome;
 using Avalonia.Interactivity;
-using EasePass.Settings;
 using EasePass.Core;
 using EasePass.Core.Database;
 using EasePass.Dialogs;
+using EasePass.Helper.App;
 using EasePass.Helper.Logout;
 using EasePass.Helper.Security.Generator;
 using EasePass.Manager;
 using EasePass.Models.Logger;
+using EasePass.Settings;
+using EasePass.ViewModels;
+using EasePassExtensibility;
 using System.Threading.Tasks;
-using EasePass.Helper.App;
 
 namespace EasePass.Views
 {
@@ -37,8 +39,6 @@ namespace EasePass.Views
 
             current = this;
             InfoMessagesPanel = infoMessagesPanel;
-
-            ApplicationData.Initialize();
 
             LoggingManager.Logger = new MultiLogger(new FileLogger(), new DebugLineLogger()); // To disable, use "new NoLogger()"
             LoggingManager.InitializeCurrentLogger();

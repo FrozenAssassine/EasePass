@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using EasePass.Helper.App;
+using EasePass.Settings;
 using EasePass.ViewModels;
 using EasePass.Views;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace EasePass.AvaloniaUI
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
+                ApplicationData.Initialize();
+
                 var mainVM = new MainViewModel();
 
                 NavigationHelper.MainVM = mainVM;

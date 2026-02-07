@@ -46,7 +46,7 @@ namespace EasePass.Dialogs
             return null;
         }
 
-        private void Dialog_Closing(object? sender, Avalonia.Controls.WindowClosingEventArgs e)
+        private void Dialog_Closing(object? sender, BaseDialogClosingArgs args)
         {
             /*if (page == null || args.Result != ContentDialogResult.Primary)
                 return;

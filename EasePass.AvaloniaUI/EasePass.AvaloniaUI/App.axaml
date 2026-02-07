@@ -1,8 +1,8 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:EasePass.AvaloniaUI"
-             xmlns:vm="using:EasePass.AvaloniaUI.ViewModels"
-             xmlns:views="using:EasePass.AvaloniaUI.Views"
+             xmlns:local="using:EasePass"
+             xmlns:vm="using:EasePass.ViewModels"
+             xmlns:views="using:EasePass.Views"
              x:Class="EasePass.AvaloniaUI.App"
              RequestedThemeVariant="Default">
 

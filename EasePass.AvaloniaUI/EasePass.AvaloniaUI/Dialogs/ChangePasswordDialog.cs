@@ -40,7 +40,8 @@ namespace EasePass.Dialogs
             await dialog.ShowDialogAsync(MainWindow.current);
         }
 
-        private void Dialog_Closing(object? sender, Avalonia.Controls.WindowClosingEventArgs e)
+
+        private void Dialog_Closing(object? sender, BaseDialogClosingArgs args)
         {
             /*
             if (e.Result != ContentDialogResult.Primary)

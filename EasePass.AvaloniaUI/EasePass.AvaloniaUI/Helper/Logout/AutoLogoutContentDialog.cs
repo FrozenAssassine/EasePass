@@ -40,10 +40,10 @@ namespace EasePass.Helper.Logout
         {
             doPreventAutoLogoutDialog = preventAutoLogout;
             Dialogs.Add(this);
-            this.Closing += AutoLogoutContentDialog_Closing1; ;
+            this.Closing += Dialog_Closing;
         }
 
-        private void AutoLogoutContentDialog_Closing1(object? sender, Avalonia.Controls.WindowClosingEventArgs e)
+        private void Dialog_Closing(object? sender, BaseDialogClosingArgs args)
         {
             if (sender is AutoLogoutContentDialog dialog && dialog != null)
             {

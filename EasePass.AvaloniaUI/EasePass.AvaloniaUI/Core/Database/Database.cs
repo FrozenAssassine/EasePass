@@ -103,8 +103,12 @@ public class Database
     #region GetAllUnloadedDatabases
     public static DatabaseItem[] GetAllUnloadedDatabases()
     {
-        return GetAllDatabasePaths()
-            .Select(x => new DatabaseItem(new NativeDatabaseSource(x)))
+        var dbPath = GetAllDatabasePaths();
+        if (dbPath == null || dbPath.Length == 0)
+            return [];
+
+        return dbPath.
+            Select(x => new DatabaseItem(new NativeDatabaseSource(x)))
             .Concat(MainWindow.current.extensionManager.DatabaseSources.Select(x => new DatabaseItem(x)))
             .ToArray();
     }

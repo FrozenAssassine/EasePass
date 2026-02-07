@@ -17,6 +17,7 @@ copies or substantial portions of the Software.
 using Avalonia.Input;
 using EasePass.Extensions;
 using EasePass.Views;
+using EasePass.Views.DialogViews;
 using System.Security;
 using System.Threading.Tasks;
 
@@ -26,36 +27,36 @@ namespace EasePass.Dialogs
     {
         private BaseDialog dialog;
         public SecureString Password { get; private set; }
-        //private EnterPasswordPage page;
+        private EnterPasswordPage page;
 
         public async Task<EnterPasswordDialog> ShowAsync()
         {
-            //page = new EnterPasswordPage();
+            page = new EnterPasswordPage();
             dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Enter password of the database".Localized("Dialogs_EnterPW_Title/Text"),
                 PrimaryButtonText = "Done".Localized("Dialog_Button_Done/Text"),
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
-                Content = null //page
+                Content = page
             };
-            dialog.KeyDown += Dialog_KeyDown1;
-            dialog.Closing += Dialog_Closing1;
+            dialog.KeyDown += Dialog_KeyDown;
+            dialog.Closing += Dialog_Closing;
 
             await dialog.ShowDialogAsync(MainWindow.current);
             return this;
         }
 
-        private void Dialog_Closing1(object? sender, Avalonia.Controls.WindowClosingEventArgs e)
+        private void Dialog_Closing(object? sender, BaseDialogClosingArgs args)
         {
-            //if (Password == null)
-                //Password = args.Result == DialogResult.Primary ? page.GetPassword().ConvertToSecureString() : null;
+            if (Password == null)
+                Password = args.Result == DialogResult.Primary ? page.GetPassword().ConvertToSecureString() : null;
         }
 
-        private void Dialog_KeyDown1(object? sender, Avalonia.Input.KeyEventArgs e)
+        private void Dialog_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                //Password = page.GetPassword().ConvertToSecureString();
+                Password = page.GetPassword().ConvertToSecureString();
                 dialog.Hide();
             }
         }

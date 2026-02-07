@@ -7,6 +7,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="EasePass.Views.MainWindow"
         xmlns:fluentAvalonia="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+        x:Name="Root" 
+        x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="EasePass" >
 	<Grid>

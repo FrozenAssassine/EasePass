@@ -38,7 +38,7 @@ internal class GenPasswordDialog
         return await dialog.ShowDialogAsync(MainWindow.current) == DialogResult.Secondary;
     }
 
-    private void Dialog_Closing(object? sender, Avalonia.Controls.WindowClosingEventArgs e)
+    private void Dialog_Closing(object? sender, BaseDialogClosingArgs args)
     {
         //if(args.Result == DialogResult.Primary)
         //{
