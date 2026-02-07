@@ -11,14 +11,26 @@ using EasePass.Settings;
 using EasePass.Helper.Security;
 using Avalonia.Controls.Shapes;
 using EasePass.Extensions;
+using System.Collections.Generic;
 
-namespace EasePass.AvaloniaUI.Controls
+namespace EasePass.Controls
 {
     public partial class PasswordSafetyChart : UserControl, INotifyPropertyChanged
     {
-        public string[] Messages { get; private set; }
+        private List<string> _Messages = new List<string>
+        {
+            "Lower case letters".Localized("PW_SafetyChart_LowerCaseLetters/Text"),
+            "Upper case letters".Localized("PW_SafetyChart_UpperCaseLetters/Text"),
+            "Password length".Localized("PW_SafetyChart_PWLength/Text"),
+            "Leaked or exploited".Localized("PW_SafetyChart_LeakedExploited/Text"),
+            "Punctuation".Localized("PW_SafetyChart_SpecialChars/Text"),
+            "Digits".Localized("PW_SafetyChart_Digits/Text"),
+            "Predictability".Localized("PW_SafetyChart_Predictability/Text"),
+            "Seen before".Localized("PW_SafetyChart_Seenbefore/Text")
+        };
+        public List<string> Messages { get => _Messages; }
 
-        private static string[] infos = new string[]
+        private static List<string> _Infos = new List<string>
         {
             "Contains Lower case:".Localized("PW_SafetyChart_Info_LowerCase/Text"),
             "Contains Upper case:".Localized("PW_SafetyChart_Info_UpperCase/Text"),
@@ -29,6 +41,8 @@ namespace EasePass.AvaloniaUI.Controls
             "Predictability:".Localized("PW_SafetyChart_Info_Predictability/Text"),
             "Seen before:".Localized("PW_SafetyChart_Info_SeenBefore/Text")
         };
+        public List<string> Infos => _Infos;
+
         private static string[][] suffixes = new string[][]
         {
             //true, false, null
@@ -74,18 +88,6 @@ namespace EasePass.AvaloniaUI.Controls
 
         public PasswordSafetyChart()
         {
-            Messages = new string[]
-            {
-                "Lower case letters".Localized("PW_SafetyChart_LowerCaseLetters/Text"),
-                "Upper case letters".Localized("PW_SafetyChart_UpperCaseLetters/Text"),
-                "Password length".Localized("PW_SafetyChart_PWLength/Text"),
-                "Leaked or exploited".Localized("PW_SafetyChart_LeakedExploited/Text"),
-                "Punctuation".Localized("PW_SafetyChart_SpecialChars/Text"),
-                "Digits".Localized("PW_SafetyChart_Digits/Text"),
-                "Predictability".Localized("PW_SafetyChart_Predictability/Text"),
-                "Seen before".Localized("PW_SafetyChart_Seenbefore/Text")
-            };
-
             this.InitializeComponent();
             this.DataContext = this;
             
@@ -181,7 +183,7 @@ namespace EasePass.AvaloniaUI.Controls
             {
                 int index = ToIndex(checks[i]);
                 string suffix = index == 2 ? unknown : suffixes[i][index];
-                sb.AppendLine(infos[i] + " " + suffix);
+                sb.AppendLine(_Infos[i] + " " + suffix);
             }
             return sb.ToString();
         }

@@ -3,11 +3,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="100"
-             x:Class="EasePass.AvaloniaUI.Controls.SettingsItemSeparator"
-             Margin="0,30,0,0">
+             x:Class="EasePass.Controls.SettingsItemSeparator"
+             Margin="0,30,0,0"
+             xmlns:controls="using:EasePass.Controls"
+             x:Name="Root"
+             x:DataType="controls:SettingsItemSeparator"
+             >
 
     <StackPanel Orientation="Horizontal">
-        <TextBlock Text="{Binding Header, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="24"/>
-        <ContentPresenter Margin="10,0,0,0" Content="{Binding SettingsContent, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        <TextBlock Text="{Binding Header, ElementName=Root}" FontSize="24"/>
+        <ContentPresenter Margin="10,0,0,0" Content="{Binding SettingsContent, ElementName=Root}"/>
     </StackPanel>
 </UserControl>

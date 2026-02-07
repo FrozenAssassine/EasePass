@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Metadata;
 
-namespace EasePass.AvaloniaUI.Controls
+namespace EasePass.Controls
 {
     public partial class SettingsItemSeparator : UserControl
     {

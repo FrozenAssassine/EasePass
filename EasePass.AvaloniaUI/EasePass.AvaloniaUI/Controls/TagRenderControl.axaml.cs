@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Avalonia.Layout;
 
-namespace EasePass.AvaloniaUI.Controls
+namespace EasePass.Controls
 {
     public partial class TagRenderControl : UserControl, INotifyPropertyChanged
     {

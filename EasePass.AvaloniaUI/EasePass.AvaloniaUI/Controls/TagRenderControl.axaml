@@ -3,7 +3,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="100"
-             x:Class="EasePass.AvaloniaUI.Controls.TagRenderControl">
+             x:Class="EasePass.Controls.TagRenderControl"
+             xmlns:controls="using:EasePass.Controls"
+             x:Name="Root"
+             x:DataType="controls:TagRenderControl"
+             >
 
     <StackPanel Margin="5,0,0,0" x:Name="tagRenderer" Orientation="Horizontal" HorizontalAlignment="Left">
 

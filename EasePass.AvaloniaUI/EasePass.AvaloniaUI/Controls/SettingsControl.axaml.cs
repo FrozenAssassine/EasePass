@@ -2,9 +2,8 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Metadata;
-using System;
 
-namespace EasePass.AvaloniaUI.Controls
+namespace EasePass.Controls
 {
     public partial class SettingsControl : UserControl
     {

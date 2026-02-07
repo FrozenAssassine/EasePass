@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace EasePass.AvaloniaUI.Controls
+namespace EasePass.Controls
 {
     public partial class TextWithSuggestionBox : UserControl
     {

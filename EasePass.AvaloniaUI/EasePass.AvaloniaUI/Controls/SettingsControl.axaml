@@ -3,7 +3,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="100"
-             x:Class="EasePass.AvaloniaUI.Controls.SettingsControl">
+             xmlns:controls="using:EasePass.Controls"
+             x:Class="EasePass.Controls.SettingsControl"
+             x:Name="Root"
+             x:DataType="controls:SettingsControl">
              
     <Grid x:Name="mainGrid"
           Margin="0,5,0,0"
@@ -11,7 +14,6 @@
           HorizontalAlignment="Stretch"
           MinWidth="200"
           Background="{DynamicResource ExpanderHeaderBackground}" 
-          Padding="16"
           PointerPressed="mainGrid_PointerPressed">
         
         <Grid.Styles>
@@ -28,14 +30,14 @@
         </Grid.Transitions>
 
         <StackPanel Height="70" Spacing="10" Orientation="Horizontal" x:Name="headerContent">
-            <TextBlock Text="{Binding Glyph, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                       IsVisible="{Binding Glyph, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+            <TextBlock Text="{Binding Glyph, ElementName=Root}" 
+                       IsVisible="{Binding Glyph, ElementName=Root, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                        FontFamily="{DynamicResource SymbolThemeFontFamily}" 
                        FontSize="20" 
                        VerticalAlignment="Center" 
                        HorizontalAlignment="Left"/>
                        
-            <TextBlock Text="{Binding Header, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+            <TextBlock Text="{Binding Header, ElementName=Root}" 
                        FontSize="20" 
                        VerticalAlignment="Center" 
                        HorizontalAlignment="Left"/>
@@ -44,7 +46,7 @@
         <ContentPresenter Margin="0,0,20,0" 
                           HorizontalAlignment="Right" 
                           VerticalAlignment="Center" 
-                          Content="{Binding SettingsContent, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                          Content="{Binding SettingsContent, ElementName=Root}"/>
         
         <Border CornerRadius="5" 
                 BorderThickness="1" 
