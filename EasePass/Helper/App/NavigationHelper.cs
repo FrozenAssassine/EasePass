@@ -6,20 +6,13 @@ namespace EasePass.Helper.App;
 
 public class NavigationHelper
 {
-    public static MainViewModel? MainVM { get; set; }
-
-    private static void Navigate(ViewModelBase viewModel)
+    private static void Navigate(System.Type page, object param = null)
     {
-        if (MainVM != null)
-        {
-            MainVM.CurrentPage = viewModel;
-        }
+        EasePass.App.m_frame.Navigate(page, param);
     }
-    public static void ToPasswords() => Navigate(new PasswordsViewModel());
-
-    public static void ToSettings(PasswordsViewModel pwVM)
+    public static void ToPasswords(object param = null)
     {
-        Navigate(new SettingsViewModel { PasswordViewModel = pwVM });
+        Navigate(typeof(PasswordsPage), param);
     }
     public static void ToSettings(PasswordsPage pwPage)
     {
@@ -49,4 +42,5 @@ public class NavigationHelper
     {
         Navigate(typeof(AboutPage), param);
     }
+
 }
