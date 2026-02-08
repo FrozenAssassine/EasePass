@@ -43,7 +43,7 @@ public class WindowStateManager
 
     public WindowSizePosState GetWindowSizePosStateIndependent()
     {
-        throw new System.Exception("Not implemented yet");
+        //todo
         // Return the last restored size/position even if minimized or maximized
         return new WindowSizePosState
         {
