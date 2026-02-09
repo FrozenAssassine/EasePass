@@ -17,7 +17,9 @@ copies or substantial portions of the Software.
 using EasePass.Extensions;
 using EasePass.Models;
 using EasePass.Services;
+using EasePass.ViewModels.Dialog;
 using EasePass.Views;
+using EasePass.Views.DialogViews;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs
@@ -26,18 +28,18 @@ namespace EasePass.Dialogs
     {
         public async Task<PasswordManagerItem> ShowAsync(PasswordsPage.PasswordExists pe, PasswordManagerItem item)
         {
-            //var page = new AddItemPage(pe, item);
+            var vm = new AddItemPageViewModel(pe, item);
+            var view = new AddItemPage { DataContext = vm };
             var dialog = new Helper.Logout.AutoLogoutContentDialog(true)
             {
                 Title = "Edit item".Localized("Dialog_EditItem_Headline/Text"),
                 PrimaryButtonText = "Done".Localized("Dialog_Button_Done/Text"),
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
-                Content = null//page;
+                Content = view
             };
             var dialogResult = await dialog.ShowAsyncWithPreventAutoLogout();
             if (dialogResult == DialogResult.Primary)
-                //return page.GetValue();
-                return null;
+                return vm.GetResult();
             return null;
         }
     }

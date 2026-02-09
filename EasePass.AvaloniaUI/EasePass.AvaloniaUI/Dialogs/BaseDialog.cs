@@ -26,6 +26,7 @@ public class BaseDialog : Window
     private TaskCompletionSource<DialogResult>? _tcs;
     private readonly StackPanel _buttonPanel;
     private readonly ContentControl _contentContainer;
+    private bool _isClosing = false;
 
     // Use a unique name to avoid hiding the base Window.Closing event incorrectly
     public delegate void DialogClosingEvent(object? sender, BaseDialogClosingArgs args);
@@ -85,6 +86,7 @@ public class BaseDialog : Window
             return;
         }
 
+        _isClosing = true;
         base.OnClosing(e);
         _tcs?.TrySetResult(this.Result);
     }
@@ -112,7 +114,13 @@ public class BaseDialog : Window
             HorizontalContentAlignment = HorizontalAlignment.Center
         };
 
-        btn.Click += (_, __) => { Result = result; Close(); };
+        btn.Click += (_, e) => 
+        { 
+            e.Handled = true;
+            if (_isClosing) return;
+            Result = result; 
+            Close(); 
+        };
 
         if (isDefault)
         {
@@ -137,6 +145,9 @@ public class BaseDialog : Window
     {
         if (e.Key == Key.Escape)
         {
+            e.Handled = true;
+            if (_isClosing) return;
+
             Result = DialogResult.Cancel;
             Close();
         }

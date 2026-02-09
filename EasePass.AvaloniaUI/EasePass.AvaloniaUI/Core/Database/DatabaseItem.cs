@@ -388,6 +388,12 @@ namespace EasePass.Core.Database
         #endregion
 
         #region Save
+
+        public async void ScheduleSave(IDatabaseSource source = null)
+        {
+            await deferredSaver.RequestSaveAsync(() => SaveDatabase(source));
+        }
+
         /// <summary>
         /// Saves the Database to the <paramref name="source"/>
         /// </summary>

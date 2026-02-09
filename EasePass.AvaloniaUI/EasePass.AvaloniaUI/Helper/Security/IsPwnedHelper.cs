@@ -1,5 +1,10 @@
-﻿using EasePass.Settings;
+﻿using Avalonia.Logging;
+using EasePass.Manager;
+using EasePass.Models.Logger;
+using EasePass.Settings;
+using EasePass.Views;
 using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace EasePass.Helper.Security
@@ -17,7 +22,7 @@ namespace EasePass.Helper.Security
             }
             catch
             {
-                //could not read file:
+                LoggingManager.Logger.Log("Could not read PWNED file");
                 return PwnedResult.Error;
             }
 

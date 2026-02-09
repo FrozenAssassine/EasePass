@@ -20,7 +20,10 @@ using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Models;
 using EasePass.Services;
+using EasePass.ViewModels;
+using EasePass.ViewModels.Dialog;
 using EasePass.Views;
+using EasePass.Views.DialogViews;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs
@@ -29,20 +32,19 @@ namespace EasePass.Dialogs
     {
         public async Task<PasswordManagerItem> ShowAsync(PasswordsPage.PasswordExists pe)
         {
-            UserControl page = null; //todo: new AddItemPage(pe);
+            var vm = new AddItemPageViewModel(pe);
+            var view = new AddItemPage { DataContext = vm };
             var dialog = new Helper.Logout.AutoLogoutContentDialog(true)
             {
                 Title = "Add Password".Localized("Dialog_AddItem_Headline/Text"),
                 PrimaryButtonText = "Add".Localized("Dialog_Button_Add/Text"),
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
-                Content = page
+                Content = view
             };
 
             var result = await dialog.ShowAsyncWithPreventAutoLogout();
             if (result == DialogResult.Primary)
-            {
-                return null; //todo: page.GetValue();
-            }
+                return vm.GetResult();
             return null;
         }
     }

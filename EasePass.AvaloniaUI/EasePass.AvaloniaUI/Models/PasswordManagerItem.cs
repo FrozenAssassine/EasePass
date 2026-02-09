@@ -16,6 +16,7 @@ copies or substantial portions of the Software.
 
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
+using CommunityToolkit.Mvvm.ComponentModel;
 using EasePass.Extensions;
 using EasePass.Helper;
 using EasePass.Settings;
@@ -23,148 +24,100 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace EasePass.Models
 {
-    public class PasswordManagerItem : INotifyPropertyChanged
+    public partial class PasswordManagerItem : ObservableObject
     {
-        private string _Password;
-        public string Password { get => _Password; set { _Password = value; NotifyPropertyChanged("Password"); } }
-        private string _Username;
-        public string Username { get => _Username; set { _Username = value; NotifyPropertyChanged("Username"); } }
-
-        private string _Email;
-        public string Email { get => _Email; set { _Email = value; NotifyPropertyChanged("Email"); } }
-
-        private string _Notes;
-        public string Notes { get => _Notes; set { _Notes = value; NotifyPropertyChanged("Notes"); } }
-
-        private string _Secret;
-        public string Secret { get => _Secret; set { _Secret = value; NotifyPropertyChanged("Secret"); } }
+        [ObservableProperty] private string _password;
+        [ObservableProperty] private string _username;
+        [ObservableProperty] private string _email;
+        [ObservableProperty] private string _notes;
+        [ObservableProperty] private string _secret;
+        [ObservableProperty] private string[] _tags;
         public string Digits { get; set; } = "6";
         public string Interval { get; set; } = "30";
         public string Algorithm { get; set; } = "SHA1";
         public List<string> Clicks { get; } = new List<string>();
 
-        private string[] _Tags;
-        public string[] Tags { get=>  _Tags; set { _Tags = value; NotifyPropertyChanged("Tags"); } }
+        [ObservableProperty]
+        private string _displayName;
 
-        [JsonIgnore]
-        private string _DisplayName;
-        public string DisplayName
+        // Automatically called when DisplayName changes
+        partial void OnDisplayNameChanged(string value)
         {
-            get => _DisplayName;
-            set
-            {
-                _DisplayName = value;
-                FirstChar = value == null || value?.Length == 0 ? "" : value.Substring(0, 1);
-                NotifyPropertyChanged("DisplayName");
-                NotifyPropertyChanged("Website");
-                NotifyPropertyChanged("FirstChar");
-            }
+            FirstChar = string.IsNullOrEmpty(value) ? "" : value.Substring(0, 1);
+            OnPropertyChanged(nameof(FirstChar));
+            OnPropertyChanged(nameof(BackColor));
+            OnPropertyChanged(nameof(ForeColor));
         }
-        [JsonIgnore]
-        private string _Website = "";
 
+        [JsonIgnore]
+        private string _website = "";
         public string Website
         {
-            get => _Website;
+            get => _website;
             set
             {
-                if (ShowIcon)
+                // Logic check: don't re-run if the value hasn't actually changed
+                var normalized = value?.Trim() ?? "";
+                if (_website == normalized) return;
+
+                if (AppSettings.ShowIcons)
                 {
-                    _Website = WebsiteIconHelper.NormalizeWebsite(value);
+                    _website = WebsiteIconHelper.NormalizeWebsite(normalized);
+                    // Fire and forget the icon update
                     _ = UpdateWebsiteIconAsync();
                 }
                 else
                 {
-                    _Website = value == null ? null : value.Trim();
+                    _website = normalized;
                     Icon = null;
                 }
 
-                NotifyPropertyChanged(nameof(Website));
-                NotifyPropertyChanged(nameof(Icon));
+                SetProperty(ref _website, value, nameof(Website));
+                OnPropertyChanged(nameof(Icon));
             }
         }
-        [JsonIgnore]
-        public Bitmap Icon = null;
-        [JsonIgnore]
-        public SolidColorBrush BackColor
-        {
-            get => DisplayName.HashToSolidColorBrush();
-        }
-        [JsonIgnore]
-        public SolidColorBrush ForeColor
-        {
-            get => (BackColor as SolidColorBrush).MakeFittedTextColor();
-        }
-        [JsonIgnore]
-        public string FirstChar { get; private set; }
-        [JsonIgnore]
-        public bool ShowIcon =>  AppSettings.ShowIcons;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        [JsonIgnore][ObservableProperty] private Bitmap? _icon = null;
+
+        [JsonIgnore] public SolidColorBrush BackColor => DisplayName.HashToSolidColorBrush();
+        [JsonIgnore] public SolidColorBrush ForeColor => BackColor.MakeFittedTextColor();
+        [JsonIgnore] public string FirstChar { get; private set; }
+        [JsonIgnore] public bool ShowIcon => AppSettings.ShowIcons;
 
         public PasswordManagerItem()
         {
-            SettingsManager.RegisterSettingsChangedEvent(AppSettingsValues.showIcons, (object o, string setting) =>
+            SettingsManager.RegisterSettingsChangedEvent(AppSettingsValues.showIcons, (o, setting) =>
             {
-                Website = _Website;
-                NotifyPropertyChanged("Website");
-                NotifyPropertyChanged("ShowIcon");
-                NotifyPropertyChanged("Icon");
+                Website = _website;
+                OnPropertyChanged(nameof(ShowIcon));
             });
-        }
-
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private async Task UpdateWebsiteIconAsync()
         {
-            if (!ShowIcon || string.IsNullOrEmpty(_Website))
+            if (!ShowIcon || string.IsNullOrEmpty(_website))
             {
                 Icon = null;
-                NotifyPropertyChanged(nameof(Icon));
                 return;
             }
 
-            Icon = await WebsiteIconHelper.GetOrDownloadIconAsync(_Website);
-            NotifyPropertyChanged(nameof(Icon));
+            //Icon = await WebsiteIconHelper.GetOrDownloadIconAsync(_website);
         }
 
-        /// <summary>
-        /// Deserialize the given <paramref name="json"/> to the <see cref="ObservableCollection{PasswordManagerItem}"/>
-        /// </summary>
-        /// <param name="json">The JSON String, which should be deserialized to a <see cref="ObservableCollection{PasswordManagerItem}"/> object</param>
-        /// <returns>Returns an Instance of <see cref="ObservableCollection{PasswordManagerItem}"/> if the Deserialization was successfull, otherwise <see cref="default"/> will be returned</returns>
-        public static ObservableCollection<PasswordManagerItem> DeserializeItems(string json)
+        public static ObservableCollection<PasswordManagerItem>? DeserializeItems(string json)
         {
-            try
-            {
-                return System.Text.Json.JsonSerializer.Deserialize<ObservableCollection<PasswordManagerItem>>(json);
-            }
-            catch { }
-            return default;
+            try { return System.Text.Json.JsonSerializer.Deserialize<ObservableCollection<PasswordManagerItem>>(json); }
+            catch { return null; }
         }
-        /// <summary>
-        /// Serialize the given <paramref name="items"/> to a <see cref="string"/>
-        /// </summary>
-        /// <param name="json">The JSON String, which should be serialized to a <see cref="string"/></param>
-        /// <returns>Returns an Instance of <see cref="string"/> if the Serialization was successfull, otherwise <see cref="string.Empty"/> will be returned</returns>
+
         public static string SerializeItems(ObservableCollection<PasswordManagerItem> items)
         {
-            try
-            {
-                return JsonConvert.SerializeObject(items, Formatting.Indented);
-            }
-            catch
-            {
-                return string.Empty;
-            }
+            try { return JsonConvert.SerializeObject(items, Formatting.Indented); }
+            catch { return string.Empty; }
         }
     }
 }

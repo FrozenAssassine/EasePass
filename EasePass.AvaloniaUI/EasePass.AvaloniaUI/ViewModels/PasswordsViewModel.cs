@@ -33,6 +33,8 @@ namespace EasePass.ViewModels
         private ObservableCollection<PasswordManagerItem> _passwordItems;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(EditItemCommand))]
+        [NotifyCanExecuteChangedFor(nameof(DeleteItemCommand))]
         private PasswordManagerItem _selectedItem;
 
         [ObservableProperty]
@@ -178,7 +180,7 @@ namespace EasePass.ViewModels
                 LoadedDB.DeleteItem(item);
                 
                 UpdateAfterDelete();
-                await LoadedDB.SaveAsync();
+                LoadedDB.ScheduleSave();
             }
         }
         
@@ -203,8 +205,8 @@ namespace EasePass.ViewModels
                      LoadedDB.DeleteItem(item);
                  }
                  UpdateAfterDelete();
-                 await LoadedDB.SaveAsync();
-             }
+                 LoadedDB.ScheduleSave();
+            }
         }
 
         private void UpdateAfterDelete()
@@ -220,9 +222,15 @@ namespace EasePass.ViewModels
         private async Task EditItem(PasswordManagerItem item)
         {
             if (item == null) return;
+
             PasswordManagerItem editItem = await new EditItemDialog().ShowAsync(LoadedDB.GetPasswordOccurence, item);
             if (editItem != null)
-                await LoadedDB.SaveAsync();
+            {
+                LoadedDB.ScheduleSave();
+
+                OnSearchTextChanged(SearchText);
+                SelectedItem = editItem;
+            }
         }
 
         [RelayCommand]
@@ -233,7 +241,8 @@ namespace EasePass.ViewModels
             {
                 LoadedDB.AddItem(newItem);
                 OnSearchTextChanged(SearchText);
-                await LoadedDB.SaveAsync();
+                SelectedItem = newItem;
+                LoadedDB.ScheduleSave();
             }
         }
 
@@ -254,7 +263,7 @@ namespace EasePass.ViewModels
             }
 
             Update2FATimer();
-            await LoadedDB.SaveAsync();
+            LoadedDB.ScheduleSave();
         }
 
         [RelayCommand]
@@ -311,7 +320,7 @@ namespace EasePass.ViewModels
 
             LoadedDB.Items.Sort(comparison);
             Reload();
-            await LoadedDB.SaveAsync();
+            LoadedDB.ScheduleSave();
         }
 
         [RelayCommand]
@@ -319,7 +328,7 @@ namespace EasePass.ViewModels
         {
             LoadedDB.SetNewPasswords(LoadedDB.Items.ReverseSelf());
             Reload();
-            await LoadedDB.SaveAsync();
+            LoadedDB.ScheduleSave();
             OnSearchTextChanged(SearchText);
         }
 
