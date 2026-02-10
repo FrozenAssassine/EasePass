@@ -19,24 +19,6 @@ namespace EasePass.Controls
             rootTB.AddHandler(PointerPressedEvent, TextBox_PointerPressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble, true);
         }
 
-        public static readonly StyledProperty<bool> UseRevealClassProperty =
-            AvaloniaProperty.Register<CopyTextbox, bool>(nameof(UseRevealClass));
-
-        public bool UseRevealClass
-        {
-            get => GetValue(UseRevealClassProperty);
-            set => SetValue(UseRevealClassProperty, value);
-        }
-
-        public static readonly StyledProperty<char> PasswordCharProperty =
-    AvaloniaProperty.Register<CopyTextbox, char>(nameof(PasswordChar));
-
-        public char PasswordChar
-        {
-            get => GetValue(PasswordCharProperty);
-            set => SetValue(PasswordCharProperty, value);
-        }
-
         public static readonly StyledProperty<string> TextProperty =
             AvaloniaProperty.Register<CopyTextbox, string>(nameof(Text));
 

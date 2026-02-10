@@ -8,30 +8,19 @@
              x:Class="EasePass.Controls.CopyTextbox"
              x:Name="Root"
              x:DataType="controls:CopyTextbox">
-    <StackPanel Spacing="4">
-        <TextBlock Text="{Binding Header, ElementName=Root}" 
-                   IsVisible="{Binding Header, ElementName=Root, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" 
-                   Classes="header" 
-                   FontWeight="Normal"
-                   FontSize="14"
-                   Foreground="{DynamicResource TextControlHeaderForeground}"/>
-        
-        <TextBox x:Name="rootTB" Text="{Binding Text, ElementName=Root, Mode=TwoWay}"
-                 IsReadOnly="{Binding IsReadOnly, ElementName=Root}"
-                 Watermark="{Binding Watermark, ElementName=Root}"
-                 AcceptsReturn="{Binding AcceptsReturn, ElementName=Root}"
-                 UseFloatingWatermark="False"
-                 PasswordChar="{Binding PasswordChar, ElementName=Root}" 
-                 Classes.revealPasswordButton="{Binding UseRevealClass, ElementName=Root}">
-            <TextBox.InnerRightContent>
-                <Button Click="CopyText_Click"
-                        Theme="{DynamicResource BorderlessButton}"
-                        Padding="8,0"
-                        ToolTip.Tip="Copy"
-                        Cursor="Hand" >
-                    <avalonia:MaterialIcon Kind="ContentCopy"/>
-                </Button>
-            </TextBox.InnerRightContent>
-        </TextBox>
-    </StackPanel>
+    <TextBox x:Name="rootTB" Text="{Binding Text, ElementName=Root, Mode=TwoWay}"
+                IsReadOnly="{Binding IsReadOnly, ElementName=Root}"
+                Watermark="{Binding Watermark, ElementName=Root}"
+                AcceptsReturn="{Binding AcceptsReturn, ElementName=Root}"
+                UseFloatingWatermark="False">
+        <TextBox.InnerRightContent>
+            <Button Click="CopyText_Click"
+                    Theme="{DynamicResource BorderlessButton}"
+                    Padding="8,0"
+                    ToolTip.Tip="Copy"
+                    Cursor="Hand" >
+                <avalonia:MaterialIcon Kind="ContentCopy"/>
+            </Button>
+        </TextBox.InnerRightContent>
+    </TextBox>
 </UserControl>

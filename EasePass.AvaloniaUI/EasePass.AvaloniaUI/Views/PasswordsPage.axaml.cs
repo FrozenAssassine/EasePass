@@ -53,7 +53,7 @@ namespace EasePass.Views
             if (searchbox == null)
                 throw new Exception("Searchbox must not be null");
 
-            pwTB = this.FindControl<CopyTextbox>("pwTB");
+            pwTB = this.FindControl<CopyPasswordbox>("pwTB");
             if (pwTB == null)
                 throw new Exception("pwTB must not be null");
 
