@@ -119,5 +119,24 @@ namespace EasePass.Models
             try { return JsonConvert.SerializeObject(items, Formatting.Indented); }
             catch { return string.Empty; }
         }
+
+        public PasswordManagerItem CloneItem()
+        {
+            return new PasswordManagerItem
+            {
+                DisplayName = this.DisplayName,
+                Username = this.Username,
+                Email = this.Email,
+                Password = this.Password,
+                Website = this.Website,
+                Secret = this.Secret,
+                Notes = this.Notes,
+                Digits = this.Digits,
+                Interval = this.Interval,
+                Algorithm = this.Algorithm,
+                Tags = this.Tags,
+                Icon = this.Icon,
+            };
+        }
     }
 }

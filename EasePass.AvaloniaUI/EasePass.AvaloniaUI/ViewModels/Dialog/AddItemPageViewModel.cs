@@ -30,9 +30,10 @@ namespace EasePass.ViewModels.Dialog
             _originalItem = inputItem;
 
             //cloning the item, because we need one item to edit and one to keep original values if canceled
-            ItemCopy = inputItem != null ? CloneItem(inputItem) : new PasswordManagerItem();
+            ItemCopy = inputItem != null ? inputItem.CloneItem() : new PasswordManagerItem();
 
-            TagsString = string.Join(" ", ItemCopy.Clicks);
+            if (ItemCopy.Tags != null)
+                TagsString = string.Join(" ", ItemCopy.Tags);
             Show2FAInputs = !string.IsNullOrEmpty(ItemCopy.Secret);
         }
 
@@ -75,22 +76,6 @@ namespace EasePass.ViewModels.Dialog
             return ItemCopy;
         }
 
-        private PasswordManagerItem CloneItem(PasswordManagerItem source)
-        {
-            return new PasswordManagerItem
-            {
-                DisplayName = source.DisplayName,
-                Username = source.Username,
-                Email = source.Email,
-                Password = source.Password,
-                Website = source.Website,
-                Secret = source.Secret,
-                Notes = source.Notes,
-                Digits = source.Digits,
-                Interval = source.Interval,
-                Algorithm = source.Algorithm
-            };
-        }
 
         [RelayCommand]
         private void Export2FA()
