@@ -10,7 +10,7 @@ using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Extensions;
 using EasePass.Helper;
-using EasePass.Helper.App;
+using EasePass.Helper.AppHelper;
 using EasePass.Helper.Database;
 using EasePass.Helper.Logout;
 using EasePass.Helper.Security;

@@ -36,7 +36,7 @@ internal class GenPasswordDialog
             Content = null//page
         };
         dialog.Closing += Dialog_Closing;
-        return await dialog.ShowOnMainWindow() == DialogResult.Secondary;
+        return await dialog.ShowOnMainView() == DialogResult.Secondary;
     }
 
     private void Dialog_Closing(object? sender, BaseDialogClosingArgs args)

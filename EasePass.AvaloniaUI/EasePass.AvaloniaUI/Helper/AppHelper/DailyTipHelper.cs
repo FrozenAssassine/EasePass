@@ -21,7 +21,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EasePass.Helper.App
+namespace EasePass.Helper.AppHelper
 {
     internal static class DailyTipHelper
     {

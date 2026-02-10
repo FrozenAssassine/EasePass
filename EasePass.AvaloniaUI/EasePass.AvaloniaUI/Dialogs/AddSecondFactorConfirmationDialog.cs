@@ -23,7 +23,7 @@ namespace EasePass.Dialogs
                 Content = "Are you sure you want to enable a SecondFactor for the Database \"@@@Name@@@\"?\nIf you Forget your Password you will have no Access to your Database!".Localized("Dialog_ConfirmAddSecondFactor_Item/Text").Replace("@@@Name@@@", databaseName),
             };
 
-            return await dialog.ShowOnMainWindow() == DialogResult.Primary;
+            return await dialog.ShowOnMainView() == DialogResult.Primary;
         }
     }
 }

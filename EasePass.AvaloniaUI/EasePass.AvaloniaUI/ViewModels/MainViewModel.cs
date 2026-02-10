@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using EasePass.Controls;
 using EasePass.Core.Database;
 using EasePass.Dialogs;
-using EasePass.Helper.App;
+using EasePass.Helper.AppHelper;
 using EasePass.Helper.Security.Generator;
 using EasePass.Manager;
 using EasePass.Models.Logger;
@@ -43,7 +43,7 @@ public partial class MainViewModel : ObservableObject
         InactivityHelper.InactivityStarted += InactivityHelper_InactivityStarted;
     }
 
-    private void BackButtonPressed()
+    public void BackButtonPressed()
     {
 
     }

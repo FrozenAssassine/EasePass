@@ -35,6 +35,6 @@ internal class DeleteExtensionConfirmationDialog
             Content = "Are you sure you want to delete the extension:".Localized("Dialog_ConfirmDelete_Extension/Text") + "" + deleteItem.AboutPlugin.PluginName + "?"
         };
 
-        return await dialog.ShowOnMainWindow() == DialogResult.Primary;
+        return await dialog.ShowOnMainView() == DialogResult.Primary;
     }
 }

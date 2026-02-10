@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Extensions;
-using EasePass.Helper.App;
+using EasePass.Helper.AppHelper;
 using EasePass.Helper.Database;
 using EasePass.Helper.Security.Generator;
 using EasePass.Models;

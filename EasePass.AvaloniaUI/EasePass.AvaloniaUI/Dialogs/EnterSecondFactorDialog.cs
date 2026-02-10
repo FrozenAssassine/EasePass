@@ -26,7 +26,7 @@ internal class EnterSecondFactorDialog
             Height = 200
         };
 
-        var result = await dialog.ShowOnMainWindow();
+        var result = await dialog.ShowOnMainView();
 
         if (result == DialogResult.Primary && Token == null)
         {

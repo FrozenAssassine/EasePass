@@ -38,7 +38,7 @@ namespace EasePass.Dialogs
             //dialog.Content = page;
             dialog.Closing += Dialog_Closing;
 
-            var res = await dialog.ShowOnMainWindow();
+            var res = await dialog.ShowOnMainView();
             if (res == DialogResult.Primary)
             {
                 //var eval = page.Evaluate();

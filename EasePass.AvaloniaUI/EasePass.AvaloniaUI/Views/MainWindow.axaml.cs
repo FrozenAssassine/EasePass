@@ -5,7 +5,7 @@ using Avalonia.Platform.Storage;
 using EasePass.AvaloniaUI;
 using EasePass.Core;
 using EasePass.Core.Database;
-using EasePass.Helper.App;
+using EasePass.Helper.AppHelper;
 using EasePass.Manager;
 using EasePass.Services;
 using EasePass.ViewModels;
@@ -13,21 +13,20 @@ using System;
 
 namespace EasePass.Views
 {
+    //this window is only visible on desktop, so core instances we need
+    //are created inside the app.axaml.cs.
     public partial class MainWindow : Window
     {
         private readonly WindowStateManager _windowStateManager;
         private readonly RestoreWindowManager _restoreWindowManager;
-        public static IStorageProvider storageProvider { get; private set; }
-        public static IClipboard clipboardInst { get; private set; }
+
         public MainWindow()
         {
             InitializeComponent();
 
-            storageProvider = this.StorageProvider;
-            clipboardInst = this.Clipboard;
-            DialogService.MainWindow = this;
-
-            DataContext = new MainViewModel();
+            App.VisualRoot = this;
+            App.StorageProvider = this.StorageProvider;
+            App.Clipboard = this.Clipboard;
 
             _windowStateManager = new WindowStateManager(this);
             _restoreWindowManager = new RestoreWindowManager(this, _windowStateManager);

@@ -19,7 +19,7 @@ using EasePass.Settings;
 using System;
 using System.Reflection;
 
-namespace EasePass.Helper.App;
+namespace EasePass.Helper.AppHelper;
 
 internal class AppVersionHelper
 {

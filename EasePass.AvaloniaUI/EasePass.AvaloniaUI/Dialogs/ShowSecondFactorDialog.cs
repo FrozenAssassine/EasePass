@@ -19,7 +19,7 @@ namespace EasePass.Dialogs
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
                 //Content = showSecondFactorPage
             };
-            await dialog.ShowOnMainWindow();
+            await dialog.ShowOnMainView();
             return true;
         }
     }

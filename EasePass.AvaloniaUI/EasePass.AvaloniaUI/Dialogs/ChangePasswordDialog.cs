@@ -38,7 +38,7 @@ namespace EasePass.Dialogs
                 Content = null //page;
             };
             dialog.Closing += Dialog_Closing;
-            await dialog.ShowOnMainWindow();
+            await dialog.ShowOnMainView();
         }
 
 

@@ -31,7 +31,7 @@ namespace EasePass.Helper.Logout
 
             for (int i = 0; i < Dialogs.Count; i++)
             {
-                Dialogs[i].Hide();
+                Dialogs[i].Close(DialogResult.Cancel);
             }
             return true;
         }

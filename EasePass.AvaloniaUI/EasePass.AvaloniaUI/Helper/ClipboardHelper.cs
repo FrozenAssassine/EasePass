@@ -14,6 +14,7 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using EasePass.AvaloniaUI;
 using EasePass.Views;
 using System.Threading.Tasks;
 
@@ -28,9 +29,9 @@ namespace EasePass.Helper
             if (string.IsNullOrEmpty(text))
                 return;
 
-            if (MainWindow.clipboardInst!= null)
+            if (App.Clipboard != null)
             {
-                await MainWindow.clipboardInst.SetTextAsync(text);
+                await App.Clipboard.SetTextAsync(text);
             }
 
             if (removeFromClipboard)

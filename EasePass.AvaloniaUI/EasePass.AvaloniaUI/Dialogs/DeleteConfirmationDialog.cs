@@ -35,7 +35,7 @@ namespace EasePass.Dialogs
                 Content = text,
             };
 
-            return await dialog.ShowOnMainWindow() == DialogResult.Primary;
+            return await dialog.ShowOnMainView() == DialogResult.Primary;
         }
 
         public async Task<bool> ShowAsync(PasswordManagerItem deleteItem)

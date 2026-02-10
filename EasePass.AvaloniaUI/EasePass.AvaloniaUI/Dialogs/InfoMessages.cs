@@ -17,7 +17,7 @@ copies or substantial portions of the Software.
 using Avalonia.Controls;
 using EasePass.Controls;
 using EasePass.Extensions;
-using EasePass.Helper.App;
+using EasePass.Helper.AppHelper;
 using System;
 
 namespace EasePass.Dialogs

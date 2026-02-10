@@ -36,7 +36,7 @@ namespace EasePass.Dialogs
                 Content = null //page
             };
 
-            await dialog.ShowOnMainWindow();
+            await dialog.ShowOnMainView();
         }
     }
 }

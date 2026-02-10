@@ -1,12 +1,19 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Layout;
+using Avalonia.Media;
+using Avalonia.VisualTree;
 using EasePass.AvaloniaUI;
 using EasePass.Views;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs;
+
+
+//TODO: Use Proper dialog host for android and desktop: https://github.com/AvaloniaUtils/DialogHost.Avalonia/
 
 public enum DialogResult
 {
@@ -21,31 +28,26 @@ public class BaseDialogClosingArgs
     public bool Cancel { get; set; }
 }
 
-public class BaseDialog : Window
+public class BaseDialog : UserControl
 {
     private TaskCompletionSource<DialogResult>? _tcs;
     private readonly StackPanel _buttonPanel;
     private readonly ContentControl _contentContainer;
-    private bool _isClosing = false;
+    private Window? _hostWindow;
+    private Grid? _overlayWrapper;
 
-    // Use a unique name to avoid hiding the base Window.Closing event incorrectly
     public delegate void DialogClosingEvent(object? sender, BaseDialogClosingArgs args);
     public event DialogClosingEvent? Closing;
 
     public DialogResult Result { get; private set; } = DialogResult.None;
-
     public string? PrimaryButtonText { get; set; }
     public string? SecondaryButtonText { get; set; }
     public string? CloseButtonText { get; set; }
+    public string? Title { get; set; }
 
     public BaseDialog()
     {
-        CanResize = false;
-        Width = 450;
-        SizeToContent = SizeToContent.Height;
-        WindowStartupLocation = WindowStartupLocation.CenterOwner;
-
-        // Visual Wrapper
+        // Visual Setup
         _buttonPanel = new StackPanel
         {
             Orientation = Orientation.Horizontal,
@@ -61,95 +63,100 @@ public class BaseDialog : Window
         rootLayout.Children.Add(_buttonPanel);
         rootLayout.Children.Add(_contentContainer);
 
-        base.Content = rootLayout;
-
-        KeyDown += OnKeyDown;
+        this.Content = rootLayout;
+        this.Background = Brushes.Transparent;
     }
 
-    // Shadowing the original Content property
     public new object? Content
     {
         get => _contentContainer.Content;
         set => _contentContainer.Content = value;
     }
 
-    protected override void OnClosing(WindowClosingEventArgs e)
-    {
-        var args = new BaseDialogClosingArgs { Result = this.Result };
-
-        // Trigger our custom event
-        Closing?.Invoke(this, args);
-
-        if (args.Cancel)
-        {
-            e.Cancel = true;
-            return;
-        }
-
-        _isClosing = true;
-        base.OnClosing(e);
-        _tcs?.TrySetResult(this.Result);
-    }
-
     private void CreateButtons()
     {
         _buttonPanel.Children.Clear();
-
-        if (!string.IsNullOrEmpty(PrimaryButtonText))
-            AddButton(PrimaryButtonText, DialogResult.Primary, true);
-
-        if (!string.IsNullOrEmpty(SecondaryButtonText))
-            AddButton(SecondaryButtonText, DialogResult.Secondary);
-
-        if (!string.IsNullOrEmpty(CloseButtonText))
-            AddButton(CloseButtonText, DialogResult.Cancel);
+        if (!string.IsNullOrEmpty(PrimaryButtonText)) AddButton(PrimaryButtonText, DialogResult.Primary, true);
+        if (!string.IsNullOrEmpty(SecondaryButtonText)) AddButton(SecondaryButtonText, DialogResult.Secondary);
+        if (!string.IsNullOrEmpty(CloseButtonText)) AddButton(CloseButtonText, DialogResult.Cancel);
     }
 
     private void AddButton(string text, DialogResult result, bool isDefault = false)
     {
-        var btn = new Button
-        {
-            Content = text,
-            MinWidth = 80,
-            HorizontalContentAlignment = HorizontalAlignment.Center
-        };
-
-        btn.Click += (_, e) => 
-        { 
-            e.Handled = true;
-            if (_isClosing) return;
-            Result = result; 
-            Close(); 
-        };
-
-        if (isDefault)
-        {
-            btn.HotKey = new KeyGesture(Key.Enter);
-            btn.Classes.Add("accent");
-        }
-
+        var btn = new Button { Content = text, MinWidth = 80 };
+        btn.Click += (_, _) => Close(result);
+        if (isDefault) btn.Classes.Add("accent");
         _buttonPanel.Children.Add(btn);
     }
 
-    public async Task<DialogResult> ShowDialogAsync(Window owner)
+    public async Task<DialogResult> ShowDialogAsync(TopLevel owner)
     {
         _tcs = new TaskCompletionSource<DialogResult>();
         CreateButtons();
 
-        await ShowDialog(owner);
+        if (owner is Window desktopWindow)
+        {
+            // DESKTOP LOGIC
+            _hostWindow = new Window
+            {
+                Content = this,
+                Title = Title,
+                SizeToContent = SizeToContent.Height,
+                Width = 450,
+                CanResize = false,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            _hostWindow.Closing += (s, e) =>
+            {
+                var args = new BaseDialogClosingArgs { Result = this.Result };
+                Closing?.Invoke(this, args);
+                if (args.Cancel) e.Cancel = true;
+            };
+            await _hostWindow.ShowDialog(desktopWindow);
+        }
+        else
+        {
+            // ANDROID LOGIC (Overlay)
+            var overlayLayer = owner.GetVisualDescendants().OfType<OverlayLayer>().FirstOrDefault();
+            if (overlayLayer != null)
+            {
+                _overlayWrapper = new Grid
+                {
+                    Background = new SolidColorBrush(Color.Parse("#80000000")),
+                    Children = { new Border {
+                        Background = Brushes.White,
+                        CornerRadius = new CornerRadius(10),
+                        Margin = new Thickness(20),
+                        VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        MaxWidth = 500,
+                        Child = this
+                    }}
+                };
+                overlayLayer.Children.Add(_overlayWrapper);
+            }
+        }
 
         return await _tcs.Task;
     }
 
-    private void OnKeyDown(object? sender, KeyEventArgs e)
+    public void Close(DialogResult result)
     {
-        if (e.Key == Key.Escape)
-        {
-            e.Handled = true;
-            if (_isClosing) return;
+        this.Result = result;
+        var args = new BaseDialogClosingArgs { Result = result };
+        Closing?.Invoke(this, args);
+        if (args.Cancel) return;
 
-            Result = DialogResult.Cancel;
-            Close();
+        if (_hostWindow != null)
+        {
+            _hostWindow.Close();
         }
+        else if (_overlayWrapper != null)
+        {
+            var overlayLayer = _overlayWrapper.Parent as OverlayLayer;
+            overlayLayer?.Children.Remove(_overlayWrapper);
+        }
+
+        _tcs?.TrySetResult(result);
     }
 }

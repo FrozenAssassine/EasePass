@@ -1,45 +1,9 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:avaloniaui="using:EasePass.AvaloniaUI"
         xmlns:controls="using:EasePass.Controls"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:EasePass.ViewModels"
-        x:Class="EasePass.Views.MainWindow"
-        x:DataType="vm:MainViewModel"
+        x:Class="EasePass.Views.MainWindow"   
         Title="Ease Pass"
         Icon="/Assets/avalonia-logo.ico">
-
-    <Grid>
-        <Grid RowDefinitions="Auto, *">
-            <Button Content="←" 
-                    IsVisible="{Binding ShowBackArrow}" 
-                    Command="{Binding BackButtonPressed}" />
-
-            <ContentControl Grid.Row="1" 
-                            Content="{Binding CurrentPage}" />
-        </Grid>
-
-        <ProgressBar ZIndex="100" 
-                     IsVisible="{Binding IsSaving}" 
-                     HorizontalAlignment="Center" 
-                     VerticalAlignment="Center" 
-                     Width="100" Height="100" 
-                     Theme="{DynamicResource ProgressRing}" 
-                     IsIndeterminate="True" />
-
-        <ItemsControl ItemsSource="{Binding Notifications}"
-                      HorizontalAlignment="Right"
-                      VerticalAlignment="Top"
-                      Margin="10"
-                      ZIndex="50">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="vm:NotificationViewModel">
-                    <controls:NotificationBar />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Spacing="5" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
-    </Grid>
+    <avaloniaui:MainView />
 </Window>

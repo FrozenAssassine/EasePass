@@ -1,4 +1,4 @@
-﻿using EasePass.Helper.App;
+﻿using EasePass.Helper.AppHelper;
 using EasePassExtensibility;
 using System;
 using System.Globalization;

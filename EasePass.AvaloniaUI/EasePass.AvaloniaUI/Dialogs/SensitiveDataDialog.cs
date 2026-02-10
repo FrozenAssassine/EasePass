@@ -33,7 +33,7 @@ namespace EasePass.Dialogs
                 Content = "This plugin tries to get access to sensitive information:" + Environment.NewLine + extension.ToString(false),
             };
 
-            return await dialog.ShowOnMainWindow() == DialogResult.Primary;
+            return await dialog.ShowOnMainView() == DialogResult.Primary;
         }
     }
 }

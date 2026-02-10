@@ -3,7 +3,7 @@ using EasePass.Models;
 using EasePass.ViewModels;
 using System;
 
-namespace EasePass.Helper.App;
+namespace EasePass.Helper.AppHelper;
 
 public class NavigationHelper
 {

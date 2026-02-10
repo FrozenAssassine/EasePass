@@ -43,7 +43,7 @@ namespace EasePass.Dialogs
             dialog.KeyDown += Dialog_KeyDown;
             dialog.Closing += Dialog_Closing;
 
-            await dialog.ShowOnMainWindow();
+            await dialog.ShowOnMainView();
             return this;
         }
 
@@ -58,7 +58,7 @@ namespace EasePass.Dialogs
             if (e.Key == Key.Enter)
             {
                 Password = page.GetPassword().ConvertToSecureString();
-                dialog.Hide();
+                dialog.Close(DialogResult.Cancel);
             }
         }
     }

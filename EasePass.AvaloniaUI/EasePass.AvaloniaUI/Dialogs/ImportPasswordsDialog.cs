@@ -47,7 +47,7 @@ namespace EasePass.Dialogs
             //to add confirmation on overwrite passwords:
             dialog.Closing += Dialog_Closing;
 
-            var res = await dialog.ShowOnMainWindow();
+            var res = await dialog.ShowOnMainView();
             //PasswordManagerItem[] items = importPage.GetSelectedPasswords();
 
             //if (res == DialogResult.Primary)

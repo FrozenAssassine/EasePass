@@ -40,6 +40,6 @@ internal class RenameDatabaseDialog
             Content = dbName
         };
 
-        return (await dialog.ShowOnMainWindow() == DialogResult.Primary && dbName.Text.Length > 0);
+        return (await dialog.ShowOnMainView() == DialogResult.Primary && dbName.Text.Length > 0);
     }
 }

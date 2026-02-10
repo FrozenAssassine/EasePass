@@ -36,7 +36,7 @@ namespace EasePass.Dialogs
                 //Content = page
             };
 
-            if (await dialog.ShowOnMainWindow() == DialogResult.Primary)
+            if (await dialog.ShowOnMainView() == DialogResult.Primary)
                 return null;//return page.GetSelectedPasswords();
             return null;
         }
