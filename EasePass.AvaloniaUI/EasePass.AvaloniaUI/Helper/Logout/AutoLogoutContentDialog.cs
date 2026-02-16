@@ -15,6 +15,7 @@ copies or substantial portions of the Software.
 */
 
 using EasePass.Dialogs;
+using EasePass.Services;
 using System.Collections.Generic;
 
 namespace EasePass.Helper.Logout
@@ -40,6 +41,7 @@ namespace EasePass.Helper.Logout
         {
             doPreventAutoLogoutDialog = preventAutoLogout;
             Dialogs.Add(this);
+            
             this.Closing += Dialog_Closing;
         }
 

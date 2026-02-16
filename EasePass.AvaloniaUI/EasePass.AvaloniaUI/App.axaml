@@ -4,6 +4,7 @@
              xmlns:materialIcons="using:Material.Icons.Avalonia"
              xmlns:vm="using:EasePass.ViewModels"
              xmlns:views="using:EasePass.Views"
+             xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
              x:Class="EasePass.AvaloniaUI.App"
              xmlns:semi="https://irihi.tech/semi"
              RequestedThemeVariant="Default">
@@ -23,8 +24,8 @@
     </Application.DataTemplates>
 
     <Application.Styles>
-                <semi:SemiTheme Locale="en-US" />
-            <materialIcons:MaterialIconStyles />
-
+        <semi:SemiTheme Locale="en-US" />
+        <materialIcons:MaterialIconStyles />
+        <dialogHostAvalonia:DialogHostStyles />
     </Application.Styles>
 </Application>
