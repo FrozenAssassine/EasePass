@@ -1,0 +1,144 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:EasePass.ViewModels"
+             xmlns:database="using:EasePass.Core.Database"
+             xmlns:models="using:EasePass.Models"
+             xmlns:avalonia="using:Material.Icons.Avalonia"
+             xmlns:controls="using:EasePass.Controls"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
+             x:Class="EasePass.Views.ManageDatabasePage"
+             x:DataType="vm:ManageDatabaseViewModel">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="40,20" MaxWidth="900" HorizontalAlignment="Center" Spacing="8">
+            <TextBlock TextAlignment="Center" FontSize="32" FontWeight="Bold" Text="Manage Databases"/>
+
+            <controls:SettingsItemSeparator Header="Your Databases">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button Command="{Binding CreateDatabaseCommand}" Classes="Primary" ToolTip.Tip="Create a new database">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <avalonia:MaterialIcon Kind="Add"/>
+                            <TextBlock Text="Create" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding ImportDatabaseCommand}" ToolTip.Tip="Import an existing database">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <avalonia:MaterialIcon Kind="Import"/>
+                            <TextBlock Text="Import" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </controls:SettingsItemSeparator>
+
+            <Grid Margin="0,15,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" MinWidth="300"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" MinWidth="200"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Database List -->
+                <ItemsControl ItemsSource="{Binding Databases}" Grid.Column="0">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="database:DatabaseItem">
+                            <Button Margin="6" Padding="0"
+                                    Command="{Binding $parent[UserControl].((vm:ManageDatabaseViewModel)DataContext).SelectDatabaseCommand}"
+                                    CommandParameter="{Binding}"
+                                    HorizontalContentAlignment="Stretch"
+                                    VerticalContentAlignment="Stretch">
+                                <Border Padding="15" MinWidth="220" MinHeight="120" CornerRadius="6">
+                                    <Border.ContextFlyout>
+                                        <MenuFlyout>
+                                            <MenuItem Header="Delete"
+                                                      Command="{Binding $parent[UserControl].((vm:ManageDatabaseViewModel)DataContext).DeleteDatabaseCommand}"/>
+                                            <MenuItem Header="Copy Path"
+                                                      Command="{Binding $parent[UserControl].((vm:ManageDatabaseViewModel)DataContext).CopyDatabasePathCommand}"/>
+                                        </MenuFlyout>
+                                    </Border.ContextFlyout>
+                                    <Grid RowDefinitions="Auto,*,Auto">
+                                        <TextBlock Grid.Row="1" Text="{Binding Name}" FontSize="22" FontWeight="SemiBold" TextWrapping="WrapWithOverflow"/>
+                                        <TextBlock Grid.Row="2" Text="{Binding DatabaseSource.SourceDescription}" FontSize="11" Opacity="0.6" TextWrapping="Wrap"/>
+                                    </Grid>
+                                </Border>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <GridSplitter Grid.Column="1" Width="4" ResizeBehavior="PreviousAndNext" Background="Gray"/>
+
+                <!-- Edit Panel -->
+                <Border Grid.Column="2" Padding="20" CornerRadius="8"
+                        IsVisible="{Binding IsEditPanelVisible}"
+                        Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+                    <StackPanel Spacing="10">
+                        <TextBlock FontSize="20" FontWeight="SemiBold" Text="{Binding SelectedDatabase.Name}"/>
+                        
+                        <Button HorizontalAlignment="Stretch" Command="{Binding ManageSecondFactorCommand}"
+                                ToolTip.Tip="Manage the SecondFactor Authentication">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <avalonia:MaterialIcon Kind="ShieldKey"/>
+                                <TextBlock Text="Manage 2FA" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button HorizontalAlignment="Stretch" Command="{Binding ImportIntoDatabaseCommand}"
+                                ToolTip.Tip="Import passwords from an external database into this one">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <avalonia:MaterialIcon Kind="Import"/>
+                                <TextBlock Text="Import Into" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button HorizontalAlignment="Stretch" Command="{Binding DeleteDatabaseCommand}" Foreground="Red"
+                                ToolTip.Tip="Delete this database">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <avalonia:MaterialIcon Kind="Delete"/>
+                                <TextBlock Text="Delete" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button HorizontalAlignment="Stretch" Command="{Binding ExportDatabaseCommand}"
+                                ToolTip.Tip="Export this database">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <avalonia:MaterialIcon Kind="Export"/>
+                                <TextBlock Text="Export" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button HorizontalAlignment="Stretch" Command="{Binding ExportDatabaseDiffPWCommand}"
+                                ToolTip.Tip="Export with a different password">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <avalonia:MaterialIcon Kind="Export"/>
+                                <TextBlock Text="Export (diff. PW)" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button HorizontalAlignment="Stretch" Command="{Binding LoadDatabaseCommand}"
+                                ToolTip.Tip="Load this database">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <avalonia:MaterialIcon Kind="FolderOpen"/>
+                                <TextBlock Text="Load Database" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button HorizontalAlignment="Stretch" Command="{Binding ChangePasswordCommand}"
+                                ToolTip.Tip="Change the password for this database">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <avalonia:MaterialIcon Kind="KeyChange"/>
+                                <TextBlock Text="Change Password" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

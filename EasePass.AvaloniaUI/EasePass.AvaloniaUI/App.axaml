@@ -1,0 +1,39 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:EasePass"
+             xmlns:materialIcons="using:Material.Icons.Avalonia"
+             xmlns:vm="using:EasePass.ViewModels"
+             xmlns:views="using:EasePass.Views"
+             xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+             x:Class="EasePass.AvaloniaUI.App"
+             xmlns:semi="https://irihi.tech/semi"
+             RequestedThemeVariant="Default">
+
+    <Application.DataTemplates>
+        <DataTemplate DataType="{x:Type vm:LoginViewModel}">
+            <views:LoginPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:PasswordsViewModel}">
+            <views:PasswordsPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+            <views:SettingsPage />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:ManageDatabaseViewModel}">
+            <views:ManageDatabasePage />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:AboutViewModel}">
+            <views:AboutPage />
+        </DataTemplate>
+    </Application.DataTemplates>
+
+    <Application.Styles>
+        <semi:SemiTheme Locale="en-US" />
+        <materialIcons:MaterialIconStyles />
+        <dialogHostAvalonia:DialogHostStyles />
+    </Application.Styles>
+</Application>

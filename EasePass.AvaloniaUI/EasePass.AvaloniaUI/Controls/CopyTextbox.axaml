@@ -1,0 +1,26 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:avalonia="using:Material.Icons.Avalonia"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:EasePass.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EasePass.Controls.CopyTextbox"
+             x:Name="Root"
+             x:DataType="controls:CopyTextbox">
+    <TextBox x:Name="rootTB" Text="{Binding Text, ElementName=Root, Mode=TwoWay}"
+                IsReadOnly="{Binding IsReadOnly, ElementName=Root}"
+                Watermark="{Binding Watermark, ElementName=Root}"
+                AcceptsReturn="{Binding AcceptsReturn, ElementName=Root}"
+                UseFloatingWatermark="False">
+        <TextBox.InnerRightContent>
+            <Button Click="CopyText_Click"
+                    Theme="{DynamicResource BorderlessButton}"
+                    Padding="8,0"
+                    ToolTip.Tip="Copy"
+                    Cursor="Hand" >
+                <avalonia:MaterialIcon Kind="ContentCopy"/>
+            </Button>
+        </TextBox.InnerRightContent>
+    </TextBox>
+</UserControl>

@@ -1,0 +1,26 @@
+﻿using EasePass.AvaloniaUI;
+using EasePass.Extensions;
+using EasePass.Helper.Logout;
+using EasePass.Services;
+using EasePass.Views;
+using System.Threading.Tasks;
+
+namespace EasePass.Dialogs
+{
+    internal class ShowSecondFactorDialog
+    {
+        public async Task<bool> ShowAsync(string token)
+        {
+            //ShowSecondFactorPage showSecondFactorPage = new ShowSecondFactorPage(token);
+            AutoLogoutContentDialog dialog = new AutoLogoutContentDialog
+            {
+                Title = "The new SecondFactor Token for the Database".Localized("Dialogs_ShowSF_Title/Text"),
+                PrimaryButtonText = "Done".Localized("Dialog_Button_Done/Text"),
+                CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
+                //Content = showSecondFactorPage
+            };
+            await dialog.ShowOnMainView();
+            return true;
+        }
+    }
+}

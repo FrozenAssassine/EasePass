@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EasePass.Controls.NotificationBar" 
+             xmlns:vm="using:EasePass.ViewModels"
+             x:DataType="vm:NotificationViewModel">
+    <Border Name="ContainerBorder"
+            Margin="5"
+            Padding="12,10"
+            CornerRadius="8"
+            MinWidth="300"
+            MaxWidth="500"
+            BorderThickness="1"
+            IsVisible="{Binding IsOpen}"
+            BoxShadow="0 2 8 0 #40000000">
+
+        <Border.Styles>
+            <!-- Default style (Info) -->
+            <Style Selector="Border#ContainerBorder">
+                <Setter Property="Background" Value="#1a3a5c"/>
+                <Setter Property="BorderBrush" Value="#2a6090"/>
+            </Style>
+        </Border.Styles>
+
+        <Grid ColumnDefinitions="Auto, *, Auto">
+            <PathIcon Grid.Column="0" 
+                      Width="18" Height="18" 
+                      Margin="0,0,12,0"
+                      VerticalAlignment="Center"
+                      Foreground="White"
+                      Data="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M13,17H11V11H13V17M13,9H11V7H13V9Z" />
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Title}" 
+                           FontWeight="SemiBold" 
+                           FontSize="14"
+                           Foreground="White"/>
+                <TextBlock Text="{Binding Message}" 
+                           FontSize="12" 
+                           Opacity="0.85"
+                           Foreground="White"
+                           TextWrapping="Wrap" />
+            </StackPanel>
+
+            <ContentControl Grid.Column="2" 
+                            Content="{Binding ActionContent}" 
+                            Margin="12,0,0,0"
+                            VerticalAlignment="Center" />
+        </Grid>
+    </Border>
+</UserControl>

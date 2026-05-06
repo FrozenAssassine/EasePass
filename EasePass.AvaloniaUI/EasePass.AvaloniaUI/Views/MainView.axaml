@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dialogHost="using:DialogHostAvalonia"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:EasePass.ViewModels"
+             xmlns:controls="using:EasePass.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EasePass.AvaloniaUI.MainView"
+             x:DataType="vm:MainViewModel">
+    <dialogHost:DialogHost Identifier="MainDialogHost"
+                           DisableOpeningAnimation="True">
+        <Grid>
+            <Grid RowDefinitions="Auto, *">
+                <Button Content="←" 
+                        IsVisible="{Binding ShowBackArrow}" 
+                        Command="{Binding BackButtonPressedCommand}" />
+
+                <ContentControl Grid.Row="1" 
+                                Content="{Binding CurrentPage}" />
+            </Grid>
+
+            <ProgressBar ZIndex="100" 
+                         IsVisible="{Binding IsSaving}" 
+                         HorizontalAlignment="Center" 
+                         VerticalAlignment="Center" 
+                         Width="100" Height="100" 
+                         Theme="{DynamicResource ProgressRing}" 
+                         IsIndeterminate="True" />
+
+            <ItemsControl ItemsSource="{Binding Notifications}"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Top"
+                          Margin="10"
+                          ZIndex="50">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="vm:NotificationViewModel">
+                        <controls:NotificationBar />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="5" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </Grid>
+    </dialogHost:DialogHost>
+</UserControl>

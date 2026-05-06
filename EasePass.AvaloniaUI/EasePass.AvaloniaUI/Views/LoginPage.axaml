@@ -1,0 +1,80 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:avalonia="using:Material.Icons.Avalonia"
+             xmlns:controls="using:FluentAvalonia.UI.Controls"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:EasePass.ViewModels"
+             xmlns:models="using:EasePass.Core.Database"
+             xmlns:converters="using:EasePass.Converter"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EasePass.Views.LoginPage"
+             x:DataType="vm:LoginViewModel"
+             xmlns:semi="https://irihi.tech/semi">
+
+    <UserControl.Resources>
+        <converters:AvailabilityToBrushConverter x:Key="AvailabilityToBrushConverter"/>
+    </UserControl.Resources>
+
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" MinWidth="300" MaxWidth="400"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="1" VerticalAlignment="Center" Grid.Row="0" TextAlignment="Center" FontSize="36" Text="Login"/>
+        <Border Theme="{StaticResource CardBorder}" Classes="Hover" Grid.Column="1" VerticalAlignment="Center" Grid.Row="1" Margin="0" Padding="20" CornerRadius="10">	
+            <StackPanel>
+                <HeaderedContentControl Margin="0,5,0,0" Header="Select a database" Grid.Column="0" HorizontalAlignment="Stretch" >
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                            <ComboBox ItemsSource="{Binding Databases}" SelectedItem="{Binding SelectedDatabase}" HorizontalAlignment="Stretch"  PlaceholderText="Choose database:">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate x:DataType="models:DatabaseItem">
+                                        <TextBlock Text="{Binding Name}" Foreground="{Binding DatabaseSource.Availability, Converter={StaticResource AvailabilityToBrushConverter}}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                
+                        <SplitButton Margin="10,0,0,0" Classes="Primary" Grid.Column="1" Command="{Binding CreateDatabaseCommand}">
+                            <SplitButton.Content>
+                                <avalonia:MaterialIcon Kind="Add" FontSize="24"/>
+                            </SplitButton.Content>
+                            <SplitButton.Flyout>
+								<MenuFlyout>
+									<MenuItem Command="{Binding ImportDatabaseCommand}" ToolTip.Tip="Import an existing database" Header="Import Database"/>
+                                </MenuFlyout>
+                            </SplitButton.Flyout>
+                        </SplitButton>
+                    </Grid>
+                </HeaderedContentControl>
+                <HeaderedContentControl Header="Enter password" Margin="0,10,0,0">
+                    <TextBox Classes="RevealPasswordButton" PasswordChar="*" Margin="0,5,0,0" Name="passwordBox" MinWidth="150" HorizontalAlignment="Stretch">
+                        <TextBox.KeyBindings>
+                            <KeyBinding Gesture="Enter" Command="{Binding LoginCommand}" CommandParameter="{Binding #passwordBox.Text}"/>
+                        </TextBox.KeyBindings>
+                    </TextBox>
+                </HeaderedContentControl>
+
+                <ProgressBar Classes="Primary" Margin="0,5,0,0" IsVisible="{Binding IsLoginInProgress}" IsIndeterminate="True"/>
+                <Button HorizontalAlignment="Center" Margin="10" Command="{Binding LoginCommand}" CommandParameter="{Binding #passwordBox.Text}" Content="Login" Classes="Solid Large Primary"/>
+            </StackPanel>
+        </Border > 
+
+        <Border IsVisible="{Binding DailyTipVisible}" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3" MaxHeight="140"  CornerRadius="10" Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}" >	
+            <Grid >
+                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" TextWrapping="Wrap" Padding="20" Text="{Binding DailyTipText}"/>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

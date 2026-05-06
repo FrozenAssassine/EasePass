@@ -1,0 +1,46 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EasePass.Controls.CopyTokenBox"
+             x:Name="Root" 
+             xmlns:controls="using:EasePass.Controls"
+             x:DataType="controls:CopyTokenBox">
+             
+    <StackPanel Spacing="4">
+        <TextBlock Text="{Binding Header, ElementName=Root}" 
+                   IsVisible="{Binding Header, ElementName=Root, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" 
+                   Classes="header"
+                   FontSize="14"
+                   Foreground="{DynamicResource TextControlHeaderForeground}"/>
+
+        <TextBox x:Name="textBox"
+                 IsReadOnly="True"
+                 Watermark="{Binding Watermark, ElementName=Root}"
+                 UseFloatingWatermark="False"
+                 Classes="revealPasswordButton">
+            <TextBox.InnerRightContent>
+                <StackPanel Orientation="Horizontal" Spacing="2">
+                    <Button Click="CopyText_Click"
+                        Theme="{DynamicResource TransparentButton}"
+                        Padding="8,0"
+                        ToolTip.Tip="Copy"
+                        Cursor="Hand">
+                         <PathIcon Data="{StaticResource copy_regular}" />
+                    </Button>
+                    <ToggleButton IsChecked="{Binding ShowToken, ElementName=Root, Mode=TwoWay}"
+                                  Theme="{DynamicResource TransparentButton}"
+                                  Padding="8,0"
+                                  ToolTip.Tip="Show Token"
+                                  Cursor="Hand">
+                        <Panel>
+                             <PathIcon Data="{StaticResource eye_show_regular}" IsVisible="{Binding !$parent[ToggleButton].IsChecked}"/>
+                             <PathIcon Data="{StaticResource eye_hide_regular}" IsVisible="{Binding $parent[ToggleButton].IsChecked}"/>
+                        </Panel>
+                    </ToggleButton>
+                </StackPanel>
+            </TextBox.InnerRightContent>
+        </TextBox>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:EasePass.ViewModels.Dialog"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="350"
+             x:Class="EasePass.Views.DialogViews.CreateDatabasePage"
+             x:DataType="vm:CreateDatabaseViewModel">
+
+    <StackPanel Spacing="10" Margin="10" MinWidth="380">
+        <HeaderedContentControl Header="Database Name">
+            <TextBox Text="{Binding DatabaseName}" Watermark="Database Name"/>
+        </HeaderedContentControl>
+
+        <HeaderedContentControl Header="Enter Password">
+            <TextBox PasswordChar="*" Classes="RevealPasswordButton"
+                     Text="{Binding Password}" Watermark="Enter Password"/>
+        </HeaderedContentControl>
+
+        <HeaderedContentControl Header="Repeat Password">
+            <TextBox PasswordChar="*" Classes="RevealPasswordButton"
+                     Text="{Binding RepeatPassword}" Watermark="Repeat Password"/>
+        </HeaderedContentControl>
+
+        <HeaderedContentControl Header="Database Path">
+            <TextBox Text="{Binding DatabasePath}" IsReadOnly="True" Watermark="Select a path..."/>
+        </HeaderedContentControl>
+
+        <Button Content="Select Path" Command="{Binding SelectPathCommand}"
+                HorizontalAlignment="Stretch"/>
+    </StackPanel>
+</UserControl>

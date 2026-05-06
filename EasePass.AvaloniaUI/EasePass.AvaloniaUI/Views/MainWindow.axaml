@@ -1,0 +1,9 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:avaloniaui="using:EasePass.AvaloniaUI"
+        xmlns:controls="using:EasePass.Controls"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="EasePass.Views.MainWindow"   
+        Title="Ease Pass"
+        Icon="/Assets/avalonia-logo.ico">
+    <avaloniaui:MainView />
+</Window>

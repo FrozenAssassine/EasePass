@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:EasePass.ViewModels"
+             xmlns:avalonia="using:Material.Icons.Avalonia"
+             xmlns:controls="using:EasePass.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="700"
+             x:Class="EasePass.Views.AboutPage"
+             x:DataType="vm:AboutViewModel">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="40,20" MaxWidth="700" HorizontalAlignment="Center" Spacing="8">
+            <TextBlock TextAlignment="Center" FontSize="32" FontWeight="Bold" Text="About Ease Pass"/>
+
+            <TextBlock TextAlignment="Center" FontSize="16" Opacity="0.7"
+                       Text="{Binding AppVersion, StringFormat='Version {0}'}" Margin="0,0,0,20"/>
+
+            <TextBlock TextWrapping="Wrap" FontSize="14" Opacity="0.8" TextAlignment="Center" Margin="0,0,0,20"
+                       Text="Ease Pass is a free, open-source password manager. Your passwords are encrypted locally and never leave your device."/>
+            
+            <controls:SettingsItemSeparator Header="Links"/>
+
+            <controls:SettingsControl Header="Source Code on GitHub">
+                <Button Content="Open" Command="{Binding OpenGitHubCommand}" Classes="Primary"/>
+            </controls:SettingsControl>
+
+            <controls:SettingsControl Header="Privacy Policy">
+                <Button Content="Open" Command="{Binding OpenPrivacyPolicyCommand}"/>
+            </controls:SettingsControl>
+
+            <controls:SettingsControl Header="License (MIT)">
+                <Button Content="Open" Command="{Binding OpenLicenseCommand}"/>
+            </controls:SettingsControl>
+
+            <controls:SettingsItemSeparator Header="Changelog"/>
+
+            <Border Padding="15" CornerRadius="8" Margin="0,5"
+                    Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+                <ScrollViewer MaxHeight="400" VerticalScrollBarVisibility="Auto">
+                    <TextBlock Text="{Binding ChangelogText}" TextWrapping="Wrap" FontSize="13" FontFamily="Consolas,Monospace"/>
+                </ScrollViewer>
+            </Border>
+
+            <TextBlock TextAlignment="Center" Margin="0,20,0,10" FontSize="12" Opacity="0.5"
+                       Text="© 2023-2026 Julius Kirsch — MIT License"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

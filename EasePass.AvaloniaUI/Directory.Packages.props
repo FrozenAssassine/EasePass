@@ -1,0 +1,31 @@
+<Project>
+  <!-- https://learn.microsoft.com/en-us/nuget/consume-packages/central-package-management -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Avalonia packages -->
+    <!-- Important: keep version in sync! -->
+    <PackageVersion Include="Avalonia" Version="11.3.11" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.3.11" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.3.11" />
+    <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.11" />
+    <PackageVersion Include="Avalonia.Desktop" Version="11.3.11" />
+    <PackageVersion Include="Avalonia.iOS" Version="11.3.11" />
+    <PackageVersion Include="Avalonia.Browser" Version="11.3.11" />
+    <PackageVersion Include="Avalonia.Android" Version="11.3.11" />
+    <PackageVersion Include="AvaloniaDialogs" Version="3.7.0" />
+    <PackageVersion Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageVersion Include="DialogHost.Avalonia" Version="0.10.4" />
+    <PackageVersion Include="FluentAvaloniaUI" Version="2.5.0" />
+    <PackageVersion Include="Konscious.Security.Cryptography.Argon2" Version="1.3.1" />
+    <PackageVersion Include="Material.Avalonia" Version="3.13.4" />
+    <PackageVersion Include="Material.Icons.Avalonia" Version="2.4.1" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageVersion Include="Semi.Avalonia" Version="11.3.7.2" />
+    <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.0.1.15" />
+    <PackageVersion Include="ZXing.Net" Version="0.16.11" />
+    <PackageVersion Include="ZXing.Net.Bindings.Windows.Compatibility" Version="0.16.14" />
+  </ItemGroup>
+</Project>
