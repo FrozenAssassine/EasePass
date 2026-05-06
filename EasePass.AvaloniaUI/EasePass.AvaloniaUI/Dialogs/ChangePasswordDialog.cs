@@ -1,4 +1,4 @@
-﻿/*
+/*
 MIT License
 
 Copyright (c) 2023 Julius Kirsch
@@ -17,7 +17,9 @@ copies or substantial portions of the Software.
 using EasePass.Core.Database;
 using EasePass.Extensions;
 using EasePass.Services;
+using EasePass.ViewModels.Dialog;
 using EasePass.Views;
+using EasePass.Views.DialogViews;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs
@@ -25,49 +27,48 @@ namespace EasePass.Dialogs
     internal class ChangePasswordDialog
     {
         private BaseDialog dialog;
-        //private ChangePasswordPage page;
+        private ChangePasswordViewModel _vm;
 
         public async Task ShowAsync(DatabaseItem db)
         {
-            //page = new ChangePasswordPage();
+            _vm = new ChangePasswordViewModel();
+            var page = new ChangePasswordPage { DataContext = _vm };
+
             dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Change Password for".Localized("Dialog_ChangePassword_Title/Text") + " " + db.Name,
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
                 PrimaryButtonText = "Change".Localized("Dialog_Button_Change/Text"),
-                Content = null //page;
+                Content = page
             };
             dialog.Closing += Dialog_Closing;
             await dialog.ShowOnMainView();
         }
 
-
-        private void Dialog_Closing(object? sender, BaseDialogClosingArgs args)
+        private async void Dialog_Closing(object? sender, BaseDialogClosingArgs args)
         {
-            /*
-            if (e.Result != ContentDialogResult.Primary)
+            if (args.Result != DialogResult.Primary)
                 return;
 
-            ChangePasswordPageResult changePWResult = await page.ChangePassword();
-            if (changePWResult == ChangePasswordPageResult.Success)
+            args.Cancel = true; // prevent close until validated
+
+            ChangePasswordPageResult result = await _vm.ChangePassword();
+            switch (result)
             {
-                InfoMessages.SuccessfullyChangedPassword();
-                dialog.Hide();
-                return;
+                case ChangePasswordPageResult.Success:
+                    InfoMessages.SuccessfullyChangedPassword();
+                    dialog.Close(DialogResult.Cancel); // close after success
+                    break;
+                case ChangePasswordPageResult.IncorrectPassword:
+                    InfoMessages.ChangePasswordWrong();
+                    break;
+                case ChangePasswordPageResult.PWNotMatching:
+                    InfoMessages.PasswordsDoNotMatch();
+                    break;
+                case ChangePasswordPageResult.PWTooShort:
+                    InfoMessages.PasswordTooShort();
+                    break;
             }
-            else if (changePWResult == ChangePasswordPageResult.IncorrectPassword)
-            {
-                InfoMessages.ChangePasswordWrong(page.InfoMessageParent);
-            }
-            else if (changePWResult == ChangePasswordPageResult.PWNotMatching)
-            {
-                InfoMessages.PasswordsDoNotMatch(page.InfoMessageParent);
-            }
-            else if (changePWResult == ChangePasswordPageResult.PWTooShort)
-            {
-                InfoMessages.PasswordTooShort(page.InfoMessageParent);
-            }
-            args.Cancel = true;*/
         }
     }
 }

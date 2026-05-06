@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="using:EasePass.Models"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+             x:Class="EasePass.Views.DialogViews.Add2FAPage">
+
+    <StackPanel Spacing="10" Margin="10" MinWidth="350">
+        <HeaderedContentControl Header="Secret Key">
+            <TextBox x:Name="secretBox" PasswordChar="*" Classes="RevealPasswordButton"
+                     Watermark="Enter your TOTP secret key"/>
+        </HeaderedContentControl>
+
+        <HeaderedContentControl Header="Digits">
+            <TextBox x:Name="digitsBox" Text="6" Watermark="Number of digits (default: 6)"/>
+        </HeaderedContentControl>
+
+        <HeaderedContentControl Header="Interval (seconds)">
+            <TextBox x:Name="intervalBox" Text="30" Watermark="Interval in seconds (default: 30)"/>
+        </HeaderedContentControl>
+
+        <HeaderedContentControl Header="Algorithm">
+            <ComboBox x:Name="algorithmBox" HorizontalAlignment="Stretch" SelectedIndex="0">
+                <x:String>SHA1</x:String>
+                <x:String>SHA256</x:String>
+                <x:String>SHA512</x:String>
+            </ComboBox>
+        </HeaderedContentControl>
+    </StackPanel>
+</UserControl>

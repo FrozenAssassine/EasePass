@@ -2,7 +2,82 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="EasePass.Views.SettingsPage">
-Not implemented yet!
+             xmlns:vm="using:EasePass.ViewModels"
+             xmlns:controls="using:EasePass.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="700"
+             x:Class="EasePass.Views.SettingsPage"
+             x:DataType="vm:SettingsViewModel">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="40,20" MaxWidth="700" HorizontalAlignment="Center" Spacing="4">
+            <TextBlock TextAlignment="Center" Margin="0,0,0,30" FontSize="32" FontWeight="Bold" Text="Settings"/>
+
+            <!-- Security Section -->
+            <controls:SettingsItemSeparator Header="Security"/>
+
+            <controls:SettingsControl Header="Inactivity Logout">
+                <NumericUpDown Value="{Binding InactivityLogoutTime}"
+                               Minimum="1" Maximum="1000"
+                               FormatString="0"
+                               Watermark="Minutes"
+                               MinWidth="150"/>
+            </controls:SettingsControl>
+
+            <controls:SettingsControl Header="Clipboard Clear Timeout">
+                <NumericUpDown Value="{Binding ClipboardClearTimeout}"
+                               Minimum="1" Maximum="100000"
+                               FormatString="0"
+                               Watermark="Seconds"
+                               MinWidth="150"/>
+            </controls:SettingsControl>
+
+            <Expander Margin="0,5" HorizontalAlignment="Stretch">
+                <Expander.Header>
+                    <TextBlock VerticalAlignment="Center" FontSize="18" Text="Password Generator" Margin="4,12"/>
+                </Expander.Header>
+                <StackPanel Spacing="12" Margin="10,15">
+                    <Grid ColumnDefinitions="*, Auto" MaxWidth="500">
+                        <HeaderedContentControl Header="Possible Characters" Grid.Column="0">
+                            <TextBox Text="{Binding PasswordChars}" Watermark="Characters used in generated passwords"/>
+                        </HeaderedContentControl>
+                        <Button Grid.Column="1" Content="Reset" Margin="10,20,0,0"
+                                Command="{Binding ResetPasswordCharsCommand}" Classes="Primary"/>
+                    </Grid>
+                    <HeaderedContentControl Header="Password Length (min: 8)" MaxWidth="500" HorizontalAlignment="Left">
+                        <TextBox Text="{Binding PasswordLengthText}" Watermark="Length of the password" MaxWidth="500"/>
+                    </HeaderedContentControl>
+                    <ToggleSwitch IsChecked="{Binding VerifyLeakedPasswords}"
+                                  OnContent="Verify that the password was not leaked"
+                                  OffContent="Leaked password check disabled"/>
+                </StackPanel>
+            </Expander>
+
+            <!-- Miscellaneous Section -->
+            <controls:SettingsItemSeparator Header="Miscellaneous"/>
+
+            <controls:SettingsControl Header="Quick Copy on Double Click"
+                                      ToolTip.Tip="Enable quick copy to copy text by double clicking on the textbox">
+                <ToggleSwitch IsChecked="{Binding DoubleTapToCopy}"/>
+            </controls:SettingsControl>
+
+            <controls:SettingsControl Header="Show Icons"
+                                      ToolTip.Tip="Show or hide the icons in the password list">
+                <ToggleSwitch IsChecked="{Binding ShowIcons}"/>
+            </controls:SettingsControl>
+
+            <controls:SettingsControl Header="Password Popularity Counter">
+                <Button Content="Reset" Classes="Primary"
+                        Command="{Binding ResetPopularityCommand}"
+                        ToolTip.Tip="Resets the counter that counts the clicks to sort by popularity."/>
+            </controls:SettingsControl>
+
+            <!-- Database Section -->
+            <controls:SettingsItemSeparator Header="Database"/>
+
+            <controls:SettingsControl Header="Manage Databases">
+                <Button Content="Manage" Classes="Primary"
+                        Command="{Binding ManageDatabasesCommand}"/>
+            </controls:SettingsControl>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

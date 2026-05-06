@@ -17,69 +17,73 @@ copies or substantial portions of the Software.
 using EasePass.Core.Database;
 using EasePass.Extensions;
 using EasePass.Services;
+using EasePass.ViewModels.Dialog;
 using EasePass.Views;
+using EasePass.Views.DialogViews;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs
 {
     internal class CreateDatabaseDialog
     {
-        //private CreateDatabaseDialogPage page;
+        private CreateDatabaseViewModel _vm;
+
         public async Task<DatabaseItem> ShowAsync()
         {
+            _vm = new CreateDatabaseViewModel();
+            var page = new CreateDatabasePage { DataContext = _vm };
+
             var dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = "Create Database".Localized("Dialog_CreateDB_Headline/Text"),
                 PrimaryButtonText = "Create".Localized("Dialog_Button_Create/Text"),
                 CloseButtonText = "Close".Localized("Dialog_Button_Close/Text"),
+                Content = page
             };
-            //page = new CreateDatabaseDialogPage();
 
-            //dialog.Content = page;
             dialog.Closing += Dialog_Closing;
 
             var res = await dialog.ShowOnMainView();
             if (res == DialogResult.Primary)
             {
-                //var eval = page.Evaluate();
-                //return await Database.CreateNewDatabase(eval.path, eval.masterPassword);
+                var eval = _vm.Evaluate();
+                return await Database.CreateNewDatabase(eval.path, eval.masterPassword);
             }
             return null;
         }
 
         private void Dialog_Closing(object? sender, BaseDialogClosingArgs args)
         {
-            /*if (page == null || args.Result != ContentDialogResult.Primary)
+            if (args.Result != DialogResult.Primary)
                 return;
 
-
-            if (!page.PasswordsMatch)
+            if (!_vm.PasswordsMatch)
             {
-                InfoMessages.PasswordsDoNotMatch(page.InfoMessageParent);
+                InfoMessages.PasswordsDoNotMatch();
                 args.Cancel = true;
                 return;
             }
 
-            if (!page.PathValid)
+            if (!_vm.PathValid)
             {
-                InfoMessages.InvalidDatabasePath(page.InfoMessageParent);
+                InfoMessages.InvalidDatabasePath();
                 args.Cancel = true;
                 return;
             }
 
-            if(!page.PasswordLengthCorrect)
+            if (!_vm.PasswordLengthCorrect)
             {
-                InfoMessages.PasswordTooShort(page.InfoMessageParent);
+                InfoMessages.PasswordTooShort();
                 args.Cancel = true;
                 return;
             }
 
-            if (page.PathValid && page.PathAlreadyExists)
+            if (_vm.PathValid && _vm.PathAlreadyExists)
             {
-                InfoMessages.DatabaseWithThatNameAlreadyExists(page.InfoMessageParent);
+                InfoMessages.DatabaseWithThatNameAlreadyExists();
                 args.Cancel = true;
                 return;
-            }*/
+            }
         }
     }
 }

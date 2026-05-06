@@ -1,4 +1,4 @@
-﻿/*
+/*
 MIT License
 
 Copyright (c) 2023 Julius Kirsch
@@ -17,6 +17,7 @@ copies or substantial portions of the Software.
 using EasePass.Extensions;
 using EasePass.Services;
 using EasePass.Views;
+using EasePass.Views.DialogViews;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs
@@ -25,12 +26,12 @@ namespace EasePass.Dialogs
     {
         public async Task<DialogResult> ShowAsync(string info, string extensionName)
         {
-            //var page = new TextInfoPage(info);
+            var page = new TextInfoPage(info);
             var dialog = new Helper.Logout.AutoLogoutContentDialog
             {
                 Title = extensionName + " " + "info".Localized("Dialog_Info_Headline/Text"),
                 CloseButtonText = "Close".Localized("Dialog_Button_Close/Text"),
-                //Content = page
+                Content = page
             };
 
             return await dialog.ShowOnMainView();

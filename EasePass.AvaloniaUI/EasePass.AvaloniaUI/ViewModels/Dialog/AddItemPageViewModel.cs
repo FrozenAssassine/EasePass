@@ -1,4 +1,4 @@
-﻿using Avalonia.Media.Imaging;
+using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasePass.Helper;
@@ -83,7 +83,7 @@ namespace EasePass.ViewModels.Dialog
             var uri = TOTP.EncodeUrl(ItemCopy.DisplayName, ItemCopy.Username, ItemCopy.Email, ItemCopy.Secret,
                 TOTP.StringToHashMode(ItemCopy.Algorithm), int.Parse(ItemCopy.Digits), int.Parse(ItemCopy.Interval));
 
-            //todo: QrCodeSource = QRCodeScanner.GenerateAvaloniaBitmap(uri);
+            QrCodeSource = QRCodeScanner.GenerateAvaloniaBitmap(uri);
         }
     }
 }

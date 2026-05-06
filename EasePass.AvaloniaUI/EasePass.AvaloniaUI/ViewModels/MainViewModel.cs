@@ -1,9 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasePass.Controls;
 using EasePass.Core.Database;
 using EasePass.Dialogs;
 using EasePass.Helper.AppHelper;
+using EasePass.Helper.Logout;
 using EasePass.Helper.Security.Generator;
 using EasePass.Manager;
 using EasePass.Models.Logger;
@@ -43,15 +44,23 @@ public partial class MainViewModel : ObservableObject
         InactivityHelper.InactivityStarted += InactivityHelper_InactivityStarted;
     }
 
+    [RelayCommand]
     public void BackButtonPressed()
     {
-
+        NavigationHelper.GoBack();
     }
 
-
-    private void InactivityHelper_InactivityStarted()
+    private async void InactivityHelper_InactivityStarted()
     {
+        if (!AutoLogoutContentDialog.InactivityStarted())
+            return;
 
+        if (Database.LoadedInstance != null)
+        {
+            await SaveDatabaseAsync();
+            LogoutHelper.Logout();
+            InfoMessages.AutomaticallyLoggedOut();
+        }
     }
 
     public async Task<bool> SaveDatabaseAsync()

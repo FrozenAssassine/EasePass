@@ -1,4 +1,4 @@
-﻿/*
+/*
 MIT License
 
 Copyright (c) 2023 Julius Kirsch
@@ -14,92 +14,103 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+using Avalonia.Media.Imaging;
+using System;
 using System.IO;
 using ZXing;
+using ZXing.Common;
 using ZXing.QrCode;
-using ZXing.Windows.Compatibility;
+using ZXing.Rendering;
 
 namespace EasePass.Helper
 {
     internal class QRCodeScanner
     {
-        //private readonly SoftwareBitmapBarcodeReader _reader;
-
-        public QRCodeScanner()
+        /// <summary>
+        /// Generates a QR code as an Avalonia Bitmap from the given content string.
+        /// </summary>
+        public static Bitmap? GenerateAvaloniaBitmap(string content)
         {
-            //_reader = new SoftwareBitmapBarcodeReader
-            //{
-            //    AutoRotate = true
-            //};
-            //_reader.Options.PossibleFormats = new[] { BarcodeFormat.QR_CODE };
-            //_reader.Options.TryHarder = true;
-
-            throw new System.Exception("Qr code scanner is not implemented yet");
-        }
-
-        /*public string Scan(SoftwareBitmap bmp)
-        {
-            var res = _reader.Decode(bmp);
-            return res != null ? res.Text : null;
-        }
-
-        public static ImageSource GenerateQRCode(string content)
-        {
-            QrCodeEncodingOptions options = new QrCodeEncodingOptions()
+            try
             {
-                DisableECI = true,
-                CharacterSet = "UTF-8",
-                Width = 500,
-                Height = 500
-            };
+                var options = new QrCodeEncodingOptions
+                {
+                    DisableECI = true,
+                    CharacterSet = "UTF-8",
+                    Width = 300,
+                    Height = 300,
+                    Margin = 1
+                };
 
-            BarcodeWriter writer = new BarcodeWriter()
-            {
-                Format = BarcodeFormat.QR_CODE,
-                Options = options
-            };
+                var writer = new BarcodeWriterPixelData
+                {
+                    Format = BarcodeFormat.QR_CODE,
+                    Options = options
+                };
 
-            BitmapImage bitmapImage = new BitmapImage();
-            using (MemoryStream stream = new MemoryStream())
-            {
-                writer.Write(content).Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                stream.Position = 0;
-                bitmapImage.SetSource(stream.AsRandomAccessStream());
+                var pixelData = writer.Write(content);
+                
+                // Convert pixel data to PNG via manual bitmap construction
+                using var ms = new MemoryStream();
+                WriteBmpToStream(pixelData, ms);
+                ms.Position = 0;
+                return new Bitmap(ms);
             }
-            return bitmapImage;
-        }
-    }
-
-    public class SoftwareBitmapBarcodeReader : BarcodeReader<SoftwareBitmap>
-    {
-        public SoftwareBitmapBarcodeReader()
-            : base(bmp => new SoftwareBitmapLuminanceSource(bmp))
-        {
-        }
-    }
-
-    // from https://github.com/micjahn/ZXing.Net/blob/master/Source/lib/BitmapLuminanceSource.SoftwareBitmap.cs
-    public class SoftwareBitmapLuminanceSource : BaseLuminanceSource
-    {
-        protected SoftwareBitmapLuminanceSource(int width, int height)
-          : base(width, height)
-        {
-        }
-
-        public SoftwareBitmapLuminanceSource(SoftwareBitmap softwareBitmap)
-            : base(softwareBitmap.PixelWidth, softwareBitmap.PixelHeight)
-        {
-            if (softwareBitmap.BitmapPixelFormat != BitmapPixelFormat.Gray8)
+            catch
             {
-                using SoftwareBitmap convertedSoftwareBitmap = SoftwareBitmap.Convert(softwareBitmap, BitmapPixelFormat.Gray8);
-                convertedSoftwareBitmap.CopyToBuffer(luminances.AsBuffer());
-                return;
+                return null;
             }
-            softwareBitmap.CopyToBuffer(luminances.AsBuffer());
         }
 
-        protected override LuminanceSource CreateLuminanceSource(byte[] newLuminances, int width, int height)
-            => new SoftwareBitmapLuminanceSource(width, height) { luminances = newLuminances };
-        */
+        /// <summary>
+        /// Writes raw BGRA pixel data as a BMP to a stream (simple cross-platform approach).
+        /// </summary>
+        private static void WriteBmpToStream(PixelData pixelData, Stream stream)
+        {
+            int width = pixelData.Width;
+            int height = pixelData.Height;
+            byte[] pixels = pixelData.Pixels;
+
+            // BMP file format
+            int rowSize = ((width * 3 + 3) / 4) * 4; // rows are padded to 4-byte boundaries
+            int imageSize = rowSize * height;
+            int fileSize = 54 + imageSize;
+
+            using var bw = new BinaryWriter(stream, System.Text.Encoding.Default, true);
+            
+            // BMP Header
+            bw.Write((byte)'B');
+            bw.Write((byte)'M');
+            bw.Write(fileSize);
+            bw.Write(0); // reserved
+            bw.Write(54); // offset to pixel data
+
+            // DIB Header (BITMAPINFOHEADER)
+            bw.Write(40); // header size
+            bw.Write(width);
+            bw.Write(height);
+            bw.Write((short)1); // color planes
+            bw.Write((short)24); // bits per pixel
+            bw.Write(0); // compression
+            bw.Write(imageSize);
+            bw.Write(2835); // horizontal resolution (72 DPI)
+            bw.Write(2835); // vertical resolution
+            bw.Write(0); // colors in palette
+            bw.Write(0); // important colors
+
+            // Pixel data (BMP is bottom-up)
+            byte[] row = new byte[rowSize];
+            for (int y = height - 1; y >= 0; y--)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int srcIdx = (y * width + x) * 4; // BGRA
+                    row[x * 3 + 0] = pixels[srcIdx + 2]; // B (from R in RGBA)
+                    row[x * 3 + 1] = pixels[srcIdx + 1]; // G
+                    row[x * 3 + 2] = pixels[srcIdx + 0]; // R (from B in RGBA)
+                }
+                bw.Write(row);
+            }
+        }
     }
 }

@@ -35,7 +35,6 @@ namespace EasePass.Views
         public PasswordsPage()
         {
             InitializeComponent();
-            this.DataContext = new PasswordsViewModel();
         }
 
         private void InitializeComponent()

@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace EasePass.Views;
 
-public partial class SettingsPage : UserControl
+public partial class ManageDatabasePage : UserControl
 {
-    public SettingsPage()
+    public ManageDatabasePage()
     {
         InitializeComponent();
     }

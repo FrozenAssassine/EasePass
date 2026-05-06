@@ -1,4 +1,4 @@
-﻿/*
+/*
 MIT License
 
 Copyright (c) 2023 Julius Kirsch
@@ -14,13 +14,11 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-using Avalonia.Controls;
 using EasePass.Models;
-using EasePass.Views;
-using System.Threading.Tasks;
 using EasePass.Helper.Logout;
-using EasePass.AvaloniaUI;
 using EasePass.Services;
+using EasePass.Views.DialogViews;
+using System.Threading.Tasks;
 
 namespace EasePass.Dialogs;
 
@@ -28,7 +26,7 @@ internal class Add2FADialog
 {
     public async Task<bool> ShowAsync(PasswordManagerItem item)
     {
-        UserControl page = null; //todo: new Add2FAPage(item);
+        var page = new Add2FAPage(item);
 
         var dialog = new AutoLogoutContentDialog()
         {
@@ -41,7 +39,7 @@ internal class Add2FADialog
         var result = await dialog.ShowAsyncWithPreventAutoLogout();
         if (result == DialogResult.Primary)
         {
-            //todo: page.UpdateValue();
+            page.UpdateItem();
             return true;
         }
 

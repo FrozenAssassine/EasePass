@@ -1,4 +1,4 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
 using Avalonia.Layout;
@@ -29,33 +29,36 @@ namespace EasePass.Dialogs
         public string? PrimaryButtonText { get; set; }
         public string? SecondaryButtonText { get; set; }
         public string? CloseButtonText { get; set; }
-        public string? Title { get => _titleBlock?.Text; set => _titleBlock?.Text = value; }
+        public string? Title { get => _titleBlock?.Text; set { if (_titleBlock != null) _titleBlock.Text = value; } }
 
         public BaseDialog()
         {
-            this.BorderThickness = new Thickness(2);
-            this.CornerRadius = new CornerRadius(10);
-            //todo proper colors from theme
-            this.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
-            this.Background = new SolidColorBrush(Color.FromArgb(255, 35, 35, 35));
+            this.BorderThickness = new Thickness(1);
+            this.CornerRadius = new CornerRadius(12);
+            this.BorderBrush = new SolidColorBrush(Color.FromArgb(60, 255, 255, 255));
+            this.Background = new SolidColorBrush(Color.FromArgb(255, 40, 40, 40));
+            this.Padding = new Thickness(0);
 
             _buttonPanel = new StackPanel
             {
                 Orientation = Orientation.Horizontal,
                 HorizontalAlignment = HorizontalAlignment.Right,
-                Spacing = 10,
-                Margin = new Thickness(20)
+                Spacing = 8,
+                Margin = new Thickness(20, 12, 20, 20)
             };
 
             _titleBlock = new TextBlock
             {
                 FontWeight = FontWeight.Bold,
-                FontSize = 18,
-                Margin = new Thickness(20, 20, 20, 0),
+                FontSize = 20,
+                Margin = new Thickness(24, 20, 24, 4),
                 Text = Title
             };
 
-            _contentContainer = new ContentControl();
+            _contentContainer = new ContentControl
+            {
+                Margin = new Thickness(24, 8, 24, 4)
+            };
 
             var rootLayout = new Grid
             {
@@ -78,7 +81,7 @@ namespace EasePass.Dialogs
 
         private void BaseDialog_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
         {
-            if(e.Key == Avalonia.Input.Key.Escape)
+            if (e.Key == Avalonia.Input.Key.Escape)
                 Close(DialogResult.Cancel);
         }
 
@@ -92,13 +95,12 @@ namespace EasePass.Dialogs
                     {
                         Source = DialogService.topLevel,
                         Converter = new PercentageConverter(),
-                        ConverterParameter = 0.4 //size in percent 
+                        ConverterParameter = 0.45
                     });
-                    rootLayout.MinWidth = 200;
-                    rootLayout.MaxWidth = 600; 
-                    rootLayout.ClearValue(Layoutable.MaxWidthProperty); 
+                    rootLayout.MinWidth = 300;
+                    rootLayout.MaxWidth = 650;
                 }
-                
+
                 rootLayout.HorizontalAlignment = HorizontalAlignment.Center;
                 rootLayout.VerticalAlignment = VerticalAlignment.Center;
             }
@@ -120,7 +122,13 @@ namespace EasePass.Dialogs
 
         private void AddButton(string text, DialogResult result, bool isDefault = false)
         {
-            var btn = new Button { Content = text, MinWidth = 80 };
+            var btn = new Button
+            {
+                Content = text,
+                MinWidth = 90,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                Padding = new Thickness(16, 8)
+            };
             btn.Click += (_, _) => Close(result);
             if (isDefault) btn.Classes.Add("accent");
             _buttonPanel.Children.Add(btn);
@@ -129,9 +137,8 @@ namespace EasePass.Dialogs
         public async Task<DialogResult> ShowAsync(TopLevel? owner = null)
         {
             CreateButtons();
-
             AdjustDialogSize();
-       
+
             var result = await base.ShowAsync();
             return result.GetValueOrDefault(DialogResult.Cancel);
         }

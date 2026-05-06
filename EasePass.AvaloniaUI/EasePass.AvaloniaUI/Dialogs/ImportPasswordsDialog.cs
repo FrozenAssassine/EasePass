@@ -1,4 +1,4 @@
-﻿/*
+/*
 MIT License
 
 Copyright (c) 2023 Julius Kirsch
@@ -14,11 +14,12 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-using Avalonia.Media;
 using EasePass.Extensions;
 using EasePass.Models;
 using EasePass.Services;
+using EasePass.ViewModels.Dialog;
 using EasePass.Views;
+using EasePass.Views.DialogViews;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -26,11 +27,13 @@ namespace EasePass.Dialogs
 {
     public class ImportPasswordsDialog
     {
-        //private readonly ImportPasswordsDialogPage importPage;
+        private ImportPasswordsViewModel _vm;
+        private ImportPasswordsPage _page;
 
         public ImportPasswordsDialog()
         {
-            //importPage = new ImportPasswordsDialogPage();
+            _vm = new ImportPasswordsViewModel();
+            _page = new ImportPasswordsPage { DataContext = _vm };
         }
 
         public async Task<(PasswordManagerItem[] Items, bool Override)> ShowAsync(bool showProgressbar)
@@ -41,52 +44,54 @@ namespace EasePass.Dialogs
                 PrimaryButtonText = "Add".Localized("Dialog_Button_Add/Text"),
                 SecondaryButtonText = "Override".Localized("Dialog_Button_Override/Text"),
                 CloseButtonText = "Cancel".Localized("Dialog_Button_Cancel/Text"),
-                //Content = importPage
+                Content = _page
             };
 
-            //to add confirmation on overwrite passwords:
             dialog.Closing += Dialog_Closing;
 
             var res = await dialog.ShowOnMainView();
-            //PasswordManagerItem[] items = importPage.GetSelectedPasswords();
+            PasswordManagerItem[] items = _vm.GetSelectedPasswords();
 
-            //if (res == DialogResult.Primary)
-            //    return (items, false);
-            //if (res == DialogResult.Secondary)
-            //    return (items, true);
+            if (res == DialogResult.Primary)
+                return (items, false);
+            if (res == DialogResult.Secondary)
+                return (items, true);
             return (null, false);
         }
 
         private void Dialog_Closing(object? sender, BaseDialogClosingArgs args)
         {
-            /*
-            //ensure overwrite button was pressed:
-            if (args.Result != ContentDialogResult.Secondary)
+            if (args.Result != DialogResult.Secondary)
                 return;
 
-            importPage.ShowConfirmOverWriteDatabase();
-
-            var overwriteState = importPage.GetConfirmOverwriteState();
-            //allow overwrite
-            if (overwriteState.result)
+            // Show confirmation for overwrite
+            if (!_vm.ShowOverwriteConfirm)
+            {
+                _vm.ShowOverwriteConfirm = true;
+                args.Cancel = true;
                 return;
+            }
 
-            overwriteState.confirmOverwriteCheckbox.BorderBrush = new SolidColorBrush(Colors.Red);
-            args.Cancel = true;*/
+            if (!_vm.ConfirmOverwrite)
+            {
+                args.Cancel = true;
+                return;
+            }
         }
 
         public void SetPagePasswords(PasswordManagerItem[] items)
         {
-            //importPage.SetPasswords(items);
+            _vm.SetPasswords(items);
         }
+
         public void SetPagePasswords(ObservableCollection<PasswordManagerItem> items)
         {
-            //importPage.SetPasswords(items);
+            _vm.SetPasswords(items);
         }
 
         public void ShowProgressBar()
         {
-            //importPage.ShowProgressBar();
+            // Progress indication handled by the dialog itself
         }
     }
 }

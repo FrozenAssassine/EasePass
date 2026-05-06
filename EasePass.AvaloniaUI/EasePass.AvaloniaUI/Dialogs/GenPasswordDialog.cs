@@ -16,24 +16,29 @@ copies or substantial portions of the Software.
 
 using EasePass.Extensions;
 using EasePass.Services;
+using EasePass.ViewModels.Dialog;
 using EasePass.Views;
+using EasePass.Views.DialogViews;
 using System.Threading.Tasks;
 
 namespace EasePass.Dialogs;
 
 internal class GenPasswordDialog
 {
-    //private GenPasswordPage page = new GenPasswordPage();
-    
+    private GenPasswordViewModel _vm;
+    private GenPasswordPage _page;
+
     public async Task<bool> ShowAsync()
     {
-        //page.GeneratePassword();
+        _vm = new GenPasswordViewModel();
+        _page = new GenPasswordPage { DataContext = _vm };
+
         var dialog = new Helper.Logout.AutoLogoutContentDialog
         {
             Title = "Password generator".Localized("Dialog_PWGenerator_New/Text"),
             PrimaryButtonText = "New".Localized("Dialog_Button_New/Text"),
             CloseButtonText = "Done".Localized("Dialog_Button_Done/Text"),
-            Content = null//page
+            Content = _page
         };
         dialog.Closing += Dialog_Closing;
         return await dialog.ShowOnMainView() == DialogResult.Secondary;
@@ -41,10 +46,11 @@ internal class GenPasswordDialog
 
     private void Dialog_Closing(object? sender, BaseDialogClosingArgs args)
     {
-        //if(args.Result == DialogResult.Primary)
-        //{
-        //    page.GeneratePassword();
-        //    args.Cancel = true;
-        //}
+        if (args.Result == DialogResult.Primary)
+        {
+            // "New" button pressed - generate a new password and keep dialog open
+            _vm.GeneratePasswordCommand.Execute(null);
+            args.Cancel = true;
+        }
     }
 }

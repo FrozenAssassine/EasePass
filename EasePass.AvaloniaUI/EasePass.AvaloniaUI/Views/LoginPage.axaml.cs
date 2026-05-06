@@ -10,7 +10,6 @@ namespace EasePass.Views
         public LoginPage()
         {
             InitializeComponent();
-            DataContext = new LoginViewModel();
         }
 
         private void InitializeComponent()

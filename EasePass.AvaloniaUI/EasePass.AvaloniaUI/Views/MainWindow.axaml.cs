@@ -34,6 +34,20 @@ namespace EasePass.Views
 
             this.Closing += MainWindow_Closing;
             this.Loaded += MainWindow_Loaded;
+            this.Activated += MainWindow_Activated;
+            this.Deactivated += MainWindow_Deactivated;
+        }
+
+        private void MainWindow_Activated(object? sender, System.EventArgs e)
+        {
+            if (DataContext is MainViewModel vm)
+                vm.InactivityHelper.WindowActivated();
+        }
+
+        private void MainWindow_Deactivated(object? sender, System.EventArgs e)
+        {
+            if (DataContext is MainViewModel vm)
+                vm.InactivityHelper.WindowDeactivated();
         }
 
         private void MainWindow_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)

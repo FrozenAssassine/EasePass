@@ -8,34 +8,39 @@
              x:DataType="vm:NotificationViewModel">
     <Border Name="ContainerBorder"
             Margin="5"
-            Padding="12,8"
-            CornerRadius="4"
+            Padding="12,10"
+            CornerRadius="8"
             MinWidth="300"
             MaxWidth="500"
-            Background="#2b2b2b"
             BorderThickness="1"
-            IsVisible="{Binding IsOpen}">
-        
+            IsVisible="{Binding IsOpen}"
+            BoxShadow="0 2 8 0 #40000000">
+
         <Border.Styles>
-            <Style Selector="Border">
-                <Setter Property="BorderBrush" Value="#444444"/>
+            <!-- Default style (Info) -->
+            <Style Selector="Border#ContainerBorder">
+                <Setter Property="Background" Value="#1a3a5c"/>
+                <Setter Property="BorderBrush" Value="#2a6090"/>
             </Style>
-            </Border.Styles>
+        </Border.Styles>
 
         <Grid ColumnDefinitions="Auto, *, Auto">
             <PathIcon Grid.Column="0" 
-                      Width="16" Height="16" 
+                      Width="18" Height="18" 
                       Margin="0,0,12,0"
                       VerticalAlignment="Center"
+                      Foreground="White"
                       Data="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M13,17H11V11H13V17M13,9H11V7H13V9Z" />
 
             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                 <TextBlock Text="{Binding Title}" 
                            FontWeight="SemiBold" 
-                           FontSize="14" />
+                           FontSize="14"
+                           Foreground="White"/>
                 <TextBlock Text="{Binding Message}" 
                            FontSize="12" 
-                           Opacity="0.8" 
+                           Opacity="0.85"
+                           Foreground="White"
                            TextWrapping="Wrap" />
             </StackPanel>
 
